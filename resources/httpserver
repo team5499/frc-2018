@@ -1,0 +1,152 @@
+#!/usr/bin/env python
+
+from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+import SocketServer
+import os
+from os import curdir, sep
+import json
+import urlparse
+import subprocess
+
+class S(BaseHTTPRequestHandler):
+    def _set_headers(self, datatype):
+        self.send_response(200)
+        self.send_header('Content-type', datatype)
+        self.end_headers()
+
+    def do_GET(self):
+        try:
+            print(self.path)
+            if self.path.endswith('/'):
+                f = open(curdir + sep + 'SmartDashboard' + sep + 'index.html', 'rb')
+
+                self._set_headers('text/html')
+                self.wfile.write(f.read())
+                f.close()
+                return
+            else:
+                f = open(curdir + sep + 'SmartDashboard' + sep + self.path, 'rb')
+
+                self._set_headers('text/%s' % self.path.split(".")[-1])
+                self.wfile.write(f.read())
+                f.close()
+                return
+
+        except IOError:
+            self.send_error(404, 'File not found: %s' % self.path)
+
+    def do_HEAD(self):
+        self._set_headers('text/html')
+        
+    def do_POST(self):
+        # Process the posted data, and add it to the file
+        content_length = self.headers.getheaders('content-length')
+        length = int(content_length[0]) if content_length else 0
+
+        raw_data = self.rfile.read(length)
+        parsed_data = urlparse.urlparse(raw_data)
+        params = []
+        try:
+            params = dict([p.split('=') for p in parsed_data[2].split('&')])
+        except:
+            print('ERROR')
+            params = {}
+
+        if params['action'] == 'deploy':
+            print('deploy')
+            ret = deploy_files()
+            if ret > 0:
+                err = {1: 'Failed to remove old runtime libraries',
+                    2: 'Failed to make new lib folder',
+                    3: 'Failed to unzip new libraries',
+                    4: 'Failed to remove zip archive',
+                    5: 'Failed to rename user program'}[ret]
+                self._set_headers('text/html')
+                self.wfile.write(err)
+                return
+            ret = deploy_cleanup()
+            if ret > 0:
+                err = {1: 'natinst-path error',
+                    2: 'frcKillRobot failed',
+                    3: 'sync failed'}[ret]
+                self._set_headers('text/html')
+                self.wfile.write(err)
+                return
+            self._set_headers('text/html')
+            self.wfile.write('Success!')
+            return
+
+
+            
+            
+def subproc_catch_stderr(args):
+    subproc = subprocess.Popen(args,
+                               stderr=subprocess.PIPE,
+                               universal_newlines=True)
+    subproc.wait()
+
+    if subproc.returncode > 0:
+        print('Command failed ({0})'.format(os.strerror(subproc.returncode)))
+        data = subproc.stderr.read(76).replace('\n', '')
+        while data != '':
+            print('*** {0}'.format(data))
+            data = subproc.stderr.read(76).replace('\n', '')
+
+    return subproc
+
+def deploy_files():
+    subproc = subproc_catch_stderr(['rm', '-rf', '/usr/local/frc/lib'])
+    if subproc.returncode > 0:
+        print('Failed to remove old runtime libraries')
+        return 1
+    subproc = subproc_catch_stderr(['mkdir', '/usr/local/frc/lib'])
+    if subproc.returncode > 0:
+        print('Failed to make new lib folder')
+        return 2
+    subproc = subproc_catch_stderr(['unzip', '/home/lvuser/lib.zip','-d', '/usr/local/frc/lib/'])
+    if subproc.returncode > 0:
+        print('Failed to unzip new libraries')
+        return 3
+    subproc = subproc_catch_stderr(['rm', '/home/lvuser/lib.zip'])
+    if subproc.returncode > 0:
+        print('Failed to remove zip archive')
+        return 4
+    subproc = subproc_catch_stderr(['mv', '/home/lvuser/frc-2017-java.jar', '/home/lvuser/FRCUserProgram.jar'])
+    if subproc.returncode > 0:
+        print('Failed to rename user program')
+        return 5
+    return 0
+
+def deploy_cleanup():
+    subproc = subproc_catch_stderr(['killall', '-q', 'netconsole-host', '||', ':'])
+    if subproc.returncode > 0:
+        print('failed to kill netconsole-host')
+    subproc = subproc_catch_stderr(['sh', '/etc/profile.d/natinst-path.sh'])
+    if subproc.returncode > 0:
+        print('natinst-path error')
+        return 1
+    subproc = subproc_catch_stderr(['sh', '/usr/local/frc/bin/frcKillRobot.sh', '-t', '-r'])
+    if subproc.returncode > 0:
+        print('frcKillRobot failed')
+        return 2
+    subproc = subproc_catch_stderr(['sync'])
+    if subproc.returncode > 0:
+        print('sync failed')
+        return 3
+    print('deploy success!')
+    return 0
+
+        
+def run(server_class=HTTPServer, handler_class=S, port=5800):
+    server_address = ('', port)
+    httpd = server_class(server_address, handler_class)
+    print('Starting httpd...')
+    httpd.serve_forever()
+
+if __name__ == "__main__":
+    from sys import argv
+
+    if len(argv) == 2:
+        run(port=int(argv[1]))
+    else:
+        run()
