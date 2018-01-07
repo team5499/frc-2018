@@ -11,10 +11,12 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void robotInit() {
+        System.out.println("Hello, world!");
     }
 
     @Override
     public void robotPeriodic() {
+        System.out.println("Repeat");
     }
 
     @Override

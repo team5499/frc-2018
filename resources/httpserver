@@ -79,10 +79,11 @@ class S(BaseHTTPRequestHandler):
 
             
             
-def subproc_catch_stderr(args):
+def subproc_catch_stderr(args, shell=False):
     subproc = subprocess.Popen(args,
                                stderr=subprocess.PIPE,
-                               universal_newlines=True)
+                               universal_newlines=True,
+                               shell=shell)
     subproc.wait()
 
     if subproc.returncode > 0:
@@ -111,14 +112,14 @@ def deploy_files():
     if subproc.returncode > 0:
         print('Failed to remove zip archive')
         return 4
-    subproc = subproc_catch_stderr(['mv', '/home/lvuser/frc-2017-java.jar', '/home/lvuser/FRCUserProgram.jar'])
+    subproc = subproc_catch_stderr(['mv', '/home/lvuser/frc-2018-java.jar', '/home/lvuser/FRCUserProgram.jar'])
     if subproc.returncode > 0:
         print('Failed to rename user program')
         return 5
     return 0
 
 def deploy_cleanup():
-    subproc = subproc_catch_stderr(['killall', '-q', 'netconsole-host', '||', ':'])
+    subproc = subproc_catch_stderr('killall -q netconsole-host ||:', shell=True)
     if subproc.returncode > 0:
         print('failed to kill netconsole-host')
     subproc = subproc_catch_stderr(['sh', '/etc/profile.d/natinst-path.sh'])
@@ -128,7 +129,6 @@ def deploy_cleanup():
     subproc = subproc_catch_stderr(['sh', '/usr/local/frc/bin/frcKillRobot.sh', '-t', '-r'])
     if subproc.returncode > 0:
         print('frcKillRobot failed')
-        return 2
     subproc = subproc_catch_stderr(['sync'])
     if subproc.returncode > 0:
         print('sync failed')

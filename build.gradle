@@ -8,7 +8,7 @@ ext {
   GSON_version = '2.8.2'
 
   // input ip at run
-  RoboRIO_target = '169.254.69.81'
+  RoboRIO_target = 'roborio-5499-frc.local'
 
   MainClass = 'org.team5499.robots.frc2018.Robot'
 }
@@ -97,6 +97,29 @@ task deploy {
     }
   }
 }
+
+task deployServers {
+  doLast {
+    exec {
+      commandLine 'scp'
+      args 'resources/httpserver', "admin@$RoboRIO_target:/home/lvuser/httpserver"
+    }
+    exec {
+      commandLine 'scp'
+      args 'resources/ftpserver', "admin@$RoboRIO_target:/home/lvuser/ftpserver"
+    }
+    exec {
+      commandLine 'scp'
+      args 'resources/servers', "admin@$RoboRIO_target:/home/lvuser/servers"
+    }
+  }
+}
+
+
+
+
+
+
 
 // DO NOT USE -- STILL UNDER DEVELOPMENT
 
