@@ -5,8 +5,9 @@ import org.team5499.robots.frc2018.Reference;
 import com.ctre.MotorControl.CANTalon;
 
 public class Drivetrain {
-
+    // left talons
     private CANTalon left1, left2;
+    // right talons
     private CANTalon right1, right2;
 
     public Drivetrain() {

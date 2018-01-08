@@ -7,8 +7,8 @@ import com.ctre.PigeonImu;;
 public class Subsystems {
 
     public static Drivetrain drivetrain = new Drivetrain();
+    public static Gyro gyro = new Gyro();
     public static Encoders encoders = new Encoders();
     public static Inputs inputs = new Inputs();
-    public static PigeonImu gyro = new PigeonImu(deviceNumber);
 
 }
