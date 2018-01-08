@@ -8,7 +8,7 @@ ext {
   GSON_version = '2.8.2'
 
   // input ip at run
-  RoboRIO_target = '169.254.69.81'
+  RoboRIO_target = '192.168.1.93'
 
   MainClass = 'org.team5499.robots.frc2018.Robot'
 }
