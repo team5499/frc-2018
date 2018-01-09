@@ -86,15 +86,23 @@ task zipLibraries(type: Zip, dependsOn: runtimeLibraries) {
   }
 }
    
-task deploy {
-  dependsOn build
+task deployLibraries {
   dependsOn zipLibraries
   doLast {
-    println zipLibraries.getTemporaryDir().toPath().resolve('lib_zip').toAbsolutePath().toString() + "/lib.zip"
     exec {
       commandLine 'curl'
       args '-u', 'team5499:5499', '-T', zipLibraries.getTemporaryDir().toPath().resolve('lib_zip').toAbsolutePath().toString() + "/lib.zip", "ftp://$RoboRIO_target:5801/"
     }
+    exec {
+      commandLine 'curl'
+      args '-d', 'action=libraries', "http://$RoboRIO_target:5800"
+    }
+  }
+}
+   
+task deploy {
+  dependsOn build
+  doLast {
     exec {
       commandLine 'curl'
       args '-u', 'team5499:5499', '-T', jar.archivePath, "ftp://$RoboRIO_target:5801/"
