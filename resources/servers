@@ -8,7 +8,7 @@ subproc_ftp = subprocess.Popen('python ftpserver', stderr=subprocess.PIPE, stdou
 print('after second')
 
 while(True):
-    data_http = subproc_http.stdout.read(2)
-    data_ftp = subproc_ftp.stdout.read(2)
+    data_http = subproc_http.stdout.read(1)
+    data_ftp = subproc_ftp.stdout.read(1)
     print('FTP***{}'.format(data_ftp))
     print('HTTP***{}'.format(data_http))
