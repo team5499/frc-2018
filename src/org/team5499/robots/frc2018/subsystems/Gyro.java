@@ -20,5 +20,6 @@ public class Gyro {
     public double getAbsoluteAngle() {
         return pigeon.GetAbsoluteCompassHeading();
     }
+
     
 }

@@ -2,6 +2,7 @@ package org.team5499.robots.frc2018;
 
 import org.team5499.robots.frc2018.controllers.AutoController;
 import org.team5499.robots.frc2018.controllers.OperatorController;
+import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -28,7 +29,7 @@ public class Robot extends IterativeRobot {
 
     @Override
 	public void disabledInit() {
-        
+        Subsystems.encoders.reset();
     }
     
 	@Override
@@ -39,6 +40,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
         // System.out.println(DriverStation.getInstance().getGameSpecificData());
+        Subsystems.encoders.reset();
         autoController.start();
     }
 
