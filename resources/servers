@@ -2,9 +2,9 @@
 import subprocess
 
 print('starting')
-subproc_http = subprocess.Popen('python httpserver', stderr=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True, shell=True)
+subproc_http = subprocess.Popen('python httpserver', stdout=subprocess.PIPE, universal_newlines=True, shell=True)
 print('after first')
-subproc_ftp = subprocess.Popen('python ftpserver', stderr=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True, shell=True)
+subproc_ftp = subprocess.Popen('python ftpserver', stdout=subprocess.PIPE, universal_newlines=True, shell=True)
 print('after second')
 
 while(True):
