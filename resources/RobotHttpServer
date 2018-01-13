@@ -1,0 +1,48 @@
+#!/bin/sh
+
+PID_RUNHTTPSERVER=/var/run/runhttpserver.pid
+PID_HTTPSERVER=/var/run/httpserver.pid
+
+# runhttpserver is a function that restarts httpserver if it crashes
+runhttpserver() {
+  while true
+  do
+    /bin/su - -- admin -l -c "python /home/lvuser/httpserver" &
+    echo $! > $PID_HTTPSERVER
+	 wait $!
+  done
+}
+
+case "$1" in
+  start)
+    if [ -e $PID_RUNHTTPSERVER -a -e /proc/`cat $PID_RUNHTTPSERVER 2> /dev/null` ]; then
+      echo "$0 already started"
+      exit 1
+    fi
+
+    touch $PID_RUNHTTPSERVER
+    chmod +r $PID_RUNHTTPSERVER
+
+    touch $PID_HTTPSERVER
+    # we need user lvuser to write its PID
+    chown lvuser $PID_HTTPSERVER
+    chmod +r $PID_HTTPSERVER
+
+    runhttpserver &
+    # save  runhttpserver process PID to /var/run
+    echo $! > $PID_RUNHTTPSERVER
+    ;;
+  stop)
+    # kill saved PID for runhttpserver process
+    if [[ -f "$PID_RUNHTTPSERVER" ]]; then
+      kill `cat $PID_RUNHTTPSERVER`
+      rm $PID_RUNHTTPSERVER
+    fi
+
+    # kill saved PID for httpserver process
+    if [[ -f "$PID_HTTPSERVER" ]]; then
+      kill `cat $PID_HTTPSERVER`
+      rm $PID_HTTPSERVER
+    fi
+    ;;
+esac

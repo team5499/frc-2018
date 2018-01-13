@@ -1,0 +1,48 @@
+#!/bin/sh
+
+PID_RUNFTPSERVER=/var/run/runftpserver.pid
+PID_FTPSERVER=/var/run/ftpserver.pid
+
+# runftpserver is a function that restarts ftpserver if it crashes
+runftpserver() {
+  while true
+  do
+    /bin/su - -- admin -l -c "python /home/lvuser/ftpserver" &
+    echo $! > $PID_FTPSERVER
+	 wait $!
+  done
+}
+
+case "$1" in
+  start)
+    if [ -e $PID_RUNFTPSERVER -a -e /proc/`cat $PID_RUNFTPSERVER 2> /dev/null` ]; then
+      echo "$0 already started"
+      exit 1
+    fi
+
+    touch $PID_RUNFTPSERVER
+    chmod +r $PID_RUNFTPSERVER
+
+    touch $PID_FTPSERVER
+    # we need user lvuser to write its PID
+    chown lvuser $PID_FTPSERVER
+    chmod +r $PID_FTPSERVER
+
+    runftpserver &
+    # save  runftpserver process PID to /var/run
+    echo $! > $PID_RUNFTPSERVER
+    ;;
+  stop)
+    # kill saved PID for runftpserver process
+    if [[ -f "$PID_RUNFTPSERVER" ]]; then
+      kill `cat $PID_RUNFTPSERVER`
+      rm $PID_RUNFTPSERVER
+    fi
+
+    # kill saved PID for ftpserver process
+    if [[ -f "$PID_FTPSERVER" ]]; then
+      kill `cat $PID_FTPSERVER`
+      rm $PID_FTPSERVER
+    fi
+    ;;
+esac

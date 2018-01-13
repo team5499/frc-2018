@@ -1,0 +1,1 @@
+scp runtime/libCTRE_PhoenixCCI.so admin@roborio-5499-frc.local:/usr/local/frc/lib/
