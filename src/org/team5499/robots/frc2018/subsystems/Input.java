@@ -22,8 +22,11 @@ public class Input {
     }
 
     public double isSlow() {
-        return (driver.getTrigger(Hand.kLeft) ? 0.5 : driver.getTrigger(Hand.kRight)  ? 0.25 : 1.0);
+        return (driver.getTriggerAxis(Hand.kLeft) > 0.1 ? 0.5 : driver.getTriggerAxis(Hand.kRight) > 0.1  ? 0.25 : 1.0);
     }
 
+    public double getBumper() {
+        return (driver.getBumper(Hand.kLeft) ? Reference.INTAKE_SPEED : driver.getBumper(Hand.kRight) ? -Reference.INTAKE_SPEED : 0);  
+    }
 
 }

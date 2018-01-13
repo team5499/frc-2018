@@ -2,6 +2,8 @@ package org.team5499.robots.frc2018;
 
 public class Reference {
 
+    public static final double INTAKE_SPEED = 0.9;
+
     // drivetrain talons
     public static final int LEFT1_PORT = 0;
     public static final int LEFT2_PORT = 1;

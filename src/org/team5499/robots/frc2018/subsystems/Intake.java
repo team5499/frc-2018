@@ -1,33 +1,26 @@
 package org.team5499.robots.frc2018.subsystems;
 
 import org.team5499.robots.frc2018.Reference;
-
-import com.ctre.MotorControl.CANTalon;
-
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class Intake {
 
-    private CANTalon left, right;
+    private TalonSRX left, right;
 
     public Intake() {
-        left = new CANTalon(Reference.LEFT_INTAKE_PORT);
-        right = new CANTalon(Reference.RIGHT_INTAKE_PORT);
+        left = new TalonSRX(Reference.LEFT_INTAKE_PORT);
+        right = new TalonSRX(Reference.RIGHT_INTAKE_PORT);
         right.setInverted(true);
     }
 
     public void intake(double speed) {
-        left.set(speed);
-        right.set(speed);
+        left.set(ControlMode.PercentOutput, speed);
+        right.set(ControlMode.PercentOutput, speed);
     }
 
-    public void exaust(double speed) {
-        left.set(-speed);
-        right.set(-speed);
-    } 
-
     public void stop() {
-        left.set(0);
-        right.set(0);
+        intake(0);
     }
 
 }
