@@ -96,6 +96,7 @@ task deployLibraries {
   if(project.hasProperty('ip')) {
     RoboRIO_target=ip
   }
+  println RoboRIO_target
   doLast {
     exec {
       commandLine 'curl'
@@ -138,10 +139,6 @@ task deployServers {
       commandLine 'scp'
       args 'resources/ftpserver', "admin@$RoboRIO_target:/home/lvuser/ftpserver"
     }
-    exec {
-      commandLine 'scp'
-      args 'resources/servers', "admin@$RoboRIO_target:/home/lvuser/servers"
-    }
   }
 }
 
@@ -153,15 +150,18 @@ task deployServers {
 
 // DO NOT USE -- STILL UNDER DEVELOPMENT
 
+/*
 task zipDashboard(type: Zip) {
   from file('./')
   into file('SmartDashboard')
-  include 'SmartDashboard/'
+  include 'dashboard/*'
   archiveName 'SmartDashboard.zip'
-  destinationDir(file('./SmartDashboard_new/'))
+  destinationDir(file('./zip_dir/'))
   //THIS HAS TO CHANGE TO PREVENT FROM FLATTENING THE DIRECTORY STRUCTURE
   eachFile { details ->
-     details.setRelativePath(new RelativePath(true, details.getName()))
+      String new_path = details.getAbsolutePath().toString();
+      new_path = new_path.substring(System.getProperty("user.dir").length(), new_path.length())
+      details.setRelativePath(new RelativePath(true, details.getAbsolutePath().toString().substring())
   }
 }
 
@@ -177,6 +177,6 @@ task deploy_dashboard {
       args '-d', 'action=dashboard', 'http://roborio-5499-frc.local:5800'
     }
   }
-}
+}*/
 
 //--------------------------------------------------------------
