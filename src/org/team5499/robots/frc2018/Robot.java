@@ -4,19 +4,21 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class Robot extends IterativeRobot {
 
+    OperatorController operatorController;
+
     public Robot() {
-        System.out.println("Hello, world!");
+        operatorController = new OperatorController();
     }
 
 
     @Override
     public void robotInit() {
-        System.out.println("Hello, world!");
+        
     }
 
     @Override
     public void robotPeriodic() {
-        System.out.println("Repeat");
+        
     }
 
     @Override
