@@ -13,7 +13,8 @@ public class OperatorController {
     }
 
     public void handle() {
-        Subsystems.drivetrain.drive(Subsystems.input.getLeftStick(), Subsystems.input.getRightStick());
+        double slow = Subsystems.input.isSlow();
+        Subsystems.drivetrain.drive(Subsystems.input.getLeftStick() * slow, Subsystems.input.getRightStick() * slow);
         Subsystems.intake.intake(Subsystems.input.getIntake());
     }
 

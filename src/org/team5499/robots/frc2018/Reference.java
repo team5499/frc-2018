@@ -2,6 +2,7 @@ package org.team5499.robots.frc2018;
 
 public class Reference {
 
+    public static final double FAST_INTAKE = 1.0;
     public static final double INTAKE_SPEED = 0.65;
     public static final double SLOW_INTAKE = 0.3;
     public static final double OUTTAKE_SPEED = -1.0;

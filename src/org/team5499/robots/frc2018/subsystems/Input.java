@@ -29,7 +29,7 @@ public class Input {
     }
 
     public double getIntake() {
-        return (codriver.getTriggerAxis(Hand.kRight) > 0.05 ?  Reference.SLOW_INTAKE : codriver.getBumper(Hand.kLeft) ? Reference.INTAKE_SPEED : codriver.getBumper(Hand.kRight) ? Reference.OUTTAKE_SPEED : 0);
+        return (codriver.getAButton() ? Reference.FAST_INTAKE : codriver.getTriggerAxis(Hand.kRight) > 0.05 ?  Reference.SLOW_INTAKE : codriver.getBumper(Hand.kLeft) ? Reference.INTAKE_SPEED : codriver.getBumper(Hand.kRight) ? Reference.OUTTAKE_SPEED : 0);
     }
 
 }
