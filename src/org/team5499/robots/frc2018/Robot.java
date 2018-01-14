@@ -19,7 +19,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void robotPeriodic() {
-        
+        Subsystems.gyro.getAngle();
     }
 
     @Override

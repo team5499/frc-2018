@@ -14,14 +14,19 @@ public class Reference {
     public static final int RIGHT1_PORT = 3;
     public static final int RIGHT2_PORT = 4;
     
+    
     // intake ports
     public static final int RIGHT_INTAKE_PORT = 5;
     public static final int LEFT_INTAKE_PORT = 6;
+
+    // gyro port
+    public static final int PIGEON1 = 7;
+    // public static final int PIGEON2 = 8;
 
     // input
 
     public static final int DRIVER_PORT = 0;
     public static final int CODRIVER_PORT = 1;
-
+  
 
 }
