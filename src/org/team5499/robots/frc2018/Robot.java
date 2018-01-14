@@ -40,9 +40,11 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void teleopInit() {
+        operatorController.start();
     }
 
     @Override
     public void teleopPeriodic() {
+        operatorController.handle();
     }
 }

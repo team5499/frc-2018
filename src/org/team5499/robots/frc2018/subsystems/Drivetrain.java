@@ -15,6 +15,7 @@ public class Drivetrain {
         right2 = new TalonSRX(Reference.RIGHT2_PORT);
         right1.setInverted(true);
         right2.setInverted(true);
+        left1.setInverted(true);
 
     }
 

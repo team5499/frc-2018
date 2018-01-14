@@ -15,7 +15,7 @@ public class Intake {
     }
 
     public void intake(double speed) {
-        left.set(ControlMode.PercentOutput, speed);
+        left.set(ControlMode.PercentOutput, -speed);
         right.set(ControlMode.PercentOutput, speed);
     }
 

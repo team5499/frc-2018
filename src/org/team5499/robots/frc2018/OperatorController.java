@@ -14,7 +14,7 @@ public class OperatorController {
 
     public void handle() {
         Subsystems.drivetrain.drive(Subsystems.input.getLeftStick(), Subsystems.input.getRightStick());
-        Subsystems.intake.intake(Subsystems.input.getBumper());
+        Subsystems.intake.intake(Subsystems.input.getIntake());
     }
 
 
