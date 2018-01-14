@@ -29,7 +29,21 @@ public class Input {
     }
 
     public double getIntake() {
-        return (codriver.getTriggerAxis(Hand.kRight) > 0.05 ?  Reference.SLOW_INTAKE : codriver.getBumper(Hand.kLeft) ? Reference.INTAKE_SPEED : codriver.getBumper(Hand.kRight) ? Reference.OUTTAKE_SPEED : 0);
+        double speed = 0;
+        if(codriver.getTriggerAxis(Hand.kRight) > 0.05) {
+            return Reference.SLOW_INTAKE;
+        } else if(codriver.getBumper(Hand.kRight)) {
+            return 1;
+        } else if(codriver.getBumper(Hand.kLeft)) {
+            return Reference.OUTTAKE_SPEED;
+        } else if(codriver.getAButton()) {
+            return Reference.INTAKE_SPEED;
+        }else {
+            return 0;
+        }
+        
+
+        //return (codriver.getTriggerAxis(Hand.kRight) > 0.05 ?  Reference.SLOW_INTAKE : codriver.getBumper(Hand.kLeft) ? Reference.INTAKE_SPEED : codriver.getBumper(Hand.kRight) ? Reference.OUTTAKE_SPEED : 0);
     }
 
 }
