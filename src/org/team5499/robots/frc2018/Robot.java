@@ -8,9 +8,7 @@ import java.io.File;
 public class Robot extends IterativeRobot {
 
     public Robot() {
-        System.out.println("Hello, world!");
-        TalonSRX t = new TalonSRX(2);
-        t.set(0);
+        System.out.println("hello");
     }
 
 
