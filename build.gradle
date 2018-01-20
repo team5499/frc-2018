@@ -1,14 +1,15 @@
 ext {
   WPILib_version = '2018.1.1'
-  Athena_tmp_version = '2017.3.1'
+  WPIUtil_version = '3.0.0'
   OpenCV_version = '3.1.0'
   NetworkTables_version = '3.1.7'
-  CameraServer_version = '1.0.2'
-  CTREToolsuite_version = '5.0.2.1'
+  Ntcore_version = '4.0.0'
+  CameraServer_version = '1.1.0'
+  CTREToolsuite_version = '5.1.3.1'
   GSON_version = '2.8.2'
 
   // input ip at run
-  RoboRIO_target = '192.168.1.93'
+  RoboRIO_target = 'roborio-5499-frc.local'
 
   MainClass = 'org.team5499.robots.frc2018.Robot'
 }
@@ -25,22 +26,32 @@ repositories {
   maven {
     url 'http://dev.imjac.in/maven'
   }
+  flatDir {
+       dirs 'tmp_ctre/runtime'
+  }
+  flatDir {
+       dirs 'tmp_ctre/compile'
+  }
 }
 
 dependencies {
-  compile "edu.wpi.first.wpilibj:athena:$Athena_tmp_version"
+  compile "edu.wpi.first.wpilibj:wpilibj-java:$WPILib_version"
+  compile "edu.wpi.first.wpiutil:wpiutil-java:$WPIUtil_version"
   compile "org.opencv:opencv-java:$OpenCV_version"
-  compile "edu.wpi.first.wpilib.networktables.java:NetworkTables:$NetworkTables_version:arm"
-  compile "edu.wpi.cscore.java:cscore:$CameraServer_version:arm"
-  compile "thirdparty.frc.ctre:Toolsuite-Java:$CTREToolsuite_version"
+  compile "edu.wpi.first.ntcore:ntcore-java:$Ntcore_version"
+  compile "edu.wpi.first.cscore:cscore-java:$CameraServer_version"
+  //compile "thirdparty.frc.ctre:Toolsuite-Java:$CTREToolsuite_version"
+  compile name: 'CTRE_Phoenix'
+  compile name: 'CTRE_Phoenix-sources'
   compile "com.google.code.gson:gson:$GSON_version"
 
-  runtime "edu.wpi.first.wpilib:athena-runtime:$Athena_tmp_version"
-  runtime "edu.wpi.first.wpilibj:athena-jni:$Athena_tmp_version"
+  runtime "edu.wpi.first.wpilibj:wpilibj-jni:$WPILib_version:linuxathena"
   runtime "org.opencv:opencv-natives:$OpenCV_version:linux-arm"
   runtime "org.opencv:opencv-jni:$OpenCV_version:linux-arm"
-  runtime "edu.wpi.cscore.java:cscore:$CameraServer_version:athena-uberzip@zip"
-  runtime "thirdparty.frc.ctre:Toolsuite-Zip:$CTREToolsuite_version@zip"
+  runtime "edu.wpi.first.cscore:cscore-jni:$CameraServer_version:linuxathena"
+  runtime "edu.wpi.first.wpiutil:wpiutil-java:$WPIUtil_version"
+  runtime "edu.wpi.first.ntcore:ntcore-jni:$Ntcore_version:linuxathena"
+  //runtime "thirdparty.frc.ctre:Toolsuite-Zip:$CTREToolsuite_version@zip"
 }
 
 jar {
@@ -61,6 +72,7 @@ task runtimeLibraries {
         includeEmptyDirs = false
         eachFile { details ->
           details.setRelativePath(new RelativePath(true, details.getName()))
+          println details.getName()
         }
       }
     }
@@ -75,18 +87,33 @@ task zipLibraries(type: Zip, dependsOn: runtimeLibraries) {
   destinationDir(getTemporaryDir().toPath().resolve('lib_zip').toFile())
   eachFile { details ->
      details.setRelativePath(new RelativePath(true, details.getName()))
+     println details.getName()
+  }
+}
+   
+task deployLibraries {
+  dependsOn zipLibraries
+  if(project.hasProperty('ip')) {
+    RoboRIO_target=ip
+  }
+  doLast {
+    exec {
+      commandLine 'curl'
+      args '-u', 'team5499:5499', '-T', zipLibraries.getTemporaryDir().toPath().resolve('lib_zip').toAbsolutePath().toString() + "/lib.zip", "ftp://$RoboRIO_target:5801/"
+    }
+    exec {
+      commandLine 'curl'
+      args '-d', 'action=libraries', "http://$RoboRIO_target:5800"
+    }
   }
 }
    
 task deploy {
   dependsOn build
-  dependsOn zipLibraries
+  if(project.hasProperty('ip')) {
+    RoboRIO_target=ip
+  }
   doLast {
-    println zipLibraries.getTemporaryDir().toPath().resolve('lib_zip').toAbsolutePath().toString() + "/lib.zip"
-    exec {
-      commandLine 'curl'
-      args '-u', 'team5499:5499', '-T', zipLibraries.getTemporaryDir().toPath().resolve('lib_zip').toAbsolutePath().toString() + "/lib.zip", "ftp://$RoboRIO_target:5801/"
-    }
     exec {
       commandLine 'curl'
       args '-u', 'team5499:5499', '-T', jar.archivePath, "ftp://$RoboRIO_target:5801/"
@@ -97,6 +124,32 @@ task deploy {
     }
   }
 }
+
+task deployServers {
+  if(project.hasProperty('ip')) {
+    RoboRIO_target=ip
+  }
+  doLast {
+    exec {
+      commandLine 'scp'
+      args 'resources/httpserver', "admin@$RoboRIO_target:/home/lvuser/httpserver"
+    }
+    exec {
+      commandLine 'scp'
+      args 'resources/ftpserver', "admin@$RoboRIO_target:/home/lvuser/ftpserver"
+    }
+    exec {
+      commandLine 'scp'
+      args 'resources/servers', "admin@$RoboRIO_target:/home/lvuser/servers"
+    }
+  }
+}
+
+
+
+
+
+
 
 // DO NOT USE -- STILL UNDER DEVELOPMENT
 
