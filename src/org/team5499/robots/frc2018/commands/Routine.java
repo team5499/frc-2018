@@ -17,7 +17,7 @@ public class Routine {
 
     public void addCommand(BaseCommand command) {
         commands.add(command);
-        currentCommand = commands.get(0):
+        currentCommand = commands.get(0);
     }
 
     public void start() {
