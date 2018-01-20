@@ -18,14 +18,13 @@ public class Inputs {
     public enum CodriverControlMethod {}
 
     private DriverControlMethod currentMethod;
-    private boolean lastAuto = false;
 
     private XboxController driver, codriver;
     private Joystick wheel, throttle;
 
 
     public Inputs() {
-        currentMethod = Reference.driveMethod;
+        currentMethod = Reference.driverMethod;
         switch(currentMethod) {
             case WHEEL:
                 wheel = new Joystick(Reference.WHEEL_PORT);
@@ -70,20 +69,15 @@ public class Inputs {
         return (throttle.getRawButton(1) ? 0.25 : 1);
     }
 
-    public boolean autoSelector() {
-        if(lastAuto) {
-            if((currentMethod == DriverControlMethod.CONTROLLER && !driver.getAButton()) 
-            || (currentMethod == DriverControlMethod.WHEEL && !wheel.getRawButton(0))) {
-                lastAuto = false;
-            }
-        } else {
-            if((currentMethod == DriverControlMethod.CONTROLLER && driver.getAButton()) 
-            || (currentMethod == DriverControlMethod.WHEEL && wheel.getRawButton(0))) {
-                lastAuto = true;
-                return true;
-            }
-        }
-
-        return false;
+    public double getIntake() {
+        if(codriver.getAButton()) {
+            return Reference.FAST_INTAKE;
+        } else if(codriver.getBumper(Hand.kLeft)) {
+            return Reference.INTAKE_SPEED;
+        } else if(codriver.getTriggerAxis(Hand.kLeft) > 0.05) {
+            return Reference.SLOW_INTAKE;
+        } else if(codriver.getTriggerAxis(Hand.kRight) > 0.05) {
+            return Reference.OUTTAKE_SPEED;
+        } else return 0;
     }
 }

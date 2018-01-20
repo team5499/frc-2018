@@ -7,6 +7,8 @@ import org.team5499.robots.frc2018.subsystems.Subsystems;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 public class Robot extends IterativeRobot {
 
     private OperatorController operatorController;
@@ -29,7 +31,6 @@ public class Robot extends IterativeRobot {
 
     @Override
 	public void disabledInit() {
-        Subsystems.encoders.reset();
     }
     
 	@Override
@@ -40,7 +41,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
         // System.out.println(DriverStation.getInstance().getGameSpecificData());
-        Subsystems.encoders.reset();
         autoController.start();
     }
 
@@ -53,6 +53,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopInit() {
         operatorController.start();
+        System.out.println(Hardware.left1.getSensorCollection().getQuadraturePosition());
     }
 
     @Override

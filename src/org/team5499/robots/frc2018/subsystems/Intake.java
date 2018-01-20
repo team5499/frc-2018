@@ -1,0 +1,19 @@
+package org.team5499.robots.frc2018.subsystems;
+
+import org.team5499.robots.frc2018.Hardware;
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
+public class Intake {
+
+    public Intake() {
+        Hardware.rightIntake.setInverted(true);
+    }
+
+    public void intake(double speed) {
+        Hardware.leftIntake.set(ControlMode.PercentOutput, speed);
+        Hardware.rightIntake.set(ControlMode.PercentOutput, speed);
+    }
+
+}

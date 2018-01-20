@@ -3,6 +3,8 @@ package org.team5499.robots.frc2018.controllers;
 import org.team5499.robots.frc2018.Reference;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
+import org.team5499.robots.frc2018.subsystems.Inputs.DriverControlMethod;;
+
 public class OperatorController extends BaseController {
 
     public OperatorController() {
@@ -16,7 +18,7 @@ public class OperatorController extends BaseController {
 
     @Override
     public void handle() {
-        switch(Reference.driveMethod) {
+        switch(Reference.driverMethod) {
             case CONTROLLER:
                 Subsystems.drivetrain.drive(Subsystems.inputs.getLeftStick() * Subsystems.inputs.isSlow(), Subsystems.inputs.getRightStick() * Subsystems.inputs.isSlow());
                 break;
@@ -28,7 +30,7 @@ public class OperatorController extends BaseController {
         }
 
         // more code
-        
+        Subsystems.intake.intake(Subsystems.inputs.getIntake());
     }
 
 }
