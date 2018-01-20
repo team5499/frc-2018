@@ -53,7 +53,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopInit() {
         operatorController.start();
-        System.out.println(Hardware.left1.getSensorCollection().getQuadraturePosition());
+        System.out.println("Encoder: " + Hardware.left1.getSensorCollection().getQuadraturePosition());
     }
 
     @Override
