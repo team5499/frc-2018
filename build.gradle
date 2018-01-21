@@ -150,7 +150,6 @@ task deployServers {
 
 // DO NOT USE -- STILL UNDER DEVELOPMENT
 
-/*
 task zipDashboard(type: Zip) {
   from file('./')
   into file('SmartDashboard')
@@ -159,9 +158,9 @@ task zipDashboard(type: Zip) {
   destinationDir(file('./zip_dir/'))
   //THIS HAS TO CHANGE TO PREVENT FROM FLATTENING THE DIRECTORY STRUCTURE
   eachFile { details ->
-      String new_path = details.getAbsolutePath().toString();
-      new_path = new_path.substring(System.getProperty("user.dir").length(), new_path.length())
-      details.setRelativePath(new RelativePath(true, details.getAbsolutePath().toString().substring())
+      String new_path = details.getAbsolutePath().toString()
+      new_path = System.getProperty("user.dir").relativize(new_path)
+      details.setRelativePath(new RelativePath(true, new_path))
   }
 }
 
@@ -177,6 +176,6 @@ task deploy_dashboard {
       args '-d', 'action=dashboard', 'http://roborio-5499-frc.local:5800'
     }
   }
-}*/
+}
 
 //--------------------------------------------------------------
