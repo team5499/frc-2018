@@ -126,22 +126,6 @@ task deploy {
   }
 }
 
-task deployServers {
-  if(project.hasProperty('ip')) {
-    RoboRIO_target=ip
-  }
-  doLast {
-    exec {
-      commandLine 'scp'
-      args 'resources/httpserver', "admin@$RoboRIO_target:/home/lvuser/httpserver"
-    }
-    exec {
-      commandLine 'scp'
-      args 'resources/ftpserver', "admin@$RoboRIO_target:/home/lvuser/ftpserver"
-    }
-  }
-}
-
 
 
 
@@ -151,15 +135,14 @@ task deployServers {
 // DO NOT USE -- STILL UNDER DEVELOPMENT
 
 task zipDashboard(type: Zip) {
-  from file('./')
+  from file('./dashboard')
   into file('SmartDashboard')
-  include 'dashboard/*'
+  include '*'
   archiveName 'SmartDashboard.zip'
-  destinationDir(file('./zip_dir/'))
+  destinationDir(getTemporaryDir().toPath().resolve('zip_dir').toFile())
   //THIS HAS TO CHANGE TO PREVENT FROM FLATTENING THE DIRECTORY STRUCTURE
   eachFile { details ->
-      String new_path = details.getAbsolutePath().toString()
-      new_path = System.getProperty("user.dir").relativize(new_path)
+      String new_path = details.getSourcePath()
       details.setRelativePath(new RelativePath(true, new_path))
   }
 }
@@ -167,9 +150,10 @@ task zipDashboard(type: Zip) {
 task deploy_dashboard {
   dependsOn zipDashboard
   doLast {
+    println zipDashboard.getTemporaryDir().toPath().resolve('zip_dir') + '/SmartDashboard.zip'
     exec {
       commandLine 'curl'
-      args '-u', 'team5499:5499', '-T', getTemporaryDir().toPath().resolve('zip_dir') + '/SmartDashboard.zip', 'ftp://roborio-5499-frc.local:5801/'
+      args '-u', 'team5499:5499', '-T', zipDashboard.getTemporaryDir().toPath().resolve('zip_dir').toAbsolutePath().toString() + '/SmartDashboard.zip', "ftp://$RoboRIO_target:5801/"
     }
     exec {
       commandLine 'curl'
