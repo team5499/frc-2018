@@ -9,8 +9,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 public class Drivetrain {
     
     public Drivetrain() {
+        Hardware.left2.follow(Hardware.left1);
         Hardware.right1.setInverted(true);
         Hardware.right2.setInverted(true);
+        Hardware.right2.follow(Hardware.right1);
     }
 
     /**
@@ -20,9 +22,15 @@ public class Drivetrain {
      */
     public void drive(double left, double right) {
         Hardware.left1.set(ControlMode.PercentOutput, left);
-        Hardware.left2.set(ControlMode.PercentOutput, left);
         Hardware.right1.set(ControlMode.PercentOutput, right);
-        Hardware.right2.set(ControlMode.PercentOutput, right);
+    }
+
+    /**
+     * Driving command based on position
+     */
+    public void pDrive(double leftPos, double rightPos) {
+        Hardware.left1.set(ControlMode.Position , leftPos);
+        Hardware.right1.set(ControlMode.Position, rightPos);
     }
 
     /**
