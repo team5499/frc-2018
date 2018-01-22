@@ -4,6 +4,9 @@ import org.team5499.robots.frc2018.subsystems.Inputs.DriverControlMethod;
 
 public class Reference {
 
+    public static final int mTimeout = 0;
+
+    // drive constants
     public static final DriverControlMethod driverMethod = DriverControlMethod.CONTROLLER; 
 
     public static final double SLOW_MULTIPLIER = 0.5;
@@ -33,6 +36,16 @@ public class Reference {
     public static final int WHEEL_PORT = 2;
     public static final int THROTTLE_PORT = 3;
 
+    // PID constants 
+    public static double MAX_PID_OUTPUT = 0.1;
+    public static double kP = 0d;
+    public static double kI = 0d;
+    public static double kD = 0d;
+    public static double kF = 0d;
+
+    public static void updatePIDConstants() {
+
+    }
   
 
 }
