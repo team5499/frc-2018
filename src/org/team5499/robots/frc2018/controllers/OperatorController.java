@@ -18,7 +18,7 @@ public class OperatorController extends BaseController {
 
     @Override
     public void handle() {
-        switch(Reference.driverMethod) {
+        switch(Reference.DRIVER_CONTROL_METHOD) {
             case CONTROLLER:
                 Subsystems.drivetrain.drive(Subsystems.inputs.getLeftStick() * Subsystems.inputs.isSlow(), Subsystems.inputs.getRightStick() * Subsystems.inputs.isSlow());
                 break;

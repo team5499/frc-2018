@@ -30,6 +30,7 @@ public class AutoController extends BaseController {
     public void loadGameData(String data) { 
         this.data = data;
         System.out.println("Data loaded: " + data);
+        System.out.println("Close plate: " + (data.charAt(0) == 'L' ? "Left" : "Right"));
     }
 
 }

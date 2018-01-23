@@ -24,7 +24,7 @@ public class Inputs {
 
 
     public Inputs() {
-        currentMethod = Reference.driverMethod;
+        currentMethod = Reference.DRIVER_CONTROL_METHOD;
         switch(currentMethod) {
             case WHEEL:
                 wheel = new Joystick(Reference.WHEEL_PORT);

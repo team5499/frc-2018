@@ -16,4 +16,8 @@ public class Intake {
         Hardware.rightIntake.set(ControlMode.PercentOutput, speed);
     }
 
+    public void stop() {
+        intake(0);
+    }
+
 }

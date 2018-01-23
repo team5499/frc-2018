@@ -3,12 +3,12 @@ package org.team5499.robots.frc2018;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.team5499.robots.frc2018.subsystems.Inputs.DriverControlMethod;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+
+import org.team5499.robots.frc2018.subsystems.Inputs.DriverControlMethod;
 
 public class Reference {
 
@@ -18,17 +18,18 @@ public class Reference {
     private static JsonElement jTree;
     private static JsonObject jObject;
 
+    // timeout for phoenix methods
     public static final int mTimeout = 0;
 
     // drive constants
-    public static final DriverControlMethod driverMethod = DriverControlMethod.CONTROLLER; 
+    public static final DriverControlMethod DRIVER_CONTROL_METHOD = DriverControlMethod.CONTROLLER;
 
     public static final double SLOW_MULTIPLIER = 0.5;
     public static final double FAST_INTAKE = 1.0;
     public static final double INTAKE_SPEED = 0.65;
     public static final double SLOW_INTAKE = 0.3;
     public static final double OUTTAKE_SPEED = -1.0;
-    public static final double JOYSTICK_DEADZONE = 0.05;
+    public static final double JOYSTICK_DEADZONE = 0.02;
 
     // drivetrain talons
     public static final int LEFT1_PORT = 1;
@@ -40,6 +41,10 @@ public class Reference {
     // intake ports
     public static final int RIGHT_INTAKE_PORT = 5;
     public static final int LEFT_INTAKE_PORT = 6;
+
+    // climber ports
+    public static final int CLIMBER1_PORT = 8;
+    public static final int CLIMBER2_PORT = 9;
 
     // gyro port
     public static final int PIGEON_PORT = 7;
@@ -67,11 +72,10 @@ public class Reference {
         jTree = jParser.parse(jReader);
         jObject = jTree.getAsJsonObject();
 
-        kP = jObject.get("kP").getAsDouble();
-        kI = jObject.get("kI").getAsDouble();
-        kD = jObject.get("kD").getAsDouble();
-        kF = jObject.get("kF").getAsDouble();
-
+        kP = jObject.get("pid.kP").getAsDouble();
+        kI = jObject.get("pid.kI").getAsDouble();
+        kD = jObject.get("pid.kD").getAsDouble();
+        kF = jObject.get("pid.kF").getAsDouble();
     }
   
 }

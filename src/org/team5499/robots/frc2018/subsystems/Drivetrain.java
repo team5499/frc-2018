@@ -26,7 +26,7 @@ public class Drivetrain {
     }
 
     /**
-     * Driving command based on position
+     * Driving command based on position (uses encoders to drive to a setpoint)
      */
     public void mDrive(double leftPos, double rightPos) {
         Hardware.left1.set(ControlMode.MotionMagic , leftPos);
