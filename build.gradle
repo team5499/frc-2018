@@ -7,6 +7,8 @@ ext {
   CameraServer_version = '1.1.0'
   CTREToolsuite_version = '5.1.3.1'
   GSON_version = '2.8.2'
+  WEBSOCKET_version = '9.0.1'
+  TYRUS_version = '1.13.1'
 
   // input ip at run
   RoboRIO_target = 'roborio-5499-frc.local'
@@ -44,6 +46,9 @@ dependencies {
   compile name: 'CTRE_Phoenix'
   compile name: 'CTRE_Phoenix-sources'
   compile "com.google.code.gson:gson:$GSON_version"
+  compile group: 'org.apache.tomcat', name: 'tomcat-websocket', version: WEBSOCKET_version
+  compile group: 'org.glassfish.tyrus', name: 'tyrus-server', version: TYRUS_version
+  compile group: 'org.glassfish.tyrus', name: 'tyrus-container-grizzly-server', version: TYRUS_version
 
   runtime "edu.wpi.first.wpilibj:wpilibj-jni:$WPILib_version:linuxathena"
   runtime "org.opencv:opencv-natives:$OpenCV_version:linux-arm"

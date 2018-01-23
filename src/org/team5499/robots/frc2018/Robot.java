@@ -1,9 +1,6 @@
 package org.team5499.robots.frc2018;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.NidecBrushless;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import java.io.File;
 
 public class Robot extends IterativeRobot {
 
@@ -14,6 +11,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void robotInit() {
+        Subsystems.dash.start();
     }
 
     @Override
