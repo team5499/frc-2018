@@ -1,8 +1,22 @@
 package org.team5499.robots.frc2018;
 
+import java.io.FileReader;
+import java.io.IOException;
+
 import org.team5499.robots.frc2018.subsystems.Inputs.DriverControlMethod;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
+
 public class Reference {
+
+    private static final String FILE_PATH = "/home/lvuser/vars.json";
+    private static JsonReader jReader;
+    private static JsonParser jParser;
+    private static JsonElement jTree;
+    private static JsonObject jObject;
 
     public static final int mTimeout = 0;
 
@@ -37,15 +51,27 @@ public class Reference {
     public static final int THROTTLE_PORT = 3;
 
     // PID constants 
-    public static double MAX_PID_OUTPUT = 0.1;
+    public static double MAX_PID_OUTPUT = 0.4;
     public static double kP = 0d;
     public static double kI = 0d;
     public static double kD = 0d;
     public static double kF = 0d;
 
     public static void updatePIDConstants() {
+        try {
+            jReader = new JsonReader(new FileReader(FILE_PATH));
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        jParser = new JsonParser();
+        jTree = jParser.parse(jReader);
+        jObject = jTree.getAsJsonObject();
+
+        kP = jObject.get("kP").getAsDouble();
+        kI = jObject.get("kI").getAsDouble();
+        kD = jObject.get("kD").getAsDouble();
+        kF = jObject.get("kF").getAsDouble();
 
     }
   
-
 }

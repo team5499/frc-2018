@@ -28,9 +28,9 @@ public class Drivetrain {
     /**
      * Driving command based on position
      */
-    public void pDrive(double leftPos, double rightPos) {
-        Hardware.left1.set(ControlMode.Position , leftPos);
-        Hardware.right1.set(ControlMode.Position, rightPos);
+    public void mDrive(double leftPos, double rightPos) {
+        Hardware.left1.set(ControlMode.MotionMagic , leftPos);
+        Hardware.right1.set(ControlMode.MotionMagic, rightPos);
     }
 
     /**

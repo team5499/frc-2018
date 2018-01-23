@@ -21,39 +21,45 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void robotInit() {
-
+        Subsystems.leftPID.resetEncoder();
+        Subsystems.rightPID.resetEncoder();
+        Reference.updatePIDConstants();
     }
 
     @Override
     public void robotPeriodic() {
-
-    }
-
-    @Override
-	public void disabledInit() {
-    }
-    
-	@Override
-	public void disabledPeriodic() {
         
     }
 
     @Override
-    public void autonomousInit() {
-        // System.out.println(DriverStation.getInstance().getGameSpecificData());
+	public void disabledInit() {
+
+    }
+    
+	@Override
+	public void disabledPeriodic() {
+        Subsystems.leftPID.resetEncoder();
+        Subsystems.rightPID.resetEncoder();
+        Reference.updatePIDConstants();
+    }
+
+    @Override
+    public void autonomousInit(){
+        String data = DriverStation.getInstance().getGameSpecificMessage();
+        autoController.loadGameData(data);
+        Subsystems.leftPID.resetEncoder();
+        Subsystems.rightPID.resetEncoder();
         autoController.start();
     }
 
     @Override
     public void autonomousPeriodic() {
-
         autoController.handle();
     }
 
     @Override
     public void teleopInit() {
         operatorController.start();
-        System.out.println("Encoder: " + Hardware.left1.getSensorCollection().getQuadraturePosition());
     }
 
     @Override
