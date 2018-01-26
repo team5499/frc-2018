@@ -17,7 +17,6 @@ public class Climber {
 
     public void extendArm() {
         
-        
     }
 
 

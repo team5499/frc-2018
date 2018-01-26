@@ -6,10 +6,11 @@ import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.TimedRobot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-public class Robot extends IterativeRobot {
+public class Robot extends TimedRobot {
 
     private OperatorController operatorController;
     private AutoController autoController;
@@ -17,6 +18,7 @@ public class Robot extends IterativeRobot {
     public Robot() {
         operatorController = new OperatorController();
         autoController = new AutoController();
+        super.setPeriod(Reference.TIMED_INTERVAL);
     }
 
     @Override
@@ -66,4 +68,15 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         operatorController.handle();
     }
+
+    @Override
+    public void testInit() {
+
+    }
+
+    @Override
+    public void testPeriodic() {
+
+    }
+
 }

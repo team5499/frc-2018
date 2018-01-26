@@ -8,6 +8,7 @@ public class Subsystems {
     public static Inputs inputs = new Inputs();
     public static Drivetrain drivetrain = new Drivetrain();
     public static Intake intake = new Intake();
+    public static Climber climber = new Climber();
     public static Position position = new Position();
     public static Gyro gyro = new Gyro();
     public static PID leftPID = new PID(Hardware.left1, Reference.kP, Reference.kI, Reference.kD, Reference.kF, Reference.MAX_PID_OUTPUT);

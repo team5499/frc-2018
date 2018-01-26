@@ -11,12 +11,17 @@ public class Intake {
         Hardware.rightIntake.setInverted(true);
     }
 
+    public void setArm(double speed) {
+        Hardware.arm.set(ControlMode.PercentOutput, speed);
+    }
+
     public void intake(double speed) {
         Hardware.leftIntake.set(ControlMode.PercentOutput, speed);
         Hardware.rightIntake.set(ControlMode.PercentOutput, speed);
     }
 
     public void stop() {
+        setArm(0);
         intake(0);
     }
 

@@ -12,6 +12,7 @@ public class Hardware {
     public static TalonSRX right2 = new TalonSRX(Reference.RIGHT2_PORT);
 
     // intake talons 
+    public static TalonSRX arm = new TalonSRX(Reference.ARM_PORT);
     public static TalonSRX rightIntake = new TalonSRX(Reference.RIGHT_INTAKE_PORT);
     public static TalonSRX leftIntake = new TalonSRX(Reference.LEFT_INTAKE_PORT);
 
@@ -20,6 +21,6 @@ public class Hardware {
     public static TalonSRX climb2 = new TalonSRX(Reference.CLIMBER2_PORT);
 
     // gyro
-    public static PigeonIMU pigeon = new PigeonIMU(Reference.PIGEON_PORT); 
+    public static PigeonIMU pigeon = new PigeonIMU(Reference.PIGEON_PORT);
 
 }

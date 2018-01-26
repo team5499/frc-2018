@@ -31,6 +31,7 @@ public class OperatorController extends BaseController {
 
         // more code
         Subsystems.intake.intake(Subsystems.inputs.getIntake());
+        Subsystems.intake.setArm(Subsystems.inputs.getArm());
     }
 
 }

@@ -15,7 +15,7 @@ public class Inputs {
     }
 
     // do we need this?
-    public enum CodriverControlMethod {}
+    public enum CodriverControlMethod{}
 
     private DriverControlMethod currentMethod;
 
@@ -67,6 +67,10 @@ public class Inputs {
 
     public double throttleLimiter() {
         return (throttle.getRawButton(1) ? 0.25 : 1);
+    }
+
+    public double getArm() {
+        return codriver.getY(Hand.kRight) * Reference.ARM_SPEED;
     }
 
     public double getIntake() {

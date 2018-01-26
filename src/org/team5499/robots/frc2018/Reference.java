@@ -18,7 +18,8 @@ public class Reference {
     private static JsonElement jTree;
     private static JsonObject jObject;
 
-    // timeout for phoenix methods
+    // time constants
+    public static final double TIMED_INTERVAL = 0.005;
     public static final int mTimeout = 0;
 
     // drive constants
@@ -30,6 +31,7 @@ public class Reference {
     public static final double SLOW_INTAKE = 0.3;
     public static final double OUTTAKE_SPEED = -1.0;
     public static final double JOYSTICK_DEADZONE = 0.02;
+    public static final double ARM_SPEED = 0.5;
 
     // drivetrain talons
     public static final int LEFT1_PORT = 1;
@@ -41,6 +43,7 @@ public class Reference {
     // intake ports
     public static final int RIGHT_INTAKE_PORT = 5;
     public static final int LEFT_INTAKE_PORT = 6;
+    public static final int ARM_PORT = 10;
 
     // climber ports
     public static final int CLIMBER1_PORT = 8;
