@@ -3,6 +3,8 @@
 .settings 
 .vscode
 bin
+.classpath
+.project
 
 
 # Ignore Gradle GUI config

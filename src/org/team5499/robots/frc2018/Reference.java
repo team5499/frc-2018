@@ -12,15 +12,9 @@ import org.team5499.robots.frc2018.subsystems.Inputs.DriverControlMethod;
 
 public class Reference {
 
-    private static final String FILE_PATH = "/home/lvuser/vars.json";
-    private static JsonReader jReader;
-    private static JsonParser jParser;
-    private static JsonElement jTree;
-    private static JsonObject jObject;
-
     // time constants
-    public static final double TIMED_INTERVAL = 0.005;
-    public static final int mTimeout = 0;
+    public static double TIMED_INTERVAL = 0.005;
+    public static int mTimeout = 0;
 
     // drive constants
     public static final DriverControlMethod DRIVER_CONTROL_METHOD = DriverControlMethod.CONTROLLER;
@@ -64,21 +58,5 @@ public class Reference {
     public static double kI = 0d;
     public static double kD = 0d;
     public static double kF = 0d;
-
-    public static void updatePIDConstants() {
-        try {
-            jReader = new JsonReader(new FileReader(FILE_PATH));
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-        jParser = new JsonParser();
-        jTree = jParser.parse(jReader);
-        jObject = jTree.getAsJsonObject();
-
-        kP = jObject.get("pid.kP").getAsDouble();
-        kI = jObject.get("pid.kI").getAsDouble();
-        kD = jObject.get("pid.kD").getAsDouble();
-        kF = jObject.get("pid.kF").getAsDouble();
-    }
   
 }

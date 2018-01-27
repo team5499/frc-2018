@@ -45,7 +45,11 @@ public class PID {
         return talon.getClosedLoopError(PID_LOOP);
     }
 
-    public void resetEncoder() {
+    public void reset() {
+        resetEncoder();
+    }
+
+    private void resetEncoder() {
         talon.setSelectedSensorPosition(0, PID_LOOP, Reference.mTimeout);
     }
 

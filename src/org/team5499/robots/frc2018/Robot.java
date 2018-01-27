@@ -18,14 +18,16 @@ public class Robot extends TimedRobot {
     public Robot() {
         operatorController = new OperatorController();
         autoController = new AutoController();
-        super.setPeriod(Reference.TIMED_INTERVAL);
+        setInterval(Reference.TIMED_INTERVAL); // set update interval
+        Subsystems.json.updateVariables();
     }
 
     @Override
     public void robotInit() {
-        Subsystems.leftPID.resetEncoder();
-        Subsystems.rightPID.resetEncoder();
-        Reference.updatePIDConstants();
+        Subsystems.leftPID.reset();
+        Subsystems.rightPID.reset();
+        Subsystems.gyro.reset();
+        Subsystems.json.updateVariables();
     }
 
     @Override
@@ -40,17 +42,19 @@ public class Robot extends TimedRobot {
     
 	@Override
 	public void disabledPeriodic() {
-        Subsystems.leftPID.resetEncoder();
-        Subsystems.rightPID.resetEncoder();
-        Reference.updatePIDConstants();
+        Subsystems.leftPID.reset();
+        Subsystems.rightPID.reset();
+        Subsystems.json.updateVariables();
+        setInterval(Reference.TIMED_INTERVAL);
     }
 
     @Override
     public void autonomousInit(){
         String data = DriverStation.getInstance().getGameSpecificMessage();
         autoController.loadGameData(data);
-        Subsystems.leftPID.resetEncoder();
-        Subsystems.rightPID.resetEncoder();
+        operatorController.loadGameData(data);
+        Subsystems.leftPID.reset();
+        Subsystems.rightPID.reset();
         autoController.start();
     }
 
@@ -77,6 +81,10 @@ public class Robot extends TimedRobot {
     @Override
     public void testPeriodic() {
 
+    }
+
+    public void setInterval(double seconds) {
+        super.setPeriod(seconds);
     }
 
 }

@@ -14,8 +14,9 @@ public class Inputs {
         CONTROLLER
     }
 
-    // do we need this?
-    public enum CodriverControlMethod{}
+    public enum CodriverControlMethod{
+        CONTROLLER
+    }
 
     private DriverControlMethod currentMethod;
 

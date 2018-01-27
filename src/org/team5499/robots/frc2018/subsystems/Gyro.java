@@ -39,5 +39,9 @@ public class Gyro {
         return ypr[2];
     }
 
+    public void reset() {
+        Hardware.pigeon.setYaw(0, Reference.mTimeout);
+    }
+
     
 }

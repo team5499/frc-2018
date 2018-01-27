@@ -7,8 +7,11 @@ import org.team5499.robots.frc2018.subsystems.Inputs.DriverControlMethod;;
 
 public class OperatorController extends BaseController {
 
+    private String data;
+
     public OperatorController() {
         super();
+        data = "";
     }
 
     @Override
@@ -32,6 +35,11 @@ public class OperatorController extends BaseController {
         // more code
         Subsystems.intake.intake(Subsystems.inputs.getIntake());
         Subsystems.intake.setArm(Subsystems.inputs.getArm());
+    }
+
+    @Override 
+    public void loadGameData(String data) {
+        this.data = data;
     }
 
 }

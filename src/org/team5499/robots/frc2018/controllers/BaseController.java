@@ -8,4 +8,6 @@ public abstract class BaseController {
 
     public abstract void handle();
 
+    public abstract void loadGameData(String data);
+
 }
