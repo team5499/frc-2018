@@ -15,18 +15,19 @@ public class Inputs {
     }
 
     public enum CodriverControlMethod{
-        CONTROLLER
+        CONTROLLER,
+        JOYSTICK
     }
 
     private DriverControlMethod currentMethod;
 
     private XboxController driver, codriver;
     private Joystick wheel, throttle;
+    private Joystick codriverJoystick;
 
 
     public Inputs() {
-        currentMethod = Reference.DRIVER_CONTROL_METHOD;
-        switch(currentMethod) {
+        switch(Reference.DRIVER_CONTROL_METHOD) {
             case WHEEL:
                 wheel = new Joystick(Reference.WHEEL_PORT);
                 throttle = new Joystick(Reference.THROTTLE_PORT);
@@ -35,7 +36,15 @@ public class Inputs {
                 driver = new XboxController(Reference.DRIVER_PORT);
                 break;
         }
-        codriver = new XboxController(Reference.CODRIVER_PORT);
+
+        switch(Reference.CODRIVER_CONTROL_METHOD) {
+            case CONTROLLER:
+                codriver = new XboxController(Reference.CODRIVER_PORT);
+                break;
+            case JOYSTICK:
+                codriverJoystick = new Joystick(Reference.CODRIVER_JOYSTICK_PORT);
+                break;
+        }
     }
 
     public double getLeftStick() {
