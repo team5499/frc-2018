@@ -1,38 +1,46 @@
-package org.team5499.robots.frc2018;
+package org.team5499.robots.frc2018.subsystems;
 
 import java.util.Scanner;
+import java.io.IOException;
+import java.lang.Runnable;
+import java.lang.Thread;
 import org.glassfish.tyrus.server.Server;
 import org.glassfish.tyrus.container.grizzly.server.GrizzlyServerContainer;
-
-import java.io.IOException;
 import javax.websocket.*;
 import javax.websocket.server.*;
 
-public class Dashboard {
+public class Dashboard implements Runnable{
+    private Thread t;
     private org.glassfish.tyrus.server.Server server;
     private boolean isRunning;
     public Dashboard() {
         server = new org.glassfish.tyrus.server.Server("roborio-5499-frc.local", 5803, "/dash", null, Endpoint.class);
         isRunning = false;
     }
-    public void start() {
+
+    //Possibly join main thread as a blocking function?
+    @Override
+    public void run() {
         System.out.println("Starting the server...");
         try {
             server.start();
+            isRunning = true;
+            Thread.currentThread().join();
+            return;
         } catch(Exception e) {
-            System.out.println("Error starting WS server:");
+            System.out.println("Error starting/stopping WS server:");
             e.printStackTrace();
             return;
         }
-        isRunning = true;
+    }
+    public void start() {
+        if(t == null) {
+            t = new Thread(this, "websockets_server_thread");
+            t.start();
+        }
     }
     public void stop() {
-        if(!isRunning) {
-            System.out.println("Server not running!");
-            return;
-        }
-        System.out.println("Stopping the server...");
-        server.stop();
+        t.interrupt();
     }
 }
 
