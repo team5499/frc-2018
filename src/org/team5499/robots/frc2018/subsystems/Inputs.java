@@ -48,11 +48,15 @@ public class Inputs {
     }
 
     public double getLeftStick() {
-        return driver.getY(Hand.kLeft);
+        if(Math.abs(driver.getY(Hand.kLeft)) > Reference.JOYSTICK_DEADZONE)
+            return driver.getY(Hand.kLeft);
+        else return 0;
     }
 
     public double getRightStick() {
-        return driver.getY(Hand.kRight);
+        if(Math.abs(driver.getY(Hand.kRight)) > Reference.JOYSTICK_DEADZONE)
+            return driver.getY(Hand.kRight);
+        else return 0;
     }
 
     public double isSlow() {

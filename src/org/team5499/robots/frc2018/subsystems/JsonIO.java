@@ -25,20 +25,26 @@ public class JsonIO {
             jReader = new JsonReader(reader);
             jParser = new JsonParser();
         } catch(Exception e) {
-            System.err.println("ERROR: Could not read Json file at location: " + FILE_PATH);
+            System.err.println("ERROR: Could not find Json file at location: " + FILE_PATH);
             e.printStackTrace();
         }
 
     }
 
     public void updateVariables(){
-        JsonElement jElement = jParser.parse(jReader);
-        JsonObject jObject = jElement.getAsJsonObject();
-        Reference.kP = jObject.get("pid.kP").getAsDouble();
-        Reference.kI = jObject.get("pid.kI").getAsDouble();
-        Reference.kD = jObject.get("pid.kD").getAsDouble();
-        Reference.kF = jObject.get("pid.kF").getAsDouble();
-        Reference.TIMED_INTERVAL = jObject.get("system.updateInterval").getAsDouble();
+        JsonElement jElement = null;
+        JsonObject jObject = null;
+        try {
+            jElement = jParser.parse(jReader);
+            jObject = jElement.getAsJsonObject();
+            Reference.kP = jObject.get("pid.kP").getAsDouble();
+            Reference.kI = jObject.get("pid.kI").getAsDouble();
+            Reference.kD = jObject.get("pid.kD").getAsDouble();
+            Reference.kF = jObject.get("pid.kF").getAsDouble();
+            Reference.TIMED_INTERVAL = jObject.get("system.updateInterval").getAsDouble();
+        } catch(IllegalStateException | NullPointerException e) {
+            System.out.println("ERROR: Json file not found!");
+        }
         // System.out.println("kP: " + Reference.kP);
     }
 

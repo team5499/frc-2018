@@ -1,5 +1,6 @@
 package org.team5499.robots.frc2018.controllers;
 
+import org.team5499.robots.frc2018.commands.NothingCommand;
 import org.team5499.robots.frc2018.commands.Routine;
 import org.team5499.robots.frc2018.commands.pid.*;
 
@@ -13,7 +14,9 @@ public class AutoController extends BaseController {
     public AutoController() {
         super();
         test = new Routine();
-        test.addCommand(new DriveCommand(10, 10));
+        //test.addCommand(new NothingCommand(2));
+        test.addCommand(new DriveCommand(1, 10));
+        currentRoutine = test;
     }
 
     @Override
@@ -30,7 +33,6 @@ public class AutoController extends BaseController {
     public void loadGameData(String data) { 
         this.data = data;
         System.out.println("Data loaded: " + data);
-        System.out.println("Close plate: " + (data.charAt(0) == 'L' ? "Left" : "Right"));
     }
 
 }

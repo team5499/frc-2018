@@ -19,7 +19,7 @@ public class Robot extends TimedRobot {
         operatorController = new OperatorController();
         autoController = new AutoController();
         setInterval(Reference.TIMED_INTERVAL); // set update interval
-        Subsystems.json.updateVariables();
+        // Subsystems.json.updateVariables();
     }
 
     @Override
@@ -32,6 +32,11 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
+        /*
+        System.out.print("Left Encoder: " + Subsystems.leftPID.getEncoderData());
+        System.out.print(", Right Encoder: " + Subsystems.rightPID.getEncoderData());
+        System.out.println(", Angle: " + Subsystems.gyro.getYaw());
+        */
         
     }
 
@@ -42,9 +47,9 @@ public class Robot extends TimedRobot {
     
 	@Override
 	public void disabledPeriodic() {
-        Subsystems.leftPID.reset();
-        Subsystems.rightPID.reset();
-        Subsystems.json.updateVariables();
+        // Subsystems.leftPID.reset();
+        // Subsystems.rightPID.reset();
+        // Subsystems.json.updateVariables();
         setInterval(Reference.TIMED_INTERVAL);
     }
 
@@ -55,6 +60,7 @@ public class Robot extends TimedRobot {
         operatorController.loadGameData(data);
         Subsystems.leftPID.reset();
         Subsystems.rightPID.reset();
+        Subsystems.gyro.reset();
         autoController.start();
     }
 
