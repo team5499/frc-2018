@@ -27,12 +27,12 @@ public class Drivetrain {
 
     /**
      * Driving command based on position (uses encoders to drive to a setpoint)
-     */
+     */ 
     public void pDrive(double leftPos, double rightPos) {
         Hardware.left1.set(ControlMode.Position, leftPos);
         Hardware.right1.set(ControlMode.Position, rightPos);
     }
-    
+
     /**
      * stops drivetrain
      */

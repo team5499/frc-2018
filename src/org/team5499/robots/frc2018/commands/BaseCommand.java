@@ -6,19 +6,21 @@ public abstract class BaseCommand {
 
     private double timeout;
     private double startTime;
+    private Timer timer;
 
     public BaseCommand(double to) {
         timeout = to;
+        timer = new Timer();
     }
 
     public void start() {
-        startTime = Timer.getFPGATimestamp();
+        timer.start();
     }
 
     public abstract void handle();
 
     public boolean isFinished() {
-        return (timeout < Timer.getFPGATimestamp() - startTime);
+        return (timer.get() >= timeout ? true : false);
     }
 
     public abstract void reset();

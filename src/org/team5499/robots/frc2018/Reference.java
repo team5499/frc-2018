@@ -53,7 +53,7 @@ public class Reference {
     public static final int DRIVER_PORT = 0;
     public static final int CODRIVER_PORT = 1;
     public static final int WHEEL_PORT = 2;
-    public static final int THROTTLE_PORT = 3;
+    public static final int THROTTLE_PORT = 3; 
     public static final int CODRIVER_JOYSTICK_PORT = 4;
 
     // PID constants 

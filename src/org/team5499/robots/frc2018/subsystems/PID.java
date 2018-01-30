@@ -19,7 +19,7 @@ public class PID {
 
     private void talonConfig(double p, double i, double d, double f, double maxOut) {
         talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, PID_LOOP, Reference.mTimeout);
-        // talon.configRemoteFeedbackFilter(Reference.PIGEON_PORT, RemoteSensorSource.Pigeon_Yaw, 0, Reference.mTimeout);
+        talon.configRemoteFeedbackFilter(Reference.PIGEON_PORT, RemoteSensorSource.Pigeon_Yaw, 0, Reference.mTimeout);
         talon.configNominalOutputForward(0, Reference.mTimeout);
         talon.configNominalOutputReverse(0, Reference.mTimeout);
         talon.configPeakOutputForward(maxOut, Reference.mTimeout);

@@ -14,8 +14,8 @@ public class AutoController extends BaseController {
     public AutoController() {
         super();
         test = new Routine();
-        //test.addCommand(new NothingCommand(2));
-        test.addCommand(new DriveCommand(1, 10));
+        // test.addCommand(new NothingCommand(2));
+        test.addCommand(new DriveCommand(2, 10));
         currentRoutine = test;
     }
 
@@ -27,6 +27,7 @@ public class AutoController extends BaseController {
 
     @Override
     public void handle() {
+        // System.out.println("Test");
         currentRoutine.handle();
     }
 

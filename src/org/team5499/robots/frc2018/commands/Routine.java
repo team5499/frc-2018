@@ -21,10 +21,14 @@ public class Routine {
     }
 
     public void start() {
+        // System.out.println("Command started");
+        currentCommand = commands.get(0);
         currentCommand.start();
     }
 
     public void handle() {
+        // System.out.println(currentCommand.isFinished());
+        
         if(currentCommand.isFinished()) {
             Subsystems.drivetrain.stop();
             if(!advanceRoutine()) return;
@@ -43,6 +47,10 @@ public class Routine {
 
     public void reset() {
         stepNumber = 0;
+        Subsystems.leftPID.reset();
+        Subsystems.rightPID.reset();
+        commands.forEach((c) -> {c.reset();});
+        currentCommand = commands.get(0);
     }
 
 

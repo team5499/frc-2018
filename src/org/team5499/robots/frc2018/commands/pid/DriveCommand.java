@@ -18,18 +18,24 @@ public class DriveCommand extends BaseCommand {
 
     @Override
     public void start() {
+        super.start();
         startAngle = Subsystems.gyro.getYaw();
     }
 
     @Override
     public void handle() {
-        System.out.println("Test");
+        // System.out.println("Test");
         Subsystems.drivetrain.drive(0.4, 0.4);
     }
 
     @Override
     public void reset() {
 
+    }
+
+    @Override
+    public boolean isFinished() {
+        return super.isFinished();
     }
 
 }
