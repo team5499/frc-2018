@@ -9,9 +9,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 public class Drivetrain {
     
     public Drivetrain() {
-        Hardware.left2.follow(Hardware.left1);
         Hardware.right1.setInverted(true);
         Hardware.right2.setInverted(true);
+        Hardware.left2.follow(Hardware.left1);
         Hardware.right2.follow(Hardware.right1);
     }
 
@@ -27,7 +27,9 @@ public class Drivetrain {
 
     /**
      * Driving command based on position (uses encoders to drive to a setpoint)
-     */ 
+     * @param leftPos set point for the left side motors
+     * @param rightPos set point for the right side motors
+     */
     public void pDrive(double leftPos, double rightPos) {
         Hardware.left1.set(ControlMode.Position, leftPos);
         Hardware.right1.set(ControlMode.Position, rightPos);

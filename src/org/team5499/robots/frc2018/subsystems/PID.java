@@ -43,6 +43,10 @@ public class PID {
         talon.configPeakOutputReverse(-maxOut, Reference.mTimeout);
     }
 
+    /**
+     * gets error from the PID loop
+     * @return error value as double
+     */
     public double getError() {
         return talon.getClosedLoopError(PID_LOOP);
     }

@@ -47,9 +47,7 @@ public class Routine {
 
     public void reset() {
         stepNumber = 0;
-        Subsystems.leftPID.reset();
-        Subsystems.rightPID.reset();
-        commands.forEach((c) -> {c.reset();});
+        commands.forEach((command) -> {command.reset();});
         currentCommand = commands.get(0);
     }
 
