@@ -10,7 +10,7 @@ import com.ctre.phoenix.ParamEnum;
 public class PID {
     
     private TalonSRX talon;
-    private static final int PID_LOOP = 0;
+    private final int PID_LOOP = 0;
     
     public PID(TalonSRX talon, double p, double i, double d, double f, double maxOut) {
         this.talon = talon;
