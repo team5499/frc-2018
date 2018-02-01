@@ -3,6 +3,7 @@ package org.team5499.robots.frc2018.controllers;
 import org.team5499.robots.frc2018.commands.NothingCommand;
 import org.team5499.robots.frc2018.commands.Routine;
 import org.team5499.robots.frc2018.commands.pid.*;
+import org.team5499.robots.frc2018.commands.timed.TimedDriveCommand;
 
 public class AutoController extends BaseController {
 
@@ -13,9 +14,16 @@ public class AutoController extends BaseController {
 
     public AutoController() {
         super();
+
         test = new Routine();
-        // test.addCommand(new NothingCommand(2));
-        test.addCommand(new DriveCommand(2, 10));
+        center = new Routine();
+        left = new Routine();
+        right = new Routine();
+
+        test.addCommand(new NothingCommand(1));
+        test.addCommand(new TimedDriveCommand(2, 0.2));
+        test.addCommand(new TimedDriveCommand(2, -0.2));
+        
         currentRoutine = test;
     }
 
@@ -31,6 +39,7 @@ public class AutoController extends BaseController {
         currentRoutine.handle();
     }
 
+    @Override
     public void loadGameData(String data) { 
         this.data = data;
         System.out.println("Data loaded: " + data);

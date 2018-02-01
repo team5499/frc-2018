@@ -23,6 +23,9 @@ public abstract class BaseCommand {
         return (timer.get() >= timeout ? true : false);
     }
 
-    public abstract void reset();
+    public void reset() {
+        timer.stop();
+        timer.reset();
+    }
 
 }

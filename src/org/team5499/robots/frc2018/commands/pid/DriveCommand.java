@@ -30,7 +30,7 @@ public class DriveCommand extends BaseCommand {
 
     @Override
     public void reset() {
-
+        super.reset();
     }
 
     @Override

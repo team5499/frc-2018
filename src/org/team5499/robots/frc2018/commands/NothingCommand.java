@@ -9,8 +9,4 @@ public class NothingCommand extends BaseCommand {
     @Override
     public void handle() {}
 
-    @Override
-    public void reset(){}
-
-
 }
