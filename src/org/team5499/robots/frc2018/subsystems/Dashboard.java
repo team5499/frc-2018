@@ -9,22 +9,17 @@ import org.glassfish.tyrus.container.grizzly.server.GrizzlyServerContainer;
 import javax.websocket.*;
 import javax.websocket.server.*;
 
-public class Dashboard implements Runnable{
-    private Thread t;
+public class Dashboard{
     private org.glassfish.tyrus.server.Server server;
     private boolean isRunning;
     public Dashboard() {
         server = new org.glassfish.tyrus.server.Server("roborio-5499-frc.local", 5803, "/dash", null, Endpoint.class);
         isRunning = false;
     }
-
-    //Possibly join main thread as a blocking function?
-    @Override
-    public void run() {
+    public void start() {
         System.out.println("Starting the server...");
         try {
             server.start();
-            isRunning = true;
             Thread.currentThread().join();
             return;
         } catch(Exception e) {
@@ -33,14 +28,8 @@ public class Dashboard implements Runnable{
             return;
         }
     }
-    public void start() {
-        if(t == null) {
-            t = new Thread(this, "websockets_server_thread");
-            t.start();
-        }
-    }
     public void stop() {
-        t.interrupt();
+        
     }
 }
 

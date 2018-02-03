@@ -13,7 +13,8 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         //Subsystems.dash.start();
-        Subsystems.dash_test.start();
+        Subsystems.dash.start();
+        System.out.println("~TEST~");
     }
 
     @Override
