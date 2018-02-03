@@ -3,7 +3,7 @@ var echo = document.getElementById("echo");
 var out = document.getElementById("out");
 
 echo.onclick = function() {
-    var exampleSocket = new WebSocket("ws://roborio-5499-frc.local:5803/dash/echo");
+    var exampleSocket = new WebSocket("ws://roborio-5499-frc.local:5804/dashboard/echo");
     exampleSocket.onopen = function (event) {
         console.log("connected!");
         exampleSocket.send("Here's some text that the server is urgently awaiting!");
