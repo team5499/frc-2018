@@ -1,6 +1,8 @@
-package org.team5499.robots.frc2018.subsystems;
+package org.team5499.robots.frc2018.dashboard;
 
 import java.io.IOException;
+import java.lang.Thread;
+import java.util.HashMap;
 import javax.websocket.*;
 import javax.websocket.server.*;
 
@@ -11,8 +13,13 @@ import javax.websocket.server.*;
 * "EchoChamber" is the name of the package
 * and "echo" is the address to access this class from the server
 */
-@ServerEndpoint(value = "/echo")
+@ServerEndpoint(value = "/main")
 public class Endpoint {
+    private HashMap<String,Thread> threads;
+    public Endpoint() {
+        System.out.println("Initializing endpoing class");
+        threads = new HashMap<String,Thread>();
+    }
    /**
     * @OnOpen allows us to intercept the creation of a new session.
     * The session class allows us to send data to the user.
@@ -22,11 +29,9 @@ public class Endpoint {
    @OnOpen
    public void onOpen(Session session){
        System.out.println(session.getId() + " has opened a connection"); 
-       try {
-           session.getBasicRemote().sendText("Connection Established");
-       } catch (IOException ex) {
-           ex.printStackTrace();
-       }
+       Thread handle_thread = new Thread(new MessageThread(session));
+       threads.put(session.getId(), handle_thread);
+       handle_thread.start();
    }
 
    /**
@@ -36,11 +41,6 @@ public class Endpoint {
    @OnMessage
    public void onMessage(String message, Session session){
        System.out.println("Message from " + session.getId() + ": " + message);
-       try {
-           session.getBasicRemote().sendText(message);
-       } catch (IOException ex) {
-           ex.printStackTrace();
-       }
    }
 
    /**
@@ -50,6 +50,10 @@ public class Endpoint {
     */
    @OnClose
    public void onClose(Session session){
-       System.out.println("Session " +session.getId()+" has ended");
+       System.out.println("Attempting to terminate thread for " + session.getId());
+       Thread term = (Thread) threads.get(session.getId());
+       term.interrupt();
+       threads.remove(session.getId());
+       System.out.println("Session " + session.getId() + " has ended");
    }
 }
