@@ -19,5 +19,9 @@ public class Climber {
         
     }
 
+    public void stop() {
+        
+    }
+
 
 }

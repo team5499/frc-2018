@@ -11,8 +11,8 @@ public class Subsystems {
     public static Climber climber = new Climber();
     public static Position position = new Position();
     public static Gyro gyro = new Gyro();
-    public static PID leftPID = new PID(Hardware.left1, Reference.kP, Reference.kI, Reference.kD, Reference.kF, Reference.MAX_PID_OUTPUT);
-    public static PID rightPID = new PID(Hardware.right1, Reference.kP, Reference.kD, Reference.kD, Reference.kF, Reference.MAX_PID_OUTPUT);
+    public static PID leftPID = new PID(Hardware.left1, Reference.kP, Reference.kI, Reference.kD, Reference.kF, Reference.MAX_PID_OUTPUT, true);
+    public static PID rightPID = new PID(Hardware.right1, Reference.kP, Reference.kD, Reference.kD, Reference.kF, Reference.MAX_PID_OUTPUT, false);
     public static JsonIO json = new JsonIO();
 
 }

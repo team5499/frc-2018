@@ -84,17 +84,22 @@ public class Inputs {
     }
 
     public double getArm() {
-        return codriver.getY(Hand.kRight) * Reference.ARM_SPEED;
+        double speed = codriver.getY(Hand.kLeft) * Reference.ARM_SPEED;
+        if(speed > 0) return -speed; // up
+        else if(speed < 0) return (speed * 0.1); // down
+        else return 0;
+    }
+
+    public double getB() {
+        return (driver.getBButton() ? 1.0 : 0);
     }
 
     public double getIntake() {
-        if(codriver.getAButton()) {
-            return Reference.FAST_INTAKE;
-        } else if(codriver.getBumper(Hand.kLeft)) {
+        if(codriver.getBumper(Hand.kRight)) {
             return Reference.INTAKE_SPEED;
-        } else if(codriver.getTriggerAxis(Hand.kLeft) > 0.05) {
-            return Reference.SLOW_INTAKE;
         } else if(codriver.getTriggerAxis(Hand.kRight) > 0.05) {
+            return Reference.SLOW_INTAKE;
+        } else if(codriver.getBumper(Hand.kLeft)) {
             return Reference.OUTTAKE_SPEED;
         } else return 0;
     }

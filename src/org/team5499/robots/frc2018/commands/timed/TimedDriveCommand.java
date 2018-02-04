@@ -14,7 +14,7 @@ public class TimedDriveCommand extends BaseCommand {
 
     @Override
     public void handle() {
-        Subsystems.drivetrain.drive(speed, speed);
+        Subsystems.drivetrain.drive(-speed, -speed);
     }
 
 }

@@ -8,16 +8,16 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 public class Intake {
 
     public Intake() {
-        Hardware.rightIntake.setInverted(true);
+        // Hardware.rightIntake.setInverted(true);
+        Hardware.rightIntake.follow(Hardware.leftIntake);
     }
 
     public void setArm(double speed) {
         Hardware.arm.set(ControlMode.PercentOutput, speed);
     }
-
+    
     public void intake(double speed) {
         Hardware.leftIntake.set(ControlMode.PercentOutput, speed);
-        Hardware.rightIntake.set(ControlMode.PercentOutput, speed);
     }
 
     public void stop() {

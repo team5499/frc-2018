@@ -1,9 +1,9 @@
 package org.team5499.robots.frc2018.controllers;
 
-import org.team5499.robots.frc2018.commands.NothingCommand;
-import org.team5499.robots.frc2018.commands.Routine;
+import org.team5499.robots.frc2018.commands.*;
 import org.team5499.robots.frc2018.commands.pid.*;
-import org.team5499.robots.frc2018.commands.timed.TimedDriveCommand;
+import org.team5499.robots.frc2018.commands.timed.*;
+import org.team5499.robots.frc2018.commands.timed.IntakeCommand.Direction;
 
 public class AutoController extends BaseController {
 
@@ -21,8 +21,11 @@ public class AutoController extends BaseController {
         right = new Routine();
 
         test.addCommand(new NothingCommand(1));
-        test.addCommand(new TimedDriveCommand(2, 0.2));
-        test.addCommand(new TimedDriveCommand(2, -0.2));
+        // test.addCommand(new DriveCommand(10, 1028));
+        // test.addCommand(new TimedDriveCommand(2, 0.2));
+        // test.addCommand(new IntakeCommand(2, 0.5, Direction.INTAKE));
+        test.addCommand(new ArmCommand(1, org.team5499.robots.frc2018.commands.timed.ArmCommand.Direction.DOWN));
+        test.addCommand(new IntakeCommand(1, 0.5, org.team5499.robots.frc2018.commands.timed.IntakeCommand.Direction.EXAUST));
         
         currentRoutine = test;
     }
@@ -35,7 +38,6 @@ public class AutoController extends BaseController {
 
     @Override
     public void handle() {
-        // System.out.println("Test");
         currentRoutine.handle();
     }
 
@@ -43,6 +45,10 @@ public class AutoController extends BaseController {
     public void loadGameData(String data) { 
         this.data = data;
         System.out.println("Data loaded: " + data);
+    }
+
+    public void reset() {
+        test.reset();
     }
 
 }

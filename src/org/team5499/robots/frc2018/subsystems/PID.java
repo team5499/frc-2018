@@ -12,18 +12,21 @@ public class PID {
     private TalonSRX talon;
     private final int PID_LOOP = 0;
     
-    public PID(TalonSRX talon, double p, double i, double d, double f, double maxOut) {
+    public PID(TalonSRX talon, double p, double i, double d, double f, double maxOut, boolean inverted) {
         this.talon = talon;
-        talonConfig(p, i, d, f, maxOut);
+        talonConfig(p, i, d, f, maxOut, inverted);
     }
 
-    private void talonConfig(double p, double i, double d, double f, double maxOut) {
+    private void talonConfig(double p, double i, double d, double f, double maxOut, boolean inverted) {
         talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, PID_LOOP, Reference.mTimeout);
-        talon.configRemoteFeedbackFilter(Reference.PIGEON_PORT, RemoteSensorSource.Pigeon_Yaw, 0, Reference.mTimeout);
-        talon.configNominalOutputForward(0, Reference.mTimeout);
-        talon.configNominalOutputReverse(0, Reference.mTimeout);
+        // talon.configRemoteFeedbackFilter(Reference.PIGEON_PORT, RemoteSensorSource.Pigeon_Yaw, 0, Reference.mTimeout);
+        // talon.configNominalOutputForward(0, Reference.mTimeout);
+        // talon.configNominalOutputReverse(0, Reference.mTimeout);
         talon.configPeakOutputForward(maxOut, Reference.mTimeout);
         talon.configPeakOutputReverse(-maxOut, Reference.mTimeout);
+        // talon.configMotionAcceleration(10, Reference.mTimeout);
+        // talon.configMotionCruiseVelocity(2, Reference.mTimeout);
+        // talon.setSensorPhase(inverted);
 
         talon.config_kP(PID_LOOP, p, Reference.mTimeout);
         talon.config_kI(PID_LOOP, i, Reference.mTimeout);
@@ -39,8 +42,8 @@ public class PID {
     }
 
     public void setMaxOutput(double maxOut) {
-        talon.configPeakOutputForward(maxOut, Reference.mTimeout);
-        talon.configPeakOutputReverse(-maxOut, Reference.mTimeout);
+        //talon.configPeakOutputForward(maxOut, Reference.mTimeout);
+        // talon.configPeakOutputReverse(-maxOut, Reference.mTimeout);
     }
 
     /**

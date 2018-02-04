@@ -18,14 +18,16 @@ public class DriveCommand extends BaseCommand {
 
     @Override
     public void start() {
+        // System.out.println("Command started!");
         super.start();
         startAngle = Subsystems.gyro.getYaw();
     }
 
     @Override
     public void handle() {
-        // System.out.println("Test");
-        Subsystems.drivetrain.drive(0.4, 0.4);
+        Subsystems.drivetrain.pidDrive(-setPoint, -setPoint);
+        System.out.println("Right PID:" + Subsystems.rightPID.getEncoderData());
+        System.out.println("Left PID:" + Subsystems.leftPID.getEncoderData());
     }
 
     @Override

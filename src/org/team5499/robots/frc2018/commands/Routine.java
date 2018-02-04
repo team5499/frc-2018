@@ -31,6 +31,8 @@ public class Routine {
         
         if(currentCommand.isFinished()) {
             Subsystems.drivetrain.stop();
+            Subsystems.intake.stop();
+            Subsystems.climber.stop();
             if(!advanceRoutine()) return;
         } else {
             currentCommand.handle();

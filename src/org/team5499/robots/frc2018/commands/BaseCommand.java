@@ -14,6 +14,7 @@ public abstract class BaseCommand {
     }
 
     public void start() {
+        timer.reset();
         timer.start();
     }
 

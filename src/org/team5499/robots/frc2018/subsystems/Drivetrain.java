@@ -30,7 +30,7 @@ public class Drivetrain {
      * @param leftPos set point for the left side motors
      * @param rightPos set point for the right side motors
      */
-    public void pDrive(double leftPos, double rightPos) {
+    public void pidDrive(double leftPos, double rightPos) {
         Hardware.left1.set(ControlMode.Position, leftPos);
         Hardware.right1.set(ControlMode.Position, rightPos);
     }
