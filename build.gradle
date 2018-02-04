@@ -156,7 +156,7 @@ task deploy_dashboard {
     }
     exec {
       commandLine 'curl'
-      args '-d', 'action=dashboard', 'http://roborio-5499-frc.local:5800'
+      args '-d', 'action=dashboard', "http://$RoboRIO_target:5800"
     }
   }
 }
