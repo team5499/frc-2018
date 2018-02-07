@@ -8,46 +8,51 @@ import com.ctre.phoenix.ParamEnum;
 
 public class Hardware {
 
-    // drivetrain talons
-    public static TalonSRX left_master_talon = new TalonSRX(Reference.LEFTPID_PORT);
-    public static TalonSRX left_slave_talon = new TalonSRX(Reference.LEFTFOLLOW_PORT);
-    public static TalonSRX right_master_talon = new TalonSRX(Reference.RIGHTPID_PORT);
-    public static TalonSRX right_slave_talon = new TalonSRX(Reference.RIGHTFOLLOW_PORT);
+    // drivetrain
+    public static TalonSRX left_master_talon = new TalonSRX(Reference.LEFT_MASTER_PORT);
+    public static TalonSRX left_slave_talon = new TalonSRX(Reference.LEFT_SLAVE_PORT);
+    public static TalonSRX right_master_talon = new TalonSRX(Reference.RIGHT_MASTER_PORT);
+    public static TalonSRX right_master_talon = new TalonSRX(Reference.RIGHT_SLAVE_PORT);
 
-    // intake talons 
-    public static TalonSRX arm = new TalonSRX(Reference.ARM_PORT);
-    public static TalonSRX rightIntake = new TalonSRX(Reference.RIGHT_INTAKE_PORT);
-    public static TalonSRX leftIntake = new TalonSRX(Reference.LEFT_INTAKE_PORT);
+    // intake 
+    public static TalonSRX arm_talon = new TalonSRX(Reference.ARM_PORT);
+    public static TalonSRX intake_master_talon = new TalonSRX(Reference.LEFT_INTAKE_PORT);
+    public static TalonSRX intake_slave_talon = new TalonSRX(Reference.RIGHT_INTAKE_PORT);
 
-    // climber talons
-    public static TalonSRX climb1 = new TalonSRX(Reference.CLIMBER1_PORT);
-    public static TalonSRX climb2 = new TalonSRX(Reference.CLIMBER2_PORT);
+    // climber
+    public static TalonSRX climb_master_talon = new TalonSRX(Reference.CLIMBER_MASTER_PORT);
+    public static TalonSRX climb_slave_talon = new TalonSRX(Reference.CLIMBER_SLAVE_PORT);
 
     // gyro
     public static PigeonIMU pigeon = new PigeonIMU(Reference.PIGEON_PORT);
 
+    // Hardware setup
     static {
         left_master_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Reference.mTimeout);
         right_master_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Reference.mTimeout);
-        // talon.configRemoteFeedbackFilter(Reference.PIGEON_PORT, RemoteSensorSource.Pigeon_Yaw, 0, Reference.mTimeout);
-        // talon.configNominalOutputForward(0, Reference.mTimeout);
-        // talon.configNominalOutputReverse(0, Reference.mTimeout);
+        
         left_master_talon.configPeakOutputForward(Reference.MAX_PID_OUTPUT, Reference.mTimeout);
         right_master_talon.configPeakOutputForward(Reference.MAX_PID_OUTPUT, Reference.mTimeout);
         left_master_talon.configPeakOutputReverse(-Reference.MAX_PID_OUTPUT, Reference.mTimeout);
         right_master_talon.configPeakOutputReverse(-Reference.MAX_PID_OUTPUT, Reference.mTimeout);
-        // talon.configMotionAcceleration(10, Reference.mTimeout);
-        // talon.configMotionCruiseVelocity(2, Reference.mTimeout);
-        // talon.setSensorPhase(inverted);
 
-        left_master_talon.config_kP(0, p, Reference.mTimeout);
-        right_master_talon.config_kP(0, p, Reference.mTimeout);
-        left_master_talon.config_kI(0, i, Reference.mTimeout);
-        right_master_talon.config_kI(0, i, Reference.mTimeout);
-        left_master_talon.config_kD(0, d, Reference.mTimeout);
-        right_master_talon.config_kD(0, d, Reference.mTimeout);
-        left_master_talon.config_kF(0, f, Reference.mTimeout);
-        right_master_talon.config_kF(0, f, Reference.mTimeout);
+        left_master_talon.config_kP(0, Reference.kP, Reference.mTimeout);
+        right_master_talon.config_kP(0, Reference.kP, Reference.mTimeout);
+        left_master_talon.config_kI(0, Reference.kI, Reference.mTimeout);
+        right_master_talon.config_kI(0, Reference.kI, Reference.mTimeout);
+        left_master_talon.config_kD(0, Reference.kD, Reference.mTimeout);
+        right_master_talon.config_kD(0, Reference.kD, Reference.mTimeout);
+        left_master_talon.config_kF(0, Reference.kF, Reference.mTimeout);
+        right_master_talon.config_kF(0, Reference.kF, Reference.mTimeout);
+
+        Hardware.right_master_talon.setInverted(true);
+        Hardware.right_slave_talon.setInverted(true);
+        Hardware.left_slave_talon.follow(Hardware.left_master_talon);
+        Hardware.right_slave_talon.follow(Hardware.right_master_talon);
+
+        Hardware.climb_slave_talon.follow(Hardware.climb_master_talon); 
+
+        Hardware.intake_slave_talon.follow(Hardware.intake_master_talon);
     }
 
 }

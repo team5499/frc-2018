@@ -8,8 +8,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
-import org.team5499.robots.frc2018.subsystems.Inputs.CodriverControlMethod;
-import org.team5499.robots.frc2018.subsystems.Inputs.DriverControlMethod;
+import org.team5499.robots.frc2018.controllers.OperatorController.CodriverControlMethod;
+import org.team5499.robots.frc2018.controllers.OperatorController.DriverControlMethod;
 
 public class Reference {
 
@@ -30,10 +30,10 @@ public class Reference {
     public static final double ARM_SPEED = 1.0;
 
     // drivetrain talons
-    public static final int LEFTPID_PORT = 1;
-    public static final int LEFTFOLLOW_PORT = 2;
-    public static final int RIGHTPID_PORT = 9;
-    public static final int RIGHTFOLLOW_PORT = 8;
+    public static final int LEFT_MASTER_PORT = 1;
+    public static final int LEFT_SLAVE_PORT = 2;
+    public static final int RIGHT_MASTER_PORT = 9;
+    public static final int RIGHT_SLAVE_PORT = 8;
     
     // intake ports
     public static final int RIGHT_INTAKE_PORT = 6;
@@ -43,8 +43,8 @@ public class Reference {
     public static final int PIGEON_PORT = 10;
 
     // climber ports
-    public static final int CLIMBER1_PORT = 7;
-    public static final int CLIMBER2_PORT = 5;
+    public static final int CLIMBER_MASTER_PORT = 7;
+    public static final int CLIMBER_SLAVE_PORT = 5;
 
     // arm ports
     public static final int ARM_PORT = 3;
