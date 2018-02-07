@@ -15,45 +15,43 @@ import javax.websocket.server.*;
 */
 @ServerEndpoint(value = "/main")
 public class Endpoint {
-    private HashMap<String,Thread> threads;
-    public Endpoint() {
-        System.out.println("Initializing endpoing class");
-        threads = new HashMap<String,Thread>();
-    }
-   /**
+    /**
     * @OnOpen allows us to intercept the creation of a new session.
     * The session class allows us to send data to the user.
     * In the method onOpen, we'll let the user know that the handshake was 
     * successful.
     */
-   @OnOpen
-   public void onOpen(Session session){
+    @OnOpen
+    public void onOpen(Session session) {
        System.out.println(session.getId() + " has opened a connection"); 
-       Thread handle_thread = new Thread(new MessageThread(session));
-       threads.put(session.getId(), handle_thread);
-       handle_thread.start();
-   }
+       Dashboard.sessions.put(session.getId(), session);
+       updateSessions();
+    }
 
    /**
     * When a user sends a message to the server, this method will intercept the message
     * and allow us to react to it. For now the message is read as a String.
     */
-   @OnMessage
-   public void onMessage(String message, Session session){
+    @OnMessage
+    public void onMessage(String message, Session session) {
        System.out.println("Message from " + session.getId() + ": " + message);
-   }
+    }
 
    /**
     * The user closes the connection.
     * 
     * Note: you can't send messages to the client from this method
     */
-   @OnClose
-   public void onClose(Session session){
-       System.out.println("Attempting to terminate thread for " + session.getId());
-       Thread term = (Thread) threads.get(session.getId());
-       term.interrupt();
-       threads.remove(session.getId());
-       System.out.println("Session " + session.getId() + " has ended");
-   }
+    @OnClose
+    public void onClose(Session session) {
+        System.out.println("Attempting to terminate thread for " + session.getId());
+        Dashboard.sessions.remove(session.getId());
+        System.out.println("Session " + session.getId() + " has ended");
+    }
+
+    private void updateSessions() {
+        synchronized(Dashboard.sessions) {
+            Dashboard.mt.updateSessions(Dashboard.sessions.values());
+        }
+    }
 }

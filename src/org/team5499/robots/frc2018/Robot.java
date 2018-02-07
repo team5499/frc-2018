@@ -17,6 +17,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         //Subsystems.dash.start();
         Dashboard.runServer();
+        Dashboard.setValue("battvoltage", "12.0");
         System.out.println("~TEST~");
     }
 

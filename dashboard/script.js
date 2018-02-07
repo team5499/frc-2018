@@ -1,12 +1,12 @@
 "use strict";
-var echo = document.getElementById("echo");
+goog.require('proto.dashboard.DashPacket');
+var connect = document.getElementById("connect");
 var out = document.getElementById("out");
 
-echo.onclick = function() {
-    var exampleSocket = new WebSocket("ws://roborio-5499-frc.local:5804/dashboard/echo");
+connect.onclick = function() {
+    var exampleSocket = new WebSocket("ws://roborio-5499-frc.local:5804/dashboard/main");
     exampleSocket.onopen = function (event) {
         console.log("connected!");
-        exampleSocket.send("Here's some text that the server is urgently awaiting!");
         return false;
     };
     exampleSocket.onerror = function (event) {
