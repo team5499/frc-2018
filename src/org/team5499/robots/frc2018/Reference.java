@@ -30,10 +30,10 @@ public class Reference {
     public static final double ARM_SPEED = 1.0;
 
     // drivetrain talons
-    public static final int LEFT1_PORT = 1;
-    public static final int LEFT2_PORT = 2;
-    public static final int RIGHT1_PORT = 9;
-    public static final int RIGHT2_PORT = 8;
+    public static final int LEFTPID_PORT = 1;
+    public static final int LEFTFOLLOW_PORT = 2;
+    public static final int RIGHTPID_PORT = 9;
+    public static final int RIGHTFOLLOW_PORT = 8;
     
     // intake ports
     public static final int RIGHT_INTAKE_PORT = 6;
@@ -58,11 +58,11 @@ public class Reference {
 
     // PID constants 
     public static double ANGLE_TOLERANCE = 1.0;
-    public static double ANGLE_CORRECTION = 30;
-    public static double MAX_PID_OUTPUT = 1;
+    public static double ANGLE_CORRECTION = 30.0;
+    public static double MAX_PID_OUTPUT = 1.0;
     public static double kP = 0.1;
-    public static double kI = 0d;
-    public static double kD = 0d;
+    public static double kI = 0.0;
+    public static double kD = 0.0;
     public static double kF = 0.1;
   
 }
