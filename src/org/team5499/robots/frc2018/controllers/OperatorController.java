@@ -6,8 +6,21 @@ import org.team5499.robots.frc2018.subsystems.Subsystems;
 import org.team5499.robots.frc2018.subsystems.Inputs.DriverControlMethod;;
 
 public class OperatorController extends BaseController {
+    public enum DriverControlMethod {
+        WHEEL,
+        CONTROLLER
+    }
+
+    public enum CodriverControlMethod{
+        CONTROLLER,
+        JOYSTICK
+    }
 
     private String data;
+    private DriverControlMethod currentMethod;
+    private XboxController driver, codriver;
+    private Joystick wheel, throttle;
+    private Joystick codriverJoystick;
 
     public OperatorController() {
         super();
@@ -23,7 +36,12 @@ public class OperatorController extends BaseController {
     public void handle() {
         switch(Reference.DRIVER_CONTROL_METHOD) {
             case CONTROLLER:
-                Subsystems.drivetrain.drive(Subsystems.inputs.getLeftStick() * Subsystems.inputs.isSlow(), Subsystems.inputs.getRightStick() * Subsystems.inputs.isSlow());
+                double left_drive = 0;
+                double right_drive = 0;
+
+
+
+                Subsystems.drivetrain.drive(left_drive, right_drive);
                 break;
             case WHEEL:
                 double throttle = Subsystems.inputs.getThrottle() * Subsystems.inputs.throttleLimiter();

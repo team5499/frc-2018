@@ -7,8 +7,7 @@ import org.team5499.robots.frc2018.Hardware;
 
 public class Climber {
 
-    public Climber() {
-        Hardware.climb2.follow(Hardware.climb1);    
+    public Climber() {   
     }
 
     public void climb(double speed) {

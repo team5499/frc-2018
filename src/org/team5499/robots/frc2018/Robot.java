@@ -16,9 +16,9 @@ public class Robot extends TimedRobot {
     private AutoController autoController;
 
     public Robot() {
+        super.setPeriod(Reference.TIMED_INTERVAL); // set update interval
         operatorController = new OperatorController();
         autoController = new AutoController();
-        setInterval(Reference.TIMED_INTERVAL); // set update interval
     }
 
     @Override
@@ -53,7 +53,6 @@ public class Robot extends TimedRobot {
         // Subsystems.gyro.reset();
         // Subsystems.json.updateVariables();
         autoController.reset();
-        setInterval(Reference.TIMED_INTERVAL);
     }
 
     @Override
@@ -91,10 +90,6 @@ public class Robot extends TimedRobot {
     @Override
     public void testPeriodic() {
 
-    }
-
-    public void setInterval(double seconds) {
-        super.setPeriod(seconds);
     }
 
 }
