@@ -12,7 +12,7 @@ public class Hardware {
     public static TalonSRX left_master_talon = new TalonSRX(Reference.LEFT_MASTER_PORT);
     public static TalonSRX left_slave_talon = new TalonSRX(Reference.LEFT_SLAVE_PORT);
     public static TalonSRX right_master_talon = new TalonSRX(Reference.RIGHT_MASTER_PORT);
-    public static TalonSRX right_master_talon = new TalonSRX(Reference.RIGHT_SLAVE_PORT);
+    public static TalonSRX right_slave_talon = new TalonSRX(Reference.RIGHT_SLAVE_PORT);
 
     // intake 
     public static TalonSRX arm_talon = new TalonSRX(Reference.ARM_PORT);
@@ -28,22 +28,22 @@ public class Hardware {
 
     // Hardware setup
     static {
-        left_master_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Reference.mTimeout);
-        right_master_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Reference.mTimeout);
+        left_master_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+        right_master_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
         
-        left_master_talon.configPeakOutputForward(Reference.MAX_PID_OUTPUT, Reference.mTimeout);
-        right_master_talon.configPeakOutputForward(Reference.MAX_PID_OUTPUT, Reference.mTimeout);
-        left_master_talon.configPeakOutputReverse(-Reference.MAX_PID_OUTPUT, Reference.mTimeout);
-        right_master_talon.configPeakOutputReverse(-Reference.MAX_PID_OUTPUT, Reference.mTimeout);
+        left_master_talon.configPeakOutputForward(Reference.MAX_PID_OUTPUT, 0);
+        right_master_talon.configPeakOutputForward(Reference.MAX_PID_OUTPUT, 0);
+        left_master_talon.configPeakOutputReverse(-Reference.MAX_PID_OUTPUT, 0);
+        right_master_talon.configPeakOutputReverse(-Reference.MAX_PID_OUTPUT, 0);
 
-        left_master_talon.config_kP(0, Reference.kP, Reference.mTimeout);
-        right_master_talon.config_kP(0, Reference.kP, Reference.mTimeout);
-        left_master_talon.config_kI(0, Reference.kI, Reference.mTimeout);
-        right_master_talon.config_kI(0, Reference.kI, Reference.mTimeout);
-        left_master_talon.config_kD(0, Reference.kD, Reference.mTimeout);
-        right_master_talon.config_kD(0, Reference.kD, Reference.mTimeout);
-        left_master_talon.config_kF(0, Reference.kF, Reference.mTimeout);
-        right_master_talon.config_kF(0, Reference.kF, Reference.mTimeout);
+        left_master_talon.config_kP(0, Reference.kP, 0);
+        right_master_talon.config_kP(0, Reference.kP, 0);
+        left_master_talon.config_kI(0, Reference.kI, 0);
+        right_master_talon.config_kI(0, Reference.kI, 0);
+        left_master_talon.config_kD(0, Reference.kD, 0);
+        right_master_talon.config_kD(0, Reference.kD, 0);
+        left_master_talon.config_kF(0, Reference.kF, 0);
+        right_master_talon.config_kF(0, Reference.kF, 0);
 
         Hardware.right_master_talon.setInverted(true);
         Hardware.right_slave_talon.setInverted(true);

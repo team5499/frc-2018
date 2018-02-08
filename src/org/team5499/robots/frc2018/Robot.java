@@ -3,6 +3,7 @@ package org.team5499.robots.frc2018;
 import org.team5499.robots.frc2018.controllers.AutoController;
 import org.team5499.robots.frc2018.controllers.OperatorController;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
+import org.team5499.robots.frc2018.json.JsonIO;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -23,46 +24,33 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-        Subsystems.leftPID.reset();
-        Subsystems.rightPID.reset();
+        Subsystems.drivetrain.reset();
         Subsystems.gyro.reset();
-        Subsystems.json.updateVariables();
+        JsonIO.updateVariables();
     }
 
     @Override
     public void robotPeriodic() {
-        /*
-        System.out.print("Left Encoder: " + Subsystems.leftPID.getEncoderData());
-        System.out.print(", Right Encoder: " + Subsystems.rightPID.getEncoderData());
-        System.out.println(", Angle: " + Subsystems.gyro.getYaw());
-        */
-        
     }
 
     @Override
 	public void disabledInit() {
-
     }
     
 	@Override
 	public void disabledPeriodic() {
-        // System.out.println("Right PID:" + Subsystems.rightPID.getEncoderData());
-        // System.out.println("Left PID:" + Subsystems.leftPID.getEncoderData());
-        Subsystems.leftPID.reset();
-        Subsystems.rightPID.reset();
-        // Subsystems.gyro.reset();
-        // Subsystems.json.updateVariables();
-        autoController.reset();
+        Subsystems.drivetrain.reset();
+        Subsystems.gyro.reset();
+        //Subsystems.json.updateVariables();
     }
 
     @Override
     public void autonomousInit(){
-        // System.out.println("auto init");
+        System.out.println("auto init");
         String data = DriverStation.getInstance().getGameSpecificMessage();
         autoController.loadGameData(data);
         operatorController.loadGameData(data);
-        Subsystems.leftPID.reset();
-        Subsystems.rightPID.reset();
+        Subsystems.drivetrain.reset();
         Subsystems.gyro.reset();
         autoController.start();
     }

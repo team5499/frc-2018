@@ -31,6 +31,11 @@ public class Drivetrain {
         Hardware.right_master_talon.set(ControlMode.Position, rightPos);
     }
 
+    public void reset() {
+        Hardware.left_master_talon.setSelectedSensorPosition(0, 0, 0);
+        Hardware.right_master_talon.setSelectedSensorPosition(0, 0, 0);
+    }
+
     /**
      * stops drivetrain
      */

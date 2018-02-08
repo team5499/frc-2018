@@ -1,4 +1,4 @@
-package org.team5499.robots.frc2018.subsystems;
+package org.team5499.robots.frc2018.json;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,12 +14,12 @@ import com.google.gson.stream.JsonReader;
 public class JsonIO {
 
     private static final String FILE_PATH = "/home/lvuser/vars.json";
-    private FileReader reader;
-    private JsonReader jReader;
-    private JsonParser jParser;
+    private static FileReader reader;
+    private static JsonReader jReader;
+    private static JsonParser jParser;
 
 
-    public JsonIO() {
+    static {
         try {
             reader = new FileReader(FILE_PATH);
             jReader = new JsonReader(reader);
@@ -28,10 +28,9 @@ public class JsonIO {
             System.err.println("ERROR: Could not find Json file at location: " + FILE_PATH);
             e.printStackTrace();
         }
-
     }
 
-    public void updateVariables(){
+    public static void updateVariables(){
         JsonElement jElement = null;
         JsonObject jObject = null;
         try {

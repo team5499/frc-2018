@@ -1,6 +1,7 @@
 package org.team5499.robots.frc2018.commands.pid;
 
 import org.team5499.robots.frc2018.Reference;
+import org.team5499.robots.frc2018.Hardware;
 import org.team5499.robots.frc2018.commands.BaseCommand;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
@@ -26,8 +27,8 @@ public class DriveCommand extends BaseCommand {
     @Override
     public void handle() {
         Subsystems.drivetrain.pidDrive(-setPoint, -setPoint);
-        System.out.println("Right PID:" + Subsystems.rightPID.getEncoderData());
-        System.out.println("Left PID:" + Subsystems.leftPID.getEncoderData());
+        System.out.println("Right PID:" + Hardware.right_master_talon.getSensorCollection().getQuadraturePosition());
+        System.out.println("Left PID:" + Hardware.left_master_talon.getSensorCollection().getQuadraturePosition());
     }
 
     @Override

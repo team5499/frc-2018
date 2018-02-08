@@ -11,7 +11,7 @@ public class Climber {
     }
 
     public void climb(double speed) {
-        Hardware.climb1.set(ControlMode.PercentOutput, speed);
+        Hardware.climb_master_talon.set(ControlMode.PercentOutput, speed);
     }
 
     public void extendArm() {

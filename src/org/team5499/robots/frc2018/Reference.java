@@ -15,7 +15,6 @@ public class Reference {
 
     // time constants
     public static double TIMED_INTERVAL = 0.005;
-    public static int mTimeout = 0;
 
     // drive constants
     public static DriverControlMethod DRIVER_CONTROL_METHOD = DriverControlMethod.CONTROLLER;

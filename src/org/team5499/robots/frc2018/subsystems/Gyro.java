@@ -40,7 +40,7 @@ public class Gyro {
     }
 
     public void reset() {
-        Hardware.pigeon.setYaw(0, Reference.mTimeout);
+        Hardware.pigeon.setYaw(0, 0);
     }
 
     
