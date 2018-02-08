@@ -59,9 +59,9 @@ public class Reference {
     public static double ANGLE_TOLERANCE = 1.0;
     public static double ANGLE_CORRECTION = 30.0;
     public static double MAX_PID_OUTPUT = 1.0;
-    public static double kP = 0.1;
+    public static double kP = 1.0;
     public static double kI = 0.0;
-    public static double kD = 0.0;
-    public static double kF = 0.1;
+    public static double kD = 0.2;
+    public static double kF = 0.0;
   
 }
