@@ -45,6 +45,12 @@ public class Hardware {
         left_master_talon.config_kF(0, Reference.kF, 0);
         right_master_talon.config_kF(0, Reference.kF, 0);
 
+        left_master_talon.config_IntegralZone(0, 0, 0);
+        right_master_talon.config_IntegralZone(0, 0, 0);
+
+        left_master_talon.configAllowableClosedloopError(0, 0, 0);
+        right_master_talon.configAllowableClosedloopError(0, 0, 0);
+
         Hardware.right_master_talon.setInverted(true);
         Hardware.right_slave_talon.setInverted(true);
         Hardware.left_slave_talon.follow(Hardware.left_master_talon);

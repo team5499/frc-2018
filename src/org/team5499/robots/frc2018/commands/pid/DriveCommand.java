@@ -27,8 +27,9 @@ public class DriveCommand extends BaseCommand {
     @Override
     public void handle() {
         Subsystems.drivetrain.pidDrive(-setPoint, -setPoint);
-        System.out.println("Right PID:" + Hardware.right_master_talon.getSensorCollection().getQuadraturePosition());
-        System.out.println("Left PID:" + Hardware.left_master_talon.getSensorCollection().getQuadraturePosition());
+        //System.out.println("Right PID:" + Hardware.right_master_talon.getSensorCollection().getQuadraturePosition());
+        //System.out.println("Left PID:" + Hardware.left_master_talon.getSensorCollection().getQuadraturePosition());
+        System.out.println(Hardware.right_master_talon.getClosedLoopError(0));
     }
 
     @Override

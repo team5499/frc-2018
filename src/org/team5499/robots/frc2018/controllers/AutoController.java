@@ -20,12 +20,8 @@ public class AutoController extends BaseController {
         left = new Routine();
         right = new Routine();
 
-        test.addCommand(new NothingCommand(1));
-        // test.addCommand(new DriveCommand(10, 1028));
-        // test.addCommand(new TimedDriveCommand(2, 0.2));
-        // test.addCommand(new IntakeCommand(2, 0.5, Direction.INTAKE));
-        test.addCommand(new ArmCommand(1, org.team5499.robots.frc2018.commands.timed.ArmCommand.Direction.DOWN));
-        test.addCommand(new IntakeCommand(1, 0.5, org.team5499.robots.frc2018.commands.timed.IntakeCommand.Direction.EXAUST));
+        //test.addCommand(new NothingCommand(1));
+        test.addCommand(new DriveCommand(100, 1028));
         
         currentRoutine = test;
     }
