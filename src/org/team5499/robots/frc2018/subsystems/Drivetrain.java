@@ -32,10 +32,10 @@ public class Drivetrain {
         gyro = new Gyro();
         drive_out = new DriveOutput();
         angle_out = new AngleOutput();
-        drive_controller = new PIDController(Reference.kDP, Reference.kDI, Reference.kDD, Reference.kDF, encoders, drive_out, 5);
-        angle_controller = new PIDController(Reference.kAP, Reference.kAI, Reference.kAD, Reference.kAF, gyro, angle_out, 5);
-        drive_controller.setOutputRange(-Reference.MAX_DRIVE_PID_OUTPUT, Reference.MAX_DRIVE_PID_OUTPUT);
-        angle_controller.setOutputRange(-Reference.MAX_ANGLE_PID_OUTPUT, Reference.MAX_ANGLE_PID_OUTPUT);
+        drive_controller = new PIDController(Reference.getInstance().kDP, Reference.getInstance().kDI, Reference.getInstance().kDD, Reference.getInstance().kDF, encoders, drive_out, 5);
+        angle_controller = new PIDController(Reference.getInstance().kAP, Reference.getInstance().kAI, Reference.getInstance().kAD, Reference.getInstance().kAF, gyro, angle_out, 5);
+        drive_controller.setOutputRange(-Reference.getInstance().MAX_DRIVE_PID_OUTPUT, Reference.getInstance().MAX_DRIVE_PID_OUTPUT);
+        angle_controller.setOutputRange(-Reference.getInstance().MAX_ANGLE_PID_OUTPUT, Reference.getInstance().MAX_ANGLE_PID_OUTPUT);
         drive_controller.setContinuous();
         drive_controller.setContinuous();
 

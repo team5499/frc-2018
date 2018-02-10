@@ -9,22 +9,22 @@ import com.ctre.phoenix.ParamEnum;
 public class Hardware {
 
     // drivetrain
-    public static TalonSRX left_master_talon = new TalonSRX(Reference.LEFT_MASTER_PORT);
-    public static TalonSRX left_slave_talon = new TalonSRX(Reference.LEFT_SLAVE_PORT);
-    public static TalonSRX right_master_talon = new TalonSRX(Reference.RIGHT_MASTER_PORT);
-    public static TalonSRX right_slave_talon = new TalonSRX(Reference.RIGHT_SLAVE_PORT);
+    public static TalonSRX left_master_talon = new TalonSRX(Reference.getInstance().LEFT_MASTER_PORT);
+    public static TalonSRX left_slave_talon = new TalonSRX(Reference.getInstance().LEFT_SLAVE_PORT);
+    public static TalonSRX right_master_talon = new TalonSRX(Reference.getInstance().RIGHT_MASTER_PORT);
+    public static TalonSRX right_slave_talon = new TalonSRX(Reference.getInstance().RIGHT_SLAVE_PORT);
 
     // intake 
-    public static TalonSRX arm_talon = new TalonSRX(Reference.ARM_PORT);
-    public static TalonSRX intake_master_talon = new TalonSRX(Reference.LEFT_INTAKE_PORT);
-    public static TalonSRX intake_slave_talon = new TalonSRX(Reference.RIGHT_INTAKE_PORT);
+    public static TalonSRX arm_talon = new TalonSRX(Reference.getInstance().ARM_PORT);
+    public static TalonSRX intake_master_talon = new TalonSRX(Reference.getInstance().LEFT_INTAKE_PORT);
+    public static TalonSRX intake_slave_talon = new TalonSRX(Reference.getInstance().RIGHT_INTAKE_PORT);
 
     // climber
-    public static TalonSRX climb_master_talon = new TalonSRX(Reference.CLIMBER_MASTER_PORT);
-    public static TalonSRX climb_slave_talon = new TalonSRX(Reference.CLIMBER_SLAVE_PORT);
+    public static TalonSRX climb_master_talon = new TalonSRX(Reference.getInstance().CLIMBER_MASTER_PORT);
+    public static TalonSRX climb_slave_talon = new TalonSRX(Reference.getInstance().CLIMBER_SLAVE_PORT);
 
     // gyro
-    public static PigeonIMU pigeon = new PigeonIMU(Reference.PIGEON_PORT);
+    public static PigeonIMU pigeon = new PigeonIMU(Reference.getInstance().PIGEON_PORT);
 
     // Hardware setup
     static {
