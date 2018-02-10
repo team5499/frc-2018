@@ -1,5 +1,6 @@
 package org.team5499.robots.frc2018.controllers;
 
+import org.team5499.robots.frc2018.subsystems.Subsystems;
 import org.team5499.robots.frc2018.commands.*;
 import org.team5499.robots.frc2018.commands.pid.*;
 import org.team5499.robots.frc2018.commands.timed.*;
@@ -44,6 +45,7 @@ public class AutoController extends BaseController {
     }
 
     public void reset() {
+        Subsystems.drivetrain.reset();
         test.reset();
     }
 

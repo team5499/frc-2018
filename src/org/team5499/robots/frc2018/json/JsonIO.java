@@ -36,10 +36,10 @@ public class JsonIO {
         try {
             jElement = jParser.parse(jReader);
             jObject = jElement.getAsJsonObject();
-            Reference.kP = jObject.get("pid.kP").getAsDouble();
-            Reference.kI = jObject.get("pid.kI").getAsDouble();
-            Reference.kD = jObject.get("pid.kD").getAsDouble();
-            Reference.kF = jObject.get("pid.kF").getAsDouble();
+            Reference.kDP = jObject.get("pid.kDP").getAsDouble();
+            Reference.kDI = jObject.get("pid.kDI").getAsDouble();
+            Reference.kDD = jObject.get("pid.kDD").getAsDouble();
+            Reference.kDF = jObject.get("pid.kDF").getAsDouble();
             Reference.TIMED_INTERVAL = jObject.get("system.updateInterval").getAsDouble();
         } catch(IllegalStateException | NullPointerException e) {
             System.out.println("ERROR: Json file not found!");

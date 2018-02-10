@@ -58,10 +58,14 @@ public class Reference {
     // PID constants 
     public static double ANGLE_TOLERANCE = 1.0;
     public static double ANGLE_CORRECTION = 30.0;
-    public static double MAX_PID_OUTPUT = 1.0;
-    public static double kP = 1.0;
-    public static double kI = 0.0;
-    public static double kD = 0.2;
-    public static double kF = 0.0;
-  
+    public static double MAX_DRIVE_PID_OUTPUT = 1.0;
+    public static double MAX_ANGLE_PID_OUTPUT = 1.0;
+    public static double kDP = 1.0;
+    public static double kDI = 0.0;
+    public static double kDD = 0.2;
+    public static double kDF = 0.0;
+    public static double kAP = 1.0;
+    public static double kAI = 0.0;
+    public static double kAD = 0.2;
+    public static double kAF = 0.0;
 }

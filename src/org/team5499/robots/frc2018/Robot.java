@@ -24,8 +24,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-        Subsystems.drivetrain.reset();
-        Subsystems.gyro.reset();
+        autoController.reset();
         JsonIO.updateVariables();
     }
 
@@ -35,12 +34,11 @@ public class Robot extends TimedRobot {
 
     @Override
 	public void disabledInit() {
+        autoController.reset();
     }
     
 	@Override
 	public void disabledPeriodic() {
-        Subsystems.drivetrain.reset();
-        Subsystems.gyro.reset();
         //Subsystems.json.updateVariables();
     }
 
@@ -50,8 +48,6 @@ public class Robot extends TimedRobot {
         String data = DriverStation.getInstance().getGameSpecificMessage();
         autoController.loadGameData(data);
         operatorController.loadGameData(data);
-        Subsystems.drivetrain.reset();
-        Subsystems.gyro.reset();
         autoController.start();
     }
 

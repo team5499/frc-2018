@@ -24,15 +24,13 @@ public class DriveCommand extends BaseCommand {
         // System.out.println("Command started!");
         super.start();
         enabled = true;
-        startAngle = Subsystems.gyro.getYaw();
+        Subsystems.drivetrain.pidSet(setPoint, 0);
+        Subsystems.drivetrain.pidEnable();
     }
 
     @Override
     public void handle() {
-        Subsystems.drivetrain.pidDrive(-setPoint, -setPoint);
-        //System.out.println("Right PID:" + Hardware.right_master_talon.getSensorCollection().getQuadraturePosition());
-        //System.out.println("Left PID:" + Hardware.left_master_talon.getSensorCollection().getQuadraturePosition());
-        System.out.println(Hardware.right_master_talon.getClosedLoopError(0));
+        System.out.println("PID distance error:" + Subsystems.drivetrain.pidDistanceError());
     }
 
     @Override

@@ -28,29 +28,6 @@ public class Hardware {
 
     // Hardware setup
     static {
-        left_master_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-        right_master_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-        
-        left_master_talon.configPeakOutputForward(Reference.MAX_PID_OUTPUT, 0);
-        right_master_talon.configPeakOutputForward(Reference.MAX_PID_OUTPUT, 0);
-        left_master_talon.configPeakOutputReverse(-Reference.MAX_PID_OUTPUT, 0);
-        right_master_talon.configPeakOutputReverse(-Reference.MAX_PID_OUTPUT, 0);
-
-        left_master_talon.config_kP(0, Reference.kP, 0);
-        right_master_talon.config_kP(0, Reference.kP, 0);
-        left_master_talon.config_kI(0, Reference.kI, 0);
-        right_master_talon.config_kI(0, Reference.kI, 0);
-        left_master_talon.config_kD(0, Reference.kD, 0);
-        right_master_talon.config_kD(0, Reference.kD, 0);
-        left_master_talon.config_kF(0, Reference.kF, 0);
-        right_master_talon.config_kF(0, Reference.kF, 0);
-
-        left_master_talon.config_IntegralZone(0, 0, 0);
-        right_master_talon.config_IntegralZone(0, 0, 0);
-
-        left_master_talon.configAllowableClosedloopError(0, 0, 0);
-        right_master_talon.configAllowableClosedloopError(0, 0, 0);
-
         Hardware.right_master_talon.setInverted(true);
         Hardware.right_slave_talon.setInverted(true);
         Hardware.left_slave_talon.follow(Hardware.left_master_talon);
