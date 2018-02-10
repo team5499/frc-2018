@@ -15,12 +15,13 @@ public class Robot extends TimedRobot {
 
     private OperatorController operatorController;
     private AutoController autoController;
-    private Reference reference;
 
     public Robot() {
-        super.setPeriod(Reference.TIMED_INTERVAL); // set update interval
+        super.setPeriod(Reference.getInstance().TIMED_INTERVAL); // set update interval
         operatorController = new OperatorController();
         autoController = new AutoController();
+        // JsonIO.updateJson(Reference.getInstance());
+        JsonIO.updateReference();
     }
 
     @Override

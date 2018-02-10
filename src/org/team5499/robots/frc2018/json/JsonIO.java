@@ -1,7 +1,9 @@
 package org.team5499.robots.frc2018.json;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import org.team5499.robots.frc2018.Reference;
@@ -11,13 +13,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.MalformedJsonException;
 
 public class JsonIO {
 
-    private static final String FILE_PATH = "/home/lvuser/vars.json";
-    private static FileReader reader;
-    private static JsonReader jReader;
-    private static JsonParser jParser;
+    private static final String FILE_PATH = "/home/lvuser/vars.json";   
+    private static File file = new File(FILE_PATH);
     private static Gson gson;
 
 
@@ -29,12 +30,34 @@ public class JsonIO {
         }
     }
 
-    public void updateReference(){
-        Reference ref = gson.fromJson(FILE_PATH, Reference.class);
-
-
+    public static void updateReference(){
+        
+        try {
+            FileReader fr = new FileReader(file);
+            char[] data = new char[(int) file.length()];
+            String json = new String(data);
+            System.out.println(json);
+            // Reference ref = gson.fromJson(json, Reference.class);
+            // Reference.setInstance(ref);
+            System.out.println("New Reference Instance");
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
+
+    public static void updateJson(Reference ref) {
+        String json = gson.toJson(ref);
+        // System.out.println(json);
+        try {
+            FileWriter writer = new FileWriter(file, false);
+            writer.write(json);
+            writer.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+
+    } 
 
 
 }
