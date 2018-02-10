@@ -59,14 +59,11 @@ public class OperatorController extends BaseController {
                 Subsystems.drivetrain.drive(getLeftStick() * isSlow(), getRightStick() * isSlow());
                 break;
             case WHEEL:
-                /*
-                double throttle = Subsystems.inputs.getThrottle() * Subsystems.inputs.throttleLimiter();
-                double wheel = Subsystems.inputs.getWheel() * Subsystems.inputs.wheelLimiter();
+                double throttle = getThrottle() * throttleLimiter();
+                double wheel = getWheel() * wheelLimiter();
                 Subsystems.drivetrain.drive(throttle - wheel, throttle + wheel);
-                */
                 break;
         }
-
         // more code
         Subsystems.intake.intake(getIntake());
         Subsystems.intake.setArm(getArm());
@@ -114,8 +111,18 @@ public class OperatorController extends BaseController {
     }
 
     public double getArm() {
-        double speed = -codriver.getY(Hand.kLeft) * Reference.ARM_SPEED;
-        speed = (speed > 0) ? speed * 0.75 : speed;
+        double speed = 0;
+
+        switch(Reference.CODRIVER_CONTROL_METHOD) {
+            case CONTROLLER:
+                speed = -codriver.getY(Hand.kLeft) * Reference.ARM_SPEED;
+                break;
+            case JOYSTICK:
+                speed = -codriverJoystick.getRawAxis(1) * Reference.ARM_SPEED;
+                break;
+        }
+
+        speed = (speed > 0) ? speed * 0.90 : speed;
         return speed;
     }
 
@@ -124,13 +131,26 @@ public class OperatorController extends BaseController {
     }
 
     public double getIntake() {
-        if(codriver.getBumper(Hand.kRight)) {
-            return Reference.INTAKE_SPEED;
-        } else if(codriver.getTriggerAxis(Hand.kRight) > 0.05) {
-            return Reference.SLOW_INTAKE;
-        } else if(codriver.getBumper(Hand.kLeft)) {
-            return Reference.OUTTAKE_SPEED;
-        } else return 0;
+        switch(Reference.CODRIVER_CONTROL_METHOD) {
+            case CONTROLLER:
+                if(codriver.getBumper(Hand.kRight)) {
+                    return Reference.INTAKE_SPEED;
+                } else if(codriver.getTriggerAxis(Hand.kRight) > 0.05) {
+                    return Reference.SLOW_INTAKE;
+                } else if(codriver.getBumper(Hand.kLeft)) {
+                    return Reference.OUTTAKE_SPEED;
+                } else return 0;
+            case JOYSTICK:
+                if(codriverJoystick.getRawButton(1)) {
+                    return Reference.INTAKE_SPEED;
+                } else if(codriverJoystick.getRawButton(5)) {
+                    return Reference.SLOW_INTAKE;
+                } else if(codriverJoystick.getRawButton(3)) {
+                    return Reference.OUTTAKE_SPEED;
+                } else return 0;
+            default:
+                return 0;
+        }
     }
 
 }

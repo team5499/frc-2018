@@ -22,7 +22,7 @@ public class AutoController extends BaseController {
         right = new Routine();
 
         //test.addCommand(new NothingCommand(1));
-        test.addCommand(new DriveCommand(100, 1028));
+        test.addCommand(new DriveCommand(100, 1024));
         
         currentRoutine = test;
     }
