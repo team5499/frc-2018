@@ -3,11 +3,17 @@ package org.team5499.robots.frc2018.subsystems;
 import org.team5499.robots.frc2018.Hardware;
 import org.team5499.robots.frc2018.Reference;
 
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
+
 import com.ctre.phoenix.sensors.PigeonIMU;
 
-public class Gyro {
+public class Gyro implements PIDSource {
+    private PIDSourceType type;
 
-    public Gyro() {}
+    public Gyro() {
+        type = PIDSourceType.kDisplacement;
+    }
 
     /**
      * gets angle of the robot
@@ -37,6 +43,21 @@ public class Gyro {
         double[] ypr = new double[3];
         Hardware.pigeon.getYawPitchRoll(ypr);
         return ypr[2];
+    }
+
+    @Override
+    public PIDSourceType getPIDSourceType() {
+        return type;
+    }
+
+    @Override
+    public void setPIDSourceType(PIDSourceType pst) {
+        type = pst;
+    }
+
+    @Override
+    public double pidGet() {
+        return 0;
     }
 
     public void reset() {

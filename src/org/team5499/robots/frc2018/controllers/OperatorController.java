@@ -2,7 +2,6 @@ package org.team5499.robots.frc2018.controllers;
 
 import org.team5499.robots.frc2018.Reference;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
-import org.team5499.robots.frc2018.subsystems.Inputs.DriverControlMethod;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -57,23 +56,20 @@ public class OperatorController extends BaseController {
     public void handle() {
         switch(Reference.DRIVER_CONTROL_METHOD) {
             case CONTROLLER:
-                double left_drive = 0;
-                double right_drive = 0;
-
-
-
-                Subsystems.drivetrain.drive(left_drive, right_drive);
+                Subsystems.drivetrain.drive(getLeftStick() * isSlow(), getRightStick() * isSlow());
                 break;
             case WHEEL:
+                /*
                 double throttle = Subsystems.inputs.getThrottle() * Subsystems.inputs.throttleLimiter();
                 double wheel = Subsystems.inputs.getWheel() * Subsystems.inputs.wheelLimiter();
                 Subsystems.drivetrain.drive(throttle - wheel, throttle + wheel);
+                */
                 break;
         }
 
         // more code
-        Subsystems.intake.intake(Subsystems.inputs.getIntake());
-        Subsystems.intake.setArm(Subsystems.inputs.getArm());
+        Subsystems.intake.intake(getIntake());
+        Subsystems.intake.setArm(getArm());
     }
 
     @Override 
@@ -81,29 +77,29 @@ public class OperatorController extends BaseController {
         this.data = data;
     }
     
-    public double getLeftStick() {
+    private double getLeftStick() {
         if(Math.abs(driver.getY(Hand.kLeft)) > Reference.JOYSTICK_DEADZONE)
             return driver.getY(Hand.kLeft);
         else return 0;
     }
 
-    public double getRightStick() {
+    private double getRightStick() {
         if(Math.abs(driver.getY(Hand.kRight)) > Reference.JOYSTICK_DEADZONE)
             return driver.getY(Hand.kRight);
         else return 0;
     }
 
-    public double isSlow() {
+    private double isSlow() {
         return (driver.getTriggerAxis(Hand.kRight) > 0.1? Reference.SLOW_MULTIPLIER // Kinda Slow
         : driver.getTriggerAxis(Hand.kLeft) > 0.1? Reference.SLOW_MULTIPLIER / 2 // Really Slow
         : 1.0); // Normal Speed / Not Slow
     }
 
-    public double getWheel() {
+    private double getWheel() {
         return wheel.getRawAxis(0);
     }
 
-    public double wheelLimiter() {
+    private double wheelLimiter() {
         if(!wheel.getRawButton(8)) {
             return (getThrottle() > 0 ? 0.4 : 0.25);
         } else return 1;
@@ -118,10 +114,9 @@ public class OperatorController extends BaseController {
     }
 
     public double getArm() {
-        double speed = codriver.getY(Hand.kLeft) * Reference.ARM_SPEED;
-        if(speed > 0) return -speed; // up
-        else if(speed < 0) return (speed * 0.1); // down
-        else return 0;
+        double speed = -codriver.getY(Hand.kLeft) * Reference.ARM_SPEED;
+        speed = (speed > 0) ? speed * 0.75 : speed;
+        return speed;
     }
 
     public double getB() {

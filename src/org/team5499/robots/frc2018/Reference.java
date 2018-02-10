@@ -24,9 +24,9 @@ public class Reference {
     public static final double FAST_INTAKE = 1.0;
     public static final double INTAKE_SPEED = 0.65;
     public static final double SLOW_INTAKE = 0.3;
-    public static final double OUTTAKE_SPEED = -1.0;
+    public static final double OUTTAKE_SPEED = -0.5;
     public static final double JOYSTICK_DEADZONE = 0.05;
-    public static final double ARM_SPEED = 1.0;
+    public static final double ARM_SPEED = 0.75;
 
     // drivetrain talons
     public static final int LEFT_MASTER_PORT = 1;

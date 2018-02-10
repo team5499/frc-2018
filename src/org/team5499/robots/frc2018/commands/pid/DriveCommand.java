@@ -11,16 +11,19 @@ public class DriveCommand extends BaseCommand {
 
     private double setPoint;
     private double startAngle;
+    private boolean enabled;
 
     public DriveCommand(double to, double setPoint) {
         super(to);
         this.setPoint = setPoint;
+        enabled = false;
     }
 
     @Override
     public void start() {
         // System.out.println("Command started!");
         super.start();
+        enabled = true;
         startAngle = Subsystems.gyro.getYaw();
     }
 

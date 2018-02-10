@@ -1,40 +1,42 @@
-package org.team5499.robots.frc2018.subsystems;
+package org.team5499.robots.frc2018.position;
 
 public class Position {
 
-    private double xPosition = 0;
-    private double zPosition = 0;
+    private static double xPosition = 0;
+    private static double yPosition = 0;
 
-    private double lastTimeLeft = 0;
-    private double lastTimeRight = 0;
-    private double lastTimeAngle = 0;
+    private static double lastLeft = 0;
+    private static double lastRight = 0;
+    private static double lastAngle = 0;
 
-    public Position() {}
-
-    public void start() {
-
+    public static void start(double x_start, double y_start) {
+        xPosition = x_start;
+        yPosition = y_start;
     }
 
-    public void handle(double angle, double left, double right) {
-        angle = Math.toRadians(angle);
-        double deltaK = angle - lastTimeAngle;
-        double leftDelta = left - lastTimeLeft;
-        double rightDelta = right - lastTimeRight;
+    public static void handle(double angle, double left, double right) {
+        double delta_angle = Math.toRadians(angle) - lastAngle;
+        double delta_left = left - lastLeft;
+        double delta_right = right - lastRight;
 
-        double a = (rightDelta - leftDelta) / 2.0;
+        double delta_xleft = (delta_right - (delta_right*Math.cos(Math.abs(delta_angle)))) / Math.abs(delta_angle);
+        double delta_yleft = (delta_right*Math.sin(Math.abs(delta_angle))) / Math.abs(delta_angle);
+
+        double delta_xright = (delta_right - (delta_right*Math.cos(Math.abs(delta_angle)))) / Math.abs(delta_angle);
+        double delta_yright = (delta_right*Math.sin(Math.abs(delta_angle))) / Math.abs(delta_angle);
     }
 
-    public void reset() {
+    public static void reset() {
         xPosition = 0;
-        zPosition = 0;
+        yPosition = 0;
     }
 
-    public double getXPosition() {
+    public static double getXPosition() {
         return xPosition;
     }
 
-    public double getZPosition() {
-        return zPosition;
+    public static double getYPosition() {
+        return yPosition;
     }
 
 }
