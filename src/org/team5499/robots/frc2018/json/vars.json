@@ -1,5 +1,41 @@
 {
 
-    
+    "TimedInterval" : 0.005,
+    "SLOW_MULTIPLIER" : 0.5,
+    "FAST_INTAKE" : 1.0,
+    "SLOW_INTALE" : 0.3,
+    "OUTTAKE_SPEED" : -0.5,
+    "JOYSTICK_DEADZONE" : 0.05,
+    "ARM_SPEED" : 0.9,
+
+    "LEFT_MASTER_PORT" : 1,
+    "LEFT_SLAVE_PORT" : 2,
+    "RIGHT_MASTER_PORT" : 9,
+    "RIGHT_SLAVE_PORT" : 8,
+
+    "RIGHT_INTAKE_PORT" : 6,
+    "LEFT_INTAKE_PORT" : 4,
+
+    "CLIMBER_MASTER_PORT" : 7,
+    "CLIMBER_SLAVE_PORT" : 5,
+
+    "ARM_PORT" : 3,
+
+    "PIGEON_PORT" : 10,
+
+    "DRIVER_PORT" : 0,
+    "CODRIVER_PORT" : 1,
+    "WHEEL_PORT" : 2,
+    "THOTTLE_PORT" : 3,
+    "CODRIVER_JOYSTICK_PORT" : 4,
+
+    "ANGLE_TOLERANCE" : 1.0,
+    "ANGLE_CORRECTION" : 30.0,
+    "MAX_PID_OUTPUT" : 1.0,
+    "kP" : 1.0,
+    "kI" : 0.0,
+    "kD" : 0.2,
+    "kF" : 0.0
+
 
 }
