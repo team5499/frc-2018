@@ -15,6 +15,7 @@ public class Robot extends TimedRobot {
 
     private OperatorController operatorController;
     private AutoController autoController;
+    private Reference reference;
 
     public Robot() {
         super.setPeriod(Reference.TIMED_INTERVAL); // set update interval
@@ -26,7 +27,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         Subsystems.drivetrain.reset();
         Subsystems.gyro.reset();
-        JsonIO.updateVariables();
+        //  JsonIO.updateReference();
     }
 
     @Override
