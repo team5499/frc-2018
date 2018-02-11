@@ -7,7 +7,7 @@ public class IntakeCommand extends BaseCommand {
 
     public enum Direction {
         INTAKE,
-        EXAUST
+        EXHAUST
     }
 
     private double speed;
@@ -17,7 +17,7 @@ public class IntakeCommand extends BaseCommand {
         super(to);
         this.speed = speed;
         this.dir = dir;
-        if(dir == Direction.EXAUST) speed *= -1;
+        if(dir == Direction.EXHAUST) speed *= -1;
     }
 
     @Override

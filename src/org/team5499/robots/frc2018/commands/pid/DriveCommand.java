@@ -40,6 +40,9 @@ public class DriveCommand extends BaseCommand {
 
     @Override
     public boolean isFinished() {
+        if(super.isFinished()) {
+            Subsystems.drivetrain.pidDisable();
+        }
         return super.isFinished();
     }
 

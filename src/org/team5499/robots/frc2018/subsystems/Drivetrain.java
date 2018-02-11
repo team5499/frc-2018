@@ -44,8 +44,8 @@ public class Drivetrain {
         left_drive_controller = new PIDController(Reference.getInstance().kDP, Reference.getInstance().kDI, Reference.getInstance().kDD, Reference.getInstance().kDF, left_encoder, left_drive_out, 0.005);
         right_drive_controller = new PIDController(Reference.getInstance().kDP, Reference.getInstance().kDI, Reference.getInstance().kDD, Reference.getInstance().kDF, right_encoder, right_drive_out, 0.005);
         angle_controller = new PIDController(Reference.getInstance().kAP, Reference.getInstance().kAI, Reference.getInstance().kAD, Reference.getInstance().kAF, gyro, angle_out, 0.005);
-        left_drive_controller.setOutputRange(-Reference.getInstance().MAX_DRIVE_PID_OUTPUT, Reference.getInstance().MAX_DRIVE_PID_OUTPUT);
-        right_drive_controller.setOutputRange(-Reference.getInstance().MAX_DRIVE_PID_OUTPUT, Reference.getInstance().MAX_DRIVE_PID_OUTPUT);
+        left_drive_controller.setOutputRange(-1, 1);
+        right_drive_controller.setOutputRange(-1, 1);
         angle_controller.setOutputRange(-Reference.getInstance().MAX_ANGLE_PID_OUTPUT, Reference.getInstance().MAX_ANGLE_PID_OUTPUT);
         left_drive_controller.setAbsoluteTolerance(0);
         right_drive_controller.setAbsoluteTolerance(0);
@@ -93,7 +93,13 @@ public class Drivetrain {
 
     public void _setLeftPidDrive(double value) {
         synchronized(pid_output_lock) {
-            pid_left_drive_output = value;
+            if(value > Reference.getInstance().MAX_DRIVE_PID_OUTPUT) {
+                pid_left_drive_output = Reference.getInstance().MAX_DRIVE_PID_OUTPUT;
+            } else if(value < -Reference.getInstance().MAX_DRIVE_PID_OUTPUT) {
+                pid_left_drive_output = -Reference.getInstance().MAX_DRIVE_PID_OUTPUT;
+            } else {
+                pid_left_drive_output = value;
+            }
             drive(pid_left_drive_output + pid_angle_output, pid_right_drive_output - pid_angle_output);
             //drive(pid_angle_output, -pid_angle_output);
         }
@@ -101,7 +107,13 @@ public class Drivetrain {
 
     public void _setRightPidDrive(double value) {
         synchronized(pid_output_lock) {
-            pid_right_drive_output = value;
+            if(value > Reference.getInstance().MAX_DRIVE_PID_OUTPUT) {
+                pid_right_drive_output = Reference.getInstance().MAX_DRIVE_PID_OUTPUT;
+            } else if(value < -Reference.getInstance().MAX_DRIVE_PID_OUTPUT) {
+                pid_right_drive_output = -Reference.getInstance().MAX_DRIVE_PID_OUTPUT;
+            } else {
+                pid_right_drive_output = value;
+            }
             drive(pid_left_drive_output + pid_angle_output, pid_right_drive_output - pid_angle_output);
             //drive(pid_angle_output, -pid_angle_output);
         }
@@ -109,7 +121,13 @@ public class Drivetrain {
 
     public void _setPidAngle(double value) {
         synchronized(pid_output_lock){
-            pid_angle_output = value;
+            if(value > Reference.getInstance().MAX_ANGLE_PID_OUTPUT) {
+                pid_angle_output = Reference.getInstance().MAX_ANGLE_PID_OUTPUT;
+            } else if(value < -Reference.getInstance().MAX_ANGLE_PID_OUTPUT) {
+                pid_angle_output = -Reference.getInstance().MAX_ANGLE_PID_OUTPUT;
+            } else {
+                pid_angle_output = value;
+            }
             drive(pid_left_drive_output + pid_angle_output, pid_right_drive_output - pid_angle_output);
             //drive(pid_angle_output, -pid_angle_output);
         }
@@ -120,6 +138,7 @@ public class Drivetrain {
     }
 
     public void reset() {
+        System.out.println("Reset");
         pidDisable();
         left_drive_controller.reset();
         right_drive_controller.reset();
