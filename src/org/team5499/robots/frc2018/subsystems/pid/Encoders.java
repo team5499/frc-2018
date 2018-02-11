@@ -8,9 +8,11 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 
 public class Encoders implements PIDSource {
     private PIDSourceType type;
+    private boolean left_side;
 
-    public Encoders() {
+    public Encoders(boolean l_side) {
         type = PIDSourceType.kDisplacement;
+        left_side = l_side;
     }
 
     @Override
@@ -20,7 +22,13 @@ public class Encoders implements PIDSource {
     
     @Override
     public double pidGet() {
-        return (Hardware.left_master_talon.getSensorCollection().getQuadraturePosition() + Hardware.right_master_talon.getSensorCollection().getQuadraturePosition()) / 2;
+        double distance_value;
+        if(left_side) {
+            distance_value = -Hardware.left_master_talon.getSensorCollection().getQuadraturePosition() * Reference.getInstance().DISTANCE_PER_TICK;
+        } else {
+            distance_value = Hardware.right_master_talon.getSensorCollection().getQuadraturePosition() * Reference.getInstance().DISTANCE_PER_TICK;
+        }
+        return distance_value;
     }
 
     @Override

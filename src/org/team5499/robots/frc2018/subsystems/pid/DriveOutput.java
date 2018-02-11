@@ -5,11 +5,17 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 public class DriveOutput implements PIDOutput{
-    public DriveOutput() {
+    private boolean left_side;
+    public DriveOutput(boolean left) {
+        left_side = left;
     }
 
     @Override
     public void pidWrite(double output) {
-        Subsystems.drivetrain._setPidDrive(output);
+        if(left_side) {
+            Subsystems.drivetrain._setLeftPidDrive(output);
+        } else {
+            Subsystems.drivetrain._setRightPidDrive(output);
+        }
     }
 }

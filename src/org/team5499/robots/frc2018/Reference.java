@@ -62,17 +62,18 @@ public class Reference {
     public  int CODRIVER_JOYSTICK_PORT = 4;
 
     // PID constants 
+    public double DISTANCE_PER_TICK = 4.0 * Math.PI / 1024.0;
     public double ANGLE_TOLERANCE = 1.0;
     public double ANGLE_CORRECTION = 30.0;
     public double MAX_DRIVE_PID_OUTPUT = 1.0;
     public double MAX_ANGLE_PID_OUTPUT = 1.0;
-    public double kDP = 1.0;
+    public double kDP = 0.05;
     public double kDI = 0.0;
-    public double kDD = 0.2;
+    public double kDD = 0.0;
     public double kDF = 0.0;
-    public double kAP = 1.0;
+    public double kAP = 0.03;
     public double kAI = 0.0;
-    public double kAD = 0.2;
+    public double kAD = 0.0;
     public double kAF = 0.0;
   
 }
