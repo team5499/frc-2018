@@ -5,19 +5,13 @@ import org.team5499.robots.frc2018.commands.BaseCommand;
 
 public class IntakeCommand extends BaseCommand {
 
-    public enum Direction {
-        INTAKE,
-        EXAUST
-    }
-
+    // negative is outtake, positive is intake
     private double speed;
-    private Direction dir;
 
-    public IntakeCommand(double to, double speed, Direction dir) {
+
+    public IntakeCommand(double to, double speed) {
         super(to);
         this.speed = speed;
-        this.dir = dir;
-        if(dir == Direction.EXAUST) speed *= -1;
     }
 
     @Override
