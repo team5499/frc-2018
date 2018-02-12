@@ -28,9 +28,8 @@ public class AutoController extends BaseController {
         left.addCommand(new IntakeCommand(1, -1.0));
 
         //test.addCommand(new NothingCommand(1));
-        test.addCommand(new ArmCommand(0.75, ArmCommand.Direction.UP));
-        // test.addCommand(new IntakeCommand(1, -1.0));
-        // test.addCommand(new DriveCommand(100, 1024));
+        test.addCommand(new DriveCommand(100, 25));
+        test.addCommand(new IntakeCommand(1, 1, IntakeCommand.Direction.EXHAUST));
         
         currentRoutine = left;
     }

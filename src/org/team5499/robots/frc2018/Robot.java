@@ -32,11 +32,13 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
+        //System.out.println(Subsystems.drivetrain.getAngle());
     }
 
     @Override
 	public void disabledInit() {
         autoController.reset();
+        System.out.println(Subsystems.drivetrain.getAngle());
     }
     
 	@Override
@@ -47,6 +49,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit(){
         System.out.println("auto init");
+        autoController.reset();
         String data = DriverStation.getInstance().getGameSpecificMessage();
         autoController.loadGameData(data);
         operatorController.loadGameData(data);

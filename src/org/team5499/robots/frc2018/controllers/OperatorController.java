@@ -112,6 +112,7 @@ public class OperatorController extends BaseController {
     }
 
     public double getArm() {
+        // Positive is down
         double speed = 0;
 
         switch(Reference.getInstance().CODRIVER_CONTROL_METHOD) {

@@ -42,7 +42,7 @@ public class JsonIO {
             while((currentLine = br.readLine()) != null) {
                 json += currentLine;
             }
-            // System.out.println(json);
+            //System.out.println(json);
             Reference ref = gson.fromJson(json, Reference.class);
             Reference.setInstance(ref);
             System.out.println("New Reference Instance");

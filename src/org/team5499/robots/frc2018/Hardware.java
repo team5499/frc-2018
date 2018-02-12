@@ -4,6 +4,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.ParamEnum;
 
 public class Hardware {
@@ -28,6 +29,12 @@ public class Hardware {
 
     // Hardware setup
     static {
+        System.out.println("Current Left Talon Quadrature update period:" + Hardware.left_master_talon.getStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 0));
+        System.out.println("Current Right Talon Quadrature update period:" + Hardware.right_master_talon.getStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 0));
+
+        //Hardware.left_master_talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 5, 0);
+        //Hardware.right_master_talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 5, 0);
+
         Hardware.right_master_talon.setInverted(true);
         Hardware.right_slave_talon.setInverted(true);
         Hardware.left_slave_talon.follow(Hardware.left_master_talon);
