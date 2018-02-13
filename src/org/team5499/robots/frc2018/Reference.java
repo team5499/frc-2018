@@ -84,4 +84,9 @@ public class Reference {
     public double kTI = 0.0;
     public double kTD = 0.03;
     public double kTF = 0.0;
+    // arm pid consts
+    public double kArmP = 0.0;
+    public double kArmI = 0.0;
+    public double kArmD = 0.0;
+    public double kArmF = 0.0;
 }
