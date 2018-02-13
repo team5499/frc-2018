@@ -77,10 +77,19 @@ public class Drivetrain {
         angle_controller.setSetpoint(angle_setpoint);
     }
 
-    public void pidEnable() {
-        left_drive_controller.enable();
-        right_drive_controller.enable();
-        angle_controller.enable();
+    public void pidEnable(boolean drive, boolean angle) {
+        if(drive) {
+            left_drive_controller.enable();
+            right_drive_controller.enable();
+        } else {
+            left_drive_controller.disable();
+            right_drive_controller.disable();
+        }
+        if(angle) {
+            angle_controller.enable();
+        } else {
+            angle_controller.disable();
+        }
         System.out.println("enabled");
     }
 
@@ -135,6 +144,10 @@ public class Drivetrain {
 
     public double pidDistanceError() {
         return (left_drive_controller.getError() + right_drive_controller.getError()) / 2;
+    }
+
+    public double pidAngleError() {
+        return angle_controller.getError();
     }
 
     public void reset() {

@@ -23,8 +23,8 @@ public class Reference {
     public double TIMED_INTERVAL = 0.005;
 
     // drive constants
-    public DriverControlMethod DRIVER_CONTROL_METHOD = DriverControlMethod.WHEEL;
-    public CodriverControlMethod CODRIVER_CONTROL_METHOD = CodriverControlMethod.JOYSTICK;
+    public DriverControlMethod DRIVER_CONTROL_METHOD = DriverControlMethod.CONTROLLER;
+    public CodriverControlMethod CODRIVER_CONTROL_METHOD = CodriverControlMethod.CONTROLLER;
 
     public double SLOW_MULTIPLIER = 0.5;
     public double FAST_INTAKE = 1.0;

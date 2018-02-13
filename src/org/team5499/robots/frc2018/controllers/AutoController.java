@@ -22,7 +22,8 @@ public class AutoController extends BaseController {
         right = new Routine();
 
         //test.addCommand(new NothingCommand(1));
-        test.addCommand(new DriveCommand(100, 25));
+        test.addCommand(new DriveCommand(4, 25));
+        test.addCommand(new TurnCommand(4, -90));
         test.addCommand(new IntakeCommand(1, 1, IntakeCommand.Direction.EXHAUST));
         
         currentRoutine = test;

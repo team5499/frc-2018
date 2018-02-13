@@ -5,30 +5,27 @@ import org.team5499.robots.frc2018.Hardware;
 import org.team5499.robots.frc2018.commands.BaseCommand;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
-public class DriveCommand extends BaseCommand {
-
-    private double setPoint;
-    private double startAngle;
+public class TurnCommand extends BaseCommand {
+    private double setpoint;
     private boolean enabled;
 
-    public DriveCommand(double to, double setPoint) {
+    public TurnCommand(double to, double setPoint) {
         super(to);
-        this.setPoint = setPoint;
+        this.setpoint = setPoint;
         this.enabled = false;
     }
 
     @Override
     public void start() {
-        // System.out.println("Command started!");
         super.start();
         enabled = true;
-        Subsystems.drivetrain.pidSet(setPoint, 0);
-        Subsystems.drivetrain.pidEnable(true, true);
+        Subsystems.drivetrain.pidSet(0, setpoint);
+        Subsystems.drivetrain.pidEnable(false, true);
     }
 
     @Override
     public void handle() {
-        System.out.println("PID distance error:" + Subsystems.drivetrain.pidDistanceError());
+        System.out.println("PID angle error:" + Subsystems.drivetrain.pidAngleError());
     }
 
     @Override
@@ -45,5 +42,4 @@ public class DriveCommand extends BaseCommand {
         }
         return super.isFinished();
     }
-
 }
