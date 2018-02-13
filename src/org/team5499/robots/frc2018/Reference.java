@@ -56,6 +56,9 @@ public class Reference {
     // arm ports
     public int ARM_PORT = 3;
 
+    // pot ports
+    public int POT1_PORT = 1;
+
     // input
     public  int DRIVER_PORT = 0;
     public  int CODRIVER_PORT = 1;
