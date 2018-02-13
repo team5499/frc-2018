@@ -3,27 +3,37 @@ package org.team5499.robots.frc2018.commands.pid;
 import org.team5499.robots.frc2018.Reference;
 import org.team5499.robots.frc2018.Hardware;
 import org.team5499.robots.frc2018.commands.BaseCommand;
+import org.team5499.robots.frc2018.commands.timed.TimedArmCommand.Direction;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
-public class IntakeDriveCommand extends DriveCommand {
+public class ArmDriveCommand extends DriveCommand {
 
     private double speed;
 
-    public IntakeDriveCommand(double to, double setPoint, double speed) {
+    public ArmDriveCommand(double to, double setPoint, Direction dir) {
         super(to, setPoint);
-        this.speed = speed;
+        switch(dir) {
+            case UP: 
+                speed = Reference.getInstance().AUTO_ARM_UP_SPEED;;
+                break;
+            case DOWN:
+                speed = Reference.getInstance().AUTO_ARM_DOWN_SPEED;
+                break;
+            default:
+                speed = 0;
+                break;
+        }
     }
 
     @Override
     public void start() {
-        // System.out.println("Command started!");
         super.start();
     }
 
     @Override
     public void handle() {
         super.handle();
-        Subsystems.intake.intake(speed);
+        Subsystems.intake.setArm(speed);
     }
 
     @Override

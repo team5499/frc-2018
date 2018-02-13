@@ -1,29 +1,25 @@
 package org.team5499.robots.frc2018.commands.pid;
 
+
 import org.team5499.robots.frc2018.Reference;
 import org.team5499.robots.frc2018.Hardware;
 import org.team5499.robots.frc2018.commands.BaseCommand;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
-public class IntakeDriveCommand extends DriveCommand {
+public class ArmCommand extends BaseCommand {
 
-    private double speed;
-
-    public IntakeDriveCommand(double to, double setPoint, double speed) {
-        super(to, setPoint);
-        this.speed = speed;
+    public ArmCommand(double to, double set) {
+        super(to);
     }
 
     @Override
     public void start() {
-        // System.out.println("Command started!");
         super.start();
     }
 
     @Override
     public void handle() {
-        super.handle();
-        Subsystems.intake.intake(speed);
+        
     }
 
     @Override

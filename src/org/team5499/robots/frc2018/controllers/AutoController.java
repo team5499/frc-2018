@@ -4,7 +4,7 @@ import org.team5499.robots.frc2018.subsystems.Subsystems;
 import org.team5499.robots.frc2018.commands.*;
 import org.team5499.robots.frc2018.commands.pid.*;
 import org.team5499.robots.frc2018.commands.timed.*;
-import org.team5499.robots.frc2018.commands.timed.ArmCommand.Direction;
+import org.team5499.robots.frc2018.commands.timed.TimedArmCommand.Direction;
 
 
 public class AutoController extends BaseController {
@@ -33,17 +33,18 @@ public class AutoController extends BaseController {
         left.addCommand(new NothingCommand(1));
         left.addCommand(new IntakeCommand(1, -1.0));
 
+        // working center command
         test.addCommand(new DriveCommand(2, 45));
         test.addCommand(new TurnCommand(2, -90));
         test.addCommand(new DriveCommand(2, 45));
         test.addCommand(new TurnCommand(2, 90));
         test.addCommand(new DriveCommand(3, 63));
         test.addCommand(new IntakeCommand(1, -1.0));
-        test.addCommand(new ArmCommand(0.5, Direction.DOWN));
+        test.addCommand(new TimedArmCommand(0.5, Direction.DOWN));
         test.addCommand(new DriveCommand(2, -12));
         test.addCommand(new TurnCommand(2, -90));
-        test.addCommand(new IntakeDriveCommand(2,-30));
-        test.addCommand(new ArmCommand(2, Direction.UP));
+        test.addCommand(new IntakeDriveCommand(2,-30, 1));
+        test.addCommand(new TimedArmCommand(2, Direction.UP));
         test.addCommand(new DriveCommand(2, 30));
         test.addCommand(new TurnCommand(2, 90));
         test.addCommand(new DriveCommand(2, 10));

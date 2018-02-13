@@ -33,6 +33,8 @@ public class Reference {
     public double OUTTAKE_SPEED = -0.5;
     public double JOYSTICK_DEADZONE = 0.05;
     public double ARM_SPEED = 0.90;
+    public double AUTO_ARM_UP_SPEED = -0.7;
+    public double AUTO_ARM_DOWN_SPEED = 0.4;
 
     // drivetrain talons
     public int LEFT_MASTER_PORT = 1;
