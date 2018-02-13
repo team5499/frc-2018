@@ -17,10 +17,12 @@ public class ArmCommand extends BaseCommand {
         super(to);
         switch(dir) {
             case UP:
-                speed = 1.0;
+                speed = -0.75;
+                // .75 seconds allows it to go all the way up
                 break;
             case DOWN:
-                speed = -0.3;
+                speed = 0.4;
+                // .5 seconds is enough to go all the way down
                 break;
             default:
                 speed = 0;

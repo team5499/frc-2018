@@ -4,7 +4,7 @@ import org.team5499.robots.frc2018.subsystems.Subsystems;
 import org.team5499.robots.frc2018.commands.*;
 import org.team5499.robots.frc2018.commands.pid.*;
 import org.team5499.robots.frc2018.commands.timed.*;
-import org.team5499.robots.frc2018.commands.timed.IntakeCommand.Direction;
+
 
 public class AutoController extends BaseController {
 
@@ -21,12 +21,18 @@ public class AutoController extends BaseController {
         left = new Routine();
         right = new Routine();
 
+        // works at 70 inches
+        left.addCommand(new NothingCommand(1));
+        left.addCommand(new TimedDriveCommand(0.8, -0.3));
+        left.addCommand(new NothingCommand(1));
+        left.addCommand(new IntakeCommand(1, -1.0));
+
         //test.addCommand(new NothingCommand(1));
         test.addCommand(new DriveCommand(4, 25));
         test.addCommand(new TurnCommand(4, -90));
         test.addCommand(new IntakeCommand(1, 1, IntakeCommand.Direction.EXHAUST));
         
-        currentRoutine = test;
+        currentRoutine = left;
     }
 
     @Override
@@ -49,6 +55,7 @@ public class AutoController extends BaseController {
     public void reset() {
         Subsystems.drivetrain.reset();
         test.reset();
+        left.reset();
     }
 
 }
