@@ -109,7 +109,7 @@ public class Drivetrain {
             } else {
                 pid_left_drive_output = value;
             }
-            drive(pid_left_drive_output + pid_angle_output, pid_right_drive_output - pid_angle_output);
+            drive(pid_left_drive_output + pid_angle_output, pid_left_drive_output - pid_angle_output);
             //drive(pid_angle_output, -pid_angle_output);
         }
     }
@@ -123,7 +123,7 @@ public class Drivetrain {
             } else {
                 pid_right_drive_output = value;
             }
-            drive(pid_left_drive_output + pid_angle_output, pid_right_drive_output - pid_angle_output);
+            drive(pid_left_drive_output + pid_angle_output, pid_left_drive_output - pid_angle_output);
             //drive(pid_angle_output, -pid_angle_output);
         }
     }
@@ -137,7 +137,7 @@ public class Drivetrain {
             } else {
                 pid_angle_output = value;
             }
-            drive(pid_left_drive_output + pid_angle_output, pid_right_drive_output - pid_angle_output);
+            drive(pid_left_drive_output + pid_angle_output, pid_left_drive_output - pid_angle_output);
             //drive(pid_angle_output, -pid_angle_output);
         }
     }
@@ -148,6 +148,14 @@ public class Drivetrain {
 
     public double pidAngleError() {
         return angle_controller.getError();
+    }
+
+    public void setTurnPID(boolean turn) {
+        if(turn) {
+            angle_controller.setPID(Reference.getInstance().kTP, Reference.getInstance().kTI, Reference.getInstance().kTD, Reference.getInstance().kTF);
+        } else {
+            angle_controller.setPID(Reference.getInstance().kAP, Reference.getInstance().kAI, Reference.getInstance().kAD, Reference.getInstance().kAF);
+        }
     }
 
     public void reset() {

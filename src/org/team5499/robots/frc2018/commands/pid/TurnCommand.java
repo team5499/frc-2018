@@ -19,6 +19,7 @@ public class TurnCommand extends BaseCommand {
     public void start() {
         super.start();
         enabled = true;
+        Subsystems.drivetrain.setTurnPID(true);
         Subsystems.drivetrain.pidSet(0, setpoint);
         Subsystems.drivetrain.pidEnable(false, true);
     }
@@ -38,6 +39,7 @@ public class TurnCommand extends BaseCommand {
     public boolean isFinished() {
         if(super.isFinished()) {
             Subsystems.drivetrain.pidDisable();
+            Subsystems.drivetrain.setTurnPID(false);
             enabled = false;
         }
         return super.isFinished();

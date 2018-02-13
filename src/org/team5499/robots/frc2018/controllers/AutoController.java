@@ -4,11 +4,12 @@ import org.team5499.robots.frc2018.subsystems.Subsystems;
 import org.team5499.robots.frc2018.commands.*;
 import org.team5499.robots.frc2018.commands.pid.*;
 import org.team5499.robots.frc2018.commands.timed.*;
+import org.team5499.robots.frc2018.commands.timed.ArmCommand.Direction;
 
 
 public class AutoController extends BaseController {
 
-    private Routine center, left, right, test;
+    private Routine center, left, right, nothing, straight, test;
     private Routine currentRoutine;
 
     private String data = "";
@@ -20,6 +21,11 @@ public class AutoController extends BaseController {
         center = new Routine();
         left = new Routine();
         right = new Routine();
+        nothing = new Routine();
+        straight = new Routine();
+
+        // drives 10 feet
+        straight.addCommand(new DriveCommand(15, 120));
 
         // works at 70 inches
         left.addCommand(new NothingCommand(1));
@@ -27,10 +33,23 @@ public class AutoController extends BaseController {
         left.addCommand(new NothingCommand(1));
         left.addCommand(new IntakeCommand(1, -1.0));
 
-        //test.addCommand(new NothingCommand(1));
-        test.addCommand(new DriveCommand(4, 25));
-        test.addCommand(new TurnCommand(4, -90));
-        test.addCommand(new IntakeCommand(1, -0.5));
+        test.addCommand(new DriveCommand(2, 45));
+        test.addCommand(new TurnCommand(2, -90));
+        test.addCommand(new DriveCommand(2, 45));
+        test.addCommand(new TurnCommand(2, 90));
+        test.addCommand(new DriveCommand(3, 63));
+        test.addCommand(new IntakeCommand(1, -1.0));
+        test.addCommand(new ArmCommand(0.5, Direction.DOWN));
+        test.addCommand(new DriveCommand(2, -12));
+        test.addCommand(new TurnCommand(2, -90));
+        test.addCommand(new IntakeDriveCommand(2,-30));
+        test.addCommand(new ArmCommand(2, Direction.UP));
+        test.addCommand(new DriveCommand(2, 30));
+        test.addCommand(new TurnCommand(2, 90));
+        test.addCommand(new DriveCommand(2, 10));
+        test.addCommand(new IntakeCommand(1, -1));
+        
+
         
         currentRoutine = test;
     }
