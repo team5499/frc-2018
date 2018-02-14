@@ -35,21 +35,26 @@ public class Drivetrain {
         pid_left_drive_output = 0;
         pid_right_drive_output = 0;
         pid_angle_output = 0;
+
         left_encoder = new Encoders(true);
         right_encoder = new Encoders(false);
         gyro = new Gyro();
+
         left_drive_out = new DriveOutput(true);
         right_drive_out = new DriveOutput(false);
         angle_out = new AngleOutput();
+
         left_drive_controller = new PIDController(Reference.getInstance().kDP, Reference.getInstance().kDI, Reference.getInstance().kDD, Reference.getInstance().kDF, left_encoder, left_drive_out, 0.005);
         right_drive_controller = new PIDController(Reference.getInstance().kDP, Reference.getInstance().kDI, Reference.getInstance().kDD, Reference.getInstance().kDF, right_encoder, right_drive_out, 0.005);
         angle_controller = new PIDController(Reference.getInstance().kAP, Reference.getInstance().kAI, Reference.getInstance().kAD, Reference.getInstance().kAF, gyro, angle_out, 0.005);
+
         left_drive_controller.setOutputRange(-1, 1);
         right_drive_controller.setOutputRange(-1, 1);
-        angle_controller.setOutputRange(-Reference.getInstance().MAX_ANGLE_PID_OUTPUT, Reference.getInstance().MAX_ANGLE_PID_OUTPUT);
-        left_drive_controller.setAbsoluteTolerance(0);
-        right_drive_controller.setAbsoluteTolerance(0);
-        angle_controller.setAbsoluteTolerance(0);
+        angle_controller.setOutputRange(-1, 1);
+
+        left_drive_controller.setAbsoluteTolerance(Reference.getInstance().MAX_DRIVE_ERROR_TO_TARGET);
+        right_drive_controller.setAbsoluteTolerance(Reference.getInstance().MAX_DRIVE_ERROR_TO_TARGET);
+        angle_controller.setAbsoluteTolerance(Reference.getInstance().MAX_ANGLE_ERROR_TO_TARGET);
 
         pid_output_lock = new Object();
     }
@@ -75,6 +80,7 @@ public class Drivetrain {
         left_drive_controller.setSetpoint(distance_setpoint);
         right_drive_controller.setSetpoint(distance_setpoint);
         angle_controller.setSetpoint(angle_setpoint);
+        System.out.println("Distance setpoint" + distance_setpoint);
     }
 
     public void pidEnable(boolean drive, boolean angle) {
@@ -109,7 +115,7 @@ public class Drivetrain {
             } else {
                 pid_left_drive_output = value;
             }
-            drive(pid_left_drive_output + pid_angle_output, pid_right_drive_output - pid_angle_output);
+            drive(pid_left_drive_output + pid_angle_output, pid_left_drive_output - pid_angle_output);
             //drive(pid_angle_output, -pid_angle_output);
         }
     }
@@ -123,7 +129,7 @@ public class Drivetrain {
             } else {
                 pid_right_drive_output = value;
             }
-            drive(pid_left_drive_output + pid_angle_output, pid_right_drive_output - pid_angle_output);
+            drive(pid_left_drive_output + pid_angle_output, pid_left_drive_output - pid_angle_output);
             //drive(pid_angle_output, -pid_angle_output);
         }
     }
@@ -137,13 +143,13 @@ public class Drivetrain {
             } else {
                 pid_angle_output = value;
             }
-            drive(pid_left_drive_output + pid_angle_output, pid_right_drive_output - pid_angle_output);
+            drive(pid_left_drive_output + pid_angle_output, pid_left_drive_output - pid_angle_output);
             //drive(pid_angle_output, -pid_angle_output);
         }
     }
 
     public double pidDistanceError() {
-        return (left_drive_controller.getError() + right_drive_controller.getError()) / 2;
+        return (left_drive_controller.getError() /* right_drive_controller.getError() */) / 2;
     }
 
     public double pidAngleError() {
@@ -156,11 +162,22 @@ public class Drivetrain {
         left_drive_controller.reset();
         right_drive_controller.reset();
         angle_controller.reset();
-        Hardware.left_master_talon.getSensorCollection().setQuadraturePosition(0, 0);
-        Hardware.right_master_talon.getSensorCollection().setQuadraturePosition(0, 0);
         gyro.reset();
         distance_setpoint = 0;
         angle_setpoint = 0;
+    }
+
+    public boolean angleOnTarget() {
+        return (angle_controller.onTarget() && (averageVelocity() < Reference.getInstance().MAX_VELOCITY_TO_TARGET));
+    }
+
+    public boolean distanceOnTarget() {
+        return (angle_controller.onTarget() && left_drive_controller.onTarget() && /* right_drive_controller.onTarget() &&*/ (averageVelocity() < Reference.getInstance().MAX_VELOCITY_TO_TARGET));
+    }
+
+    public double averageVelocity() {
+        //return (Math.abs(left_encoder.getVelocity()) + Math.abs(right_encoder.getVelocity())) / 2;
+        return Math.abs(left_encoder.getVelocity());
     }
 
     public double getAngle() {

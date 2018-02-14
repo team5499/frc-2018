@@ -6,8 +6,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class Intake {
+    // private PIDController pid_arm_controller;
+    private double setpoint; /* between 0 and 100 */
 
     public Intake() {
+        setpoint = 0;
+        //pid_arm_controller = new PIDController();
     }
 
     public void setArm(double speed) {

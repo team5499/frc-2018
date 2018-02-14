@@ -39,6 +39,7 @@ public class Reference {
     public int LEFT_SLAVE_PORT = 2;
     public int RIGHT_MASTER_PORT = 9;
     public int RIGHT_SLAVE_PORT = 8;
+    public int TALON_QUADRATURE_UPDATE_INTERVAL = 5; /* Milliseconds */
     
     // intake ports
     public int RIGHT_INTAKE_PORT = 6;
@@ -67,6 +68,9 @@ public class Reference {
     public double ANGLE_CORRECTION = 30.0;
     public double MAX_DRIVE_PID_OUTPUT = 0.3; /* Cap */
     public double MAX_ANGLE_PID_OUTPUT = 1.0; /* Cap */
+    public double MAX_DRIVE_ERROR_TO_TARGET = 6.0; /* Max distance error before PID is considered on target */
+    public double MAX_ANGLE_ERROR_TO_TARGET = 2.0; /* Max angle error before PID is considered on target */
+    public double MAX_VELOCITY_TO_TARGET = 1.0; /* Max velocity before PID is considered on target */
     public double kDP = 0.045;
     public double kDI = 0.0;
     public double kDD = 0.75;

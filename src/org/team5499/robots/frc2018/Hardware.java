@@ -32,8 +32,8 @@ public class Hardware {
         System.out.println("Current Left Talon Quadrature update period:" + Hardware.left_master_talon.getStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 0));
         System.out.println("Current Right Talon Quadrature update period:" + Hardware.right_master_talon.getStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 0));
 
-        Hardware.left_master_talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 5, 0);
-        Hardware.right_master_talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 5, 0);
+        Hardware.left_master_talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, Reference.getInstance().TALON_QUADRATURE_UPDATE_INTERVAL, 0);
+        Hardware.right_master_talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, Reference.getInstance().TALON_QUADRATURE_UPDATE_INTERVAL, 0);
 
         System.out.println("Current Left Talon Quadrature update period:" + Hardware.left_master_talon.getStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 0));
         System.out.println("Current Right Talon Quadrature update period:" + Hardware.right_master_talon.getStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 0));

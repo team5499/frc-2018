@@ -5,14 +5,27 @@ import org.team5499.robots.frc2018.Reference;
 
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Timer;
 
 public class Encoders implements PIDSource {
     private PIDSourceType type;
     private boolean left_side;
+    private double last_distance;
+    private double last_time;
+    private double last_velocity;
 
     public Encoders(boolean l_side) {
+        last_velocity = 0;
         type = PIDSourceType.kDisplacement;
         left_side = l_side;
+    }
+
+    public void reset() {
+        if(left_side) {
+            Hardware.left_master_talon.getSensorCollection().setQuadraturePosition(0, 0);
+        } else {
+            Hardware.right_master_talon.getSensorCollection().setQuadraturePosition(0, 0);
+        }
     }
 
     @Override
@@ -34,5 +47,17 @@ public class Encoders implements PIDSource {
     @Override
     public void setPIDSourceType(PIDSourceType pst) {
         type = pst;
+    }
+
+    public double getVelocity() {
+        double velocity = (pidGet() - last_distance) / (Timer.getFPGATimestamp() - last_time);
+        if((Timer.getFPGATimestamp() - last_time) * 1000 < (double) Reference.getInstance().TALON_QUADRATURE_UPDATE_INTERVAL) {
+            return last_velocity;
+        } else {
+            last_velocity = velocity;
+        }
+        last_distance = pidGet();
+        last_time = Timer.getFPGATimestamp();
+        return velocity;
     }
 }
