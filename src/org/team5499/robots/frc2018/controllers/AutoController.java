@@ -9,7 +9,7 @@ import org.team5499.robots.frc2018.commands.timed.TimedArmCommand.Direction;
 
 public class AutoController extends BaseController {
 
-    private Routine center, left, right, nothing, straight, test;
+    private Routine center, left, right, nothing, straight, test, test1;
     private Routine currentRoutine;
 
     private String data = "";
@@ -18,6 +18,7 @@ public class AutoController extends BaseController {
         super();
 
         test = new Routine();
+        test1 = new Routine();
         center = new Routine();
         left = new Routine();
         right = new Routine();
@@ -49,10 +50,24 @@ public class AutoController extends BaseController {
         test.addCommand(new TurnCommand(2, 90));
         test.addCommand(new DriveCommand(2, 10));
         test.addCommand(new IntakeCommand(1, -1));
-        
 
+        test1.addCommand(new DriveCommand(1.5, 40));
+        test1.addCommand(new TurnCommand(0.7, -30));
+        test1.addCommand(new DriveCommand(2, 80));
+        test1.addCommand(new IntakeCommand(0.8, -0.6));
+        test1.addCommand(new DriveCommand(0.8, -10));
+        test1.addCommand(new TurnCommand(0.8, -60));
+        test1.addCommand(new DriveCommand(0.5, 20));
+        test1.addCommand(new TimedArmCommand(0.75, Direction.DOWN));
+        test1.addCommand(new NothingCommand(1));
+        test1.addCommand(new IntakeDriveCommand(1.7, -30, 0.65));
+        test1.addCommand(new TimedArmCommand(2, Direction.UP));
+        test1.addCommand(new DriveCommand(1, 5));
+        test1.addCommand(new TurnCommand(1, 90));
+        test1.addCommand(new DriveCommand(1, 30));
+        test1.addCommand(new IntakeCommand(1, -0.65));
         
-        currentRoutine = test;
+        currentRoutine = test1;
     }
 
     @Override
