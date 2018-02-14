@@ -7,7 +7,7 @@ import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 public class Routine {
 
-    private List<BaseCommand> commands = new ArrayList<>();
+    private List<BaseCommand> commands = new ArrayList<BaseCommand>();
     private BaseCommand currentCommand;
     private int stepNumber;
 
@@ -27,8 +27,6 @@ public class Routine {
     }
 
     public void handle() {
-        // System.out.println(currentCommand.isFinished());
-        
         if(currentCommand.isFinished()) {
             Subsystems.drivetrain.stop();
             Subsystems.intake.stop();

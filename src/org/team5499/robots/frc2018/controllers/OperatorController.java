@@ -65,7 +65,6 @@ public class OperatorController extends BaseController {
                 Subsystems.drivetrain.drive(throttle - wheel, throttle + wheel);
                 break;
         }
-        // more code
         Subsystems.intake.intake(getIntake());
         Subsystems.intake.setArm(getArm());
     }

@@ -26,7 +26,6 @@ public class TurnCommand extends BaseCommand {
 
     @Override
     public void handle() {
-        System.out.println("PID angle error:" + Subsystems.drivetrain.pidAngleError());
     }
 
     @Override
@@ -37,11 +36,12 @@ public class TurnCommand extends BaseCommand {
 
     @Override
     public boolean isFinished() {
-        if(super.isFinished()) {
+        boolean finished = (super.isFinished() || Subsystems.drivetrain.angleOnTarget());
+        if(finished) {
             Subsystems.drivetrain.pidDisable();
             Subsystems.drivetrain.setTurnPID(false);
-            enabled = false;
+            reset();
         }
-        return super.isFinished();
+        return finished;
     }
 }

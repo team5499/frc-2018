@@ -7,25 +7,23 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Timer;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 public class Encoders implements PIDSource {
     private PIDSourceType type;
-    private boolean left_side;
+    private TalonSRX host_talon;
     private double last_distance;
     private double last_time;
     private double last_velocity;
 
-    public Encoders(boolean l_side) {
+    public Encoders(TalonSRX host_talon) {
         last_velocity = 0;
         type = PIDSourceType.kDisplacement;
-        left_side = l_side;
+        this.host_talon = host_talon;
     }
 
     public void reset() {
-        if(left_side) {
-            Hardware.left_master_talon.getSensorCollection().setQuadraturePosition(0, 0);
-        } else {
-            Hardware.right_master_talon.getSensorCollection().setQuadraturePosition(0, 0);
-        }
+        host_talon.getSensorCollection().setQuadraturePosition(0, 0);
     }
 
     @Override
@@ -35,13 +33,7 @@ public class Encoders implements PIDSource {
     
     @Override
     public double pidGet() {
-        double distance_value;
-        if(left_side) {
-            distance_value = -Hardware.left_master_talon.getSensorCollection().getQuadraturePosition() * Reference.getInstance().DISTANCE_PER_TICK;
-        } else {
-            distance_value = Hardware.right_master_talon.getSensorCollection().getQuadraturePosition() * Reference.getInstance().DISTANCE_PER_TICK;
-        }
-        return distance_value;
+        return host_talon.getSensorCollection().getQuadraturePosition() * Reference.getInstance().DISTANCE_PER_TICK;
     }
 
     @Override
@@ -51,7 +43,7 @@ public class Encoders implements PIDSource {
 
     public double getVelocity() {
         double velocity = (pidGet() - last_distance) / (Timer.getFPGATimestamp() - last_time);
-        if((Timer.getFPGATimestamp() - last_time) * 1000 < (double) Reference.getInstance().TALON_QUADRATURE_UPDATE_INTERVAL) {
+        if(pidGet() == last_distance) {
             return last_velocity;
         } else {
             last_velocity = velocity;

@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.Timer;
 public abstract class BaseCommand {
 
     private double timeout;
-    private double startTime;
     private Timer timer;
 
     public BaseCommand(double to) {
@@ -21,7 +20,7 @@ public abstract class BaseCommand {
     public abstract void handle();
 
     public boolean isFinished() {
-        return (timer.get() >= timeout ? true : false);
+        return (timer.get() >= timeout);
     }
 
     public void reset() {

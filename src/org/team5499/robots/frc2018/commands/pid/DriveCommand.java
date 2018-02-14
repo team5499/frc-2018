@@ -28,7 +28,6 @@ public class DriveCommand extends BaseCommand {
 
     @Override
     public void handle() {
-        System.out.println("PID distance error:" + Subsystems.drivetrain.pidDistanceError() + " " + Subsystems.drivetrain.distanceOnTarget() + ":" + Subsystems.drivetrain.averageVelocity());
     }
 
     @Override
@@ -42,7 +41,7 @@ public class DriveCommand extends BaseCommand {
         boolean finished = (super.isFinished() || (Subsystems.drivetrain.angleOnTarget() && Subsystems.drivetrain.distanceOnTarget()));
         if(finished) {
             Subsystems.drivetrain.pidDisable();
-            enabled = false;
+            reset();
         }
         return finished;
     }

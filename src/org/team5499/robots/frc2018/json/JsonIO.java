@@ -31,6 +31,9 @@ public class JsonIO {
         }
     }
 
+    /**
+     * Sets Reference class instance from json file
+     */
     public static void updateReference(){
         FileReader fr = null;
         BufferedReader br = null;
@@ -42,19 +45,20 @@ public class JsonIO {
             while((currentLine = br.readLine()) != null) {
                 json += currentLine;
             }
-            //System.out.println(json);
             Reference ref = gson.fromJson(json, Reference.class);
             Reference.setInstance(ref);
             System.out.println("New Reference Instance");
         } catch(Exception e) {
+            System.out.println("Error updating reference - its possible that vars.json is empty!");
             e.printStackTrace();
         }
     }
 
-
+    /**
+     * Takes reference class and writes it to the json file
+     */
     public static void updateJson(Reference ref) {
         String json = gson.toJson(ref);
-        // System.out.println(json);
         try {
             FileWriter writer = new FileWriter(file, false);
             writer.write(json);

@@ -19,17 +19,19 @@ public class Intake {
     private AnalogPotentiometer potentiometer;
 
     public Intake() {
-        potentiometer = new AnalogPotentiometer(Reference.getInstance().POT1_PORT);
+        potentiometer = new AnalogPotentiometer(Reference.getInstance().ARM_POT_PORT);
         arm_output = new ArmOutput();
         arm_controller = new PIDController(Reference.getInstance().kArmP, Reference.getInstance().kArmI, Reference.getInstance().kArmD, Reference.getInstance().kArmF, potentiometer, arm_output, 0.005);
         arm_controller.setOutputRange(-1, 1);
         arm_controller.setAbsoluteTolerance(0);
     }
 
+    /** Positive is (Up, Down) */
     public void setArm(double speed) {
         Hardware.arm_talon.set(ControlMode.PercentOutput, speed);
     }
     
+    /** Positive is (Intake, Outtake) */
     public void intake(double speed) {
         Hardware.intake_master_talon.set(ControlMode.PercentOutput, speed);
     }
@@ -43,7 +45,6 @@ public class Intake {
     }
 
     public void reset() {
-        
     }
 
     public void stop() {

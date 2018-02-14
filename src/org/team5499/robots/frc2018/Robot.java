@@ -2,6 +2,7 @@ package org.team5499.robots.frc2018;
 
 import org.team5499.robots.frc2018.controllers.AutoController;
 import org.team5499.robots.frc2018.controllers.OperatorController;
+import org.team5499.robots.frc2018.controllers.TestController;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 import org.team5499.robots.frc2018.json.JsonIO;
 
@@ -15,12 +16,13 @@ public class Robot extends TimedRobot {
 
     private OperatorController operatorController;
     private AutoController autoController;
+    private TestController testController;
 
     public Robot() {
         super.setPeriod(Reference.getInstance().TIMED_INTERVAL); // set update interval
         operatorController = new OperatorController();
         autoController = new AutoController();
-        // JsonIO.updateJson(Reference.getInstance());
+        testController = new TestController();
         JsonIO.updateReference();
     }
 
@@ -32,18 +34,15 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
-        //System.out.println(Subsystems.drivetrain.getAngle());
     }
 
     @Override
 	public void disabledInit() {
         autoController.reset();
-        System.out.println(Subsystems.drivetrain.getAngle());
     }
     
 	@Override
 	public void disabledPeriodic() {
-        //Subsystems.json.updateVariables();
     }
 
     @Override
@@ -73,12 +72,12 @@ public class Robot extends TimedRobot {
 
     @Override
     public void testInit() {
-
+        testController.start();
     }
 
     @Override
     public void testPeriodic() {
-
+        testController.handle();
     }
 
 }
