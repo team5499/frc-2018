@@ -33,6 +33,8 @@ public class Reference {
     public double OUTTAKE_SPEED = -0.5;
     public double JOYSTICK_DEADZONE = 0.05;
     public double ARM_SPEED = 0.90;
+    public double AUTO_ARM_UP_SPEED = -0.65;
+    public double AUTO_ARM_DOWN_SPEED = 0.4;
 
     // drivetrain talons
     public int LEFT_MASTER_PORT = 1;
@@ -55,6 +57,9 @@ public class Reference {
     // arm ports
     public int ARM_PORT = 3;
 
+    // pot ports
+    public int POT1_PORT = 3;
+
     // input
     public  int DRIVER_PORT = 0;
     public  int CODRIVER_PORT = 1;
@@ -75,9 +80,22 @@ public class Reference {
     public double kDI = 0.0;
     public double kDD = 0.75;
     public double kDF = 0.0;
+
+    // angle pid consts
     public double kAP = 0.05;
     public double kAI = 0.0;
     public double kAD = 0.04;
     public double kAF = 0.0;
-  
+
+    // turn pid consts
+    public double kTP = 0.015;
+    public double kTI = 0.0;
+    public double kTD = 0.03;
+    public double kTF = 0.0;
+
+    // arm pid consts
+    public double kArmP = 0.0;
+    public double kArmI = 0.0;
+    public double kArmD = 0.0;
+    public double kArmF = 0.0;
 }

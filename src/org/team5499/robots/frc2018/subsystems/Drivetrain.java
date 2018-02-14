@@ -156,6 +156,14 @@ public class Drivetrain {
         return angle_controller.getError();
     }
 
+    public void setTurnPID(boolean turn) {
+        if(turn) {
+            angle_controller.setPID(Reference.getInstance().kTP, Reference.getInstance().kTI, Reference.getInstance().kTD, Reference.getInstance().kTF);
+        } else {
+            angle_controller.setPID(Reference.getInstance().kAP, Reference.getInstance().kAI, Reference.getInstance().kAD, Reference.getInstance().kAF);
+        }
+    }
+
     public void reset() {
         System.out.println("Reset");
         pidDisable();

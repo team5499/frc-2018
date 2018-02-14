@@ -1,9 +1,10 @@
 package org.team5499.robots.frc2018.commands.timed;
 
+import org.team5499.robots.frc2018.Reference;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 import org.team5499.robots.frc2018.commands.BaseCommand;
 
-public class ArmCommand extends BaseCommand {
+public class TimedArmCommand extends BaseCommand {
 
     public enum Direction {
         UP,
@@ -13,15 +14,15 @@ public class ArmCommand extends BaseCommand {
     private Direction dir;
     private double speed;
 
-    public ArmCommand(double to, Direction dir) {
+    public TimedArmCommand(double to, Direction dir) {
         super(to);
         switch(dir) {
             case UP:
-                speed = -0.75;
+                speed = Reference.getInstance().AUTO_ARM_UP_SPEED;
                 // .75 seconds allows it to go all the way up
                 break;
             case DOWN:
-                speed = 0.4;
+                speed = Reference.getInstance().AUTO_ARM_DOWN_SPEED;
                 // .5 seconds is enough to go all the way down
                 break;
             default:
