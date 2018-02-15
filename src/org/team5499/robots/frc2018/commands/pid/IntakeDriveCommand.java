@@ -16,7 +16,6 @@ public class IntakeDriveCommand extends DriveCommand {
 
     @Override
     public void start() {
-        // System.out.println("Command started!");
         super.start();
     }
 

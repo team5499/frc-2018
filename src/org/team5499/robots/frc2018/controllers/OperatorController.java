@@ -20,7 +20,6 @@ public class OperatorController extends BaseController {
     }
     
     private String data;
-    private DriverControlMethod currentMethod;
     private XboxController driver, codriver;
     private Joystick wheel, throttle;
     private Joystick codriverJoystick;
@@ -127,6 +126,10 @@ public class OperatorController extends BaseController {
         return speed;
     }
 
+    private double getArmPIDSetpoint() {
+        return (codriverJoystick.getRawAxis(1) * 50) + 50;
+    }
+
     public double getB() {
         return (driver.getBButton() ? 1.0 : 0);
     }
@@ -147,7 +150,7 @@ public class OperatorController extends BaseController {
                 } else if(codriverJoystick.getRawButton(5)) {
                     return Reference.getInstance().SLOW_INTAKE;
                 } else if(codriverJoystick.getRawButton(3)) {
-                    return Reference.getInstance().getInstance().OUTTAKE_SPEED;
+                    return Reference.getInstance().OUTTAKE_SPEED;
                 } else return 0;
             default:
                 return 0;

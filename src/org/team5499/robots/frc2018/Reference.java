@@ -56,8 +56,10 @@ public class Reference {
     // arm ports
     public int ARM_PORT = 3;
 
-    // pot ports
-    public int ARM_POT_PORT = 3;
+    // pot
+    public int ARM_POT_PORT = 0;
+    public double ARM_DOWN_VOLTAGE = 2.75;
+    public double ARM_UP_VOLTAGE = 0.135;
 
     // input ports
     public  int DRIVER_PORT = 0;
@@ -92,7 +94,7 @@ public class Reference {
     public double kTF = 0.0;
 
     // arm pid consts
-    public double kArmP = 0.0;
+    public double kArmP = 0.02;
     public double kArmI = 0.0;
     public double kArmD = 0.0;
     public double kArmF = 0.0;

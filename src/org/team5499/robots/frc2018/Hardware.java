@@ -1,5 +1,7 @@
 package org.team5499.robots.frc2018;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -19,6 +21,7 @@ public class Hardware {
     public static TalonSRX arm_talon = new TalonSRX(Reference.getInstance().ARM_PORT);
     public static TalonSRX intake_master_talon = new TalonSRX(Reference.getInstance().LEFT_INTAKE_PORT);
     public static TalonSRX intake_slave_talon = new TalonSRX(Reference.getInstance().RIGHT_INTAKE_PORT);
+    public static AnalogInput arm_pot = new AnalogInput(Reference.getInstance().ARM_POT_PORT);
 
     // climber
     public static TalonSRX climb_master_talon = new TalonSRX(Reference.getInstance().CLIMBER_MASTER_PORT);

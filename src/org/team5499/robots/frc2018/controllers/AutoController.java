@@ -89,6 +89,7 @@ public class AutoController extends BaseController {
 
     public void reset() {
         Subsystems.drivetrain.reset();
+        Subsystems.intake.reset();
         test.reset();
         left.reset();
     }
