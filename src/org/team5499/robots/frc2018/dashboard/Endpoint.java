@@ -24,8 +24,7 @@ public class Endpoint {
     @OnOpen
     public void onOpen(Session session) {
        System.out.println(session.getId() + " has opened a connection"); 
-       Dashboard.sessions.put(session.getId(), session);
-       updateSessions();
+       Dashboard._addSession(session.getId(), session);
     }
 
    /**
@@ -45,13 +44,7 @@ public class Endpoint {
     @OnClose
     public void onClose(Session session) {
         System.out.println("Attempting to terminate thread for " + session.getId());
-        Dashboard.sessions.remove(session.getId());
+        Dashboard._removeSession(session.getId());
         System.out.println("Session " + session.getId() + " has ended");
-    }
-
-    private void updateSessions() {
-        synchronized(Dashboard.sessions) {
-            Dashboard.mt.updateSessions(Dashboard.sessions.values());
-        }
     }
 }

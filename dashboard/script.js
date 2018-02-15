@@ -1,5 +1,7 @@
 "use strict";
-goog.require('proto.dashboard.DashPacket');
+
+goog.require('org.team5499.robots.frc2018.dashboard.DashPacket');
+
 var connect = document.getElementById("connect");
 var out = document.getElementById("out");
 

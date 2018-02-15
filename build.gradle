@@ -133,6 +133,19 @@ task deploy {
   }
 }
 
+task buildProtoBuf {
+  doLast {
+    exec {
+      commandLine 'protoc'
+      args '--java_out=./src/', './src/org/team5499/robots/frc2018/dashboard/DashPacket.proto'
+    }
+    exec {
+      commandLine 'protoc'
+      args '--js_out=dashboard/', './src/org/team5499/robots/frc2018/dashboard/DashPacket.proto'
+    }
+  }
+}
+
 task zipDashboard(type: Zip) {
   from file('./dashboard')
   into file('SmartDashboard')

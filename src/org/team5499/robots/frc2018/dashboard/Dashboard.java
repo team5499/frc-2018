@@ -4,8 +4,13 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import org.glassfish.tyrus.server.Server;
+import org.team5499.robots.frc2018.dashboard.DashPacketProtos.DashPacket;
+import org.team5499.robots.frc2018.dashboard.DashPacketProtos.DashPacket.param;
+
 import java.lang.Thread;
 import java.util.HashMap;
+import java.util.Collection;
+import java.util.List;
 import javax.websocket.*;
 import javax.websocket.server.*;
 
@@ -13,9 +18,9 @@ public class Dashboard {
     private static boolean running = false;
     private static org.glassfish.tyrus.server.Server server;
     private static DashPacketProtos.DashPacket.Builder packet_builder = DashPacketProtos.DashPacket.newBuilder();
-    protected static HashMap<String,Session> sessions;
-    protected static Thread message_thread;
-    protected static MessageThread mt;
+    private static HashMap<String,Session> sessions;
+    private static Thread message_thread;
+    private static MessageThread mt;
 
     public static void runServer() {
         if(running) {
@@ -29,9 +34,7 @@ public class Dashboard {
             sessions = new HashMap<String,Session>();
             mt = new MessageThread();
             message_thread = new Thread(mt);
-            System.out.println("Right before start of message handling thread");
             message_thread.start();
-            System.out.println("Right after start of message handling thread");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -49,17 +52,43 @@ public class Dashboard {
 
     public static void setValue(String key, String value) {
         synchronized(packet_builder) {
-            /*
-            switch(key) {
-                case "battvoltage":
-                    packet_builder.setBattVoltage(Float.parseFloat(value));
-                default:
-                    System.out.println("There is no smart dashboard field with key: " + key);
+            List<param> parameters = packet_builder.getParametersList();
+            int index = indexOfKey(parameters, key);
+            if(index > -1) {
+                packet_builder.setParameters(index, DashPacketProtos.DashPacket.param.newBuilder().setKey(key).setValue(value).build());
+            } else {
+                packet_builder.addParameters(DashPacketProtos.DashPacket.param.newBuilder().setKey(key).setValue(value).build());
             }
-            */
-            packet_builder.setBattVoltage(Float.parseFloat(value));
         }
     }
+
+    // returns -1 if no matching key is found
+    private static int indexOfKey(List<param> parameters, String key) {
+        for(param p : parameters) {
+            if(p.getKey() == key) {
+                return parameters.indexOf(p);
+            }
+        }
+        return -1;
+    }
+
+    protected static void _addSession(String key, Session session) {
+        synchronized(sessions) {
+            sessions.put(key, session);
+        }
+    }
+
+    protected static void _removeSession(String key) {
+        synchronized(sessions) {
+            sessions.remove(key);
+        }
+    }
+
+    protected static Collection<Session> _getSessions() {
+        synchronized(sessions) {
+            return sessions.values();
+        }
+    } 
 
     protected static DashPacketProtos.DashPacket getPacket() {
         synchronized(packet_builder) {

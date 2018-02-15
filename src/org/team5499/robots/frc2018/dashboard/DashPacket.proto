@@ -6,5 +6,9 @@ option java_package = "org.team5499.robots.frc2018.dashboard";
 option java_outer_classname = "DashPacketProtos";
 
 message DashPacket {
-    optional float battVoltage = 1;
+    message param {
+        optional string key = 1;
+        optional string value = 2;
+    }
+    repeated param parameters = 1;
 }

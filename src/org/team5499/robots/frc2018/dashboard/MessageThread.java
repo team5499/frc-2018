@@ -11,23 +11,20 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public class MessageThread implements Runnable{
-    private Collection<Session> sessions;
 
     public MessageThread() {
-        sessions = new HashMap<String,Session>().values();
     }
 
     @Override
     public void run() {
         while(true) {
             DashPacketProtos.DashPacket packet = Dashboard.getPacket();
-            synchronized(sessions) {
-                for(Session i : sessions) {
-                    try {
-                        i.getBasicRemote().sendBinary(ByteBuffer.wrap(packet.toByteArray()));
-                    } catch(IOException ioe) {
-                        ioe.printStackTrace();
-                    }
+            Collection<Session> sessions = Dashboard._getSessions();
+            for(Session i : sessions) {
+                try {
+                    i.getBasicRemote().sendBinary(ByteBuffer.wrap(packet.toByteArray()));
+                } catch(IOException ioe) {
+                    ioe.printStackTrace();
                 }
             }
             try {
@@ -36,12 +33,6 @@ public class MessageThread implements Runnable{
                 System.out.println("Client closed connection - terminating message thread " + Thread.currentThread().getId());
                 return;
             }
-        }
-    }
-
-    public void updateSessions(Collection<Session> s) {
-        synchronized(sessions) {
-            sessions = s;
         }
     }
 }
