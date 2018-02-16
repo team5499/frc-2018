@@ -33,6 +33,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
+        System.out.println(Hardware.left_master_talon.getSensorCollection().getAnalogIn());
     }
 
     @Override
@@ -42,7 +43,6 @@ public class Robot extends TimedRobot {
     
 	@Override
 	public void disabledPeriodic() {
-        System.out.println(Hardware.left_master_talon.getSensorCollection().getAnalogIn());
     }
 
     @Override

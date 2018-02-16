@@ -23,7 +23,7 @@ public class Reference {
     public double TIMED_INTERVAL = 0.005; /* time interval (in seconds) for the main loop */
 
     // drive constants
-    public DriverControlMethod DRIVER_CONTROL_METHOD = DriverControlMethod.CONTROLLER; /* Which controller to use for the driver (CONTROLLER, WHEEL) */
+    public DriverControlMethod DRIVER_CONTROL_METHOD = DriverControlMethod.WHEEL; /* Which controller to use for the driver (CONTROLLER, WHEEL) */
     public CodriverControlMethod CODRIVER_CONTROL_METHOD = CodriverControlMethod.CONTROLLER; /* Which controller to use for the codriver (CONTROLLER, JOYSTICK) */
 
     public double SLOW_MULTIPLIER = 0.5; /* Speed multiplier when the driver presses the "slow" button */
@@ -60,6 +60,10 @@ public class Reference {
     public int ARM_POT_PORT = 0;
     public double ARM_DOWN_VOLTAGE = 2.75;
     public double ARM_UP_VOLTAGE = 0.135;
+
+    // sonic sensor
+    public int SONIC_FAR_VALUE = 1400;
+    public int SONIC_CLOSE_VALUE = 2000;
 
     // input ports
     public  int DRIVER_PORT = 0;
@@ -98,4 +102,10 @@ public class Reference {
     public double kArmI = 0.0;
     public double kArmD = 0.0;
     public double kArmF = 0.0;
+
+    // intake pid consts
+    public double kIntP = 0.1;
+    public double kIntI = 0.0;
+    public double kIntD = 0.0;
+    public double kIntF = 0.0;
 }
