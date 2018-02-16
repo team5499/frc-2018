@@ -147,16 +147,11 @@ task buildProtoBuf {
 }
 
 task zipDashboard(type: Zip) {
-  from file('./dashboard')
-  into file('SmartDashboard')
-  include '*'
+  from 'dashboard/'
+  into 'SmartDashboard'
+  include '**/'
   archiveName 'SmartDashboard.zip'
   destinationDir(getTemporaryDir().toPath().resolve('zip_dir').toFile())
-  //THIS HAS TO CHANGE TO PREVENT FROM FLATTENING THE DIRECTORY STRUCTURE
-  eachFile { details ->
-      String new_path = details.getSourcePath()
-      details.setRelativePath(new RelativePath(true, new_path))
-  }
 }
 
 task deploy_dashboard {
