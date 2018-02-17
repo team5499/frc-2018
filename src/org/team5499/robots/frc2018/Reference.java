@@ -27,7 +27,7 @@ public class Reference {
     public CodriverControlMethod CODRIVER_CONTROL_METHOD = CodriverControlMethod.CONTROLLER; /* Which controller to use for the codriver (CONTROLLER, JOYSTICK) */
 
     public double SLOW_MULTIPLIER = 0.5; /* Speed multiplier when the driver presses the "slow" button */
-    public double INTAKE_SPEED = 0.65; /* Normal intake speed */
+    public double INTAKE_SPEED = 0.85; /* Normal intake speed */
     public double SLOW_INTAKE = 0.3; /* Used for the intake hold function */
     public double OUTTAKE_SPEED = -0.5; /* Normal outtake speed */
     public double JOYSTICK_DEADZONE = 0.05; /* Generic joystick deadzone */
