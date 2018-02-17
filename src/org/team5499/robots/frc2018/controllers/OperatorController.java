@@ -61,6 +61,7 @@ public class OperatorController extends BaseController {
             case WHEEL:
                 double throttle = getThrottle() * throttleLimiter();
                 double wheel = getWheel() * wheelLimiter();
+                System.out.println(wheel);
                 Subsystems.drivetrain.drive(throttle - wheel, throttle + wheel);
                 break;
         }
@@ -104,13 +105,13 @@ public class OperatorController extends BaseController {
 
     private double wheelLimiter() {
         if(!wheel.getRawButton(8)) {
-            return (getThrottle() > 0 ? 0.4 : 0.25);
+            return 0.275;
         } else
-            return 1;
+            return (Math.abs(getThrottle()) < 0.075) ? 1.0 : 0.45;
     }
 
     public double getThrottle() {
-        return throttle.getRawAxis(1);
+        return (Math.abs(throttle.getRawAxis(1)) > 0.05) ? throttle.getRawAxis(1) : 0;
     }
 
     public double throttleLimiter() {
