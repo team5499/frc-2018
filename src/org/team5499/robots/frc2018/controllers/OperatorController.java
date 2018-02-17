@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 public class OperatorController extends BaseController {
     public enum DriverControlMethod {
@@ -67,13 +68,23 @@ public class OperatorController extends BaseController {
         }
         Subsystems.intake.intake(getIntake());
 
-        if(pidArm()) {
-            Subsystems.intake.setSetpoint(95);
+        if(Subsystems.intake.cubeDetected()) {
+            codriver.setRumble(RumbleType.kRightRumble, 1);
+        } else {
+            codriver.setRumble(RumbleType.kRightRumble, 0);
+        }
+
+        if(pidArm() < 0 && getArm() == 0) {
+            Subsystems.intake.setSetpoint(110);
+            Subsystems.intake.pidEnable();
+        } else if(pidArm() > 0 && getArm() == 0) {
+            Subsystems.intake.setSetpoint(-25);
             Subsystems.intake.pidEnable();
         } else {
             Subsystems.intake.pidDisable();
-            Subsystems.intake.setArm(getArm());
+            Subsystems.intake.setArm(-getArm());
         }
+        
     }
 
     @Override 
@@ -118,8 +129,22 @@ public class OperatorController extends BaseController {
         return (throttle.getRawButton(1) ? 0.25 : 1);
     }
 
-    public boolean pidArm() {
-        return getArm() < -0.1;
+    public double pidArm() {
+        double value = 0;
+
+        switch(Reference.getInstance().CODRIVER_CONTROL_METHOD) {
+            case CONTROLLER:
+                value = -codriver.getY(Hand.kLeft) * Reference.getInstance().ARM_SPEED;
+                break;
+            case JOYSTICK:
+                //value = -codriverJoystick.getRawAxis(1) * Reference.getInstance().ARM_SPEED;
+                break;
+        }
+
+        if(Math.abs(value) < 0.1)
+            return 0;
+
+        return value;
     }
 
     public double getArm() {
@@ -128,7 +153,7 @@ public class OperatorController extends BaseController {
 
         switch(Reference.getInstance().CODRIVER_CONTROL_METHOD) {
             case CONTROLLER:
-                speed = -codriver.getY(Hand.kLeft) * Reference.getInstance().ARM_SPEED;
+                speed = -codriver.getY(Hand.kRight) * Reference.getInstance().ARM_SPEED;
                 break;
             case JOYSTICK:
                 speed = -codriverJoystick.getRawAxis(1) * Reference.getInstance().ARM_SPEED;
@@ -136,6 +161,9 @@ public class OperatorController extends BaseController {
         }
 
         speed = (speed > 0) ? speed * 0.90 : speed;
+
+        if(Math.abs(speed) < 0.2)
+            return 0;
 
         return speed;
     }

@@ -11,6 +11,6 @@ public class ArmOutput implements PIDOutput {
 
     @Override
     public void pidWrite(double output) {
-        Subsystems.intake.setArm(-output);
+        Subsystems.intake.setArm(output);
     }
 }

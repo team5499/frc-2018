@@ -72,8 +72,8 @@ public class Intake {
         reset();
     }
 
-    public void handleCubeDetection() {
-
+    public boolean cubeDetected() {
+        return (Hardware.left_master_talon.getSensorCollection().getAnalogInRaw() < Reference.getInstance().SONIC_CUBE_DETECTED_VALUE);
     }
 
 }

@@ -72,6 +72,14 @@ public class Drivetrain {
         System.out.println("Distance setpoint" + distance_setpoint);
     }
 
+    public double getDistanceSetpoint() {
+        return distance_setpoint;
+    }
+
+    public double getDistanceControllerSetpoint() {
+        return drive_controller.getSetpoint();
+    }
+
     public void pidEnable(boolean drive, boolean angle) {
         if(drive) {
             drive_controller.enable();
@@ -142,6 +150,7 @@ public class Drivetrain {
         drive_controller.reset();
         angle_controller.reset();
         gyro.reset();
+        encoder.reset();
         distance_setpoint = 0;
         angle_setpoint = 0;
     }

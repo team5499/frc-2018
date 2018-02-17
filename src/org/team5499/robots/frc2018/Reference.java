@@ -62,8 +62,9 @@ public class Reference {
     public double ARM_PERPENDICULAR_VOLTAGE = 0.665;
 
     // sonic sensor
-    public int SONIC_FAR_VALUE = 1400;
-    public int SONIC_CLOSE_VALUE = 2000;
+    public int SONIC_FAR_VALUE = 530;
+    public int SONIC_CUBE_DETECTED_VALUE = 70;
+    public int SONIC_CLOSE_VALUE = 10;
 
     // input ports
     public  int DRIVER_PORT = 0;
@@ -92,15 +93,15 @@ public class Reference {
     public double kAF = 0.0;
 
     // turn pid consts
-    public double kTP = 0.015;
+    public double kTP = 0.025;
     public double kTI = 0.0;
     public double kTD = 0.03;
     public double kTF = 0.0;
 
     // arm pid consts
-    public double kArmP = 0.03;
+    public double kArmP = 0.02;
     public double kArmI = 0.0;
-    public double kArmD = 0.0;
+    public double kArmD = 0.3;
     public double kArmF = 0.0;
 
     // intake pid consts

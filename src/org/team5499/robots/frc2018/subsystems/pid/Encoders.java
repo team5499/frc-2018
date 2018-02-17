@@ -33,7 +33,7 @@ public class Encoders implements PIDSource {
     
     @Override
     public double pidGet() {
-        return host_talon.getSensorCollection().getQuadraturePosition() * Reference.getInstance().DISTANCE_PER_TICK;
+        return -host_talon.getSensorCollection().getQuadraturePosition() * Reference.getInstance().DISTANCE_PER_TICK;
     }
 
     @Override
