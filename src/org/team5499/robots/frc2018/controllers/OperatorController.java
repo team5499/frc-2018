@@ -65,7 +65,14 @@ public class OperatorController extends BaseController {
                 break;
         }
         Subsystems.intake.intake(getIntake());
-        Subsystems.intake.setArm(getArm());
+
+        if(pidArm()) {
+            Subsystems.intake.setSetpoint(95);
+            Subsystems.intake.pidEnable();
+        } else {
+            Subsystems.intake.pidDisable();
+            Subsystems.intake.setArm(getArm());
+        }
     }
 
     @Override 
@@ -109,6 +116,10 @@ public class OperatorController extends BaseController {
         return (throttle.getRawButton(1) ? 0.25 : 1);
     }
 
+    public boolean pidArm() {
+        return getArm() < -0.1;
+    }
+
     public double getArm() {
         // Positive is down
         double speed = 0;
@@ -123,11 +134,12 @@ public class OperatorController extends BaseController {
         }
 
         speed = (speed > 0) ? speed * 0.90 : speed;
+
         return speed;
     }
 
-    private double getArmPIDSetpoint() {
-        return (codriverJoystick.getRawAxis(1) * 50) + 50;
+    private boolean pastVertical() {
+        return (Subsystems.intake.getPotPosition() > 90);
     }
 
     public double getB() {

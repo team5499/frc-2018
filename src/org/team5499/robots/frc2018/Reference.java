@@ -58,8 +58,8 @@ public class Reference {
 
     // pot
     public int ARM_POT_PORT = 0;
-    public double ARM_DOWN_VOLTAGE = 2.75;
-    public double ARM_UP_VOLTAGE = 0.135;
+    public double ARM_PARALLEL_VOLTAGE = 2.25;
+    public double ARM_PERPENDICULAR_VOLTAGE = 0.665;
 
     // sonic sensor
     public int SONIC_FAR_VALUE = 1400;

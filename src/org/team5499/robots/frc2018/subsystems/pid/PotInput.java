@@ -16,7 +16,7 @@ public class PotInput implements PIDSource {
 
     @Override
     public double pidGet() {
-        return map_values(Hardware.arm_pot.getVoltage());
+        return map_degrees(Hardware.arm_pot.getVoltage());
     }
 
     @Override
@@ -29,7 +29,7 @@ public class PotInput implements PIDSource {
         this.type = type;
     }
 
-    private double map_values(double voltage) {
-        return Math.abs(((voltage - Reference.getInstance().ARM_DOWN_VOLTAGE) / (Reference.getInstance().ARM_DOWN_VOLTAGE - Reference.getInstance().ARM_UP_VOLTAGE)) * 100);
+    private double map_degrees(double voltage) {
+        return ((voltage - Reference.getInstance().ARM_PARALLEL_VOLTAGE) / (Reference.getInstance().ARM_PERPENDICULAR_VOLTAGE - Reference.getInstance().ARM_PARALLEL_VOLTAGE)) * 90;
     }
 }

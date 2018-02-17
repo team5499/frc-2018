@@ -28,7 +28,6 @@ public class Intake {
         intake_output = new IntakeOutput();
         arm_controller = new PIDController(Reference.getInstance().kArmP, Reference.getInstance().kArmI, Reference.getInstance().kArmD, Reference.getInstance().kArmF, arm_pot, arm_output, Reference.getInstance().PID_LOOP_UPDATE_FRAME);
         intake_controller = new PIDController(Reference.getInstance().kIntP, Reference.getInstance().kIntI, Reference.getInstance().kIntD, Reference.getInstance().kIntF, intake_sonic, intake_output, Reference.getInstance().PID_LOOP_UPDATE_FRAME);
-        arm_controller.setInputRange(0, 100);
         arm_controller.setOutputRange(-1, 1);
         arm_controller.setAbsoluteTolerance(0);
         cube_detected = false;

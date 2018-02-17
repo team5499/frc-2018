@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
-        System.out.println(Hardware.left_master_talon.getSensorCollection().getAnalogIn());
+        System.out.println(/* Hardware.arm_pot.getVoltage() + */ ":" + Subsystems.intake.getPotPosition());
     }
 
     @Override
