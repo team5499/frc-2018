@@ -23,7 +23,7 @@ public class Reference {
     public double TIMED_INTERVAL = 0.005; /* time interval (in seconds) for the main loop */
 
     // drive constants
-    public DriverControlMethod DRIVER_CONTROL_METHOD = DriverControlMethod.WHEEL; /* Which controller to use for the driver (CONTROLLER, WHEEL) */
+    public DriverControlMethod DRIVER_CONTROL_METHOD = DriverControlMethod.CONTROLLER; /* Which controller to use for the driver (CONTROLLER, WHEEL) */
     public CodriverControlMethod CODRIVER_CONTROL_METHOD = CodriverControlMethod.CONTROLLER; /* Which controller to use for the codriver (CONTROLLER, JOYSTICK) */
 
     public double SLOW_MULTIPLIER = 0.5; /* Speed multiplier when the driver presses the "slow" button */
@@ -98,7 +98,7 @@ public class Reference {
     public double kTF = 0.0;
 
     // arm pid consts
-    public double kArmP = 0.02;
+    public double kArmP = 0.03;
     public double kArmI = 0.0;
     public double kArmD = 0.0;
     public double kArmF = 0.0;

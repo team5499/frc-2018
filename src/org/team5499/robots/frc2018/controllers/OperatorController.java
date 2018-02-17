@@ -103,9 +103,10 @@ public class OperatorController extends BaseController {
     }
 
     private double wheelLimiter() {
-        if(wheel.getRawButton(8)) {
+        if(!wheel.getRawButton(8)) {
             return (getThrottle() > 0 ? 0.4 : 0.25);
-        } else return 1;
+        } else
+            return 1;
     }
 
     public double getThrottle() {
