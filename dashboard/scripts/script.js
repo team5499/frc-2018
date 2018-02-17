@@ -1,6 +1,16 @@
 "use strict";
 
-goog.require('org.team5499.robots.frc2018.dashboard.DashPacket');
+requirejs.config({
+    //By default load any module IDs from js/lib
+    baseUrl: 'node_modules',
+    //except, if the module ID starts with "app",
+    //load it from the js/app directory. paths
+    //config is relative to the baseUrl, and
+    //never includes a ".js" extension since
+    //the paths config could be for a directory.
+});
+
+var protobuf = require("google-protobuf");
 
 var connect = document.getElementById("connect");
 var out = document.getElementById("out");

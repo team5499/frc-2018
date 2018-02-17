@@ -148,7 +148,7 @@ task buildProtoBuf {
 
 task zipDashboard(type: Zip) {
   from 'dashboard/'
-  into 'SmartDashboard'
+  into ''
   include '**/'
   archiveName 'SmartDashboard.zip'
   destinationDir(getTemporaryDir().toPath().resolve('zip_dir').toFile())
