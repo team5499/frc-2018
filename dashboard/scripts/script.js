@@ -10,7 +10,11 @@ requirejs.config({
     //the paths config could be for a directory.
 });
 
-var protobuf = require("google-protobuf");
+// Start the main app logic.
+requirejs(['google_protobuf'],
+function(protobuf) {
+    
+});
 
 var connect = document.getElementById("connect");
 var out = document.getElementById("out");
