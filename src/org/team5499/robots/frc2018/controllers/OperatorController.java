@@ -61,7 +61,7 @@ public class OperatorController extends BaseController {
             case WHEEL:
                 double throttle = getThrottle() * throttleLimiter();
                 double wheel = getWheel() * wheelLimiter();
-                System.out.println(wheel);
+                //System.out.println(wheel);
                 Subsystems.drivetrain.drive(throttle - wheel, throttle + wheel);
                 break;
         }
