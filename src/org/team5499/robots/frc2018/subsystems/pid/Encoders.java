@@ -23,6 +23,7 @@ public class Encoders implements PIDSource {
     }
 
     public void reset() {
+        System.out.println("RESET");
         host_talon.getSensorCollection().setQuadraturePosition(0, 0);
     }
 
