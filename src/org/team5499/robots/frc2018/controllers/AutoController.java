@@ -51,10 +51,11 @@ public class AutoController extends BaseController {
         test.addCommand(new DriveCommand(2, 10));
         test.addCommand(new IntakeCommand(1, -1));
 
-        test1.addCommand(new DriveCommand(1.5, 40));
+        test1.addCommand(new DriveCommand(10, 20));
         test1.addCommand(new TurnCommand(0.7, -30));
-        test1.addCommand(new DriveCommand(2, 80));
+        test1.addCommand(new DriveCommand(2, 40));
         test1.addCommand(new IntakeCommand(0.8, -0.6));
+
         test1.addCommand(new DriveCommand(0.8, -10));
         test1.addCommand(new TurnCommand(0.8, -60));
         test1.addCommand(new DriveCommand(0.5, 20));

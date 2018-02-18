@@ -42,16 +42,13 @@ public class Robot extends TimedRobot {
     
 	@Override
 	public void disabledPeriodic() {
-        System.out.println(Hardware.left_master_talon.getSensorCollection().getAnalogIn());
+        // System.out.println(Hardware.left_master_talon.getSensorCollection().getAnalogIn());
     }
 
     @Override
     public void autonomousInit(){
         System.out.println("auto init");
         autoController.reset();
-        String data = DriverStation.getInstance().getGameSpecificMessage();
-        autoController.loadGameData(data);
-        operatorController.loadGameData(data);
         autoController.start();
     }
 
