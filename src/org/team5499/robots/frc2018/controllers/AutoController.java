@@ -26,7 +26,7 @@ public class AutoController extends BaseController {
         straight = new Routine();
 
         // drives 10 feet
-        straight.addCommand(new DriveCommand(10, 50));
+        straight.addCommand(new DriveCommand(20, 50));
 
         // works at 70 inches
         left.addCommand(new NothingCommand(1));
@@ -67,7 +67,7 @@ public class AutoController extends BaseController {
         test1.addCommand(new DriveCommand(1, -30));
         test1.addCommand(new IntakeCommand(1, -0.65));
         
-        currentRoutine = test;
+        currentRoutine = straight;
     }
 
     @Override

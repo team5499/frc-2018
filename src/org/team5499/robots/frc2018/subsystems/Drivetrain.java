@@ -110,7 +110,7 @@ public class Drivetrain {
             } else {
                 pid_drive_output = value;
             }
-            drive(pid_drive_output + pid_angle_output, pid_drive_output - pid_angle_output);
+            drive(-pid_drive_output + pid_angle_output, -pid_drive_output - pid_angle_output);
         }
     }
 
@@ -124,7 +124,7 @@ public class Drivetrain {
             } else {
                 pid_angle_output = value;
             }
-            drive(pid_drive_output + pid_angle_output, pid_drive_output - pid_angle_output);
+            drive(-pid_drive_output + pid_angle_output, -pid_drive_output - pid_angle_output);
         }
     }
 
