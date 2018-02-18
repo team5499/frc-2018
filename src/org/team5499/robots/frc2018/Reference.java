@@ -27,7 +27,7 @@ public class Reference {
     public CodriverControlMethod CODRIVER_CONTROL_METHOD = CodriverControlMethod.CONTROLLER; /* Which controller to use for the codriver (CONTROLLER, JOYSTICK) */
 
     public double SLOW_MULTIPLIER = 0.5; /* Speed multiplier when the driver presses the "slow" button */
-    public double INTAKE_SPEED = 0.65; /* Normal intake speed */
+    public double INTAKE_SPEED = 0.85; /* Normal intake speed */
     public double SLOW_INTAKE = 0.3; /* Used for the intake hold function */
     public double OUTTAKE_SPEED = -0.5; /* Normal outtake speed */
     public double JOYSTICK_DEADZONE = 0.05; /* Generic joystick deadzone */
@@ -58,8 +58,13 @@ public class Reference {
 
     // pot
     public int ARM_POT_PORT = 0;
-    public double ARM_DOWN_VOLTAGE = 2.75;
-    public double ARM_UP_VOLTAGE = 0.135;
+    public double ARM_PARALLEL_VOLTAGE = 2.25;
+    public double ARM_PERPENDICULAR_VOLTAGE = 0.665;
+
+    // sonic sensor
+    public int SONIC_FAR_VALUE = 530;
+    public int SONIC_CUBE_DETECTED_VALUE = 70;
+    public int SONIC_CLOSE_VALUE = 10;
 
     // input ports
     public  int DRIVER_PORT = 0;
@@ -88,7 +93,7 @@ public class Reference {
     public double kAF = 0.0;
 
     // turn pid consts
-    public double kTP = 0.015;
+    public double kTP = 0.025;
     public double kTI = 0.0;
     public double kTD = 0.03;
     public double kTF = 0.0;
@@ -96,6 +101,12 @@ public class Reference {
     // arm pid consts
     public double kArmP = 0.02;
     public double kArmI = 0.0;
-    public double kArmD = 0.0;
+    public double kArmD = 0.3;
     public double kArmF = 0.0;
+
+    // intake pid consts
+    public double kIntP = 0.1;
+    public double kIntI = 0.0;
+    public double kIntD = 0.0;
+    public double kIntF = 0.0;
 }
