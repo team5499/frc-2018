@@ -40,6 +40,7 @@ public class Routine {
     public boolean advanceRoutine() {
         if(!(stepNumber + 1 < commands.size())) return false;
         stepNumber++;
+        System.out.println("Advance routine: " + stepNumber);
         currentCommand = commands.get(stepNumber);
         currentCommand.start();
         return true;

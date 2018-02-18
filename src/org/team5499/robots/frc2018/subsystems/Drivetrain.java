@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.PIDController;
 public class Drivetrain {
     private double distance_setpoint;
     private double angle_setpoint;
-    private Encoders encoder;
+    public Encoders encoder;
     private Gyro gyro;
     private DriveOutput drive_out;
     private AngleOutput angle_out;

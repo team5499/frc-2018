@@ -28,6 +28,8 @@ public class DriveCommand extends BaseCommand {
 
     @Override
     public void handle() {
+    //     System.out.println("Error: " + Subsystems.drivetrain.pidDistanceError());
+    //     System.out.println("Encoder: " + Subsystems.drivetrain.encoder.pidGet());
         //System.out.println(Subsystems.drivetrain.pidDistanceError() + ":" + Subsystems.drivetrain.getDistanceSetpoint() + ":" + Subsystems.drivetrain.getDistanceControllerSetpoint());
     }
 
