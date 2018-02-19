@@ -22,7 +22,7 @@ public class Intake {
     private boolean cube_detected;
 
     public Intake() {
-        arm_pot = new PotInput();
+        arm_pot = new PotInput(Hardware.right_master_talon);
         arm_output = new ArmOutput();
         intake_sonic = new SonicInput(Hardware.left_master_talon);
         intake_output = new IntakeOutput();

@@ -7,16 +7,21 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Timer;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 public class PotInput implements PIDSource {
     private PIDSourceType type;
+    private TalonSRX host_talon;
 
-    public PotInput() {
+    public PotInput(TalonSRX host_talon) {
         type = PIDSourceType.kDisplacement;
+        this.host_talon = host_talon;
     }
 
     @Override
     public double pidGet() {
-        return map_degrees(Hardware.arm_pot.getVoltage());
+        System.out.println(map_degrees(host_talon.getSensorCollection().getAnalogInRaw()));
+        return map_degrees(host_talon.getSensorCollection().getAnalogInRaw());
     }
 
     @Override
@@ -29,7 +34,7 @@ public class PotInput implements PIDSource {
         this.type = type;
     }
 
-    private double map_degrees(double voltage) {
-        return ((voltage - Reference.getInstance().ARM_PARALLEL_VOLTAGE) / (Reference.getInstance().ARM_PERPENDICULAR_VOLTAGE - Reference.getInstance().ARM_PARALLEL_VOLTAGE)) * 90;
+    private double map_degrees(int value) {
+        return (((double) value - (double) Reference.getInstance().ARM_PARALLEL_SIGNAL) / ((double) Reference.getInstance().ARM_PERPENDICULAR_SIGNAL - (double) Reference.getInstance().ARM_PARALLEL_SIGNAL)) * 90;
     }
 }

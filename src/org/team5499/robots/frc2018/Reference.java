@@ -36,10 +36,10 @@ public class Reference {
     public double AUTO_ARM_DOWN_SPEED = -0.5; /* Arm down speed for auto */
 
     // drivetrain talons
-    public int LEFT_MASTER_PORT = 1;
-    public int LEFT_SLAVE_PORT = 2;
-    public int RIGHT_MASTER_PORT = 9;
-    public int RIGHT_SLAVE_PORT = 8;
+    public int LEFT_MASTER_PORT = 2;
+    public int LEFT_SLAVE_PORT = 3;
+    public int RIGHT_MASTER_PORT = 8;
+    public int RIGHT_SLAVE_PORT = 7;
     public int TALON_QUADRATURE_UPDATE_INTERVAL = 5; /* Time interval between encoder value updates from the talons(Milliseconds) */
     
     // intake ports
@@ -50,16 +50,16 @@ public class Reference {
     public int PIGEON_PORT = 10;
 
     // climber pots
-    public int CLIMBER_MASTER_PORT = 7;
-    public int CLIMBER_SLAVE_PORT = 5;
+    public int CLIMBER_MASTER_PORT = 9;
+    public int CLIMBER_SLAVE_PORT = 1;
 
     // arm ports
-    public int ARM_PORT = 3;
+    public int ARM_PORT = 5;
 
     // pot
     public int ARM_POT_PORT = 0;
-    public double ARM_PARALLEL_VOLTAGE = 4.32;
-    public double ARM_PERPENDICULAR_VOLTAGE = 2.635;
+    public int ARM_PARALLEL_SIGNAL = 190;
+    public int ARM_PERPENDICULAR_SIGNAL = 425;
 
     // sonic sensor
     public int SONIC_FAR_VALUE = 530;

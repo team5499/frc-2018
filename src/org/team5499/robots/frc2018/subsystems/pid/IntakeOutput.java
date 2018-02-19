@@ -11,7 +11,7 @@ public class IntakeOutput implements PIDOutput {
 
     @Override
     public void pidWrite(double output) {
-        Subsystems.intake.intake(output);
+        Subsystems.intake.intake(-output);
     }
 
 }
