@@ -41,13 +41,13 @@ public class AutoController extends BaseController {
         test.addCommand(new TurnCommand(2, 90));
         test.addCommand(new DriveCommand(3, -63));
         test.addCommand(new IntakeCommand(1, -1.0));
-        test.addCommand(new TimedArmCommand(0.5, Direction.DOWN));
         test.addCommand(new DriveCommand(2, 12));
-        test.addCommand(new TurnCommand(2, -90));
-        test.addCommand(new IntakeDriveCommand(2,-30, 1));
+        test.addCommand(new TimedArmCommand(1, Direction.DOWN));
+        test.addCommand(new TurnCommand(2, -100));
+        test.addCommand(new IntakeDriveCommand(3, 45, 1));
         test.addCommand(new TimedArmCommand(2, Direction.UP));
-        test.addCommand(new DriveCommand(2, -30));
-        test.addCommand(new TurnCommand(2, 90));
+        test.addCommand(new DriveCommand(2, -45));
+        test.addCommand(new TurnCommand(2.5, 100));
         test.addCommand(new DriveCommand(2, -10));
         test.addCommand(new IntakeCommand(1, -1));
 
@@ -67,7 +67,7 @@ public class AutoController extends BaseController {
         test1.addCommand(new DriveCommand(2, -30));
         test1.addCommand(new IntakeCommand(2, -0.65));
         
-        currentRoutine = test1;
+        currentRoutine = test;
     }
 
     @Override

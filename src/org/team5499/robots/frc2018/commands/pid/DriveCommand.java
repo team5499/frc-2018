@@ -28,9 +28,6 @@ public class DriveCommand extends BaseCommand {
 
     @Override
     public void handle() {
-    //     System.out.println("Error: " + Subsystems.drivetrain.pidDistanceError());
-    //     System.out.println("Encoder: " + Subsystems.drivetrain.encoder.pidGet());
-        //System.out.println(Subsystems.drivetrain.pidDistanceError() + ":" + Subsystems.drivetrain.getDistanceSetpoint() + ":" + Subsystems.drivetrain.getDistanceControllerSetpoint());
     }
 
     @Override
@@ -41,9 +38,8 @@ public class DriveCommand extends BaseCommand {
 
     @Override
     public boolean isFinished() {
-        boolean finished = (super.isFinished()/* || (Subsystems.drivetrain.angleOnTarget() && Subsystems.drivetrain.distanceOnTarget())*/);
+        boolean finished = (super.isFinished() || (Subsystems.drivetrain.angleOnTarget() && Subsystems.drivetrain.distanceOnTarget()));
         if(finished) {
-            System.out.println((Subsystems.drivetrain.angleOnTarget() && Subsystems.drivetrain.distanceOnTarget()) + ":" + super.isFinished());
             Subsystems.drivetrain.pidDisable();
             reset();
         }

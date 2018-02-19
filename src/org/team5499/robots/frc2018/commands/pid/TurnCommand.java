@@ -38,6 +38,7 @@ public class TurnCommand extends BaseCommand {
     public boolean isFinished() {
         boolean finished = (super.isFinished() || Subsystems.drivetrain.angleOnTarget());
         if(finished) {
+            System.out.println(super.isFinished() + ":" + Subsystems.drivetrain.angleOnTarget());
             Subsystems.drivetrain.pidDisable();
             Subsystems.drivetrain.setTurnPID(false);
             reset();

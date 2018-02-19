@@ -32,8 +32,8 @@ public class Reference {
     public double OUTTAKE_SPEED = -0.5; /* Normal outtake speed */
     public double JOYSTICK_DEADZONE = 0.05; /* Generic joystick deadzone */
     public double ARM_SPEED = 0.90; /* Normal arm speed multiplier */
-    public double AUTO_ARM_UP_SPEED = -0.65; /* Arm up speed for autonomous */
-    public double AUTO_ARM_DOWN_SPEED = 0.4; /* Arm down speed for auto */
+    public double AUTO_ARM_UP_SPEED = 0.65; /* Arm up speed for autonomous */
+    public double AUTO_ARM_DOWN_SPEED = -0.5; /* Arm down speed for auto */
 
     // drivetrain talons
     public int LEFT_MASTER_PORT = 1;
@@ -58,8 +58,8 @@ public class Reference {
 
     // pot
     public int ARM_POT_PORT = 0;
-    public double ARM_PARALLEL_VOLTAGE = 2.25;
-    public double ARM_PERPENDICULAR_VOLTAGE = 0.665;
+    public double ARM_PARALLEL_VOLTAGE = 4.32;
+    public double ARM_PERPENDICULAR_VOLTAGE = 2.635;
 
     // sonic sensor
     public int SONIC_FAR_VALUE = 530;
