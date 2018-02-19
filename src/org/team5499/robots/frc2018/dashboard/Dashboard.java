@@ -18,6 +18,7 @@ public class Dashboard {
     private static boolean running = false;
     private static org.glassfish.tyrus.server.Server server;
     private static DashPacketProtos.DashPacket.Builder packet_builder = DashPacketProtos.DashPacket.newBuilder();
+    private static DashPacketProtos.DashPacket incoming_message;
     private static HashMap<String,Session> sessions;
     private static Thread message_thread;
     private static MessageThread mt;
@@ -92,7 +93,7 @@ public class Dashboard {
 
     protected static void _setIncomingMessage(DashPacketProtos.DashPacket packet) {
         synchronized(incoming_message) {
-            
+            incoming_message = packet;
         }
     }
 
