@@ -758,22 +758,8 @@ class MessageHandler {
         this.addr = addr;
         this.curr_message = undefined;
         this.callback = undefined;
-
-        /*
-        this.indexOfKey = function(key) {
-            for(var i = 0;i < this.curr_message.getParametersSize(); i++) {
-                if(this.curr_message.getParametersList()[i].getKey() == key) {
-                    return i;
-                }
-            }
-
-            return -1;
-        }
-
-        this.getValue = function(key) {
-
-        }
-        */
+        this.outgoing_message = undefined;
+        this.datasocket = undefined;
     }
 
 
@@ -832,7 +818,30 @@ class MessageHandler {
     }
 
     getProperty(key) {
+        if(this.indexOfKey(key) === -1) {
+            return undefined;
+        }
         return this.curr_message.getParametersList()[this.indexOfKey(key)].getValue();
+    }
+
+    setProperty(key, property) {
+        this.outgoing_message = this.curr_message.cloneMessage();
+        if(indexOfKey(key) === -1) {
+            var tmp_array = this.outgoing_message.getPropertiesList();
+            var property = DashPacket.param();
+            property.setKey(key);
+            property.setValue(property);
+            tmp_array.push(property);
+            this.outgoing_message.setPropertiesList(tmp_array);
+        } else {
+            var tmp_array = this.outgoing_message.getPropertiesList();
+            var property = DashPacket.param();
+            property.setKey(key);
+            property.setValue(property);
+            tmp_array[indexOfKey(key)] = property;
+            this.outgoing_message.setPropertiesList(tmp_array);
+        }
+        this.datasocket.send(this.outgoing_message.serializeBinary());
     }
 
     connect(callback) {

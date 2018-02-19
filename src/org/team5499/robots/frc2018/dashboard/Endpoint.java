@@ -34,7 +34,7 @@ public class Endpoint {
     @OnMessage
     public void onMessage(String message, Session session) {
        System.out.println("Message from " + session.getId() + ": " + message);
-       
+       Dashboard._setIncomingMessage(message);
     }
 
    /**

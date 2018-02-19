@@ -14,6 +14,8 @@ import java.util.List;
 import javax.websocket.*;
 import javax.websocket.server.*;
 
+import com.google.protobuf.InvalidProtocolBufferException;
+
 public class Dashboard {
     private static boolean running = false;
     private static org.glassfish.tyrus.server.Server server;
@@ -63,6 +65,15 @@ public class Dashboard {
         }
     }
 
+    public static String getValue(String key) {
+        synchronized(incoming_message) {
+            if(indexOfKey(incoming_message.getParametersList(), key) == -1) {
+                return null;
+            }
+            return incoming_message.getParameters(indexOfKey(incoming_message.getParametersList(), key)).getValue();
+        }
+    }
+
     // returns -1 if no matching key is found
     private static int indexOfKey(List<param> parameters, String key) {
         for(param p : parameters) {
@@ -91,9 +102,17 @@ public class Dashboard {
         }
     }
 
-    protected static void _setIncomingMessage(DashPacketProtos.DashPacket packet) {
+    protected static void _setIncomingMessage(String packet) {
         synchronized(incoming_message) {
-            incoming_message = packet;
+            try {
+                incoming_message = DashPacketProtos.DashPacket.parseFrom(packet.getBytes());
+            } catch(InvalidProtocolBufferException ipbe) {
+                System.out.println("Error with parsing protocol buffer!");
+                ipbe.printStackTrace();
+            }
+            synchronized(packet_builder) {
+                packet_builder = incoming_message.toBuilder();
+            }
         }
     }
 
