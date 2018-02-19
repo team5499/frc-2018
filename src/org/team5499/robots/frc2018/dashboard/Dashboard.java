@@ -88,7 +88,13 @@ public class Dashboard {
         synchronized(sessions) {
             return sessions.values();
         }
-    } 
+    }
+
+    protected static void _setIncomingMessage(DashPacketProtos.DashPacket packet) {
+        synchronized(incoming_message) {
+            
+        }
+    }
 
     protected static DashPacketProtos.DashPacket getPacket() {
         synchronized(packet_builder) {
