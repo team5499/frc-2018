@@ -12,12 +12,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 public class Encoders implements PIDSource {
     private PIDSourceType type;
     private TalonSRX host_talon;
-    private double last_distance;
-    private double last_time;
-    private double last_velocity;
 
     public Encoders(TalonSRX host_talon) {
-        last_velocity = 0;
         type = PIDSourceType.kDisplacement;
         this.host_talon = host_talon;
     }
@@ -43,14 +39,7 @@ public class Encoders implements PIDSource {
     }
 
     public double getVelocity() {
-        double velocity = (pidGet() - last_distance) / (Timer.getFPGATimestamp() - last_time);
-        if(pidGet() == last_distance) {
-            return last_velocity;
-        } else {
-            last_velocity = velocity;
-        }
-        last_distance = pidGet();
-        last_time = Timer.getFPGATimestamp();
-        return velocity;
+        // Feet per second
+        return (host_talon.getSensorCollection().getQuadratureVelocity() * Reference.getInstance().DISTANCE_PER_TICK * 10) / 12;
     }
 }

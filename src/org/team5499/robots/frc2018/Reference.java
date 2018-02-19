@@ -44,7 +44,7 @@ public class Reference {
     
     // intake ports
     public int RIGHT_INTAKE_PORT = 6;
-    public int LEFT_INTAKE_PORT = 5;
+    public int LEFT_INTAKE_PORT = 4;
     
     // gyro port
     public int PIGEON_PORT = 10;
@@ -54,7 +54,7 @@ public class Reference {
     public int CLIMBER_SLAVE_PORT = 1;
 
     // arm ports
-    public int ARM_PORT = 4;
+    public int ARM_PORT = 5;
 
     // pot
     public int ARM_POT_PORT = 0;
