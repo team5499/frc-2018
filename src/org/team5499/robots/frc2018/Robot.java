@@ -5,6 +5,7 @@ import org.team5499.robots.frc2018.controllers.OperatorController;
 import org.team5499.robots.frc2018.controllers.TestController;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 import org.team5499.robots.frc2018.json.JsonIO;
+import org.team5499.robots.frc2018.Hardware;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -33,6 +34,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
+        System.out.println("Encoder velocity:" + Hardware.left_master_talon.getSensorCollection().getQuadratureVelocity());
     }
 
     @Override
