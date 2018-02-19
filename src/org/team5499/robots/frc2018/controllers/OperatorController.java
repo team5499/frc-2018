@@ -68,11 +68,13 @@ public class OperatorController extends BaseController {
         }
         Subsystems.intake.intake(getIntake());
 
+        /*
         if(Subsystems.intake.cubeDetected()) {
             codriver.setRumble(RumbleType.kRightRumble, 1);
         } else {
             codriver.setRumble(RumbleType.kRightRumble, 0);
         }
+        */
 
         if(pidArm() < 0 && getArm() == 0) {
             Subsystems.intake.setSetpoint(110);
