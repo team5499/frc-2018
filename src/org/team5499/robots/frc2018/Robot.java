@@ -4,6 +4,7 @@ import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 public class Robot extends TimedRobot {
@@ -11,7 +12,7 @@ public class Robot extends TimedRobot {
     public Robot() {
         super.setPeriod(10); // set update interval
         Dashboard.runServer();
-        Dashboard.setValue("battvoltage", "12");
+        Dashboard.setValue("battvoltage", "" + DriverStation.getInstance().getBatteryVoltage());
     }
 
     @Override
@@ -20,7 +21,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
-
+        Dashboard.setValue("battvoltage", "" + DriverStation.getInstance().getBatteryVoltage());
     }
 
     @Override
