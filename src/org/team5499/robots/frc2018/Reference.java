@@ -58,8 +58,8 @@ public class Reference {
 
     // pot
     public int ARM_POT_PORT = 0;
-    public int ARM_PARALLEL_SIGNAL = 190;
-    public int ARM_PERPENDICULAR_SIGNAL = 425;
+    public int ARM_PARALLEL_SIGNAL = 385;
+    public int ARM_PERPENDICULAR_SIGNAL = 165;
 
     // sonic sensor
     public int SONIC_FAR_VALUE = 530;
@@ -79,8 +79,8 @@ public class Reference {
     public double MAX_DRIVE_PID_OUTPUT = 0.3; /* PID speed cap */
     public double MAX_ANGLE_PID_OUTPUT = 1.0; /* PID speed cap */
     public double MAX_DRIVE_ERROR_TO_TARGET = 6.0; /* Max distance error before PID is considered on target */
-    public double MAX_ANGLE_ERROR_TO_TARGET = 2.0; /* Max angle error before PID is considered on target */
-    public double MAX_VELOCITY_TO_TARGET = 1.0; /* Max velocity before PID is considered on target */
+    public double MAX_ANGLE_ERROR_TO_TARGET = 2.5; /* Max angle error before PID is considered on target */
+    public double MAX_VELOCITY_TO_TARGET = 0.5; /* Max velocity before PID is considered on target */
     public double kDP = 0.045;
     public double kDI = 0.0;
     public double kDD = 0.75;
@@ -93,13 +93,13 @@ public class Reference {
     public double kAF = 0.0;
 
     // turn pid consts
-    public double kTP = 0.025;
+    public double kTP = 0.05;
     public double kTI = 0.0;
     public double kTD = 0.03;
     public double kTF = 0.0;
 
     // arm pid consts
-    public double kArmP = 0.03;
+    public double kArmP = 0.01;
     public double kArmI = 0.0;
     public double kArmD = 0.3;
     public double kArmF = 0.0;

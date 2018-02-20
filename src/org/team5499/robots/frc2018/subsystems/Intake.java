@@ -69,7 +69,6 @@ public class Intake {
     public void stop() {
         setArm(0);
         intake(0);
-        reset();
     }
 
     public boolean cubeDetected() {

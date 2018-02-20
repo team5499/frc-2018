@@ -34,7 +34,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
-        System.out.println("Encoder velocity:" + Subsystems.drivetrain.averageVelocity());
     }
 
     @Override

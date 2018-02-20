@@ -66,7 +66,7 @@ public class OperatorController extends BaseController {
                 Subsystems.drivetrain.drive(throttle - wheel, throttle + wheel);
                 break;
         }
-        Subsystems.intake.intake(getIntake());
+        Subsystems.intake.intake(-getIntake());
 
         /*
         if(Subsystems.intake.cubeDetected()) {
@@ -77,7 +77,7 @@ public class OperatorController extends BaseController {
         */
 
         if(pidArm() < 0 && getArm() == 0) {
-            Subsystems.intake.setSetpoint(110);
+            Subsystems.intake.setSetpoint(100);
             Subsystems.intake.pidEnable();
         } else if(pidArm() > 0 && getArm() == 0) {
             Subsystems.intake.setSetpoint(-25);

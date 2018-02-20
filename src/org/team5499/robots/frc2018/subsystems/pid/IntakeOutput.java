@@ -12,8 +12,6 @@ public class IntakeOutput implements PIDOutput {
 
     @Override
     public void pidWrite(double output) {
-        output = (output > Reference.getInstance().AUTO_ARM_UP_SPEED) ? Reference.getInstance().AUTO_ARM_UP_SPEED : output;
-        output = (output < Reference.getInstance().AUTO_ARM_DOWN_SPEED) ? Reference.getInstance().AUTO_ARM_DOWN_SPEED : output;
         Subsystems.intake.intake(output);
     }
 

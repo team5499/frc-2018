@@ -72,14 +72,6 @@ public class Drivetrain {
         System.out.println("Distance setpoint" + distance_setpoint);
     }
 
-    public double getDistanceSetpoint() {
-        return distance_setpoint;
-    }
-
-    public double getDistanceControllerSetpoint() {
-        return drive_controller.getSetpoint();
-    }
-
     public void pidEnable(boolean drive, boolean angle) {
         if(drive) {
             drive_controller.enable();
@@ -145,7 +137,7 @@ public class Drivetrain {
     }
 
     public void reset() {
-        System.out.println("Reset");
+        System.out.println("Drivetrain reset");
         pidDisable();
         drive_controller.reset();
         angle_controller.reset();
@@ -156,15 +148,15 @@ public class Drivetrain {
     }
 
     public boolean angleOnTarget() {
-        return (angle_controller.onTarget() && (averageVelocity() < Reference.getInstance().MAX_VELOCITY_TO_TARGET));
+        return (angle_controller.onTarget() && (absoluteVelocity() < Reference.getInstance().MAX_VELOCITY_TO_TARGET));
     }
 
     public boolean distanceOnTarget() {
-        return (angle_controller.onTarget() && drive_controller.onTarget() && (averageVelocity() < Reference.getInstance().MAX_VELOCITY_TO_TARGET));
+        return (angle_controller.onTarget() && drive_controller.onTarget() && (absoluteVelocity() < Reference.getInstance().MAX_VELOCITY_TO_TARGET));
     }
 
-    public double averageVelocity() {
-        return encoder.getVelocity();
+    public double absoluteVelocity() {
+        return Math.abs(encoder.getVelocity());
     }
 
     public double getAngle() {
@@ -176,6 +168,5 @@ public class Drivetrain {
      */
     public void stop() {
         drive(0, 0);
-        reset();
     }
 }

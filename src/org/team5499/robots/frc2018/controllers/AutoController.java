@@ -26,7 +26,8 @@ public class AutoController extends BaseController {
         straight = new Routine();
 
         // drives 10 feet
-        straight.addCommand(new DriveCommand(20, 50));
+        straight.addCommand(new DriveCommand(20, -50));
+        straight.addCommand(new TurnCommand(20, -90));
 
         // works at 70 inches
         left.addCommand(new NothingCommand(1));
@@ -40,16 +41,16 @@ public class AutoController extends BaseController {
         test.addCommand(new DriveCommand(2, -45));
         test.addCommand(new TurnCommand(2, 90));
         test.addCommand(new DriveCommand(3, -63));
-        test.addCommand(new IntakeCommand(1, -1.0));
-        test.addCommand(new DriveCommand(2, 12));
+        test.addCommand(new IntakeCommand(1, 1.0));
+        test.addCommand(new DriveCommand(2, 20));
         test.addCommand(new TimedArmCommand(1, Direction.DOWN));
-        test.addCommand(new TurnCommand(2, -100));
-        test.addCommand(new IntakeDriveCommand(3, 45, 1));
+        test.addCommand(new TurnCommand(2, -110));
+        test.addCommand(new IntakeDriveCommand(3, 70, -1.0));
         test.addCommand(new TimedArmCommand(2, Direction.UP));
-        test.addCommand(new DriveCommand(2, -45));
-        test.addCommand(new TurnCommand(2.5, 100));
-        test.addCommand(new DriveCommand(2, -10));
-        test.addCommand(new IntakeCommand(1, -1));
+        test.addCommand(new DriveCommand(2, -70));
+        test.addCommand(new TurnCommand(2.5, 110));
+        test.addCommand(new DriveCommand(2, -20));
+        test.addCommand(new IntakeCommand(1, 1.0));
 
         test1.addCommand(new DriveCommand(100, -40));
         test1.addCommand(new TurnCommand(0.7, -30));
@@ -78,6 +79,9 @@ public class AutoController extends BaseController {
 
     @Override
     public void handle() {
+        if(currentRoutine.isFinished()) {
+            return;
+        }
         currentRoutine.handle();
     }
 
@@ -88,9 +92,12 @@ public class AutoController extends BaseController {
     }
 
     public void reset() {
+        System.out.println("Auto controller reset");
         Subsystems.drivetrain.reset();
         Subsystems.intake.reset();
+        straight.reset();
         test.reset();
+        test1.reset();
         left.reset();
     }
 

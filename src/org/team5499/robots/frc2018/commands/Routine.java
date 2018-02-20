@@ -10,8 +10,10 @@ public class Routine {
     private List<BaseCommand> commands = new ArrayList<BaseCommand>();
     private BaseCommand currentCommand;
     private int stepNumber;
+    private boolean finished;
 
     public Routine() {
+        finished = false;
         stepNumber = 0;
     }
 
@@ -31,7 +33,10 @@ public class Routine {
             Subsystems.drivetrain.stop();
             Subsystems.intake.stop();
             Subsystems.climber.stop();
-            if(!advanceRoutine()) return;
+            if(!advanceRoutine()) {
+                finished = true;
+                return;
+            }
         } else {
             currentCommand.handle();
         }
@@ -50,6 +55,11 @@ public class Routine {
         stepNumber = 0;
         commands.forEach((command) -> {command.reset();});
         currentCommand = commands.get(0);
+        finished = false;
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 
 
