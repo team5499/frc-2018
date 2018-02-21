@@ -20,7 +20,7 @@ public class Dashboard {
     private static boolean running = false;
     private static org.glassfish.tyrus.server.Server server;
     private static DashPacketProtos.DashPacket.Builder packet_builder = DashPacketProtos.DashPacket.newBuilder();
-    private static DashPacketProtos.DashPacket incoming_message;
+    private static DashPacketProtos.DashPacket incoming_message = DashPacketProtos.DashPacket.newBuilder().build();
     private static HashMap<String,Session> sessions;
     private static Thread message_thread;
     private static MessageThread mt;
@@ -102,10 +102,11 @@ public class Dashboard {
         }
     }
 
-    protected static void _setIncomingMessage(String packet) {
+    protected static void _setIncomingMessage(byte[] packet) {
         synchronized(incoming_message) {
             try {
-                incoming_message = DashPacketProtos.DashPacket.parseFrom(packet.getBytes());
+                incoming_message = DashPacketProtos.DashPacket.parseFrom(packet);
+                System.out.println(incoming_message.getParametersList().get(0).getKey() + ":" + incoming_message.getParametersList().get(0).getValue());
             } catch(InvalidProtocolBufferException ipbe) {
                 System.out.println("Error with parsing protocol buffer!");
                 ipbe.printStackTrace();

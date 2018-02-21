@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 public class Robot extends TimedRobot {
 
     public Robot() {
-        super.setPeriod(10); // set update interval
+        super.setPeriod(0.02); // set update interval
         Dashboard.runServer();
         Dashboard.setValue("battvoltage", "" + DriverStation.getInstance().getBatteryVoltage());
     }
@@ -22,6 +22,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         Dashboard.setValue("battvoltage", "" + DriverStation.getInstance().getBatteryVoltage());
+        //System.out.println("Test value: " + Dashboard.getValue("test"));
     }
 
     @Override

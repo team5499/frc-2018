@@ -28,7 +28,7 @@ public class MessageThread implements Runnable{
                 }
             }
             try {
-                Thread.sleep(20);
+                Thread.sleep(40);
             } catch (InterruptedException ie) {
                 System.out.println("Client closed connection - terminating message thread " + Thread.currentThread().getId());
                 return;

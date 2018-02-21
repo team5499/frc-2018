@@ -5,9 +5,9 @@ var dashpacket = require('./DashPacket_pb');
 class MessageHandler {
     constructor(addr) {
         this.addr = addr;
-        this.curr_message = undefined;
+        this.curr_message = new dashpacket.DashPacket();
         this.callback = undefined;
-        this.outgoing_message = undefined;
+        this.outgoing_message = new dashpacket.DashPacket();
         this.datasocket = undefined;
     }
 
@@ -75,20 +75,20 @@ class MessageHandler {
 
     setProperty(key, property) {
         this.outgoing_message = this.curr_message.cloneMessage();
-        if(indexOfKey(key) === -1) {
-            var tmp_array = this.outgoing_message.getPropertiesList();
-            var property = DashPacket.param();
+        if(this.indexOfKey(key) === -1) {
+            var tmp_array = this.outgoing_message.getParametersList();
+            var property = new dashpacket.DashPacket.param();
             property.setKey(key);
             property.setValue(property);
             tmp_array.push(property);
-            this.outgoing_message.setPropertiesList(tmp_array);
+            this.outgoing_message.setParametersList(tmp_array);
         } else {
-            var tmp_array = this.outgoing_message.getPropertiesList();
-            var property = DashPacket.param();
+            var tmp_array = this.outgoing_message.getParametersList();
+            var property = new dashpacket.DashPacket.param();
             property.setKey(key);
             property.setValue(property);
-            tmp_array[indexOfKey(key)] = property;
-            this.outgoing_message.setPropertiesList(tmp_array);
+            tmp_array[this.indexOfKey(key)] = property;
+            this.outgoing_message.setParametersList(tmp_array);
         }
         this.datasocket.send(this.outgoing_message.serializeBinary());
     }
@@ -109,6 +109,7 @@ class MessageHandler {
 }
 
 var out = document.getElementById("out");
+var test = document.getElementById("test");
 
 window.onload = function() {
     var handler = new MessageHandler("ws://roborio-5499-frc.local:5804/dashboard/main");
@@ -116,5 +117,8 @@ window.onload = function() {
         window.setInterval(function() {
             out.innerHTML = handler.getProperty("battvoltage");
         }, 100);
+        test.onclick = function() {
+            handler.setProperty("test", "Hello World!");
+        }
     });
 }
