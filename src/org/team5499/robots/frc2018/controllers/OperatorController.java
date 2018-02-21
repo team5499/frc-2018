@@ -18,8 +18,7 @@ public class OperatorController extends BaseController {
         CONTROLLER,
         JOYSTICK
     }
-    
-    private String data;
+
     private DriverControlMethod currentMethod;
     private XboxController driver, codriver;
     private Joystick wheel, throttle;
@@ -27,7 +26,6 @@ public class OperatorController extends BaseController {
 
     public OperatorController() {
         super();
-        data = "";
         switch(Reference.getInstance().DRIVER_CONTROL_METHOD) {
             case WHEEL:
                 wheel = new Joystick(Reference.getInstance().WHEEL_PORT);
@@ -68,11 +66,6 @@ public class OperatorController extends BaseController {
         // more code
         Subsystems.intake.intake(getIntake());
         Subsystems.intake.setArm(getArm());
-    }
-
-    @Override 
-    public void loadGameData(String data) {
-        this.data = data;
     }
     
     private double getLeftStick() {

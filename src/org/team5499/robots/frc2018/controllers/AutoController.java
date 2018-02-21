@@ -12,8 +12,6 @@ public class AutoController extends BaseController {
     private Routine center, left, right, nothing, straight, test;
     private Routine currentRoutine;
 
-    private String data = "";
-
     public AutoController() {
         super();
 
@@ -64,12 +62,6 @@ public class AutoController extends BaseController {
     @Override
     public void handle() {
         currentRoutine.handle();
-    }
-
-    @Override
-    public void loadGameData(String data) { 
-        this.data = data;
-        System.out.println("Data loaded: " + data);
     }
 
     public void reset() {

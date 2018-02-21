@@ -51,8 +51,6 @@ public class Robot extends TimedRobot {
         System.out.println("auto init");
         autoController.reset();
         String data = DriverStation.getInstance().getGameSpecificMessage();
-        autoController.loadGameData(data);
-        operatorController.loadGameData(data);
         autoController.start();
     }
 
