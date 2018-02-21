@@ -1,5 +1,7 @@
 package org.team5499.robots.frc2018;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -19,6 +21,7 @@ public class Hardware {
     public static TalonSRX arm_talon = new TalonSRX(Reference.getInstance().ARM_PORT);
     public static TalonSRX intake_master_talon = new TalonSRX(Reference.getInstance().LEFT_INTAKE_PORT);
     public static TalonSRX intake_slave_talon = new TalonSRX(Reference.getInstance().RIGHT_INTAKE_PORT);
+    public static AnalogInput arm_pot = new AnalogInput(Reference.getInstance().ARM_POT_PORT);
 
     // climber
     public static TalonSRX climb_master_talon = new TalonSRX(Reference.getInstance().CLIMBER_MASTER_PORT);
@@ -29,15 +32,11 @@ public class Hardware {
 
     // Hardware setup
     static {
-        System.out.println("Current Left Talon Quadrature update period:" + Hardware.left_master_talon.getStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 0));
-        System.out.println("Current Right Talon Quadrature update period:" + Hardware.right_master_talon.getStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 0));
+        /** Set the update interval for the encoders */
+        Hardware.left_master_talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, Reference.getInstance().TALON_QUADRATURE_UPDATE_INTERVAL, 0);
+        Hardware.right_master_talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, Reference.getInstance().TALON_QUADRATURE_UPDATE_INTERVAL, 0);
 
-        Hardware.left_master_talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 5, 0);
-        Hardware.right_master_talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 5, 0);
-
-        System.out.println("Current Left Talon Quadrature update period:" + Hardware.left_master_talon.getStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 0));
-        System.out.println("Current Right Talon Quadrature update period:" + Hardware.right_master_talon.getStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 0));
-
+        /** Slave talons should follow master talons */
         Hardware.right_master_talon.setInverted(true);
         Hardware.right_slave_talon.setInverted(true);
         Hardware.left_slave_talon.follow(Hardware.left_master_talon);

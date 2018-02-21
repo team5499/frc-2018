@@ -14,7 +14,7 @@ public class ArmDriveCommand extends DriveCommand {
         super(to, setPoint);
         switch(dir) {
             case UP: 
-                speed = Reference.getInstance().AUTO_ARM_UP_SPEED;;
+                speed = Reference.getInstance().AUTO_ARM_UP_SPEED;
                 break;
             case DOWN:
                 speed = Reference.getInstance().AUTO_ARM_DOWN_SPEED;

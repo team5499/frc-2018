@@ -1,16 +1,17 @@
 package org.team5499.robots.frc2018.subsystems.pid;
 
-import edu.wpi.first.wpilibj.PIDOutput;
-
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
-public class ArmOutput implements PIDOutput {
+import edu.wpi.first.wpilibj.PIDOutput;
 
-    public ArmOutput() {
+public class IntakeOutput implements PIDOutput {
+
+    public IntakeOutput() {
     }
 
     @Override
     public void pidWrite(double output) {
-        Subsystems.intake.setArm(output);
+        Subsystems.intake.intake(output);
     }
+
 }
