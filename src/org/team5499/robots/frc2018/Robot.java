@@ -50,10 +50,6 @@ public class Robot extends TimedRobot {
     public void autonomousInit(){
         System.out.println("auto init");
         autoController.reset();
-<<<<<<< HEAD
-        String data = DriverStation.getInstance().getGameSpecificMessage();
-=======
->>>>>>> d225e96998cc8e3ec2615b6717be3558d568e164
         autoController.start();
     }
 

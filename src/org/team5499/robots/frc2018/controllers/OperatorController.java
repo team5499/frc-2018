@@ -19,13 +19,8 @@ public class OperatorController extends BaseController {
         CONTROLLER,
         JOYSTICK
     }
-<<<<<<< HEAD
 
     private DriverControlMethod currentMethod;
-=======
-    
-    private String data;
->>>>>>> d225e96998cc8e3ec2615b6717be3558d568e164
     private XboxController driver, codriver;
     private Joystick wheel, throttle;
     private Joystick codriverJoystick;
