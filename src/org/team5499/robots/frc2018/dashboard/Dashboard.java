@@ -77,7 +77,7 @@ public class Dashboard {
     // returns -1 if no matching key is found
     private static int indexOfKey(List<param> parameters, String key) {
         for(param p : parameters) {
-            if(p.getKey() == key) {
+            if(key.equals(p.getKey())) {
                 return parameters.indexOf(p);
             }
         }
@@ -106,7 +106,6 @@ public class Dashboard {
         synchronized(incoming_message) {
             try {
                 incoming_message = DashPacketProtos.DashPacket.parseFrom(packet);
-                System.out.println(incoming_message.getParametersList().get(0).getKey() + ":" + incoming_message.getParametersList().get(0).getValue());
             } catch(InvalidProtocolBufferException ipbe) {
                 System.out.println("Error with parsing protocol buffer!");
                 ipbe.printStackTrace();

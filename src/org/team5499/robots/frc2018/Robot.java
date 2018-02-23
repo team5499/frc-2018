@@ -22,7 +22,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         Dashboard.setValue("battvoltage", "" + DriverStation.getInstance().getBatteryVoltage());
-        //System.out.println("Test value: " + Dashboard.getValue("test"));
     }
 
     @Override

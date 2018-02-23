@@ -824,20 +824,20 @@ class MessageHandler {
         return this.curr_message.getParametersList()[this.indexOfKey(key)].getValue();
     }
 
-    setProperty(key, property) {
+    setProperty(key, value) {
         this.outgoing_message = this.curr_message.cloneMessage();
         if(this.indexOfKey(key) === -1) {
             var tmp_array = this.outgoing_message.getParametersList();
             var property = new dashpacket.DashPacket.param();
             property.setKey(key);
-            property.setValue(property);
+            property.setValue(value);
             tmp_array.push(property);
             this.outgoing_message.setParametersList(tmp_array);
         } else {
             var tmp_array = this.outgoing_message.getParametersList();
             var property = new dashpacket.DashPacket.param();
             property.setKey(key);
-            property.setValue(property);
+            property.setValue(value);
             tmp_array[this.indexOfKey(key)] = property;
             this.outgoing_message.setParametersList(tmp_array);
         }
