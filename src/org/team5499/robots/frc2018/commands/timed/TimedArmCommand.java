@@ -3,18 +3,14 @@ package org.team5499.robots.frc2018.commands.timed;
 import org.team5499.robots.frc2018.Reference;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 import org.team5499.robots.frc2018.commands.BaseCommand;
+import org.team5499.robots.frc2018.commands.pid.ArmCommand.ArmDirection;
 
 public class TimedArmCommand extends BaseCommand {
 
-    public enum Direction {
-        UP,
-        DOWN
-    }
-
-    private Direction dir;
+    private ArmDirection dir;
     private double speed;
 
-    public TimedArmCommand(double to, Direction dir) {
+    public TimedArmCommand(double to, ArmDirection dir) {
         super(to);
         switch(dir) {
             case UP:

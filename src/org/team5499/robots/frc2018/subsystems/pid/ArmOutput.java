@@ -14,6 +14,6 @@ public class ArmOutput implements PIDOutput {
     public void pidWrite(double output) {
         output = (output > Reference.getInstance().AUTO_ARM_UP_SPEED) ? Reference.getInstance().AUTO_ARM_UP_SPEED : output;
         output = (output < Reference.getInstance().AUTO_ARM_DOWN_SPEED) ? Reference.getInstance().AUTO_ARM_DOWN_SPEED : output;
-        Subsystems.intake.setArm(output);
+        Subsystems.intake.setArm(-output);
     }
 }

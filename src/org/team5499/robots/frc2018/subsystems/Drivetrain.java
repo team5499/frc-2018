@@ -24,12 +24,14 @@ public class Drivetrain {
     private double pid_drive_output;
     private double pid_angle_output;
     private Object pid_output_lock;
+    private int last_quadrature_position;
     
     public Drivetrain() {
         distance_setpoint = 0;
         angle_setpoint = 0;
         pid_drive_output = 0;
         pid_angle_output = 0;
+        last_quadrature_position = 0;
 
         encoder = new Encoders(Hardware.left_master_talon); /* PIDInput object to feed the PID drive controller */
         gyro = new Gyro(); /* PIDInput object to feed the PID angle controller */
@@ -57,6 +59,8 @@ public class Drivetrain {
     public void drive(double left, double right) {
         Hardware.left_master_talon.set(ControlMode.PercentOutput, left);
         Hardware.right_master_talon.set(ControlMode.PercentOutput, right);
+        Hardware.left_slave_talon.set(ControlMode.PercentOutput, left);
+        Hardware.right_slave_talon.set(ControlMode.PercentOutput, right);
     }
 
     /**
@@ -74,8 +78,11 @@ public class Drivetrain {
 
     public void pidEnable(boolean drive, boolean angle) {
         if(drive) {
+            System.out.println("Last encoder position:" + encoder.getRawEncoderValue() + " Setting encoder position:" + last_quadrature_position);
+            encoder.setEncoderPosition(last_quadrature_position);
             drive_controller.enable();
         } else {
+            last_quadrature_position = encoder.getRawEncoderValue();
             drive_controller.disable();
         }
         if(angle) {

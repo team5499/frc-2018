@@ -37,9 +37,9 @@ public class Reference {
 
     // drivetrain talons
     public int LEFT_MASTER_PORT = 2;
-    public int LEFT_SLAVE_PORT = 3;
+    public int LEFT_SLAVE_PORT = 1;
     public int RIGHT_MASTER_PORT = 8;
-    public int RIGHT_SLAVE_PORT = 7;
+    public int RIGHT_SLAVE_PORT = 9;
     public int TALON_QUADRATURE_UPDATE_INTERVAL = 5; /* Time interval between encoder value updates from the talons(Milliseconds) */
     
     // intake ports
@@ -50,16 +50,18 @@ public class Reference {
     public int PIGEON_PORT = 10;
 
     // climber pots
-    public int CLIMBER_MASTER_PORT = 9;
-    public int CLIMBER_SLAVE_PORT = 1;
+    public int CLIMBER_MASTER_PORT = 7;
+    public int CLIMBER_SLAVE_PORT = 3;
 
     // arm ports
     public int ARM_PORT = 5;
 
     // pot
     public int ARM_POT_PORT = 0;
-    public int ARM_PARALLEL_SIGNAL = 385;
-    public int ARM_PERPENDICULAR_SIGNAL = 165;
+    public int ARM_PARALLEL_SIGNAL = 325;
+    public int ARM_PERPENDICULAR_SIGNAL = 125;
+    public double ARM_UP_SETPOINT = 100.0;
+    public double ARM_DOWN_SETPOINT = -25.0;
 
     // sonic sensor
     public int SONIC_FAR_VALUE = 530;
@@ -93,9 +95,9 @@ public class Reference {
     public double kAF = 0.0;
 
     // turn pid consts
-    public double kTP = 0.05;
+    public double kTP = 0.03;
     public double kTI = 0.0;
-    public double kTD = 0.03;
+    public double kTD = 0.08;
     public double kTF = 0.0;
 
     // arm pid consts

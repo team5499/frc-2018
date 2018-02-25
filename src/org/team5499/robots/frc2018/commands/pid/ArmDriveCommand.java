@@ -3,14 +3,14 @@ package org.team5499.robots.frc2018.commands.pid;
 import org.team5499.robots.frc2018.Reference;
 import org.team5499.robots.frc2018.Hardware;
 import org.team5499.robots.frc2018.commands.BaseCommand;
-import org.team5499.robots.frc2018.commands.timed.TimedArmCommand.Direction;
+import org.team5499.robots.frc2018.commands.pid.ArmCommand.ArmDirection;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 public class ArmDriveCommand extends DriveCommand {
 
     private double speed;
 
-    public ArmDriveCommand(double to, double setPoint, Direction dir) {
+    public ArmDriveCommand(double to, double setPoint, ArmDirection dir) {
         super(to, setPoint);
         switch(dir) {
             case UP: 

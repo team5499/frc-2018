@@ -9,6 +9,7 @@ import org.team5499.robots.frc2018.Hardware;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -43,7 +44,7 @@ public class Robot extends TimedRobot {
     
 	@Override
 	public void disabledPeriodic() {
-        // System.out.println(Hardware.left_master_talon.getSensorCollection().getAnalogIn());
+        // System.out.println(Hardware.right_master_talon.getSensorCollection().getAnalogIn());
     }
 
     @Override
@@ -66,6 +67,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         operatorController.handle();
+        System.out.println("Left power:" + Hardware.pdp.getCurrent(0) + ":" + Hardware.pdp.getCurrent(3) + " Right power:" + Hardware.pdp.getCurrent(11) + ":" + Hardware.pdp.getCurrent(15));
     }
 
     @Override

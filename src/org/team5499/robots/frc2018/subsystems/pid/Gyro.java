@@ -61,6 +61,7 @@ public class Gyro implements PIDSource {
     }
 
     public void reset() {
+        System.out.println("Gyro yaw reset");
         Hardware.pigeon.setYaw(0, 0);
     }
 

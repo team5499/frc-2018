@@ -30,12 +30,20 @@ public class Encoders implements PIDSource {
     
     @Override
     public double pidGet() {
-        return host_talon.getSensorCollection().getQuadraturePosition() * Reference.getInstance().DISTANCE_PER_TICK;
+        return (double) host_talon.getSensorCollection().getQuadraturePosition() * Reference.getInstance().DISTANCE_PER_TICK;
     }
 
     @Override
     public void setPIDSourceType(PIDSourceType pst) {
         type = pst;
+    }
+
+    public int getRawEncoderValue() {
+        return host_talon.getSensorCollection().getQuadraturePosition();
+    }
+
+    public void setEncoderPosition(int pos) {
+        host_talon.getSensorCollection().setQuadraturePosition(pos, 0);
     }
 
     public double getVelocity() {

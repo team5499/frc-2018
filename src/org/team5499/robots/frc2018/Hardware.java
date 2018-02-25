@@ -1,6 +1,7 @@
 package org.team5499.robots.frc2018;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -10,6 +11,9 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.ParamEnum;
 
 public class Hardware {
+
+    // PDP
+    public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 
     // drivetrain
     public static TalonSRX left_master_talon = new TalonSRX(Reference.getInstance().LEFT_MASTER_PORT);
@@ -39,8 +43,8 @@ public class Hardware {
         /** Slave talons should follow master talons */
         Hardware.right_master_talon.setInverted(true);
         Hardware.right_slave_talon.setInverted(true);
-        Hardware.left_slave_talon.follow(Hardware.left_master_talon);
-        Hardware.right_slave_talon.follow(Hardware.right_master_talon);
+        Hardware.left_slave_talon.setInverted(false);
+        Hardware.right_slave_talon.setInverted(true);
 
         Hardware.climb_slave_talon.follow(Hardware.climb_master_talon); 
 

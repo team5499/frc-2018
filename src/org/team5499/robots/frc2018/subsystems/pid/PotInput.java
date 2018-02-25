@@ -20,7 +20,6 @@ public class PotInput implements PIDSource {
 
     @Override
     public double pidGet() {
-        System.out.println(map_degrees(host_talon.getSensorCollection().getAnalogInRaw()));
         return map_degrees(host_talon.getSensorCollection().getAnalogInRaw());
     }
 

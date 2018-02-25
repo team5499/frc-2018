@@ -8,8 +8,22 @@ import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 public class ArmCommand extends BaseCommand {
 
-    public ArmCommand(double to, double set) {
+    public enum ArmDirection {
+        UP,
+        DOWN
+    }
+
+    private ArmDirection direction;
+    private double setpoint;
+
+    public ArmCommand(double to, ArmDirection direction) {
         super(to);
+        this.direction = direction;
+        if(this.direction == ArmDirection.UP) {
+            this.setpoint = Reference.getInstance().ARM_UP_SETPOINT;
+        } else {
+            this.setpoint = Reference.getInstance().ARM_DOWN_SETPOINT;
+        }
     }
 
     @Override
