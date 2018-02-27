@@ -26,6 +26,7 @@ public class AutoController extends BaseController {
 
     public AutoController() {
         super();
+        currentRoutine = AutoRoutines.NOTHING;
         routine = new Routine();
 
         /*
@@ -102,6 +103,8 @@ public class AutoController extends BaseController {
             case CENTER:
                 break;
             case SIDE:
+                routine.addCommand(new DriveCommand(5, 50));
+                routine.addCommand(new TurnCommand(5, 90 * GameData.turnVar));
                 break;
             case TEST:
                 routine.addCommand(new DriveCommand(5, -45));
