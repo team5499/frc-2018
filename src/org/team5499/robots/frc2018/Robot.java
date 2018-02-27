@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit(){
-        System.out.println("auto init");
+        while(GameData.data.equals("")) GameData.update(); // loop until data is sent
         autoController.reset();
         autoController.start();
     }
