@@ -5,6 +5,7 @@ import org.team5499.robots.frc2018.controllers.OperatorController;
 import org.team5499.robots.frc2018.controllers.TestController;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 import org.team5499.robots.frc2018.json.JsonIO;
+import org.team5499.robots.frc2018.GameData;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -23,7 +24,6 @@ public class Robot extends TimedRobot {
         operatorController = new OperatorController();
         autoController = new AutoController();
         testController = new TestController();
-        //JsonIO.updateReference();
     }
 
     @Override
@@ -48,13 +48,19 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit(){
-        System.out.println("auto init");
+        // System.out.println("Auto init");
+        // wait for data
+        GameData.update();
         autoController.reset();
         autoController.start();
     }
 
     @Override
     public void autonomousPeriodic() {
+        if(GameData.data.equals("")) {
+            GameData.update();
+            autoController.updateRoutine();
+        }
         autoController.handle();
     }
 
