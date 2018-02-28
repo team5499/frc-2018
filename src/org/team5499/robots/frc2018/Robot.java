@@ -60,6 +60,7 @@ public class Robot extends TimedRobot {
         if(GameData.data.equals("")) {
             GameData.update();
             autoController.updateRoutine();
+            return;
         }
         autoController.handle();
     }
