@@ -19,11 +19,14 @@ public class Robot extends TimedRobot {
     private AutoController autoController;
     private TestController testController;
 
+    private boolean autoStarted;
+
     public Robot() {
         super.setPeriod(Reference.getInstance().TIMED_INTERVAL); // set update interval
         operatorController = new OperatorController();
         autoController = new AutoController();
         testController = new TestController();
+        autoStarted = false;
     }
 
     @Override
@@ -39,6 +42,7 @@ public class Robot extends TimedRobot {
     @Override
 	public void disabledInit() {
         autoController.reset();
+        autoStarted = false;
     }
     
 	@Override
@@ -48,11 +52,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit(){
-        // System.out.println("Auto init");
-        // wait for data
         GameData.update();
         autoController.reset();
-        autoController.start();
+        // autoController.start();
     }
 
     @Override
@@ -61,6 +63,9 @@ public class Robot extends TimedRobot {
             GameData.update();
             autoController.updateRoutine();
             return;
+        } else if(!autoStarted) {
+            autoController.start();
+            autoStarted = true;
         }
         autoController.handle();
     }
