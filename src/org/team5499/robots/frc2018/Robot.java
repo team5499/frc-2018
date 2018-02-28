@@ -20,61 +20,83 @@ public class Robot extends TimedRobot {
     private AutoController autoController;
     private TestController testController;
 
+    /**
+     * - Set the main loop update period
+     * - Initialize controllers
+     * - Initialize logger
+     * - Load JSON data
+     * - Start smart dashboard server
+     * - Set logging levels
+     */
     public Robot() {
-        super.setPeriod(Reference.getInstance().TIMED_INTERVAL); // set update interval
+        super.setPeriod(Reference.getInstance().TIMED_INTERVAL); // set main loop update interval
         operatorController = new OperatorController();
         autoController = new AutoController();
         testController = new TestController();
-        //JsonIO.updateReference();
     }
 
     @Override
     public void robotInit() {
-        autoController.reset();
     }
 
     @Override
     public void robotPeriodic() {
     }
 
+    /**
+     * - Reset controllers
+     */
     @Override
 	public void disabledInit() {
-        autoController.reset();
     }
     
 	@Override
 	public void disabledPeriodic() {
-        // System.out.println(Hardware.right_master_talon.getSensorCollection().getAnalogIn());
     }
 
+    /**
+     * - Start auto controller
+     */
     @Override
     public void autonomousInit(){
-        System.out.println("auto init");
-        autoController.reset();
         autoController.start();
     }
 
+    /**
+     * - Handle autonomous controller
+     */
     @Override
     public void autonomousPeriodic() {
         autoController.handle();
     }
 
+    /**
+     * - Start operator controller
+     */
     @Override
     public void teleopInit() {
         operatorController.start();
     }
 
+    /**
+     * - Handle operator controller
+     */
     @Override
     public void teleopPeriodic() {
         operatorController.handle();
-        System.out.println("Left power:" + Hardware.pdp.getCurrent(0) + ":" + Hardware.pdp.getCurrent(3) + " Right power:" + Hardware.pdp.getCurrent(11) + ":" + Hardware.pdp.getCurrent(15));
     }
 
+    /**
+     * - Start test controller
+     */
     @Override
     public void testInit() {
         testController.start();
     }
 
+    /**
+     * - Handle test controller
+     */
     @Override
     public void testPeriodic() {
         testController.handle();

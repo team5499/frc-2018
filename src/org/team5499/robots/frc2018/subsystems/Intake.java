@@ -11,68 +11,109 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 public class Intake {
-    // private PIDController pid_arm_controller;
-    private double arm_setpoint; /* between 0 and 100 */
-    private PIDController arm_controller;
-    private PIDController intake_controller;
-    private PotInput arm_pot;
-    private SonicInput intake_sonic;
-    private ArmOutput arm_output;
-    private IntakeOutput intake_output;
-    private boolean cube_detected;
+    /**
+     * THIS CLASS SHOULD ONLY BE A WRAPPER FOR INTAKE HARDWARE
+     * 
+     * This includes:
+     * - Arm motor talon
+     * - Both intake talons
+     * - Arm POT
+     * - Intake sonic sensor
+     */
 
     public Intake() {
-        arm_pot = new PotInput(Hardware.right_master_talon);
-        arm_output = new ArmOutput();
-        intake_sonic = new SonicInput(Hardware.left_master_talon);
-        intake_output = new IntakeOutput();
-        arm_controller = new PIDController(Reference.getInstance().kArmP, Reference.getInstance().kArmI, Reference.getInstance().kArmD, Reference.getInstance().kArmF, arm_pot, arm_output, Reference.getInstance().PID_LOOP_UPDATE_FRAME);
-        intake_controller = new PIDController(Reference.getInstance().kIntP, Reference.getInstance().kIntI, Reference.getInstance().kIntD, Reference.getInstance().kIntF, intake_sonic, intake_output, Reference.getInstance().PID_LOOP_UPDATE_FRAME);
-        arm_controller.setOutputRange(-1, 1);
-        arm_controller.setAbsoluteTolerance(0);
-        cube_detected = false;
     }
 
-    /** Positive is (Up, Down) */
-    public void setArm(double speed) {
-        Hardware.arm_talon.set(ControlMode.PercentOutput, speed);
+    /** -1 - 1 raw arm speed(positive is up) */
+    public void setArm() {
     }
     
-    /** Positive is (Intake, Outtake) */
-    public void intake(double speed) {
-        Hardware.intake_master_talon.set(ControlMode.PercentOutput, speed);
+    /** -1 - 1 raw intake speed(positive is outtake) */
+    public void setIntake() {
     }
 
-    public void setSetpoint(double arm_setpoint) {
-        this.arm_setpoint = arm_setpoint;
-        arm_controller.setSetpoint(arm_setpoint);
+    /** Returns the angle of the arm in degrees */
+    public double getArmAngle() {
     }
 
-    public void pidEnable() {
-        arm_controller.setSetpoint(arm_setpoint);
-        arm_controller.enable();
+    /** Returns the velocity of the very end of the arm in inches per second(up is positive) */
+    public double getArmVelocity() {
     }
 
-    public void pidDisable() {
-        arm_controller.disable();
+    /** Get raw value of the pot */
+    public int getRawPotValue() {
     }
 
-    public void reset() {
-        pidDisable();
-        arm_setpoint = 0;
+    /** True if a cube is detected; false otherwise */
+    public boolean getCubeDetected() {
     }
 
-    public double getPotPosition() {
-        return arm_pot.pidGet();
+    /** Get cube distance from the back of the intake in inches */
+    public double getCubeDistance() {
     }
 
-    public void stop() {
-        setArm(0);
-        intake(0);
+    /** Get cube velocity in inches per second(positive is intake) */
+    public double getCubeVelocity() {
     }
 
-    public boolean cubeDetected() {
-        return (Hardware.left_master_talon.getSensorCollection().getAnalogInRaw() < Reference.getInstance().SONIC_CUBE_DETECTED_VALUE);
+    /** Get raw sonic value */
+    public int getRawSonicValue() {
+    }
+
+    /** Get raw voltage output from PDP to the arm talon */
+    public double getArmPDPVoltage() {
+    }
+
+    /** Get raw current output from PDP to the arm talon */
+    public double getArmPDPCurrent() {
+    }
+
+    /** Get raw voltage output from the arm talon */
+    public double getArmVoltage() {
+    }
+
+    /** Get raw current output from the arm talon */
+    public double getArmCurrent() {
+    }
+
+    /** Get raw voltage output from PDP to the left intake talon */
+    public double getLeftIntakePDPVoltage() {
+    }
+
+    /** Get raw current output from PDP to the left intake talon */
+    public double getLeftIntakePDPCurrent() {
+    }
+
+    /** Get raw voltage output from the left intake talon */
+    public double getLeftIntakeVoltage() {
+    }
+
+    /** Get raw current output from the left intake talon */
+    public double getLeftIntakeCurrent() {
+    }
+    
+    /** Get raw voltage output from PDP to the right intake talon */
+    public double getRightIntakePDPVoltage() {
+    }
+
+    /** Get raw current output from PDP to the right intake talon */
+    public double getRightIntakePDPCurrent() {
+    }
+
+    /** Get raw voltage output from the right intake talon */
+    public double getRightIntakeVoltage() {
+    }
+
+    /** Get raw current output from the right intake talon */
+    public double getRightIntakeCurrent() {
+    }
+
+    /** Stops the arm */
+    public void stopArm() {
+    }
+
+    /** Stops the intake */
+    public void stopIntake() {
     }
 
 }

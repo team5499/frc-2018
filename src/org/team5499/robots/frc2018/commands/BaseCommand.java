@@ -3,6 +3,11 @@ package org.team5499.robots.frc2018.commands;
 import edu.wpi.first.wpilibj.Timer;
 
 public abstract class BaseCommand {
+    /**
+     * THIS CLASS PROVIDES A BASE CLASS FOR AUTONOMOUS COMMANDS
+     * 
+     * It implements the timeout feature for each autonomous command
+     */
 
     private double timeout;
     private Timer timer;
@@ -18,6 +23,15 @@ public abstract class BaseCommand {
     }
 
     public abstract void handle();
+
+    public double getTimeout() {
+    }
+
+    public void setTimeout() {
+    }
+
+    public double getCurrentTime() {
+    }
 
     public boolean isFinished() {
         return (timer.get() >= timeout);

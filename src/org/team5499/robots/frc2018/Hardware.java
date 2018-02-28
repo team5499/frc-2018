@@ -11,44 +11,39 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.ParamEnum;
 
 public class Hardware {
+    /**
+     * THIS CLASS SHOULD CONTAIN ALL RAW HARDWARE INSTANCES
+     * 
+     * These objects should only ever be referenced in the subsystems classes
+     */
 
-    // PDP
+    /** PDP */
     public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 
-    // drivetrain
-    public static TalonSRX left_master_talon = new TalonSRX(Reference.getInstance().LEFT_MASTER_PORT);
-    public static TalonSRX left_slave_talon = new TalonSRX(Reference.getInstance().LEFT_SLAVE_PORT);
-    public static TalonSRX right_master_talon = new TalonSRX(Reference.getInstance().RIGHT_MASTER_PORT);
-    public static TalonSRX right_slave_talon = new TalonSRX(Reference.getInstance().RIGHT_SLAVE_PORT);
+    /** Drivetrain */
+    public static TalonSRX left_master_talon = new TalonSRX();
+    public static TalonSRX left_slave_talon = new TalonSRX();
+    public static TalonSRX right_master_talon = new TalonSRX();
+    public static TalonSRX right_slave_talon = new TalonSRX();
 
-    // intake 
-    public static TalonSRX arm_talon = new TalonSRX(Reference.getInstance().ARM_PORT);
-    public static TalonSRX intake_master_talon = new TalonSRX(Reference.getInstance().LEFT_INTAKE_PORT);
-    public static TalonSRX intake_slave_talon = new TalonSRX(Reference.getInstance().RIGHT_INTAKE_PORT);
-    public static AnalogInput arm_pot = new AnalogInput(Reference.getInstance().ARM_POT_PORT);
+    /** Intake */
+    public static TalonSRX arm_talon = new TalonSRX();
+    public static TalonSRX intake_master_talon = new TalonSRX();
+    public static TalonSRX intake_slave_talon = new TalonSRX();
+    public static AnalogInput arm_pot = new AnalogInput();
 
-    // climber
-    public static TalonSRX climb_master_talon = new TalonSRX(Reference.getInstance().CLIMBER_MASTER_PORT);
-    public static TalonSRX climb_slave_talon = new TalonSRX(Reference.getInstance().CLIMBER_SLAVE_PORT);
+    /** Climber */
+    public static TalonSRX climb_master_talon = new TalonSRX();
+    public static TalonSRX climb_slave_talon = new TalonSRX();
 
-    // gyro
-    public static PigeonIMU pigeon = new PigeonIMU(Reference.getInstance().PIGEON_PORT);
+    /** Gyro */
+    public static PigeonIMU pigeon = new PigeonIMU();
 
-    // Hardware setup
+    /**
+     * Static hardware initialization
+     */
     static {
-        /** Set the update interval for the encoders */
-        Hardware.left_master_talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, Reference.getInstance().TALON_QUADRATURE_UPDATE_INTERVAL, 0);
-        Hardware.right_master_talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, Reference.getInstance().TALON_QUADRATURE_UPDATE_INTERVAL, 0);
-
-        /** Slave talons should follow master talons */
-        Hardware.right_master_talon.setInverted(true);
-        Hardware.right_slave_talon.setInverted(true);
-        Hardware.left_slave_talon.setInverted(false);
-        Hardware.right_slave_talon.setInverted(true);
-
-        Hardware.climb_slave_talon.follow(Hardware.climb_master_talon); 
-
-        Hardware.intake_slave_talon.follow(Hardware.intake_master_talon);
+        
     }
 
 }

@@ -12,12 +12,13 @@ import org.team5499.robots.frc2018.controllers.OperatorController.CodriverContro
 import org.team5499.robots.frc2018.controllers.OperatorController.DriverControlMethod;
 
 public class Reference {
-
-    private static Reference ref = new Reference();
-
-    public static Reference getInstance() {return ref;}
-
-    public static void setInstance(Reference r) {ref = r;}
+    /**
+     * THIS CLASS SHOULD ONLY CONTAIN CONSTANTS THAT ARE
+     * 1) Never modified while the program is running
+     * 2) Should not be changed in the dashboard
+     * 
+     * All variables should be static and final
+     */
 
     // time constants
     public double TIMED_INTERVAL = 0.005; /* time interval (in seconds) for the main loop */
