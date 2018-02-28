@@ -25,6 +25,10 @@ public class Dashboard {
     private static Thread message_thread;
     private static MessageThread mt;
 
+    static {
+        // Load data?
+    }
+
     public static void runServer() {
         if(running) {
             return;

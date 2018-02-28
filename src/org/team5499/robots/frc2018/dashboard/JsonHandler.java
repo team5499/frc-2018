@@ -13,6 +13,15 @@ import org.team5499.robots.frc2018.dashboard.DashPacketProtos.DashPacket;
 import org.team5499.robots.frc2018.dashboard.DashPacketProtos.DashPacket.param;
 
 public class JsonHandler {
+    private static void panic(JsonReader j_reader) {
+        try {
+            j_reader.close();
+        } catch(IOException ioe) {
+            System.out.println("Could not close the json reader!");
+            ioe.printStackTrace();
+        }
+        return;
+    }
     protected static DashPacketProtos.DashPacket.Builder generateDashPacketBuilderFromJson(String path) {
         DashPacketProtos.DashPacket.Builder result = DashPacketProtos.DashPacket.newBuilder();
         File input = new File(path);
@@ -22,7 +31,7 @@ public class JsonHandler {
             f_reader = new FileReader(input);
         } catch(FileNotFoundException fnfe) {
             System.out.println("JSON file " + path + " could not be found!");
-            return result;
+            return DashPacketProtos.DashPacket.newBuilder();
         }
         // Assuming the JSON file has been found
         j_reader = new JsonReader(f_reader);
@@ -47,11 +56,16 @@ public class JsonHandler {
                         System.out.println("Malformed JSON!");
                         return result;
                 }
-                
+                result = result.addParameters(DashPacketProtos.DashPacket.param.newBuilder().setKey(key).setValue(value).build());
+
             }
         } catch(IOException ioe) {
             System.out.println("IO exception!");
-            return result;
+            panic(j_reader);
+            return DashPacketProtos.DashPacket.newBuilder();
+        } finally {
+            panic(j_reader);
         }
-    } 
+        return result;
+    }
 }
