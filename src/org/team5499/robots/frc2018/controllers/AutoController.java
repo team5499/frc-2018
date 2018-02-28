@@ -11,14 +11,26 @@ import org.team5499.robots.frc2018.commands.timed.TimedArmCommand.Direction;
 public class AutoController extends BaseController {
 
     public static enum Option {
-        SIDE,
+        LEFT,
+        RIGHT,
         CENTER,
         STRAIGHT,
-        NOTHING
+        NOTHING,
+        TEST,
+        TEST1
     }
 
-    private Routine centerLeft, centerRight, left, right, nothing, straight, test, test1;
+    // center routines
+    private Routine centerLeft, centerRight;
+    // side rountines
+    private Routine sideLeft, sideRight, sideLeftCross, sideRightCross;
+    // misc routines
+    private Routine nothing, straight;
+    // test routines
+    private Routine test, test1;
+    // current routine
     private Routine currentRoutine;
+    // routine option
     private Option currentOption;
 
     public AutoController() {
@@ -43,7 +55,7 @@ public class AutoController extends BaseController {
         Subsystems.drivetrain.reset();
         Subsystems.intake.reset();
         test.reset();
-        left.reset();
+        sideLeft.reset();
     }
 
     public void updateRoutine() {
@@ -52,11 +64,19 @@ public class AutoController extends BaseController {
             case NOTHING:
                 currentRoutine = nothing;
                 break;
-            case SIDE:
-                if(GameData.closePlate.equals("L")) currentRoutine = left;
-                else if(GameData.closePlate.equals("R")) currentRoutine = right;
+            case LEFT:
+                if(GameData.closePlate.equals("L")) currentRoutine = sideLeft;
+                else if(GameData.closePlate.equals("R")) currentRoutine = sideLeftCross;
                 else {
-                    System.err.println("ERROR: Could not find load routine!");
+                    System.err.println("ERROR: Could not load routine!");
+                    currentRoutine = nothing;
+                }
+                break;
+            case RIGHT:
+                if(GameData.closePlate.equals("L")) currentRoutine = sideRightCross;
+                else if(GameData.closePlate.equals("R")) currentRoutine = sideRight;
+                else {
+                    System.err.println("ERROR: Could not load routine!");
                     currentRoutine = nothing;
                 }
                 break;
@@ -64,12 +84,18 @@ public class AutoController extends BaseController {
                 if(GameData.closePlate.equals("L")) currentRoutine = centerLeft;
                 else if(GameData.closePlate.equals("R")) currentRoutine = centerRight;
                 else {
-                    System.err.println("ERROR: Could not find load routine!");
+                    System.err.println("ERROR: Could not load routine!");
                     currentRoutine = nothing;
                 }
                 break;
             case STRAIGHT:
                 currentRoutine = straight;
+                break;
+            case TEST:
+                currentRoutine = test;
+                break;
+            case TEST1:
+                currentRoutine = test1;
                 break;
         }
     }
@@ -79,21 +105,24 @@ public class AutoController extends BaseController {
         test1 = new Routine();
         centerLeft = new Routine();
         centerRight = new Routine();
-        left = new Routine();
-        right = new Routine();
+        sideLeft = new Routine();
+        sideRight = new Routine();
+        sideLeftCross = new Routine();
+        sideRightCross = new Routine();
         nothing = new Routine();
         straight = new Routine();
 
+        // do nothing for 15 seconds
         nothing.addCommand(new NothingCommand(15));
 
         // drives 10 feet
-        straight.addCommand(new DriveCommand(20, 50));
+        straight.addCommand(new DriveCommand(10, 50));
 
-        // works at 70 inches
-        left.addCommand(new NothingCommand(1));
-        left.addCommand(new TimedDriveCommand(0.8, -0.3));
-        left.addCommand(new NothingCommand(1));
-        left.addCommand(new IntakeCommand(1, -1.0));
+        // left side auto
+        sideLeft.addCommand(new NothingCommand(1));
+        sideLeft.addCommand(new TimedDriveCommand(0.8, -0.3));
+        sideLeft.addCommand(new NothingCommand(1));
+        sideLeft.addCommand(new IntakeCommand(1, -1.0));
 
         // working center command
         test.addCommand(new DriveCommand(5, -45));
