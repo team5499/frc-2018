@@ -10,6 +10,7 @@ import org.team5499.robots.frc2018.commands.timed.TimedArmCommand.Direction;
 
 public class AutoController extends BaseController {
 
+    // starting position or generic routines set here
     public static enum Option {
         LEFT,
         RIGHT,
@@ -101,8 +102,7 @@ public class AutoController extends BaseController {
     }
 
     private void initRoutines() {
-        test = new Routine();
-        test1 = new Routine();
+
         centerLeft = new Routine();
         centerRight = new Routine();
         sideLeft = new Routine();
@@ -111,6 +111,8 @@ public class AutoController extends BaseController {
         sideRightCross = new Routine();
         nothing = new Routine();
         straight = new Routine();
+        test = new Routine();
+        test1 = new Routine();
 
         // do nothing for 15 seconds
         nothing.addCommand(new NothingCommand(15));

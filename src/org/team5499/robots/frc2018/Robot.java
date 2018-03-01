@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
     @Override
 	public void disabledInit() {
         autoController.reset();
-        autoStarted = false;
+        // autoStarted = false;
     }
     
 	@Override
@@ -54,6 +54,7 @@ public class Robot extends TimedRobot {
     public void autonomousInit(){
         GameData.update();
         autoController.reset();
+        autoStarted = false;
         // autoController.start();
     }
 
