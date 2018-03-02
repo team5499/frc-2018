@@ -26,8 +26,13 @@ public class Drivetrain {
      * - Encoder(s)
      * - Gyro
      */
+
+    private int last_encoder_value;
+    private boolean encoder_enabled;
     
     public Drivetrain() {
+        last_encoder_value = 0;
+        encoder_enabled = true;
     }
 
     /** -1 - 1 set left and right output for the drivetrain(positive is forward) */
@@ -64,6 +69,17 @@ public class Drivetrain {
     /** Set raw distance */
     public void setRawDistance(int distance) {
         Hardware.left_master_talon.getSensorCollection().setQuadraturePosition(distance, 0);
+    }
+
+    /** Set encoder enabled */
+    public void enableEncoder(boolean enable) {
+        if(enable && !encoder_enabled) {
+            setRawDistance(last_encoder_value);
+            encoder_enabled = true;
+        } else if(!enable && encoder_enabled) {
+            last_encoder_value = getRawDistance();
+            encoder_enabled = false;
+        }
     }
 
     /** Get angle of the drivetrain */

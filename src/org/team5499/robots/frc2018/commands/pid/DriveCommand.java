@@ -2,47 +2,69 @@ package org.team5499.robots.frc2018.commands.pid;
 
 import org.team5499.robots.frc2018.Reference;
 import org.team5499.robots.frc2018.Hardware;
+import org.team5499.robots.frc2018.PID;
 import org.team5499.robots.frc2018.commands.BaseCommand;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 public class DriveCommand extends BaseCommand {
 
-    private double setPoint;
-    private double startAngle;
+    private double setpoint;
+    private double start_angle;
     private boolean enabled;
+    private PID angle_controller;
+    private PID distance_controller;
 
-    public DriveCommand(double to, double setPoint) {
+    public DriveCommand(double to, double setpoint) {
         super(to);
-        this.setPoint = setPoint;
+        this.setpoint = setpoint;
         this.enabled = false;
+
+        this.angle_controller = new PID(Dashboard.getDouble("kANGLE_P"), Dashboard.getDouble("kANGLE_I"), Dashboard.getDouble("kANGLE_D"));
+        this.angle_controller.setInverted(false);
+        this.angle_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_ANGLE_ERROR"));
+        this.angle_controller.setOutputRange(-1, 1);
+
+        this.distance_controller = new PID(Dashboard.getDouble("kDIST_P"), Dashboard.getDouble("kDIST_I"), Dashboard.getDouble("kDIST_D"));
+        this.distance_controller.setInverted(false);
+        this.distance_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_DISTANCE_ERROR"));
+        this.distance_controller.setAcceptableVelocity(Dashboard.getDouble("ACCEPTABLE_DISTANCE_VELOCITY"));
+        this.distance_controller.setOutputRange(-1, 1);
+        this.distance_controller.setSetpoint(this.setpoint);
     }
 
     @Override
     public void start() {
-        // System.out.println("Command started!");
         super.start();
+        start_angle = Subsystems.drivetrain.getAngle();
+        angle_controller.setSetpoint(start_angle);
         enabled = true;
-        Subsystems.drivetrain.pidSet(setPoint, 0);
-        Subsystems.drivetrain.pidEnable(true, true);
     }
 
     @Override
     public void handle() {
-        System.out.println("Angle error:" + Subsystems.drivetrain.pidAngleError() + " Distance error:" + Subsystems.drivetrain.pidDistanceError() + " Distance velocity:" + Subsystems.drivetrain.absoluteVelocity());
+        angle_controller.setProcessVariable(Subsystems.drivetrain.getAngle());
+        angle_controller.setVelocity(Subsystems.drivetrain.getAngleVelocity());
+        distance_controller.setProcessVariable(Subsystems.drivetrain.getDistance());
+        distance_controller.setVelocity(Subsystems.drivetrain.getDistanceVelocity());
+        double angle_output = angle_controller.calculate();
+        double distance_output = distance_controller.calculate();
+        Subsystems.drivetrain.setDrivetrain(distance_output - angle_output, distance_output + angle_output);
     }
 
     @Override
     public void reset() {
         super.reset();
+        angle_controller.reset();
+        distance_controller.reset();
         enabled = false;
     }
 
     @Override
     public boolean isFinished() {
-        boolean finished = (super.isFinished() || (Subsystems.drivetrain.angleOnTarget() && Subsystems.drivetrain.distanceOnTarget()));
+        boolean finished = (super.isFinished() || (distance_controller.onTarget() && angle_controller.errorOnTarget()));
         if(finished) {
             System.out.println("Finished");
-            Subsystems.drivetrain.pidDisable();
+            Subsystems.drivetrain.stop();
             reset();
         }
         return finished;
