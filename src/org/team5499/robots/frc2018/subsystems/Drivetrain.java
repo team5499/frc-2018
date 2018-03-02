@@ -1,18 +1,11 @@
 package org.team5499.robots.frc2018.subsystems;
 
 import org.team5499.robots.frc2018.Hardware;
-import org.team5499.robots.frc2018.Reference;
-import org.team5499.robots.frc2018.subsystems.pid.Encoders;
-import org.team5499.robots.frc2018.subsystems.pid.Gyro;
-import org.team5499.robots.frc2018.subsystems.pid.DriveOutput;
-import org.team5499.robots.frc2018.subsystems.pid.AngleOutput;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.PigeonIMU.PigeonState;
-
-import edu.wpi.first.wpilibj.PIDController;
 
 public class Drivetrain {
     /**

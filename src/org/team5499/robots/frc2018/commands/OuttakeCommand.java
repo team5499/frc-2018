@@ -1,7 +1,6 @@
 package org.team5499.robots.frc2018.commands;
 
 import org.team5499.robots.frc2018.subsystems.Subsystems;
-import org.team5499.robots.frc2018.commands.BaseCommand;
 
 public class OuttakeCommand extends BaseCommand {
 

@@ -22,8 +22,7 @@ public class OperatorController extends BaseController {
         this.arm_controller.setInverted(false);
         this.arm_controller.setAcceptableError(0.0);
         this.arm_controller.setAcceptableVelocity(0.0);
-        this.arm_controller.setInputRange(Dashboard.getDouble("ARM_DOWN_SETPOINT"), Dashboard.getDouble("ARM_UP_SETPOINT"));
-        this.arm_controller.setOutputRange(-1, 1);
+        this.arm_controller.setOutputRange(Dashboard.getDouble("AUTO_ARM_DOWN_SPEED"), Dashboard.getDouble("AUTO_ARM_UP_SPEED"));
     }
 
     @Override

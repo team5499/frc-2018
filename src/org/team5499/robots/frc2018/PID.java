@@ -20,6 +20,7 @@ public class PID {
     private double accumulator;
     private double last_error;
     private Timer timer;
+    private boolean inverted;
 
     /** Set PID variables */
     public PID(double kP, double kI, double kD) {
@@ -38,6 +39,7 @@ public class PID {
         this.use_velocity_cap = false;
         this.acceptable_error = 0;
         this.last_error = 0;
+        this.inverted = false;
         timer = new Timer();
         timer.reset();
     }
@@ -93,6 +95,11 @@ public class PID {
     public void setVelocityCap(double lower_bound, double upper_bound) {
         this.velocity_lower_cap = lower_bound;
         this.velocity_upper_cap = upper_bound;
+    }
+
+    /** Make the output of the controller inverted */
+    public void setInverted(boolean inverted) {
+        this.inverted = inverted;
     }
 
     /** Enable velocity cap */
@@ -167,6 +174,9 @@ public class PID {
         timer.start();
         last_error = getError();
 
+        if(inverted) {
+            return -mapOutputValues(p_term + i_term + d_term);
+        }
         return mapOutputValues(p_term + i_term + d_term);
     }
 

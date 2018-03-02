@@ -1,6 +1,5 @@
 package org.team5499.robots.frc2018.commands.pid;
 
-import org.team5499.robots.frc2018.Reference;
 import org.team5499.robots.frc2018.Hardware;
 import org.team5499.robots.frc2018.PID;
 import org.team5499.robots.frc2018.commands.BaseCommand;
@@ -22,13 +21,13 @@ public class DriveCommand extends BaseCommand {
         this.angle_controller = new PID(Dashboard.getDouble("kANGLE_P"), Dashboard.getDouble("kANGLE_I"), Dashboard.getDouble("kANGLE_D"));
         this.angle_controller.setInverted(false);
         this.angle_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_ANGLE_ERROR"));
-        this.angle_controller.setOutputRange(-1, 1);
+        this.angle_controller.setOutputRange(-Dashboard.getDouble("MAX_ANGLE_PID_OUTPUT"), Dashboard.getDouble("MAX_ANGLE_PID_OUTPUT"));
 
         this.distance_controller = new PID(Dashboard.getDouble("kDIST_P"), Dashboard.getDouble("kDIST_I"), Dashboard.getDouble("kDIST_D"));
         this.distance_controller.setInverted(false);
         this.distance_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_DISTANCE_ERROR"));
         this.distance_controller.setAcceptableVelocity(Dashboard.getDouble("ACCEPTABLE_DISTANCE_VELOCITY"));
-        this.distance_controller.setOutputRange(-1, 1);
+        this.distance_controller.setOutputRange(-Dashboard.getDouble("MAX_DRIVE_PID_OUTPUT"), Dashboard.getDouble("MAX_DRIVE_PID_OUTPUT"));
         this.distance_controller.setSetpoint(this.setpoint);
     }
 
@@ -65,6 +64,8 @@ public class DriveCommand extends BaseCommand {
         if(finished) {
             System.out.println("Finished");
             Subsystems.drivetrain.stop();
+            Subsystems.drivetrain.setDistance(-distance_controller.getError());
+            Subsystems.drivetrain.setAngle(-angle_controller.getError());
             reset();
         }
         return finished;

@@ -3,8 +3,6 @@ package org.team5499.robots.frc2018.commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.team5499.robots.frc2018.subsystems.Subsystems;
-
 public class Routine {
     private List<BaseCommand> commands = new ArrayList<BaseCommand>();
     private int step_number;

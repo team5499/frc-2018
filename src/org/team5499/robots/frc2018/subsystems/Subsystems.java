@@ -1,7 +1,5 @@
 package org.team5499.robots.frc2018.subsystems;
 
-import org.team5499.robots.frc2018.Hardware;
-
 public class Subsystems {
     /**
      * THIS CLASS SHOULD CONTAIN ALL STATIC SUBSYSTEM OBJECTS

@@ -1,7 +1,5 @@
 package org.team5499.robots.frc2018.commands.pid;
 
-
-import org.team5499.robots.frc2018.Reference;
 import org.team5499.robots.frc2018.Hardware;
 import org.team5499.robots.frc2018.PID;
 import org.team5499.robots.frc2018.commands.BaseCommand;
@@ -32,8 +30,7 @@ public class ArmCommand extends BaseCommand {
         this.arm_controller.setInverted(false);
         this.arm_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_ARM_ERROR"));
         this.arm_controller.setAcceptableVelocity(Dashboard.getDouble("ACCEPTABLE_ARM_VELOCITY"));
-        this.arm_controller.setInputRange(Dashboard.getDouble("ARM_DOWN_SETPOINT"), Dashboard.getDouble("ARM_UP_SETPOINT"));
-        this.arm_controller.setOutputRange(-1, 1);
+        this.arm_controller.setOutputRange(Dashboard.getDouble("AUTO_ARM_DOWN_SPEED"), Dashboard.getDouble("AUTO_ARM_UP_SPEED"));
         this.arm_controller.setSetpoint(this.setpoint);
     }
 
