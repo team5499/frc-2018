@@ -760,6 +760,8 @@ class MessageHandler {
         this.callback = undefined;
         this.outgoing_message = new dashpacket.DashPacket();
         this.datasocket = undefined;
+        this.d = new Date();
+        this.last_time = this.d.getMilliseconds();
     }
 
 
@@ -796,6 +798,13 @@ class MessageHandler {
     m_message(event) {
         var ref = this;
         return function(event) { 
+            ref.d = new Date();
+            var diff = ref.d.getMilliseconds() - ref.last_time;
+            if(diff > 45) {
+                console.log(ref.d.getMilliseconds() - ref.last_time);
+            }
+            ref.last_time = ref.d.getMilliseconds();
+
             var reader = new FileReader();
             reader.readAsArrayBuffer(event.data);
             reader.addEventListener("loadend", function(e)

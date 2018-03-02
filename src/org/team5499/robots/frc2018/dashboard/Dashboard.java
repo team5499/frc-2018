@@ -26,7 +26,8 @@ public class Dashboard {
     private static MessageThread mt;
 
     static {
-        // Load data?
+        packet_builder = JsonHandler.generateDashPacketBuilderFromJson("/home/lvuser/conf.json");
+        incoming_message = packet_builder.build();
     }
 
     public static void runServer() {
