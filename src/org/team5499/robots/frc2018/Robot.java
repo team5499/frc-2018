@@ -3,6 +3,7 @@ package org.team5499.robots.frc2018;
 import org.team5499.robots.frc2018.controllers.AutoController;
 import org.team5499.robots.frc2018.controllers.OperatorController;
 import org.team5499.robots.frc2018.controllers.TestController;
+import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -24,7 +25,7 @@ public class Robot extends TimedRobot {
      */
     public Robot() {
         /** Initialize SmartDashboard */
-
+        Dashboard.runServer();
 
         super.setPeriod(Dashboard.getDouble("TIMED_INTERVAL")); /** Set main loop update interval */
         operatorController = new OperatorController();
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
+        Dashboard.setValue("battvoltage", "" + DriverStation.getInstance().getBatteryVoltage());
     }
 
     /**

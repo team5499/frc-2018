@@ -1,0 +1,79 @@
+{
+    "TIMED_INTERVAL": 0.005,
+
+    "DRIVER_CONTROL_METHOD": "CONTROLLER",
+    "CODRIVER_CONTROL_METHOD": "CONTROLLER",
+
+    "SLOW_MULTIPLIER": 0.5,
+    "INTAKE_SPEED": 0.85,
+    "SLOW_INTAKE": 0.3,
+    "OUTTAKE_SPEED": -0.5,
+    "JOYSTICK_DEADZONE": 0.05,
+    "ARM_SPEED": 0.90,
+    "AUTO_ARM_UP_SPEED": 0.65,
+    "AUTO_ARM_DOWN_SPEED": -0.5,
+
+    "LEFT_MASTER_PORT": 2,
+    "LEFT_SLAVE_PORT": 1,
+    "RIGHT_MASTER_PORT": 8,
+    "RIGHT_SLAVE_PORT": 9,
+    "TALON_QUADRATURE_UPDATE_INTERVAL": 5,
+
+    "RIGHT_INTAKE_PORT": 6,
+    "LEFT_INTAKE_PORT": 4,
+
+    "PIGEON_PORT": 10,
+
+    "CLIMBER_MASTER_PORT": 7,
+    "CLIMBER_SLAVE_PORT": 3,
+
+    "ARM_PORT": 5,
+    "ARM_POT_PORT": 0,
+    "ARM_PARALLEL_SIGNAL": 325,
+    "ARM_PERPENDICULAR_SIGNAL": 125,
+    "ARM_UP_SETPOINT": 100.0,
+    "ARM_DOWN_SETPOINT": -25.0,
+
+    "SONIC_FAR_VALUE": 530,
+    "SONIC_CUBE_DETECTED_VALUE": 70,
+    "SONIC_CLOSE_VALUE": 10,
+
+    "DRIVER_PORT": 0,
+    "CODRIVER_PORT": 1,
+    "WHEEL_PORT": 2,
+    "THROTTLE_PORT": 3,
+    "CODRIVER_JOYSTICK_PORT": 4,
+
+    "PID_LOOP_UPDATE_FRAME": 0.005,
+    "DISTANCE_PER_TICK": 0.0122718463030851,
+    "MAX_DRIVE_PID_OUTPUT": 0.3,
+    "MAX_ANGLE_PID_OUTPUT": 1.0,
+    "MAX_DRIVE_ERROR_TO_TARGET": 6.0,
+    "MAX_ANGLE_ERROR_TO_TARGET": 2.5,
+    "MAX_VELOCITY_TO_TARGET": 0.5,
+
+    "kDP": 0.045,
+    "kDI": 0.0,
+    "kDD": 0.75,
+    "kDF": 0.0,
+
+    "kAP": 0.05,
+    "kAI": 0.0,
+    "kAD": 0.04,
+    "kAF": 0.0,
+
+    "kTP": 0.03,
+    "kTI": 0.0,
+    "kTD": 0.08,
+    "kTF": 0.0,
+
+    "kArmP": 0.01,
+    "kArmI": 0.0,
+    "kArmD": 0.3,
+    "kArmF": 0.0,
+    
+    "kIntP": 0.1,
+    "kIntI": 0.0,
+    "kIntD": 0.0,
+    "kIntF": 0.0
+}

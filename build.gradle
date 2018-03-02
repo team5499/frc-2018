@@ -5,8 +5,15 @@ ext {
   NetworkTables_version = '3.1.7'
   Ntcore_version = '4.0.0'
   CameraServer_version = '1.1.0'
+<<<<<<< HEAD
   CTREToolsuite_version = '5.2.1.1'
+=======
+  CTREToolsuite_version = '5.1.3.1'
+>>>>>>> websocket_dev
   GSON_version = '2.8.2'
+  WEBSOCKET_version = '9.0.4'
+  TYRUS_version = '1.13.1'
+  PROTOC_version = '3.5.1'
 
   // input ip at run
   RoboRIO_target = 'roborio-5499-frc.local'
@@ -26,6 +33,12 @@ repositories {
   maven {
     url 'https://maven.team5499.org/'
   }
+  flatDir {
+       dirs 'tmp_ctre/runtime'
+  }
+  flatDir {
+       dirs 'tmp_ctre/compile'
+  }
 }
 
 dependencies {
@@ -36,6 +49,10 @@ dependencies {
   compile "edu.wpi.first.cscore:cscore-java:$CameraServer_version"
   compile "openrio.mirror.third.ctre:CTRE-phoenix-java:$CTREToolsuite_version"
   compile "com.google.code.gson:gson:$GSON_version"
+  compile group: 'org.apache.tomcat', name: 'tomcat-websocket', version: WEBSOCKET_version
+  compile group: 'org.glassfish.tyrus', name: 'tyrus-server', version: TYRUS_version
+  compile group: 'org.glassfish.tyrus', name: 'tyrus-container-grizzly-server', version: TYRUS_version
+  compile group: 'com.google.protobuf', name: 'protobuf-java', version: PROTOC_version
 
   runtime "edu.wpi.first.wpilibj:wpilibj-jni:$WPILib_version:linuxathena"
   runtime "org.opencv:opencv-natives:$OpenCV_version:linux-arm"
@@ -144,31 +161,52 @@ task deployServers {
 
 
 // DO NOT USE -- STILL UNDER DEVELOPMENT
+task buildProtoBuf {
+  doLast {
+    exec {
+      commandLine 'protoc'
+      args '--java_out=./src/', './src/org/team5499/robots/frc2018/dashboard/DashPacket.proto'
+    }
+    exec {
+      commandLine 'protoc'
+      args '--proto_path=src/org/team5499/robots/frc2018/dashboard', '--js_out=import_style=commonjs,binary:dashboard/scripts', 'src/org/team5499/robots/frc2018/dashboard/DashPacket.proto'
+    }
+  }
+}
+
+task bundle_dashboard {
+  doLast {
+    exec {
+      commandLine 'browserify'
+      args 'dashboard/scripts/MessageHandler.js', '-o', 'dashboard/scripts/bundle.js'
+    }
+  }
+}
 
 task zipDashboard(type: Zip) {
-  from file('./')
-  into file('SmartDashboard')
-  include 'SmartDashboard/'
+  dependsOn bundle_dashboard
+  from 'dashboard/'
+  into ''
+  include '**/'
   archiveName 'SmartDashboard.zip'
-  destinationDir(file('./SmartDashboard_new/'))
-  //THIS HAS TO CHANGE TO PREVENT FROM FLATTENING THE DIRECTORY STRUCTURE
-  eachFile { details ->
-     details.setRelativePath(new RelativePath(true, details.getName()))
-  }
+  destinationDir(getTemporaryDir().toPath().resolve('zip_dir').toFile())
 }
 
 task deploy_dashboard {
   dependsOn zipDashboard
   doLast {
+    println zipDashboard.getTemporaryDir().toPath().resolve('zip_dir') + '/SmartDashboard.zip'
     exec {
       commandLine 'curl'
-      args '-u', 'team5499:5499', '-T', getTemporaryDir().toPath().resolve('zip_dir') + '/SmartDashboard.zip', 'ftp://roborio-5499-frc.local:5801/'
+      args '-u', 'team5499:5499', '-T', zipDashboard.getTemporaryDir().toPath().resolve('zip_dir').toAbsolutePath().toString() + '/SmartDashboard.zip', "ftp://$RoboRIO_target:5801/"
     }
     exec {
       commandLine 'curl'
-      args '-d', 'action=dashboard', 'http://roborio-5499-frc.local:5800'
+      args '-d', 'action=dashboard', "http://$RoboRIO_target:5800"
     }
   }
 }
 
-//--------------------------------------------------------------
+compileJava {
+  options.compilerArgs << '-Xlint:unchecked'
+}
