@@ -6,36 +6,26 @@ import org.team5499.robots.frc2018.commands.BaseCommand;
 public class IntakeCommand extends BaseCommand {
 
     // zero to one
-    // negative is outtake, positive is intake
     private double speed;
-    private IntakeDirection direction;
-
-    public enum IntakeDirection {
-        IN,
-        OUT
-    }
+    private boolean wait_for_cube;
 
 
-    public IntakeCommand(double to, IntakeDirection direction, double speed) {
+    public IntakeCommand(double to, double speed, boolean wait_for_cube) {
         super(to);
-        this.direction = direction;
-        if(this.direction == IntakeDirection.OUT) {
-            this.speed = -speed;
-        } else {
-            this.speed = speed;
-        }
+        this.speed = speed;
+        this.wait_for_cube = wait_for_cube;
     }
 
     @Override
     public void handle() {
-        Subsystems.intake.intake(speed);
+        Subsystems.intake.setIntake(speed);
     }
 
     @Override
     public boolean isFinished() {
-        boolean finished = super.isFinished();
+        boolean finished = super.isFinished() || (Subsystems.intake.getCubeDetected() && wait_for_cube);
         if(finished) {
-            Subsystems.intake.intake(0);
+            Subsystems.intake.stopIntake();
         }
         return finished;
     }

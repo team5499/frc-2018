@@ -7,10 +7,10 @@ import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 public class Routine {
     private List<BaseCommand> commands = new ArrayList<BaseCommand>();
-    private int stepNumber;
+    private int step_number;
 
     public Routine() {
-        stepNumber = 0;
+        step_number = 0;
     }
 
     public void addCommand(BaseCommand command) {
@@ -18,20 +18,22 @@ public class Routine {
     }
 
     public BaseCommand getCurrentCommand() {
+        return commands.get(step_number);
     }
 
     public boolean advanceRoutine() {
-        if(!(stepNumber + 1 < commands.size())) return false;
-        stepNumber++;
-        System.out.println("Advance routine: " + stepNumber);
+        if(!(step_number + 1 < commands.size())) return false;
+        step_number++;
+        System.out.println("Advance routine: " + step_number);
         return true;
     }
 
-    public boolean routineFinished() {
+    public boolean isFinished() {
+        return (!(step_number + 1 < commands.size()) && commands.get(step_number).isFinished());
     }
 
     public void reset() {
-        stepNumber = 0;
+        step_number = 0;
         commands.forEach((command) -> {command.reset();});
     }
 

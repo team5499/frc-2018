@@ -2,6 +2,7 @@ package org.team5499.robots.frc2018;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.XboxController;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -35,6 +36,10 @@ public class Hardware {
 
     /** Gyro */
     public static PigeonIMU pigeon = new PigeonIMU(Dashboard.getInt("PIGEON_PORT"));
+
+    /** Driver controllers */
+    public static XboxController driver = new XboxController(Dashboard.getInt("DRIVER_PORT"));
+    public static XboxController codriver = new XboxController(Dashboard.getInt("CODRIVER_PORT"));
 
     /**
      * Static hardware initialization

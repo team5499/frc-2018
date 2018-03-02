@@ -18,19 +18,23 @@ public class Climber {
     }
 
     /** -1 - 1 set climber output(positive is to contract) */
-    public void setClimber() {
+    public void setClimber(double speed) {
+        Hardware.climber_master_talon.set(ControlMode.PercentOutput, speed);
     }
 
     /** Extend the arm */
     public void extendArm() {
+        // Not sure yet
     }
 
     /** Contract the arm */
     public void contractArm() {
+        //Not sure yet
     }
 
     /** Stop the climber */
     public void stop() {
+        Hardware.climber_master_talon.neutralOutput();
     }
 
 }

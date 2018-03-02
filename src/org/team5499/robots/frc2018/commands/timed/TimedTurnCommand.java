@@ -24,4 +24,12 @@ public class TimedTurnCommand extends BaseCommand {
         
     }
 
+    @Override
+    public boolean isFinished() {
+        boolean finished = super.isFinished();
+        if(finished) {
+            Subsystems.drivetrain.stop();
+        }
+        return finished;
+    }
 }

@@ -50,6 +50,19 @@ public class PID {
     public void setOutputRange() {
     }
 
+    /** Set speed cap range for PID output */
+    public void setOutputCap() {
+    }
+
+    /** Set velocity cap */
+    public void setVelocityCap() {
+
+    }
+
+    /** Enable velocity cap */
+    public void enableVelocityCap() {
+    }
+
     /** Map input values to usable loop values */
     private double mapProcessValues() {
     }
@@ -88,6 +101,10 @@ public class PID {
 
     /** Get velocity on target */
     public boolean velocityOnTarget() {
+    }
+
+    /** Calculate PID output */
+    public double calculate() {
     }
 
     /** Get isFinished */
