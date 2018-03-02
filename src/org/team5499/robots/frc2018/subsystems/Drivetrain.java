@@ -30,26 +30,43 @@ public class Drivetrain {
 
     /** -1 - 1 set left and right output for the drivetrain(positive is forward) */
     public void setDrivetrain(double left, double right) {
+        Hardware.left_master_talon.set(ControlMode.PercentOutput, left);
+        Hardware.right_master_talon.set(ControlMode.PercentOutput, right);
     }
 
     /** Get distance in inches that the encoder has moved */
     public double getDistance() {
-    }
-
-    /** Get raw distance value */
-    public double getRawDistance() {
+        return (double) getRawDistance() * Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI / (double) Dashboard.getInt("TICKS_PER_ROTATION");
     }
 
     /** Get distance velocity(inches per second) */
     public double getDistanceVelocity() {
+        return (double) getRawVelocity() * Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI / (double) Dashboard.getInt("TICKS_PER_ROTATION");
+    }
+
+    /** Get raw distance value */
+    public int getRawDistance() {
+        return Hardware.left_master_talon.getSensorCollection().getQuadraturePosition();
+    }
+
+    /** Get raw distance velocity value */
+    public int getRawVelocity() {
+        return Hardware.left_master_talon.getSensorCollection().getQuadratureVelocity();
     }
 
     /** Sets the distance */
-    public void setDistance() {
+    public void setDistance(double distance) {
+        Hardware.left_master_talon.getSensorCollection().setQuadraturePosition((int) (distance * (double) Dashboard.getInt("TICKS_PER_ROTATION") / (Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI)), 0);
+    }
+
+    /** Set raw distance */
+    public void setRawDistance(int distance) {
+        Hardware.left_master_talon.getSensorCollection().setQuadraturePosition(distance, 0);
     }
 
     /** Get angle of the drivetrain */
     public double getAngle() {
+        return Hardware.pigeon.get
     }
 
     /** Get angle velocity(degrees per second) */

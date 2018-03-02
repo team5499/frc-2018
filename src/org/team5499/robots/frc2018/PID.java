@@ -2,6 +2,9 @@ package org.team5499.robots.frc2018;
 
 public class PID {
     /** This class implements a PID loop */
+    private double kP;
+    private double kI;
+    private double kD;
 
     /** Set PID variables */
     public PID() {
