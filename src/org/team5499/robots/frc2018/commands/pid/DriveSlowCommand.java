@@ -5,7 +5,7 @@ import org.team5499.robots.frc2018.PID;
 import org.team5499.robots.frc2018.commands.BaseCommand;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
-public class DriveCommand extends BaseCommand {
+public class DriveSlowCommand extends BaseCommand {
 
     private double setpoint;
     private double start_angle;
@@ -13,7 +13,7 @@ public class DriveCommand extends BaseCommand {
     private PID angle_controller;
     private PID distance_controller;
 
-    public DriveCommand(double to, double setpoint) {
+    public DriveSlowCommand(double to, double setpoint) {
         super(to);
         this.setpoint = setpoint;
         this.enabled = false;
@@ -27,7 +27,7 @@ public class DriveCommand extends BaseCommand {
         this.distance_controller.setInverted(false);
         this.distance_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_DISTANCE_ERROR"));
         this.distance_controller.setAcceptableVelocity(Dashboard.getDouble("ACCEPTABLE_DISTANCE_VELOCITY"));
-        this.distance_controller.setOutputRange(-Dashboard.getDouble("MAX_DRIVE_PID_OUTPUT"), Dashboard.getDouble("MAX_DRIVE_PID_OUTPUT"));
+        this.distance_controller.setOutputRange(-Dashboard.getDouble("MAX_DRIVE_PID_OUTPUT") / 2.5, Dashboard.getDouble("MAX_DRIVE_PID_OUTPUT") / 2.5);
     }
 
     @Override

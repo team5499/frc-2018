@@ -2,6 +2,9 @@ package org.team5499.robots.frc2018.controllers;
 
 import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
+
+import edu.wpi.first.wpilibj.DriverStation;
+
 import org.team5499.robots.frc2018.commands.*;
 import org.team5499.robots.frc2018.commands.pid.*;
 import org.team5499.robots.frc2018.commands.timed.*;
@@ -12,64 +15,70 @@ public class AutoController extends BaseController {
     /**
      * THIS CLASS SHOULD CONTAIN ONLY CONTROL LOGIC FOR THE AUTONOMOUS PERIOD
      */
-
-    private Routine center, left, right, nothing, straight, test, test1;
     private Routine current_routine;
+
+
+    private Routine straight, straight_score, left_straight_score, right_straight_score, left_far_score, right_far_score, center_left_score, center_right_score;
+
     private BaseCommand current_command;
+    private String game_data;
 
     public AutoController() {
         super();
-        center = new Routine();
-        left = new Routine();
-        right = new Routine();
-        nothing = new Routine();
+        game_data = null;
+
+        center_left_score = new Routine();
+        center_right_score = new Routine();
+        left_far_score = new Routine();
+        right_far_score = new Routine();
+        left_straight_score = new Routine();
+        right_straight_score = new Routine();
         straight = new Routine();
-        test = new Routine();
-        test1 = new Routine();
+        straight_score = new Routine();
 
         // drives 10 feet
-        straight.addCommand(new DriveCommand(20, 0));
+        straight.addCommand(new NothingCommand(10));
+        straight.addCommand(new DriveCommand(20, -100));
 
-        // works at 70 inches
-        left.addCommand(new NothingCommand(1));
-        left.addCommand(new TimedDriveCommand(0.8, -0.3));
-        left.addCommand(new NothingCommand(1));
-        left.addCommand(new IntakeCommand(1, 0.75, false)); /** Positive is outtake */
+        // working center right command
+        center_right_score.addCommand(new DriveCommand(5, -45));
+        center_right_score.addCommand(new TurnCommand(2, -90));
+        center_right_score.addCommand(new DriveCommand(2, -51));
+        center_right_score.addCommand(new TurnCommand(2, 90));
+        center_right_score.addCommand(new DriveCommand(3, -63));
+        center_right_score.addCommand(new IntakeCommand(1, 0.75, false));
+        center_right_score.addCommand(new DriveCommand(2, 20));
+        center_right_score.addCommand(new ArmCommand(1, ArmDirection.DOWN));
+        center_right_score.addCommand(new TurnCommand(2, -110));
+        center_right_score.addCommand(new IntakeDriveCommand(3, 70, -1.0, true));
+        center_right_score.addCommand(new ArmCommand(2, ArmDirection.UP));
+        center_right_score.addCommand(new DriveCommand(2, -70));
+        center_right_score.addCommand(new TurnCommand(2.5, 110));
+        center_right_score.addCommand(new DriveCommand(2, -20));
+        center_right_score.addCommand(new IntakeCommand(1, 0.75, false));
 
-        // working center command
-        test.addCommand(new DriveCommand(5, -45));
-        test.addCommand(new TurnCommand(2, -90));
-        test.addCommand(new DriveCommand(2, -51));
-        test.addCommand(new TurnCommand(2, 90));
-        test.addCommand(new DriveCommand(3, -63));
-        test.addCommand(new IntakeCommand(1, 0.75, false));
-        test.addCommand(new DriveCommand(2, 20));
-        test.addCommand(new ArmCommand(1, ArmDirection.DOWN));
-        test.addCommand(new TurnCommand(2, -110));
-        test.addCommand(new IntakeDriveCommand(3, 70, -1.0, true));
-        test.addCommand(new ArmCommand(2, ArmDirection.UP));
-        test.addCommand(new DriveCommand(2, -70));
-        test.addCommand(new TurnCommand(2.5, 110));
-        test.addCommand(new DriveCommand(2, -20));
-        test.addCommand(new IntakeCommand(1, 0.75, false));
+        center_left_score.addCommand(new DriveCommand(5, -45));
+        center_left_score.addCommand(new TurnCommand(2, 90));
+        center_left_score.addCommand(new DriveCommand(2, -51));
+        center_left_score.addCommand(new TurnCommand(2, -90));
+        center_left_score.addCommand(new DriveCommand(3, -63));
+        center_left_score.addCommand(new IntakeCommand(1, 0.75, false));
+        center_left_score.addCommand(new DriveCommand(2, 50));
+        center_left_score.addCommand(new ArmCommand(1, ArmDirection.DOWN));
+        center_left_score.addCommand(new TurnCommand(2, 130));
+        center_left_score.addCommand(new IntakeDriveCommand(3, 50, -1.0, false));
+        center_left_score.addCommand(new ArmCommand(2, ArmDirection.UP));
+        center_left_score.addCommand(new DriveCommand(2, -40));
+        center_left_score.addCommand(new TurnCommand(2.5, -130));
+        center_left_score.addCommand(new DriveCommand(2, -60));
+        center_left_score.addCommand(new IntakeCommand(1, 0.75, false));
 
-        test1.addCommand(new DriveCommand(100, -40));
-        test1.addCommand(new TurnCommand(0.7, -30));
-        test1.addCommand(new DriveCommand(2, -80));
-        test1.addCommand(new IntakeCommand(0.8, 0.75, false));
-        test1.addCommand(new DriveCommand(0.8, 10));
-        test1.addCommand(new TurnCommand(0.8, -60));
-        test1.addCommand(new DriveCommand(0.5, -20));
-        test1.addCommand(new ArmCommand(0.75, ArmDirection.DOWN));
-        test1.addCommand(new NothingCommand(1));
-        test1.addCommand(new IntakeDriveCommand(2, -30, -1.0, true));
-        test1.addCommand(new ArmCommand(2, ArmDirection.UP));
-        test1.addCommand(new DriveCommand(2, -5));
-        test1.addCommand(new TurnCommand(2, 90));
-        test1.addCommand(new DriveCommand(2, -30));
-        test1.addCommand(new IntakeCommand(2, 0.75, false));
+        left_straight_score.addCommand(new DriveCommand(3, -160));
+        left_straight_score.addCommand(new TurnCommand(2, -90));
+        left_straight_score.addCommand(new DriveCommand(2, -40));
+        left_straight_score.addCommand(new OuttakeCommand(1, 0.5));
         
-        current_routine = test;
+        current_routine = straight;
     }
 
     @Override
@@ -80,7 +89,17 @@ public class AutoController extends BaseController {
     @Override
     public void handle() {
         /** Make sure the game data is loaded, and set the correct routine */
-
+        while(DriverStation.getInstance().getGameSpecificMessage().length() < 3) {
+            return;
+        }
+        if(game_data == null){
+            game_data = DriverStation.getInstance().getGameSpecificMessage();
+            if(game_data.substring(0, 1).equals("L")) {
+                current_routine = left_straight_score;
+            } else {
+                current_routine = straight;
+            }
+        }        
 
         /** Once the correct routine is choosen, handle it */
         if(current_routine.isFinished()) {
@@ -108,6 +127,17 @@ public class AutoController extends BaseController {
 
         Subsystems.drivetrain.setAngle(0);
         Subsystems.drivetrain.setDistance(0);
+
+        center_left_score.reset();
+        center_right_score.reset();
+        left_far_score.reset();
+        right_far_score.reset();
+        left_straight_score.reset();
+        right_straight_score.reset();
+        straight.reset();
+        straight_score.reset();
+
+        game_data = null;
     }
 
 }

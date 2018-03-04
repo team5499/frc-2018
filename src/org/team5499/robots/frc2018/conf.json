@@ -76,11 +76,11 @@
     "kANGLE_D": 0.0,
     "ACCEPTABLE_ANGLE_ERROR": 0.5,
 
-    "kTURN_P": 0.025,
+    "kTURN_P": 0.04,
     "kTURN_I": 0.0,
     "kTURN_D": 0.0,
     "ACCEPTABLE_TURN_ERROR": 1.5,
-    "ACCEPTABLE_TURN_VELOCITY": 1.5,
+    "ACCEPTABLE_TURN_VELOCITY": 5,
 
     "kARM_P": 0.01,
     "kARM_I": 0.0,

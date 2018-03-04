@@ -25,6 +25,8 @@ public class TurnCommand extends BaseCommand {
     public void start() {
         super.start();
         turn_controller.setSetpoint(Subsystems.drivetrain.getAngle() + setpoint);
+        turn_controller.setProcessVariable(Subsystems.drivetrain.getAngle());
+        System.out.println((Subsystems.drivetrain.getAngle() + setpoint) + ":" + turn_controller.getError() + ":" + Subsystems.drivetrain.getAngle());
         enabled = true;
     }
 
@@ -34,6 +36,7 @@ public class TurnCommand extends BaseCommand {
         turn_controller.setVelocity(Subsystems.drivetrain.getAngleVelocity());
         double output = turn_controller.calculate();
         Subsystems.drivetrain.setDrivetrain(-output, output);
+        System.out.println(turn_controller.getError());
     }
 
     @Override
@@ -47,6 +50,7 @@ public class TurnCommand extends BaseCommand {
     public boolean isFinished() {
         boolean finished = (super.isFinished() || turn_controller.onTarget());
         if(finished) {
+            System.out.println(turn_controller.getError());
             Subsystems.drivetrain.stop();
             reset();
         }

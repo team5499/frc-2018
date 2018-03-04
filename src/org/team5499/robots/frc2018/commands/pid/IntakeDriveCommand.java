@@ -2,7 +2,7 @@ package org.team5499.robots.frc2018.commands.pid;
 
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
-public class IntakeDriveCommand extends DriveCommand {
+public class IntakeDriveCommand extends DriveSlowCommand {
 
     private double intake_speed;
     private boolean wait_for_cube;
@@ -34,6 +34,7 @@ public class IntakeDriveCommand extends DriveCommand {
         boolean finished = (super.isFinished() || (Subsystems.intake.getCubeDetected() && wait_for_cube));
         if(finished) {
             Subsystems.intake.stopIntake();
+            Subsystems.drivetrain.stop();
         }
         return finished;
     }
