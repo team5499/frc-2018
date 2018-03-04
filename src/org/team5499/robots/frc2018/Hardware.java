@@ -1,5 +1,7 @@
 package org.team5499.robots.frc2018;
 
+import org.team5499.robots.frc2018.dashboard.Dashboard;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
@@ -56,17 +58,18 @@ public class Hardware {
         Hardware.right_slave_talon.setInverted(true);
         Hardware.left_slave_talon.setInverted(false);
         Hardware.right_slave_talon.setInverted(true);
+        Hardware.arm_talon.setInverted(true);
 
         /** Enable voltage compensation */
-        Hardware.left_master_talon.setVoltageCompensation(true);
-        Hardware.right_master_talon.setVoltageCompensation(true);
-        Hardware.left_slave_talon.setVoltageCompensation(true);
-        Hardware.right_slave_talon.setVoltageCompensation(true);
-        Hardware.intake_left_talon.setVoltageCompensation(true);
-        Hardware.intake_right_talon.setVoltageCompensation(true);
-        Hardware.climber_master_talon.setVoltageCompensation(true);
-        Hardware.climber_slave_talon.setVoltageCompensation(true);
-        Hardware.arm_talon.setVoltageCompensation(true);
+        Hardware.left_master_talon.enableVoltageCompensation(true);
+        Hardware.right_master_talon.enableVoltageCompensation(true);
+        Hardware.left_slave_talon.enableVoltageCompensation(true);
+        Hardware.right_slave_talon.enableVoltageCompensation(true);
+        Hardware.intake_left_talon.enableVoltageCompensation(true);
+        Hardware.intake_right_talon.enableVoltageCompensation(true);
+        Hardware.climber_master_talon.enableVoltageCompensation(true);
+        Hardware.climber_slave_talon.enableVoltageCompensation(true);
+        Hardware.arm_talon.enableVoltageCompensation(true);
 
         /** Set follower modes */
         Hardware.climber_slave_talon.follow(Hardware.climber_master_talon); 

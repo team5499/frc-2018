@@ -1,6 +1,6 @@
 package org.team5499.robots.frc2018.commands.pid;
 
-import org.team5499.robots.frc2018.Hardware;
+import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.PID;
 import org.team5499.robots.frc2018.commands.BaseCommand;
 import org.team5499.robots.frc2018.subsystems.Subsystems;

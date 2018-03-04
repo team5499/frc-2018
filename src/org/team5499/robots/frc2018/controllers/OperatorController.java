@@ -1,5 +1,6 @@
 package org.team5499.robots.frc2018.controllers;
 
+import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.PID;
 import org.team5499.robots.frc2018.Hardware;
 
@@ -35,20 +36,21 @@ public class OperatorController extends BaseController {
         Subsystems.drivetrain.setDrivetrain(getLeft(), getRight()); /** Set the left and right speeds of the drivetrain */
         Subsystems.intake.setIntake(getIntake()); /** Set the intake speed */
 
-        if(getPidArm() > 0 && getArm() == 0) { /** Use PID to move the arm up */
+        if(getPidArm() > 0 && getArm() == 0) { // Use PID to move the arm up
             arm_controller.setSetpoint(Dashboard.getDouble("ARM_UP_SETPOINT"));
             arm_controller.setProcessVariable(Subsystems.intake.getArmAngle());
             arm_controller.setVelocity(Subsystems.intake.getArmVelocity());
             Subsystems.intake.setArm(arm_controller.calculate());
-        } else if(getPidArm() < 0 && getArm() == 0) { /** Use PID to move arm down */
+        } else if(getPidArm() < 0 && getArm() == 0) { // Use PID to move arm down
             arm_controller.setSetpoint(Dashboard.getDouble("ARM_DOWN_SETPOINT"));
             arm_controller.setProcessVariable(Subsystems.intake.getArmAngle());
             arm_controller.setVelocity(Subsystems.intake.getArmVelocity());
             Subsystems.intake.setArm(arm_controller.calculate());
-        } else { /** Manual control of the arm */
+        } else { // Manual control of the arm
             arm_controller.reset();
             Subsystems.intake.setArm(getArm());
         }
+        
     }
 
     @Override
@@ -64,7 +66,7 @@ public class OperatorController extends BaseController {
 
     /** Get arm speed(positive is up) */
     private double getArm() {
-        double raw_speed = codriver.getY(Hand.kRight);
+        double raw_speed = Hardware.codriver.getY(Hand.kRight);
         if(Math.abs(raw_speed) < Dashboard.getDouble("ARM_DEADZONE")) { /** If the raw value is less than the deadzone, return 0 speed */
             return 0;
         }
@@ -73,7 +75,7 @@ public class OperatorController extends BaseController {
 
     /** Get whether PID should be used to move the arm(negative is down, positive is up) */
     public double getPidArm() {
-        double raw = codriver.getY(Hand.kLeft);
+        double raw = Hardware.codriver.getY(Hand.kLeft);
         if(Math.abs(raw) < Dashboard.getDouble("DRIVER_CONTROLLER_DEADZONE")) {
             return 0;
         }
@@ -97,40 +99,40 @@ public class OperatorController extends BaseController {
 
     /** Get left drive speed */
     private double getLeft() {
-        double raw = Hardware.driver.getY(Hand.kLeft);
+        double raw = -Hardware.driver.getY(Hand.kLeft);
+        double turn = Hardware.driver.getX(Hand.kRight);
         if(Math.abs(raw) < Dashboard.getDouble("DRIVER_CONTROLLER_DEADZONE")) {
-            return 0;
+            raw = 0;
         }
-        if(Hardware.driver.getTriggerAxis(Hand.kRight) > 0.1) {
-            raw = raw * Dashboard.getDouble("SLOW_MULTIPLIER");
-        } else if(driver.getTriggerAxis(Hand.kLeft) > 0.1) {
-            raw = raw * Dashboard.getDouble("SLOW_MULTIPLIER") / 2;
+        if(!Hardware.driver.getBumper(Hand.kRight)) {
+            turn = turn * Dashboard.getDouble("SLOW_MULTIPLIER");
         }
-        return raw;
+        return raw + turn;
     }
 
     /** Get right drive speed */
     private double getRight() {
-        double raw = Hardware.driver.getY(Hand.kRight);
+        double raw = -Hardware.driver.getY(Hand.kLeft);
+        double turn = Hardware.driver.getX(Hand.kRight);
         if(Math.abs(raw) < Dashboard.getDouble("DRIVER_CONTROLLER_DEADZONE")) {
-            return 0;
+            raw = 0;
         }
-        if(Hardware.driver.getTriggerAxis(Hand.kRight) > 0.1) {
-            raw = raw * Dashboard.getDouble("SLOW_MULTIPLIER");
-        } else if(driver.getTriggerAxis(Hand.kLeft) > 0.1) {
-            raw = raw * Dashboard.getDouble("SLOW_MULTIPLIER") / 2;
+        if(!Hardware.driver.getBumper(Hand.kRight)) {
+            turn = turn * Dashboard.getDouble("SLOW_MULTIPLIER");
         }
-        return raw;
+        return raw - turn;
     }
 
     /** Get intake speed(positive is outtake) */
     private double getIntake() {
-        if(codriver.getBumper(Hand.kRight)) {
+        if(Hardware.codriver.getBumper(Hand.kRight)) {
             return Dashboard.getDouble("INTAKE_SPEED");
-        } else if(codriver.getTriggerAxis(Hand.kRight) > 0.1) {
+        } else if(Hardware.codriver.getTriggerAxis(Hand.kRight) > 0.1) {
             return Dashboard.getDouble("SLOW_INTAKE");
-        } else if(codriver.getBumper(Hand.kLeft)) {
+        } else if(Hardware.codriver.getBumper(Hand.kLeft)) {
             return Dashboard.getDouble("OUTTAKE_SPEED");
+        } else if(Hardware.codriver.getAButton()) {
+            return 1;
         } else return 0;
     }
 

@@ -4,7 +4,7 @@ import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 public class IntakeCommand extends BaseCommand {
 
-    // zero to one
+    // Positive is outtake
     private double speed;
     private boolean wait_for_cube;
 

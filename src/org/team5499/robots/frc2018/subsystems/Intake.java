@@ -1,8 +1,8 @@
 package org.team5499.robots.frc2018.subsystems;
 
+import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.Hardware;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class Intake {
@@ -36,18 +36,19 @@ public class Intake {
     }
 
     /** Returns the velocity of the very end of the arm in inches per second(up is positive) */
+    // NOT RELIABLE - WHY?????????
     public double getArmVelocity() {
         return (double) getRawPotVelocity() * 900.0 / ((double) Dashboard.getInt("ARM_PERPENDICULAR_SIGNAL") - (double) Dashboard.getInt("ARM_PARALLEL_SIGNAL"));
     }
 
     /** Get raw value of the pot */
     public int getRawPotValue() {
-        return Hardware.right_master_talon.getSensorCollection.getAnalogInRaw();
+        return Hardware.right_master_talon.getSensorCollection().getAnalogInRaw();
     }
 
     /** Get raw velocity value */
     public int getRawPotVelocity() {
-        return Hardware.right_master_talon.getSensorCollection.getAnalogInVel();
+        return Hardware.right_master_talon.getSensorCollection().getAnalogInVel();
     }
 
     /** True if a cube is detected; false otherwise */
@@ -92,7 +93,7 @@ public class Intake {
 
     /** Get raw current output from the arm talon */
     public double getArmCurrent() {
-        return Hardware.arm_talon.getMotorOutputCurrent();
+        return Hardware.arm_talon.getOutputCurrent();
     }
 
     /** Get raw voltage output from PDP to the left intake talon */
@@ -112,7 +113,7 @@ public class Intake {
 
     /** Get raw current output from the left intake talon */
     public double getLeftIntakeCurrent() {
-        return Hardware.intake_left_talon.getMotorOutputCurrent();
+        return Hardware.intake_left_talon.getOutputCurrent();
     }
     
     /** Get raw voltage output from PDP to the right intake talon */
@@ -132,7 +133,7 @@ public class Intake {
 
     /** Get raw current output from the right intake talon */
     public double getRightIntakeCurrent() {
-        return Hardware.intake_right_talon.getMotorOutputCurrent();
+        return Hardware.intake_right_talon.getOutputCurrent();
     }
 
     /** Stops the arm */

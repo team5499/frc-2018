@@ -25,12 +25,14 @@ public abstract class BaseCommand {
     public abstract void handle();
 
     public double getTimeout() {
+        return timeout;
     }
 
     public void setTimeout() {
     }
 
     public double getCurrentTime() {
+        return timer.get();
     }
 
     public boolean isFinished() {

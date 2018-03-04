@@ -1,6 +1,9 @@
 package org.team5499.robots.frc2018.subsystems;
 
+import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.Hardware;
+
+import edu.wpi.first.wpilibj.Timer;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -22,10 +25,15 @@ public class Drivetrain {
 
     private int last_encoder_value;
     private boolean encoder_enabled;
+    private double last_angle;
+    private Timer timer;
+    private double angle_velocity;
     
     public Drivetrain() {
         last_encoder_value = 0;
         encoder_enabled = true;
+        angle_velocity = 0;
+        timer = new Timer();
     }
 
     /** -1 - 1 set left and right output for the drivetrain(positive is forward) */
@@ -41,7 +49,7 @@ public class Drivetrain {
 
     /** Get distance velocity(inches per second) */
     public double getDistanceVelocity() {
-        return (double) getRawVelocity() * Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI / (double) Dashboard.getInt("TICKS_PER_ROTATION");
+        return ((double) getRawDistanceVelocity() * Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI / (double) Dashboard.getInt("TICKS_PER_ROTATION"));
     }
 
     /** Get raw distance value */
@@ -50,7 +58,7 @@ public class Drivetrain {
     }
 
     /** Get raw distance velocity value */
-    public int getRawVelocity() {
+    public int getRawDistanceVelocity() {
         return Hardware.left_master_talon.getSensorCollection().getQuadratureVelocity();
     }
 
@@ -77,13 +85,27 @@ public class Drivetrain {
 
     /** Get angle of the drivetrain */
     public double getAngle() {
-        double[] ypr;
+        double[] ypr = {0, 0, 0};
         Hardware.pigeon.getYawPitchRoll(ypr);
         return ypr[0];
     }
 
+    public void handleAngleVelocity() {
+        angle_velocity = (getAngle() - last_angle) / timer.get();
+        timer.stop();
+        timer.reset();
+        timer.start();
+        last_angle = getAngle();
+    }
+
     /** Get angle velocity(degrees per second) */ ///NOT SURE HOW TO DO THIS YET
     public double getAngleVelocity() {
+        return angle_velocity;
+    }
+
+    /** Get raw accelerometer value */ 
+    // FIX ME
+    public double getRawAngleVelocity() {
         return 0;
     }
 
@@ -93,8 +115,11 @@ public class Drivetrain {
     }
 
     /** True if the gyro has finished calibrating */
+    // DOESNT WORK
     public boolean gyroIsCalibrated() {
-        return (Hardware.pigeon.getState() == PigeonIMU.PigeonState.READY);
+        PigeonIMU.GeneralStatus status = new PigeonIMU.GeneralStatus();
+        Hardware.pigeon.getGeneralStatus(status);
+        return (!status.bCalIsBooting);
     }
 
     /** Stops the drivetrain */
@@ -120,7 +145,7 @@ public class Drivetrain {
 
     /** Get raw current output from the left master talon */
     public double getLeftMasterCurrent() {
-        return Hardware.left_master_talon.getMotorOutputCurrent();
+        return Hardware.left_master_talon.getOutputCurrent();
     }
 
     /** Get raw voltage output from PDP to the right master talon */
@@ -140,7 +165,7 @@ public class Drivetrain {
 
     /** Get raw current output from the right master talon */
     public double getRightMasterCurrent() {
-        return Hardware.right_master_talon.getMotorOutputCurrent();
+        return Hardware.right_master_talon.getOutputCurrent();
     }
 
     /** Get raw voltage output from PDP to the left slave talon */
@@ -160,7 +185,7 @@ public class Drivetrain {
 
     /** Get raw current output from the left slave talon */
     public double getLeftSlaveCurrent() {
-        return Hardware.left_slave_talon.getMotorOutputCurrent();
+        return Hardware.left_slave_talon.getOutputCurrent();
     }
 
     /** Get raw voltage output from PDP to the right slave talon */
@@ -180,7 +205,7 @@ public class Drivetrain {
 
     /** Get raw current output from the right slave talon */
     public double getRightSlaveCurrent() {
-        return Hardware.right_slave_talon.getMotorOutputCurrent();
+        return Hardware.right_slave_talon.getOutputCurrent();
     }
 
 }

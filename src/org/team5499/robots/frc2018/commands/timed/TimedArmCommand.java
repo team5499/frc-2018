@@ -1,13 +1,11 @@
 package org.team5499.robots.frc2018.commands.timed;
 
-import org.team5499.robots.frc2018.Reference;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 import org.team5499.robots.frc2018.commands.BaseCommand;
-import org.team5499.robots.frc2018.commands.pid.ArmCommand.ArmDirection;
 
 public class TimedArmCommand extends BaseCommand {
 
-    private double speed;
+    private double speed; /** Positive is up */
 
     public TimedArmCommand(double to, double speed) {
         super(to);

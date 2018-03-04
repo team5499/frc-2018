@@ -26,6 +26,7 @@ public class Dashboard {
     private static MessageThread mt;
 
     static {
+        System.out.println("Loading json file");
         packet_builder = JsonHandler.generateDashPacketBuilderFromJson("/home/lvuser/conf.json");
         incoming_message = packet_builder.build();
     }
@@ -58,7 +59,7 @@ public class Dashboard {
         running = false;
     }
 
-    public static void setValue(String key, String value) {
+    public static void setString(String key, String value) {
         synchronized(packet_builder) {
             List<param> parameters = packet_builder.getParametersList();
             int index = indexOfKey(parameters, key);
@@ -70,13 +71,39 @@ public class Dashboard {
         }
     }
 
-    public static String getValue(String key) {
+
+    public static void setDouble(String key, double value) {
+        setString(key, Double.toString(value));
+    }
+
+    public static void setInt(String key, int value) {
+        setString(key, Integer.toString(value));
+    }
+
+    public static void setBoolean(String key, boolean value) {
+        setString(key, Boolean.toString(value));
+    }
+
+    public static String getString(String key) {
         synchronized(incoming_message) {
             if(indexOfKey(incoming_message.getParametersList(), key) == -1) {
+                System.out.println("[DASHBOARD] NO ENTRY FOR:" + key);
                 return null;
             }
             return incoming_message.getParameters(indexOfKey(incoming_message.getParametersList(), key)).getValue();
         }
+    }
+
+    public static double getDouble(String key) {
+        return Double.parseDouble(getString(key));
+    }
+
+    public static int getInt(String key) {
+        return (int) getDouble(key);
+    }
+
+    public static boolean getBoolean(String key) {
+        return Boolean.parseBoolean(getString(key));
     }
 
     // returns -1 if no matching key is found

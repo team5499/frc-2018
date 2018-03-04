@@ -1,6 +1,6 @@
 package org.team5499.robots.frc2018.commands.pid;
 
-import org.team5499.robots.frc2018.Hardware;
+import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.PID;
 import org.team5499.robots.frc2018.commands.BaseCommand;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
@@ -19,22 +19,21 @@ public class TurnCommand extends BaseCommand {
         this.turn_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_TURN_ERROR"));
         this.turn_controller.setAcceptableVelocity(Dashboard.getDouble("ACCEPTABLE_TURN_VELOCITY"));
         this.turn_controller.setOutputRange(-Dashboard.getDouble("MAX_ANGLE_PID_OUTPUT"), Dashboard.getDouble("MAX_ANGLE_PID_OUTPUT"));
-        this.turn_controller.setSetpoint(this.setpoint);
     }
 
     @Override
     public void start() {
         super.start();
-        Subsystems.drivetrain.enableEncoder(false);
+        turn_controller.setSetpoint(Subsystems.drivetrain.getAngle() + setpoint);
         enabled = true;
     }
 
     @Override
     public void handle() {
         turn_controller.setProcessVariable(Subsystems.drivetrain.getAngle());
-        turn_controller.setVelocity(Subsystems.drivetrain.getDistanceVelocity());
+        turn_controller.setVelocity(Subsystems.drivetrain.getAngleVelocity());
         double output = turn_controller.calculate();
-        Subsystems.drivetrain.setDrivetrain(output, -output);
+        Subsystems.drivetrain.setDrivetrain(-output, output);
     }
 
     @Override
@@ -49,8 +48,6 @@ public class TurnCommand extends BaseCommand {
         boolean finished = (super.isFinished() || turn_controller.onTarget());
         if(finished) {
             Subsystems.drivetrain.stop();
-            Subsystems.drivetrain.setAngle(-turn_controller.getError());
-            Subsystems.drivetrain.enableEncoder(true);
             reset();
         }
         return finished;

@@ -1,9 +1,10 @@
 package org.team5499.robots.frc2018.subsystems;
 
+import org.team5499.robots.frc2018.dashboard.Dashboard;
+import org.team5499.robots.frc2018.Hardware;
+
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
-import org.team5499.robots.frc2018.Hardware;
 
 public class Climber {
     /**

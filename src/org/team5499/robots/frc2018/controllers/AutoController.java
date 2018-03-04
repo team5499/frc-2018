@@ -1,5 +1,6 @@
 package org.team5499.robots.frc2018.controllers;
 
+import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 import org.team5499.robots.frc2018.commands.*;
 import org.team5499.robots.frc2018.commands.pid.*;
@@ -27,50 +28,48 @@ public class AutoController extends BaseController {
         test1 = new Routine();
 
         // drives 10 feet
-        straight.addCommand(new DriveCommand(20, -50));
-        straight.addCommand(new TurnCommand(20, -90));
-        straight.addCommand(new DriveCommand(20, 20));
+        straight.addCommand(new DriveCommand(20, 0));
 
         // works at 70 inches
         left.addCommand(new NothingCommand(1));
         left.addCommand(new TimedDriveCommand(0.8, -0.3));
         left.addCommand(new NothingCommand(1));
-        left.addCommand(new IntakeCommand(1, IntakeCommand.IntakeDirection.OUT, 0.75));
+        left.addCommand(new IntakeCommand(1, 0.75, false)); /** Positive is outtake */
 
         // working center command
         test.addCommand(new DriveCommand(5, -45));
         test.addCommand(new TurnCommand(2, -90));
-        test.addCommand(new DriveCommand(2, -45));
+        test.addCommand(new DriveCommand(2, -51));
         test.addCommand(new TurnCommand(2, 90));
         test.addCommand(new DriveCommand(3, -63));
-        test.addCommand(new IntakeCommand(1, IntakeCommand.IntakeDirection.OUT, 0.75));
+        test.addCommand(new IntakeCommand(1, 0.75, false));
         test.addCommand(new DriveCommand(2, 20));
-        test.addCommand(new TimedArmCommand(1, ArmDirection.DOWN));
+        test.addCommand(new ArmCommand(1, ArmDirection.DOWN));
         test.addCommand(new TurnCommand(2, -110));
-        test.addCommand(new IntakeDriveCommand(3, 70, IntakeCommand.IntakeDirection.IN, 1.0));
-        test.addCommand(new TimedArmCommand(2, ArmDirection.UP));
+        test.addCommand(new IntakeDriveCommand(3, 70, -1.0, true));
+        test.addCommand(new ArmCommand(2, ArmDirection.UP));
         test.addCommand(new DriveCommand(2, -70));
         test.addCommand(new TurnCommand(2.5, 110));
         test.addCommand(new DriveCommand(2, -20));
-        test.addCommand(new IntakeCommand(1, IntakeCommand.IntakeDirection.OUT, 0.75));
+        test.addCommand(new IntakeCommand(1, 0.75, false));
 
         test1.addCommand(new DriveCommand(100, -40));
         test1.addCommand(new TurnCommand(0.7, -30));
         test1.addCommand(new DriveCommand(2, -80));
-        test1.addCommand(new IntakeCommand(0.8, IntakeCommand.IntakeDirection.OUT, 0.75));
+        test1.addCommand(new IntakeCommand(0.8, 0.75, false));
         test1.addCommand(new DriveCommand(0.8, 10));
         test1.addCommand(new TurnCommand(0.8, -60));
         test1.addCommand(new DriveCommand(0.5, -20));
-        test1.addCommand(new TimedArmCommand(0.75, ArmDirection.DOWN));
+        test1.addCommand(new ArmCommand(0.75, ArmDirection.DOWN));
         test1.addCommand(new NothingCommand(1));
-        test1.addCommand(new IntakeDriveCommand(2, -30, IntakeCommand.IntakeDirection.IN, 1.0));
-        test1.addCommand(new TimedArmCommand(2, ArmDirection.UP));
+        test1.addCommand(new IntakeDriveCommand(2, -30, -1.0, true));
+        test1.addCommand(new ArmCommand(2, ArmDirection.UP));
         test1.addCommand(new DriveCommand(2, -5));
         test1.addCommand(new TurnCommand(2, 90));
         test1.addCommand(new DriveCommand(2, -30));
-        test1.addCommand(new IntakeCommand(2, IntakeCommand.IntakeDirection.OUT, 0.75));
+        test1.addCommand(new IntakeCommand(2, 0.75, false));
         
-        current_routine = straight;
+        current_routine = test;
     }
 
     @Override
