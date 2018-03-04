@@ -5,7 +5,7 @@ ext {
   NetworkTables_version = '3.1.7'
   Ntcore_version = '4.0.0'
   CameraServer_version = '1.1.0'
-  CTREToolsuite_version = '5.1.3.1'
+  CTREToolsuite_version = '5.2.1.1'
   GSON_version = '2.8.2'
   WEBSOCKET_version = '9.0.4'
   TYRUS_version = '1.13.1'
@@ -27,13 +27,7 @@ repositories {
     url 'http://first.wpi.edu/FRC/roborio/maven/release'
   }
   maven {
-    url 'http://dev.imjac.in/maven'
-  }
-  flatDir {
-       dirs 'tmp_ctre/runtime'
-  }
-  flatDir {
-       dirs 'tmp_ctre/compile'
+    url 'https://maven.team5499.org/'
   }
 }
 
@@ -43,9 +37,7 @@ dependencies {
   compile "org.opencv:opencv-java:$OpenCV_version"
   compile "edu.wpi.first.ntcore:ntcore-java:$Ntcore_version"
   compile "edu.wpi.first.cscore:cscore-java:$CameraServer_version"
-  //compile "thirdparty.frc.ctre:Toolsuite-Java:$CTREToolsuite_version"
-  compile name: 'CTRE_Phoenix'
-  compile name: 'CTRE_Phoenix-sources'
+  compile "openrio.mirror.third.ctre:CTRE-phoenix-java:$CTREToolsuite_version"
   compile "com.google.code.gson:gson:$GSON_version"
   compile group: 'org.apache.tomcat', name: 'tomcat-websocket', version: WEBSOCKET_version
   compile group: 'org.glassfish.tyrus', name: 'tyrus-server', version: TYRUS_version
@@ -58,7 +50,7 @@ dependencies {
   runtime "edu.wpi.first.cscore:cscore-jni:$CameraServer_version:linuxathena"
   runtime "edu.wpi.first.wpiutil:wpiutil-java:$WPIUtil_version"
   runtime "edu.wpi.first.ntcore:ntcore-jni:$Ntcore_version:linuxathena"
-  //runtime "thirdparty.frc.ctre:Toolsuite-Zip:$CTREToolsuite_version@zip"
+  runtime "openrio.mirror.third.ctre:CTRE-phoenix-java:$CTREToolsuite_version:native@zip"
 }
 
 jar {
@@ -150,7 +142,7 @@ task bundle_dashboard {
   doLast {
     exec {
       commandLine 'browserify'
-      args 'dashboard/scripts/MessageHandler.js', '-o', 'dashboard/scripts/bundle.js'
+      args 'dashboard/scripts/MessageHandler.js', 'dashboard/scripts/main.js', '-o', 'dashboard/scripts/bundle.js'
     }
   }
 }
