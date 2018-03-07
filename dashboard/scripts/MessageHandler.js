@@ -2,18 +2,20 @@
 
 var dashpacket = require('./DashPacket_pb');
 
-class MessageHandler {
+module.exports = class MessageHandler {
     constructor(addr) {
         this.addr = addr;
         this.curr_message = new dashpacket.DashPacket();
         this.callback = undefined;
         this.outgoing_message = new dashpacket.DashPacket();
         this.datasocket = undefined;
+        this.keylisteners = [];
     }
 
 
-    set currMessage(value) {
-        this.curr_message = value;
+    setNewMessage(message) {
+        this.last_message = this.curr_message.cloneMessage();
+        this.curr_message = message;
     }
 
 
@@ -31,7 +33,7 @@ class MessageHandler {
         var ref = this;
         return function(event) {
             console.log("Connection opened with this data:" + event.data);
-            ref.callback();
+            ref.callback(ref);
         }
     }
 
@@ -50,15 +52,17 @@ class MessageHandler {
             reader.addEventListener("loadend", function(e)
             {
                 var buffer = new Uint8Array(e.target.result);  // arraybuffer object
-                ref.currMessage = dashpacket.DashPacket.deserializeBinary(buffer);
+                var new_message = dashpacket.DashPacket.deserializeBinary(buffer);
+                ref.setNewMessage(new_message);
+                ref.updateKeyListeners(new_message);
             });
             return false;
         }
     }
 
-    indexOfKey(key) {
-        for(var i = 0;i < this.curr_message.getParametersList().length; i++) {
-            if(this.curr_message.getParametersList()[i].getKey() == key) {
+    indexOfKey(key, packet) {
+        for(var i = 0;i < packet.getParametersList().length;i++) {
+            if(packet.getParametersList()[i].getKey() == key) {
                 return i;
             }
         }
@@ -66,16 +70,23 @@ class MessageHandler {
         return -1;
     }
 
-    getProperty(key) {
-        if(this.indexOfKey(key) === -1) {
+    getProperty(/*key, packet*/) {
+        var packet = undefined;
+        var key = arguments[0];
+        if(arguments.length > 1) {
+            packet = arguments[1];
+        } else {
+            packet = this.curr_message;
+        }
+        if(this.indexOfKey(key, packet) === -1) {
             return undefined;
         }
-        return this.curr_message.getParametersList()[this.indexOfKey(key)].getValue();
+        return packet.getParametersList()[this.indexOfKey(key, packet)].getValue();
     }
 
     setProperty(key, value) {
         this.outgoing_message = this.curr_message.cloneMessage();
-        if(this.indexOfKey(key) === -1) {
+        if(this.indexOfKey(key, this.curr_message) === -1) {
             var tmp_array = this.outgoing_message.getParametersList();
             var property = new dashpacket.DashPacket.param();
             property.setKey(key);
@@ -87,7 +98,7 @@ class MessageHandler {
             var property = new dashpacket.DashPacket.param();
             property.setKey(key);
             property.setValue(value);
-            tmp_array[this.indexOfKey(key)] = property;
+            tmp_array[this.indexOfKey(key, this.curr_message)] = property;
             this.outgoing_message.setParametersList(tmp_array);
         }
         this.datasocket.send(this.outgoing_message.serializeBinary());
@@ -99,10 +110,22 @@ class MessageHandler {
         this.datasocket = new WebSocket(this.addr);
         this.datasocket.binaryType = 'blob';
         this.datasocket.onerror = this.m_error();
-        //this.datasocket.onopen = this.open;
         this.datasocket.onopen = this.m_open();
         this.datasocket.onclose = this.m_close();
         this.datasocket.onmessage = this.m_message();
+    }
+
+    addKeyListener(key, callback) {
+        this.keylisteners.push([key, callback]);
+    }
+
+    updateKeyListeners(new_packet) {
+        for(var i = 0;i < this.keylisteners.length;i++) {
+            if(this.getProperty(this.keylisteners[i][0], this.last_message) === this.getProperty(this.keylisteners[i][0], new_packet)) {
+            } else {
+                this.keylisteners[i][1]();
+            }
+        }
     }
 
 

@@ -8,6 +8,7 @@ import org.team5499.robots.frc2018.subsystems.Subsystems;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 
 public class Robot extends TimedRobot {
 
@@ -24,6 +25,9 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         Dashboard.setValue("battvoltage", "" + DriverStation.getInstance().getBatteryVoltage());
+        Dashboard.setValue("current_time", "" + Timer.getFPGATimestamp());
+
+        System.out.println(Dashboard.getValue("automode"));
     }
 
     @Override
