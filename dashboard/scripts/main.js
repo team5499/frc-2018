@@ -41,7 +41,7 @@ var batteryvoltage_graph = new Chart(batteryvoltage_canvas_context, {
             }],
             yAxes: [{
                 ticks: {
-                    suggestedMax: 12,
+                    suggestedMax: 14,
                     suggestedMin: 0
                 }
             }]
@@ -60,10 +60,10 @@ function run(handler) {
         var time = handler.getProperty("current_time");
         batteryvoltage_graph.data.datasets[0].data.push({x: parseFloat(time), y: parseFloat(value)});
         batteryvoltage_graph.data.labels.push(parseFloat(time));
-        if(batteryvoltage_graph.data.datasets[0].data.length > 10) {
+        if(batteryvoltage_graph.data.datasets[0].data.length > 125) {
             batteryvoltage_graph.data.datasets[0].data.splice(0, 1);
         }
-        if(batteryvoltage_graph.data.labels.length > 10) {
+        if(batteryvoltage_graph.data.labels.length > 125) {
             batteryvoltage_graph.data.labels.splice(0, 1);
         }
         batteryvoltage_graph.update();
