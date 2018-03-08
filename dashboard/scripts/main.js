@@ -68,6 +68,9 @@ function run(handler) {
         }
         batteryvoltage_graph.update();
     });
+    handler.addKeyListener("automode", function() {
+        selector.value = handler.getProperty("automode");
+    });
     selector.addEventListener("change", function() {
         console.log("setting automode:" + selector.value);
         handler.setProperty("automode", selector.value);

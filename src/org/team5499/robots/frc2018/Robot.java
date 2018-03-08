@@ -28,6 +28,7 @@ public class Robot extends TimedRobot {
         Dashboard.setValue("current_time", "" + Timer.getFPGATimestamp());
 
         System.out.println(Dashboard.getValue("automode"));
+
     }
 
     @Override

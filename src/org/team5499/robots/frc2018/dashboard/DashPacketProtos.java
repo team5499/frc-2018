@@ -156,6 +156,15 @@ public final class DashPacketProtos {
        */
       com.google.protobuf.ByteString
           getValueBytes();
+
+      /**
+       * <code>optional bool store = 3 [default = false];</code>
+       */
+      boolean hasStore();
+      /**
+       * <code>optional bool store = 3 [default = false];</code>
+       */
+      boolean getStore();
     }
     /**
      * Protobuf type {@code dashboard.DashPacket.param}
@@ -172,6 +181,7 @@ public final class DashPacketProtos {
       private param() {
         key_ = "";
         value_ = "";
+        store_ = false;
       }
 
       @java.lang.Override
@@ -215,6 +225,11 @@ public final class DashPacketProtos {
                 com.google.protobuf.ByteString bs = input.readBytes();
                 bitField0_ |= 0x00000002;
                 value_ = bs;
+                break;
+              }
+              case 24: {
+                bitField0_ |= 0x00000004;
+                store_ = input.readBool();
                 break;
               }
             }
@@ -326,6 +341,21 @@ public final class DashPacketProtos {
         }
       }
 
+      public static final int STORE_FIELD_NUMBER = 3;
+      private boolean store_;
+      /**
+       * <code>optional bool store = 3 [default = false];</code>
+       */
+      public boolean hasStore() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional bool store = 3 [default = false];</code>
+       */
+      public boolean getStore() {
+        return store_;
+      }
+
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
@@ -344,6 +374,9 @@ public final class DashPacketProtos {
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
           com.google.protobuf.GeneratedMessageV3.writeString(output, 2, value_);
         }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          output.writeBool(3, store_);
+        }
         unknownFields.writeTo(output);
       }
 
@@ -357,6 +390,10 @@ public final class DashPacketProtos {
         }
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
           size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, value_);
+        }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBoolSize(3, store_);
         }
         size += unknownFields.getSerializedSize();
         memoizedSize = size;
@@ -384,6 +421,11 @@ public final class DashPacketProtos {
           result = result && getValue()
               .equals(other.getValue());
         }
+        result = result && (hasStore() == other.hasStore());
+        if (hasStore()) {
+          result = result && (getStore()
+              == other.getStore());
+        }
         result = result && unknownFields.equals(other.unknownFields);
         return result;
       }
@@ -402,6 +444,11 @@ public final class DashPacketProtos {
         if (hasValue()) {
           hash = (37 * hash) + VALUE_FIELD_NUMBER;
           hash = (53 * hash) + getValue().hashCode();
+        }
+        if (hasStore()) {
+          hash = (37 * hash) + STORE_FIELD_NUMBER;
+          hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+              getStore());
         }
         hash = (29 * hash) + unknownFields.hashCode();
         memoizedHashCode = hash;
@@ -536,6 +583,8 @@ public final class DashPacketProtos {
           bitField0_ = (bitField0_ & ~0x00000001);
           value_ = "";
           bitField0_ = (bitField0_ & ~0x00000002);
+          store_ = false;
+          bitField0_ = (bitField0_ & ~0x00000004);
           return this;
         }
 
@@ -568,6 +617,10 @@ public final class DashPacketProtos {
             to_bitField0_ |= 0x00000002;
           }
           result.value_ = value_;
+          if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+            to_bitField0_ |= 0x00000004;
+          }
+          result.store_ = store_;
           result.bitField0_ = to_bitField0_;
           onBuilt();
           return result;
@@ -619,6 +672,9 @@ public final class DashPacketProtos {
             bitField0_ |= 0x00000002;
             value_ = other.value_;
             onChanged();
+          }
+          if (other.hasStore()) {
+            setStore(other.getStore());
           }
           this.mergeUnknownFields(other.unknownFields);
           onChanged();
@@ -796,6 +852,38 @@ public final class DashPacketProtos {
   }
   bitField0_ |= 0x00000002;
           value_ = value;
+          onChanged();
+          return this;
+        }
+
+        private boolean store_ ;
+        /**
+         * <code>optional bool store = 3 [default = false];</code>
+         */
+        public boolean hasStore() {
+          return ((bitField0_ & 0x00000004) == 0x00000004);
+        }
+        /**
+         * <code>optional bool store = 3 [default = false];</code>
+         */
+        public boolean getStore() {
+          return store_;
+        }
+        /**
+         * <code>optional bool store = 3 [default = false];</code>
+         */
+        public Builder setStore(boolean value) {
+          bitField0_ |= 0x00000004;
+          store_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>optional bool store = 3 [default = false];</code>
+         */
+        public Builder clearStore() {
+          bitField0_ = (bitField0_ & ~0x00000004);
+          store_ = false;
           onChanged();
           return this;
         }
@@ -1514,11 +1602,12 @@ public final class DashPacketProtos {
   static {
     java.lang.String[] descriptorData = {
       "\n:src/org/team5499/robots/frc2018/dashbo" +
-      "ard/DashPacket.proto\022\tdashboard\"b\n\nDashP" +
+      "ard/DashPacket.proto\022\tdashboard\"x\n\nDashP" +
       "acket\022/\n\nparameters\030\001 \003(\0132\033.dashboard.Da" +
-      "shPacket.param\032#\n\005param\022\013\n\003key\030\001 \001(\t\022\r\n\005" +
-      "value\030\002 \001(\tB9\n%org.team5499.robots.frc20" +
-      "18.dashboardB\020DashPacketProtos"
+      "shPacket.param\0329\n\005param\022\013\n\003key\030\001 \001(\t\022\r\n\005" +
+      "value\030\002 \001(\t\022\024\n\005store\030\003 \001(\010:\005falseB9\n%org" +
+      ".team5499.robots.frc2018.dashboardB\020Dash" +
+      "PacketProtos"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1543,7 +1632,7 @@ public final class DashPacketProtos {
     internal_static_dashboard_DashPacket_param_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_dashboard_DashPacket_param_descriptor,
-        new java.lang.String[] { "Key", "Value", });
+        new java.lang.String[] { "Key", "Value", "Store", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

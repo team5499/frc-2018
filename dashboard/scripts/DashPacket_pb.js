@@ -198,7 +198,8 @@ proto.dashboard.DashPacket.param.prototype.toObject = function(opt_includeInstan
 proto.dashboard.DashPacket.param.toObject = function(includeInstance, msg) {
   var f, obj = {
     key: jspb.Message.getField(msg, 1),
-    value: jspb.Message.getField(msg, 2)
+    value: jspb.Message.getField(msg, 2),
+    store: jspb.Message.getFieldWithDefault(msg, 3, false)
   };
 
   if (includeInstance) {
@@ -243,6 +244,10 @@ proto.dashboard.DashPacket.param.deserializeBinaryFromReader = function(msg, rea
       var value = /** @type {string} */ (reader.readString());
       msg.setValue(value);
       break;
+    case 3:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setStore(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -283,6 +288,13 @@ proto.dashboard.DashPacket.param.serializeBinaryToWriter = function(message, wri
   if (f != null) {
     writer.writeString(
       2,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 3));
+  if (f != null) {
+    writer.writeBool(
+      3,
       f
     );
   }
@@ -344,6 +356,37 @@ proto.dashboard.DashPacket.param.prototype.clearValue = function() {
  */
 proto.dashboard.DashPacket.param.prototype.hasValue = function() {
   return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional bool store = 3;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.dashboard.DashPacket.param.prototype.getStore = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 3, false));
+};
+
+
+/** @param {boolean} value */
+proto.dashboard.DashPacket.param.prototype.setStore = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+proto.dashboard.DashPacket.param.prototype.clearStore = function() {
+  jspb.Message.setField(this, 3, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.dashboard.DashPacket.param.prototype.hasStore = function() {
+  return jspb.Message.getField(this, 3) != null;
 };
 
 

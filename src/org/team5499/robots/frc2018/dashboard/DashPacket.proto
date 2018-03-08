@@ -9,6 +9,7 @@ message DashPacket {
     message param {
         optional string key = 1;
         optional string value = 2;
+        optional bool store = 3 [default = false];
     }
     repeated param parameters = 1;
 }

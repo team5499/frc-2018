@@ -24,6 +24,7 @@ public class Dashboard {
     private static HashMap<String,Session> sessions;
     private static Thread message_thread;
     private static MessageThread mt;
+    protected static Object sessions_lock = new Object();
 
     static {
         packet_builder = JsonHandler.generateDashPacketBuilderFromJson("/home/lvuser/conf.json");
@@ -90,19 +91,19 @@ public class Dashboard {
     }
 
     protected static void _addSession(String key, Session session) {
-        synchronized(sessions) {
+        synchronized(sessions_lock) {
             sessions.put(key, session);
         }
     }
 
     protected static void _removeSession(String key) {
-        synchronized(sessions) {
+        synchronized(sessions_lock) {
             sessions.remove(key);
         }
     }
 
     protected static Collection<Session> _getSessions() {
-        synchronized(sessions) {
+        synchronized(sessions_lock) {
             return sessions.values();
         }
     }
@@ -117,6 +118,7 @@ public class Dashboard {
             }
             synchronized(packet_builder) {
                 packet_builder = incoming_message.toBuilder();
+                writeToJson(packet_builder.build());
             }
         }
     }
@@ -125,5 +127,9 @@ public class Dashboard {
         synchronized(packet_builder) {
             return packet_builder.build();
         }
+    }
+
+    private static void writeToJson(DashPacketProtos.DashPacket packet) {
+        JsonHandler.writeDashPacketToJson("/home/lvuser/conf.json", packet);
     }
 }

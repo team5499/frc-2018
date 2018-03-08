@@ -33,12 +33,10 @@ public class Endpoint {
     */
     @OnMessage
     public void onMessage(String message, Session session) {
-       System.out.println("Message from " + session.getId() + ": " + message);
     }
 
     @OnMessage
     public void onMessage(byte[] message, Session session) {
-        System.out.println("Message from " + session.getId() + ": " + message);
         Dashboard._setIncomingMessage(message);
     }
 
@@ -49,7 +47,7 @@ public class Endpoint {
     */
     @OnClose
     public void onClose(Session session) {
-        System.out.println("Attempting to terminate thread for " + session.getId());
+        System.out.println("Removing session:" + session.getId());
         Dashboard._removeSession(session.getId());
         System.out.println("Session " + session.getId() + " has ended");
     }

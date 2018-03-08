@@ -19751,7 +19751,7 @@ module.exports = class MessageHandler {
 
     updateKeyListeners(new_packet) {
         for(var i = 0;i < this.keylisteners.length;i++) {
-            if(this.getProperty(this.keylisteners[i][0], this.last_message) === this.getProperty(this.keylisteners[i][0], new_packet)) {
+            if(this.getProperty(this.keylisteners[i][0], this.last_message) === this.getProperty(this.keylisteners[i][0], new_packet) || this.getProperty(this.keylisteners[i][0], this.last_message) === null || this.getProperty(this.keylisteners[i][0], this.last_message) === undefined) {
             } else {
                 this.keylisteners[i][1]();
             }
@@ -19830,6 +19830,9 @@ function run(handler) {
             batteryvoltage_graph.data.labels.splice(0, 1);
         }
         batteryvoltage_graph.update();
+    });
+    handler.addKeyListener("automode", function() {
+        selector.value = handler.getProperty("automode");
     });
     selector.addEventListener("change", function() {
         console.log("setting automode:" + selector.value);

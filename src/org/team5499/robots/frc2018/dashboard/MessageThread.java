@@ -22,17 +22,20 @@ public class MessageThread implements Runnable{
         while(true) {
             DashPacketProtos.DashPacket packet = Dashboard.getPacket();
             Collection<Session> sessions = Dashboard._getSessions();
-            for(Session i : sessions) {
-                try {
-                    i.getBasicRemote().sendBinary(ByteBuffer.wrap(packet.toByteArray()));
-                } catch(IOException ioe) {
-                    ioe.printStackTrace();
+            synchronized(Dashboard.sessions_lock) {
+                for(Session i : sessions) {
+                    try {
+                        i.getBasicRemote().sendBinary(ByteBuffer.wrap(packet.toByteArray()));
+                    } catch(IOException ioe) {
+                        System.out.println("Session closed");
+                        ioe.printStackTrace();
+                    }
                 }
             }
             try {
                 Thread.sleep(40);
             } catch (InterruptedException ie) {
-                System.out.println("Client closed connection - terminating message thread " + Thread.currentThread().getId());
+                System.out.println("Message Thread terminating");
                 return;
             }
         }
