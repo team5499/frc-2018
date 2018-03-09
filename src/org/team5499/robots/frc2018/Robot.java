@@ -42,6 +42,10 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         Subsystems.drivetrain.handleAngleVelocity();
         Dashboard.setDouble("battvoltage", DriverStation.getInstance().getBatteryVoltage());
+        Dashboard.setDouble("current_time", Timer.getFPGATimestamp());
+
+        System.out.println(Dashboard.getString("automode"));
+
     }
 
     /**

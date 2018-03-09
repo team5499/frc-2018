@@ -29,12 +29,6 @@ repositories {
   maven {
     url 'https://maven.team5499.org/'
   }
-  flatDir {
-       dirs 'tmp_ctre/runtime'
-  }
-  flatDir {
-       dirs 'tmp_ctre/compile'
-  }
 }
 
 dependencies {
