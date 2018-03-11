@@ -33,7 +33,9 @@ public class Robot extends TimedRobot {
         autoController = new AutoController();
         testController = new TestController();
 
-        Dashboard.setString("automode", "left");
+        Dashboard.setString("automode", "left_inner");
+        Dashboard.setString("dropmode", "drop");
+        Dashboard.setString("cubemode", "one");
     }
 
     @Override
@@ -45,6 +47,10 @@ public class Robot extends TimedRobot {
         Subsystems.drivetrain.handleAngleVelocity();
         Dashboard.setDouble("battvoltage", DriverStation.getInstance().getBatteryVoltage());
         Dashboard.setDouble("current_time", Timer.getFPGATimestamp());
+        Dashboard.setInt("pot_raw_value", Subsystems.intake.getRawPotValue());
+        Dashboard.setDouble("arm_angle", Subsystems.intake.getArmAngle());
+        Dashboard.setInt("sonic_raw_value", Subsystems.intake.getRawSonicValue());
+        Dashboard.setDouble("cube_distance", Subsystems.intake.getCubeDistance());
     }
 
     /**
@@ -76,6 +82,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         autoController.handle();
+        Subsystems.intake.handle();
     }
 
     /**
@@ -93,6 +100,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         operatorController.handle();
+        Subsystems.intake.handle();
     }
 
     /**

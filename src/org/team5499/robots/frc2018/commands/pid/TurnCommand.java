@@ -10,11 +10,13 @@ public class TurnCommand extends BaseCommand {
     private boolean enabled;
     private double initial_distance;
     private PID turn_controller;
+    private boolean wait_for_timeout;
 
-    public TurnCommand(double to, double setpoint) {
+    public TurnCommand(double to, boolean wait_for_timeout, double setpoint) {
         super(to);
         this.setpoint = setpoint;
         this.enabled = false;
+        this.wait_for_timeout = wait_for_timeout;
         this.initial_distance = 0;
         this.turn_controller = new PID(Dashboard.getDouble("kTURN_P"), Dashboard.getDouble("kTURN_I"), Dashboard.getDouble("kTURN_D"));
         this.turn_controller.setInverted(false);
@@ -50,6 +52,7 @@ public class TurnCommand extends BaseCommand {
         double output = turn_controller.calculate();
         Subsystems.drivetrain.setDrivetrain(-output, output);
         System.out.println(turn_controller.getError()); // Debugging purposes
+        Dashboard.setDouble("angle_error", turn_controller.getError());
     }
 
     @Override
@@ -62,7 +65,7 @@ public class TurnCommand extends BaseCommand {
 
     @Override
     public boolean isFinished() {
-        boolean finished = (super.isFinished() || turn_controller.onTarget());
+        boolean finished = (super.isFinished() || (turn_controller.onTarget() && !wait_for_timeout));
         if(finished) {
             System.out.println(turn_controller.getError()); // Debugging purposes
             Subsystems.drivetrain.stop();

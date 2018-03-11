@@ -12,11 +12,13 @@ public class DriveSlowCommand extends BaseCommand {
     private boolean enabled;
     private PID angle_controller;
     private PID distance_controller;
+    private boolean wait_for_timeout;
 
-    public DriveSlowCommand(double to, double setpoint) {
+    public DriveSlowCommand(double to, boolean wait_for_timeout, double setpoint) {
         super(to);
         this.setpoint = setpoint;
         this.enabled = false;
+        this.wait_for_timeout = wait_for_timeout;
 
         this.angle_controller = new PID(Dashboard.getDouble("kANGLE_P"), Dashboard.getDouble("kANGLE_I"), Dashboard.getDouble("kANGLE_D"));
         this.angle_controller.setInverted(false);
@@ -64,6 +66,8 @@ public class DriveSlowCommand extends BaseCommand {
         double angle_output = angle_controller.calculate();
         double distance_output = distance_controller.calculate();
         Subsystems.drivetrain.setDrivetrain(distance_output - angle_output, distance_output + angle_output);
+        Dashboard.setDouble("distance_error", distance_controller.getError());
+        Dashboard.setDouble("angle_error", angle_controller.getError());
     }
 
     @Override
@@ -76,7 +80,7 @@ public class DriveSlowCommand extends BaseCommand {
 
     @Override
     public boolean isFinished() {
-        boolean finished = (super.isFinished() || (distance_controller.onTarget() && angle_controller.errorOnTarget()));
+        boolean finished = (super.isFinished() || (distance_controller.onTarget() && angle_controller.errorOnTarget() && !wait_for_timeout));
         System.out.println(angle_controller.getError());
         System.out.println(distance_controller.onTarget() + ":" + angle_controller.errorOnTarget());
         if(finished) {

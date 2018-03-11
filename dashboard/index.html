@@ -5,15 +5,25 @@
         <title>Websocket Test</title>
     </head>
     <body>
-        <button id="test">Test!</button>
-        <div id="out"></div>
-
         <canvas id="batteryvoltage" width="250" height="250"></canvas>
         <select id="autoselector">
-            <option value="left">Left</option>
+            <option value="left_inner">Left Inner</option>
+            <option value="left_outer">Left Outer</option>
             <option value="center">Center</option>
-            <option value="right">Right</option>
+            <option value="right_inner">Right Inner</option>
+            <option value="right_outer">Right Outer</option>
         </select>
+        <select id="dropselector">
+            <option value="drop">Drop</option>
+            <option value="no_drop">Don't drop</option>
+        </select>
+        <select id="two_cube">
+            <option value="two">Two cubes</option>
+            <option value="one">One cube</option>
+        </select>
+        <label for="timeout">Timeout before auto:</label>
+        <input type="text" id="timeout" value="0"/>
+        <button id="set_timeout">Set timeout</button>
 
 
         <script src="scripts/main_bundle.js"></script>

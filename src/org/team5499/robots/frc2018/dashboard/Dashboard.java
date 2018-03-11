@@ -20,7 +20,6 @@ public class Dashboard {
     private static boolean running = false;
     private static org.glassfish.tyrus.server.Server server;
     private static DashPacketProtos.DashPacket.Builder packet_builder = DashPacketProtos.DashPacket.newBuilder();
-    private static DashPacketProtos.DashPacket incoming_message = DashPacketProtos.DashPacket.newBuilder().build();
     private static HashMap<String,Session> sessions;
     private static Thread message_thread;
     private static MessageThread mt;
@@ -29,7 +28,6 @@ public class Dashboard {
     static {
         System.out.println("Loading json file");
         packet_builder = JsonHandler.generateDashPacketBuilderFromJson("/home/lvuser/conf.json");
-        incoming_message = packet_builder.build();
     }
 
     public static void runServer() {
@@ -65,11 +63,9 @@ public class Dashboard {
             List<param> parameters = packet_builder.getParametersList();
             int index = indexOfKey(parameters, key);
             if(index > -1) {
-                packet_builder.setParameters(index, DashPacketProtos.DashPacket.param.newBuilder().setKey(key).setValue(value).build());
-                incoming_message = incoming_message.toBuilder().setParameters(index, DashPacketProtos.DashPacket.param.newBuilder().setKey(key).setValue(value).build()).build();
+                packet_builder.setParameters(index, DashPacketProtos.DashPacket.param.newBuilder().setKey(key).setValue(value).setStore(packet_builder.getParameters(index).getStore()).build());
             } else {
-                packet_builder.addParameters(DashPacketProtos.DashPacket.param.newBuilder().setKey(key).setValue(value).build());
-                incoming_message = incoming_message.toBuilder().addParameters(DashPacketProtos.DashPacket.param.newBuilder().setKey(key).setValue(value).build()).build();
+                packet_builder.addParameters(DashPacketProtos.DashPacket.param.newBuilder().setKey(key).setValue(value).setStore(false).build());
             }
         }
     }
@@ -88,12 +84,12 @@ public class Dashboard {
     }
 
     public static String getString(String key) {
-        synchronized(incoming_message) {
-            if(indexOfKey(incoming_message.getParametersList(), key) == -1) {
+        synchronized(packet_builder) {
+            if(indexOfKey(packet_builder.getParametersList(), key) == -1) {
                 System.out.println("[DASHBOARD] NO ENTRY FOR:" + key);
                 return null;
             }
-            return incoming_message.getParameters(indexOfKey(incoming_message.getParametersList(), key)).getValue();
+            return packet_builder.getParameters(indexOfKey(packet_builder.getParametersList(), key)).getValue();
         }
     }
 
@@ -138,17 +134,15 @@ public class Dashboard {
     }
 
     protected static void _setIncomingMessage(byte[] packet) {
-        synchronized(incoming_message) {
-            try {
-                incoming_message = DashPacketProtos.DashPacket.parseFrom(packet);
-            } catch(InvalidProtocolBufferException ipbe) {
-                System.out.println("Error with parsing protocol buffer!");
-                ipbe.printStackTrace();
-            }
-            synchronized(packet_builder) {
-                packet_builder = incoming_message.toBuilder();
-                writeToJson(packet_builder.build());
-            }
+        try {
+            DashPacketProtos.DashPacket.param updated_param = DashPacketProtos.DashPacket.param.parseFrom(packet);
+            setString(updated_param.getKey(), updated_param.getValue());
+        } catch(InvalidProtocolBufferException ipbe) {
+            System.out.println("Error with parsing protocol buffer!");
+            ipbe.printStackTrace();
+        }
+        synchronized(packet_builder) {
+            writeToJson(packet_builder.build());
         }
     }
 

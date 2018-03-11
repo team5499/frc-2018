@@ -41,47 +41,53 @@ public class AutoController extends BaseController {
 
         // drives 10 feet
         straight.addCommand(new NothingCommand(10));
-        straight.addCommand(new DriveCommand(20, -100));
+        straight.addCommand(new DriveCommand(20, false, -100));
 
         // working center right command
-        center_right_score.addCommand(new DriveCommand(5, -45));
-        center_right_score.addCommand(new TurnCommand(2, -90));
-        center_right_score.addCommand(new DriveCommand(2, -51));
-        center_right_score.addCommand(new TurnCommand(2, 90));
-        center_right_score.addCommand(new DriveCommand(3, -63));
+        center_right_score.addCommand(new DriveCommand(5, false, -45));
+        center_right_score.addCommand(new TurnCommand(2, false, -90));
+        center_right_score.addCommand(new DriveCommand(2, false, -51));
+        center_right_score.addCommand(new TurnCommand(2, false, 90));
+        center_right_score.addCommand(new DriveCommand(3, false, -63));
         center_right_score.addCommand(new IntakeCommand(1, 0.75, false));
-        center_right_score.addCommand(new DriveCommand(2, 20));
-        center_right_score.addCommand(new ArmCommand(1, ArmDirection.DOWN));
-        center_right_score.addCommand(new TurnCommand(2, -110));
-        center_right_score.addCommand(new IntakeDriveCommand(3, 70, -1.0, true));
-        center_right_score.addCommand(new ArmCommand(2, ArmDirection.UP));
-        center_right_score.addCommand(new DriveCommand(2, -70));
-        center_right_score.addCommand(new TurnCommand(2.5, 110));
-        center_right_score.addCommand(new DriveCommand(2, -20));
+        center_right_score.addCommand(new DriveCommand(2, false, 20));
+        center_right_score.addCommand(new ArmCommand(1, false, -25));
+        center_right_score.addCommand(new TurnCommand(2, false, -110));
+        center_right_score.addCommand(new IntakeDriveCommand(3, false, 70, -1.0, true));
+        center_right_score.addCommand(new ArmCommand(2, false, 100));
+        center_right_score.addCommand(new DriveCommand(2, false, -70));
+        center_right_score.addCommand(new TurnCommand(2.5, false, 110));
+        center_right_score.addCommand(new DriveCommand(2, false, -20));
         center_right_score.addCommand(new IntakeCommand(1, 0.75, false));
 
-        center_left_score.addCommand(new DriveCommand(5, -45));
-        center_left_score.addCommand(new TurnCommand(2, 90));
-        center_left_score.addCommand(new DriveCommand(2, -51));
-        center_left_score.addCommand(new TurnCommand(2, -90));
-        center_left_score.addCommand(new DriveCommand(3, -63));
+        center_left_score.addCommand(new DriveCommand(5, false, -45));
+        center_left_score.addCommand(new TurnCommand(2, false, 90));
+        center_left_score.addCommand(new DriveCommand(2, false, -51));
+        center_left_score.addCommand(new TurnCommand(2, false, -90));
+        center_left_score.addCommand(new DriveCommand(3, false, -63));
         center_left_score.addCommand(new IntakeCommand(1, 0.75, false));
-        center_left_score.addCommand(new DriveCommand(2, 50));
-        center_left_score.addCommand(new ArmCommand(1, ArmDirection.DOWN));
-        center_left_score.addCommand(new TurnCommand(2, 130));
-        center_left_score.addCommand(new IntakeDriveCommand(3, 50, -1.0, false));
-        center_left_score.addCommand(new ArmCommand(2, ArmDirection.UP));
-        center_left_score.addCommand(new DriveCommand(2, -40));
-        center_left_score.addCommand(new TurnCommand(2.5, -130));
-        center_left_score.addCommand(new DriveCommand(2, -60));
+        center_left_score.addCommand(new DriveCommand(2, false, 50));
+        center_left_score.addCommand(new ArmCommand(1, false, -25));
+        center_left_score.addCommand(new TurnCommand(2, false, 130));
+        center_left_score.addCommand(new IntakeDriveCommand(3, false, 50, -1.0, false));
+        center_left_score.addCommand(new ArmCommand(2, false, 100));
+        center_left_score.addCommand(new DriveCommand(2, false, -40));
+        center_left_score.addCommand(new TurnCommand(2.5, false, -130));
+        center_left_score.addCommand(new DriveCommand(2, false, -60));
         center_left_score.addCommand(new IntakeCommand(1, 0.75, false));
 
-        left_straight_score.addCommand(new DriveCommand(3, -160));
-        left_straight_score.addCommand(new TurnCommand(2, -90));
-        left_straight_score.addCommand(new DriveCommand(2, -40));
+        left_straight_score.addCommand(new DriveCommand(3, false, -160));
+        left_straight_score.addCommand(new TurnCommand(2, false, -90));
+        left_straight_score.addCommand(new DriveCommand(2, false, -40));
         left_straight_score.addCommand(new OuttakeCommand(1, 0.5));
 
-        tuning.addCommand(new DriveCommand(10, 36)); // Drives three feet forward
+        right_straight_score.addCommand(new DriveCommand(3, false, -160));
+        right_straight_score.addCommand(new TurnCommand(2, false, 90));
+        right_straight_score.addCommand(new DriveCommand(2, false, -40));
+        right_straight_score.addCommand(new OuttakeCommand(1, 0.5));
+
+        tuning.addCommand(new ArmCommand(10, true, 110));
+        tuning.addCommand(new ArmCommand(0, false, 110));
         
         current_routine = straight;
     }
@@ -89,6 +95,7 @@ public class AutoController extends BaseController {
     @Override
     public void start() {
         System.out.println("Auto Controller Started"); /** Eventually replace with logger */
+        Subsystems.intake.setPidEnabled(false);
     }
 
     @Override
@@ -99,12 +106,20 @@ public class AutoController extends BaseController {
         }
         game_data = DriverStation.getInstance().getGameSpecificMessage();
         Dashboard.setString("game_data", game_data);
+        System.out.println(Dashboard.getString("automode"));
         switch(Dashboard.getString("automode")) {
-            case "left":
+            case "left_inner":
                 if(game_data.substring(0, 1).equals("L")) {
                     current_routine = straight_score;
                 } else {
-                    current_routine = left_far_score;
+                    current_routine = straight;
+                }
+                break;
+            case "left_outer":
+                if(game_data.substring(0, 1).equals("L")) {
+                    current_routine = straight_score;
+                } else {
+                    current_routine = straight;
                 }
                 break;
             case "center":
@@ -114,18 +129,25 @@ public class AutoController extends BaseController {
                     current_routine = center_right_score;
                 }
                 break;
-            case "right":
+            case "right_inner":
                 if(game_data.substring(0, 1).equals("L")) {
-                    current_routine = right_far_score;
+                    current_routine = straight;
                 } else {
                     current_routine = straight_score;
                 }
                 break;
-            case "tuning":
+            case "right_outer":
+                if(game_data.substring(0, 1).equals("L")) {
+                    current_routine = straight;
+                } else {
+                    current_routine = straight_score;
+                }
+                break;
+            case "tune":
                 current_routine = tuning;
                 break;
             default:
-                System.out.println("Automode mot recognized");
+                System.out.println("Automode mode not recognized");
                 break;
         }
 
@@ -153,7 +175,7 @@ public class AutoController extends BaseController {
         Subsystems.intake.stopIntake();
         Subsystems.climber.stop();
 
-        Subsystems.drivetrain.setAngle(0);
+        Subsystems.drivetrain.setAngle(0); // Does this work?
         Subsystems.drivetrain.setDistance(0);
 
         Dashboard.setDouble("distance_setpoint", 0); // Reset the global distance setpoint
@@ -170,6 +192,7 @@ public class AutoController extends BaseController {
         tuning.reset();
 
         game_data = null;
+        current_command = null;
     }
 
 }

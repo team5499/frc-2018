@@ -2,6 +2,7 @@ package org.team5499.robots.frc2018.subsystems;
 
 import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.Hardware;
+import org.team5499.robots.frc2018.PID;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -16,12 +17,42 @@ public class Intake {
      * - Intake sonic sensor
      */
 
+    private PID arm_controller;
+    private boolean pid_enabled;
+
     public Intake() {
+        this.arm_controller = new PID(Dashboard.getDouble("kARM_P"), Dashboard.getDouble("kARM_I"), Dashboard.getDouble("kARM_D"));
+        this.arm_controller.setInverted(false);
+        this.arm_controller.setAcceptableError(0.0);
+        this.arm_controller.setAcceptableVelocity(0.0);
+        this.arm_controller.setOutputRange(Dashboard.getDouble("AUTO_ARM_DOWN_SPEED"), Dashboard.getDouble("AUTO_ARM_UP_SPEED"));
+        this.arm_controller.setSetpoint(0);
+        this.pid_enabled = false;
     }
 
     /** -1 - 1 raw arm speed(positive is up) */
     public void setArm(double speed) {
         Hardware.arm_talon.set(ControlMode.PercentOutput, speed);
+    }
+
+    public void setArmSetpoint(double angle) {
+        arm_controller.setSetpoint(angle);
+    }
+
+    public void setPidEnabled(boolean enabled) {
+        pid_enabled = enabled;
+    }
+
+    public void handle() {
+        arm_controller.setP(Dashboard.getDouble("kARM_P"));
+        arm_controller.setI(Dashboard.getDouble("kARM_I"));
+        arm_controller.setD(Dashboard.getDouble("kARM_D"));
+        if(pid_enabled) {
+            arm_controller.setProcessVariable(Subsystems.intake.getArmAngle());
+            arm_controller.setVelocity(Subsystems.intake.getArmVelocity());
+            setArm(arm_controller.calculate());
+            Dashboard.setDouble("arm_error", arm_controller.getError());
+        }
     }
     
     /** -1 - 1 raw intake speed(positive is outtake) */

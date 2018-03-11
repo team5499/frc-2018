@@ -29,6 +29,7 @@ public class OperatorController extends BaseController {
     @Override
     public void start() {
         System.out.println("Teleop controller started"); // Eventually use a logger object
+        Subsystems.intake.setPidEnabled(false);
     }
 
     @Override
@@ -36,13 +37,23 @@ public class OperatorController extends BaseController {
         Subsystems.drivetrain.setDrivetrain(getLeft(), getRight()); /** Set the left and right speeds of the drivetrain */
         Subsystems.intake.setIntake(getIntake()); /** Set the intake speed */
 
-        if(getPidArm() > 0 && getArm() == 0) { // Use PID to move the arm up
-            arm_controller.setSetpoint(Dashboard.getDouble("ARM_UP_SETPOINT"));
+        if(getPidArmForward() && getArm() == 0) { // Use PID to move the arm up
+            arm_controller.setSetpoint(Dashboard.getDouble("ARM_FORWARD_POSITION"));
             arm_controller.setProcessVariable(Subsystems.intake.getArmAngle());
             arm_controller.setVelocity(Subsystems.intake.getArmVelocity());
             Subsystems.intake.setArm(arm_controller.calculate());
-        } else if(getPidArm() < 0 && getArm() == 0) { // Use PID to move arm down
-            arm_controller.setSetpoint(Dashboard.getDouble("ARM_DOWN_SETPOINT"));
+        } else if(getPidArmReverse() && getArm() == 0) { // Use PID to move arm down
+            arm_controller.setSetpoint(Dashboard.getDouble("ARM_REVERSE_POSITION"));
+            arm_controller.setProcessVariable(Subsystems.intake.getArmAngle());
+            arm_controller.setVelocity(Subsystems.intake.getArmVelocity());
+            Subsystems.intake.setArm(arm_controller.calculate());
+        } else if(getPidArm() > 0 && getArm() == 0) {
+            arm_controller.setSetpoint(Dashboard.getDouble("ARM_REAR_POSITION"));
+            arm_controller.setProcessVariable(Subsystems.intake.getArmAngle());
+            arm_controller.setVelocity(Subsystems.intake.getArmVelocity());
+            Subsystems.intake.setArm(arm_controller.calculate());
+        } else if(getPidArm() < 0 && getArm() == 0) {
+            arm_controller.setSetpoint(Dashboard.getDouble("ARM_FRONT_POSITION"));
             arm_controller.setProcessVariable(Subsystems.intake.getArmAngle());
             arm_controller.setVelocity(Subsystems.intake.getArmVelocity());
             Subsystems.intake.setArm(arm_controller.calculate());
@@ -80,6 +91,14 @@ public class OperatorController extends BaseController {
             return 0;
         }
         return raw;
+    }
+
+    public boolean getPidArmForward() {
+        return Hardware.codriver.getAButton();
+    }
+
+    public boolean getPidArmReverse() {
+        return Hardware.codriver.getBButton();
     }
 
     /** Get climber raw speed(positive contracts) */
@@ -131,8 +150,6 @@ public class OperatorController extends BaseController {
             return Dashboard.getDouble("SLOW_INTAKE");
         } else if(Hardware.codriver.getBumper(Hand.kLeft)) {
             return Dashboard.getDouble("OUTTAKE_SPEED");
-        } else if(Hardware.codriver.getAButton()) {
-            return 1;
         } else return 0;
     }
 

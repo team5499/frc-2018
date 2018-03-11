@@ -19769,22 +19769,9 @@ module.exports = class MessageHandler {
     }
 
     setProperty(key, value) {
-        this.outgoing_message = this.curr_message.cloneMessage();
-        if(this.indexOfKey(key, this.curr_message) === -1) {
-            var tmp_array = this.outgoing_message.getParametersList();
-            var property = new dashpacket.DashPacket.param();
-            property.setKey(key);
-            property.setValue(value);
-            tmp_array.push(property);
-            this.outgoing_message.setParametersList(tmp_array);
-        } else {
-            var tmp_array = this.outgoing_message.getParametersList();
-            var property = new dashpacket.DashPacket.param();
-            property.setKey(key);
-            property.setValue(value);
-            tmp_array[this.indexOfKey(key, this.curr_message)] = property;
-            this.outgoing_message.setParametersList(tmp_array);
-        }
+        this.outgoing_message = new dashpacket.DashPacket.param();
+        this.outgoing_message.setKey(key);
+        this.outgoing_message.setValue(value);
         this.datasocket.send(this.outgoing_message.serializeBinary());
     }
 
@@ -19820,9 +19807,12 @@ module.exports = class MessageHandler {
 var MessageHandler = require('./MessageHandler');
 var Chart = require('chart.js');
 
-var out = document.getElementById("out");
-var test = document.getElementById("test");
-var selector = document.getElementById("autoselector");
+var autoselector = document.getElementById("autoselector");
+var dropselector = document.getElementById("dropselector");
+var two_cube = document.getElementById("two_cube");
+
+
+
 var batteryvoltage_canvas_context = document.getElementById("batteryvoltage").getContext('2d');
 var batteryvoltage_graph = new Chart(batteryvoltage_canvas_context, {
     type: 'line',
@@ -19891,15 +19881,31 @@ function run(handler) {
         }
         batteryvoltage_graph.update();
     });
+
+
+
     handler.addKeyListener("automode", function() {
-        selector.value = handler.getProperty("automode");
+        autoselector.value = handler.getProperty("automode");
     });
-    selector.addEventListener("change", function() {
-        console.log("setting automode:" + selector.value);
-        handler.setProperty("automode", selector.value);
+    handler.addKeyListener("dropmode", function() {
+        dropselector.value = handler.getProperty("dropmode");
+    });
+    handler.addKeyListener("cubemode", function() {
+        dropselector.value = handler.getProperty("cubemode");
+    });
+
+
+    autoselector.addEventListener("change", function() {
+        console.log("setting automode:" + autoselector.value);
+        handler.setProperty("automode", autoselector.value);
     }, false);
-    test.onclick = function() {
-        handler.setProperty("test", "Hello World!");
-    }
+    dropselector.addEventListener("change", function() {
+        console.log("setting dropmode:" + dropselector.value);
+        handler.setProperty("dropmode", dropselector.value);
+    }, false);
+    two_cube.addEventListener("change", function() {
+        console.log("setting cubemode:" + two_cube.value);
+        handler.setProperty("cubemode", two_cube.value);
+    }, false);
 }
 },{"./MessageHandler":61,"chart.js":1}]},{},[61,62]);

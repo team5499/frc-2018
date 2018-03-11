@@ -12,63 +12,34 @@ public class ArmCommand extends BaseCommand {
         DOWN
     }
 
-    private ArmDirection direction;
-    private double setpoint;
-    private PID arm_controller;
-    private boolean enabled;
+    private boolean enable;
+    private double degrees;
 
-    public ArmCommand(double to, ArmDirection direction) {
+    public ArmCommand(double to, boolean enable, double degrees) {
         super(to);
-        this.enabled = false;
-        this.direction = direction;
-        if(this.direction == ArmDirection.UP) {
-            this.setpoint = Dashboard.getDouble("ARM_UP_SETPOINT");
-        } else {
-            this.setpoint = Dashboard.getDouble("ARM_DOWN_SETPOINT");
-        }
-        this.arm_controller = new PID(Dashboard.getDouble("kARM_P"), Dashboard.getDouble("kARM_I"), Dashboard.getDouble("kARM_D"));
-        this.arm_controller.setInverted(false);
-        this.arm_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_ARM_ERROR"));
-        this.arm_controller.setAcceptableVelocity(Dashboard.getDouble("ACCEPTABLE_ARM_VELOCITY"));
-        this.arm_controller.setOutputRange(Dashboard.getDouble("AUTO_ARM_DOWN_SPEED"), Dashboard.getDouble("AUTO_ARM_UP_SPEED"));
-        this.arm_controller.setSetpoint(this.setpoint);
+        this.enable = enable;
+        this.degrees = degrees;
     }
 
     @Override
     public void start() {
         super.start();
-        arm_controller.setP(Dashboard.getDouble("kARM_P"));
-        arm_controller.setI(Dashboard.getDouble("kARM_I"));
-        arm_controller.setD(Dashboard.getDouble("kARM_D"));
-        arm_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_ARM_ERROR"));
-        arm_controller.setAcceptableVelocity(Dashboard.getDouble("ACCEPTABLE_ARM_VELOCITY"));
-        arm_controller.setOutputRange(Dashboard.getDouble("AUTO_ARM_DOWN_SPEED"), Dashboard.getDouble("AUTO_ARM_UP_SPEED"));
-        arm_controller.setSetpoint(setpoint);
-        enabled = true;
+        Subsystems.intake.setArmSetpoint(degrees);
+        Subsystems.intake.setPidEnabled(enable);
     }
 
     @Override
     public void handle() {
-        arm_controller.setProcessVariable(Subsystems.intake.getArmAngle());
-        arm_controller.setVelocity(Subsystems.intake.getArmVelocity());
-        Subsystems.intake.setArm(arm_controller.calculate());
     }
 
     @Override
     public void reset() {
         super.reset();
-        arm_controller.reset();
-        enabled = false;
     }
 
     @Override
     public boolean isFinished() {
-        boolean finished = (super.isFinished() || arm_controller.onTarget());
-        if(finished) {
-            Subsystems.intake.stopArm();
-            reset();
-        }
-        return finished;
+        return super.isFinished();
     }
 
 }

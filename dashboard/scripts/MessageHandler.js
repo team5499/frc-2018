@@ -96,22 +96,9 @@ module.exports = class MessageHandler {
     }
 
     setProperty(key, value) {
-        this.outgoing_message = this.curr_message.cloneMessage();
-        if(this.indexOfKey(key, this.curr_message) === -1) {
-            var tmp_array = this.outgoing_message.getParametersList();
-            var property = new dashpacket.DashPacket.param();
-            property.setKey(key);
-            property.setValue(value);
-            tmp_array.push(property);
-            this.outgoing_message.setParametersList(tmp_array);
-        } else {
-            var tmp_array = this.outgoing_message.getParametersList();
-            var property = new dashpacket.DashPacket.param();
-            property.setKey(key);
-            property.setValue(value);
-            tmp_array[this.indexOfKey(key, this.curr_message)] = property;
-            this.outgoing_message.setParametersList(tmp_array);
-        }
+        this.outgoing_message = new dashpacket.DashPacket.param();
+        this.outgoing_message.setKey(key);
+        this.outgoing_message.setValue(value);
         this.datasocket.send(this.outgoing_message.serializeBinary());
     }
 
