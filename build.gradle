@@ -1,6 +1,6 @@
 ext {
-  WPILib_version = '2018.1.1'
-  WPIUtil_version = '3.0.0'
+  WPILib_version = '2018.4.1'
+  WPIUtil_version = '3.2.0'
   OpenCV_version = '3.1.0'
   NetworkTables_version = '3.1.7'
   Ntcore_version = '4.0.0'
@@ -61,7 +61,14 @@ jar {
   }
 }
 
+task setTarget {
+  if(project.hasProperty('ip')) {
+    RoboRIO_target=ip
+  }
+}
+
 task runtimeLibraries {
+  dependsOn setTarget
   doLast {
     configurations.runtime.asFileTree.each { lib ->
       copy {
@@ -79,6 +86,7 @@ task runtimeLibraries {
 }
 
 task zipLibraries(type: Zip, dependsOn: runtimeLibraries) {
+  dependsOn setTarget
   from runtimeLibraries.getTemporaryDir().toPath().resolve('runtimeLibraries')
   into file('lib')
   include '*.*'
@@ -91,10 +99,8 @@ task zipLibraries(type: Zip, dependsOn: runtimeLibraries) {
 }
    
 task deployLibraries {
+  dependsOn setTarget
   dependsOn zipLibraries
-  if(project.hasProperty('ip')) {
-    RoboRIO_target=ip
-  }
   doLast {
     exec {
       commandLine 'curl'
@@ -108,10 +114,8 @@ task deployLibraries {
 }
    
 task deploy {
+  dependsOn setTarget
   dependsOn build
-  if(project.hasProperty('ip')) {
-    RoboRIO_target=ip
-  }
   doLast {
     exec {
       commandLine 'curl'
@@ -132,6 +136,7 @@ task deploy {
 
 // DO NOT USE -- STILL UNDER DEVELOPMENT
 task buildProtoBuf {
+  dependsOn setTarget
   doLast {
     exec {
       commandLine 'protoc'
@@ -145,15 +150,21 @@ task buildProtoBuf {
 }
 
 task bundle_dashboard {
+  dependsOn setTarget
   doLast {
     exec {
       commandLine 'browserify'
-      args 'dashboard/scripts/MessageHandler.js', 'dashboard/scripts/main.js', '-o', 'dashboard/scripts/bundle.js'
+      args 'dashboard/scripts/MessageHandler.js', 'dashboard/scripts/main.js', '-o', 'dashboard/scripts/main_bundle.js'
+    }
+    exec {
+      commandLine 'browserify'
+      args 'dashboard/scripts/MessageHandler.js', 'dashboard/scripts/tuning.js', '-o', 'dashboard/scripts/tuning_bundle.js'
     }
   }
 }
 
 task zipDashboard(type: Zip) {
+  dependsOn setTarget
   dependsOn bundle_dashboard
   from 'dashboard/'
   into ''
@@ -163,6 +174,7 @@ task zipDashboard(type: Zip) {
 }
 
 task deploy_dashboard {
+  dependsOn setTarget
   dependsOn zipDashboard
   doLast {
     println zipDashboard.getTemporaryDir().toPath().resolve('zip_dir') + '/SmartDashboard.zip'
@@ -173,6 +185,26 @@ task deploy_dashboard {
     exec {
       commandLine 'curl'
       args '-d', 'action=dashboard', "http://$RoboRIO_target:5800"
+    }
+  }
+}
+
+task grabJson {
+  dependsOn setTarget
+  doLast {
+    exec {
+      commandLine 'curl'
+      args '-u', 'team5499:5499', "ftp://$RoboRIO_target:5801/conf.json", '-o', System.getProperty("user.dir") + '/src/org/team5499/robots/frc2018/conf.json'
+    }
+  }
+}
+
+task deployJson {
+  dependsOn setTarget
+  doLast {
+    exec {
+      commandLine 'curl'
+      args '-u', 'team5499:5499', '-T', System.getProperty("user.dir") + '/src/org/team5499/robots/frc2018/conf.json', "ftp://$RoboRIO_target:5801/"
     }
   }
 }

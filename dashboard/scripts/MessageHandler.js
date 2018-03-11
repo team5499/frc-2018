@@ -5,7 +5,8 @@ var dashpacket = require('./DashPacket_pb');
 module.exports = class MessageHandler {
     constructor(addr) {
         this.addr = addr;
-        this.curr_message = new dashpacket.DashPacket();
+        this.curr_message = undefined;
+        this.last_message = undefined;
         this.callback = undefined;
         this.outgoing_message = new dashpacket.DashPacket();
         this.datasocket = undefined;
@@ -14,7 +15,11 @@ module.exports = class MessageHandler {
 
 
     setNewMessage(message) {
-        this.last_message = this.curr_message.cloneMessage();
+        if(this.curr_message === undefined) {
+            this.last_message = new dashpacket.DashPacket();
+        } else {
+            this.last_message = this.curr_message.cloneMessage();
+        }
         this.curr_message = message;
     }
 
@@ -33,7 +38,6 @@ module.exports = class MessageHandler {
         var ref = this;
         return function(event) {
             console.log("Connection opened with this data:" + event.data);
-            ref.callback(ref);
         }
     }
 
@@ -46,7 +50,11 @@ module.exports = class MessageHandler {
 
     m_message(event) {
         var ref = this;
-        return function(event) { 
+        return function(event) {
+            var call_at_end = false;
+            if(ref.curr_message === undefined) {
+                call_at_end = true;
+            }
             var reader = new FileReader();
             reader.readAsArrayBuffer(event.data);
             reader.addEventListener("loadend", function(e)
@@ -55,6 +63,9 @@ module.exports = class MessageHandler {
                 var new_message = dashpacket.DashPacket.deserializeBinary(buffer);
                 ref.setNewMessage(new_message);
                 ref.updateKeyListeners(new_message);
+                if(call_at_end === true) {
+                    ref.callback(ref);
+                }
             });
             return false;
         }

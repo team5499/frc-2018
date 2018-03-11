@@ -33,9 +33,25 @@ public class DriveSlowCommand extends BaseCommand {
     @Override
     public void start() {
         super.start();
-        start_angle = Subsystems.drivetrain.getAngle();
-        angle_controller.setSetpoint(start_angle);
-        distance_controller.setSetpoint(setpoint + Subsystems.drivetrain.getDistance());
+
+        angle_controller.setP(Dashboard.getDouble("kANGLE_P"));
+        angle_controller.setI(Dashboard.getDouble("kANGLE_I"));
+        angle_controller.setD(Dashboard.getDouble("kANGLE_D"));
+
+        angle_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_ANGLE_ERROR"));
+        angle_controller.setOutputRange(-Dashboard.getDouble("MAX_ANGLE_PID_OUTPUT"), Dashboard.getDouble("MAX_ANGLE_PID_OUTPUT"));
+
+        distance_controller.setP(Dashboard.getDouble("kDIST_P"));
+        distance_controller.setI(Dashboard.getDouble("kDIST_I"));
+        distance_controller.setD(Dashboard.getDouble("kDIST_D"));
+
+        distance_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_DISTANCE_ERROR"));
+        distance_controller.setAcceptableVelocity(Dashboard.getDouble("ACCEPTABLE_DISTANCE_VELOCITY"));
+        distance_controller.setOutputRange(-Dashboard.getDouble("MAX_DRIVE_PID_OUTPUT") / 2.5, Dashboard.getDouble("MAX_DRIVE_PID_OUTPUT") / 2.5);
+
+        angle_controller.setSetpoint(Dashboard.getDouble("angle_setpoint"));
+        Dashboard.setDouble("distance_setpoint", Dashboard.getDouble("distance_setpoint") + setpoint);
+        distance_controller.setSetpoint(Dashboard.getDouble("distance_setpoint"));
         enabled = true;
     }
 

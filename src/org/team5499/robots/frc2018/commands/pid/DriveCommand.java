@@ -33,9 +33,27 @@ public class DriveCommand extends BaseCommand {
     @Override
     public void start() {
         super.start();
-        start_angle = Subsystems.drivetrain.getAngle();
-        angle_controller.setSetpoint(start_angle);
-        distance_controller.setSetpoint(setpoint + Subsystems.drivetrain.getDistance());
+
+        Dashboard.setDouble("distance_setpoint_relative", setpoint);
+
+        angle_controller.setP(Dashboard.getDouble("kANGLE_P"));
+        angle_controller.setI(Dashboard.getDouble("kANGLE_I"));
+        angle_controller.setD(Dashboard.getDouble("kANGLE_D"));
+
+        angle_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_ANGLE_ERROR"));
+        angle_controller.setOutputRange(-Dashboard.getDouble("MAX_ANGLE_PID_OUTPUT"), Dashboard.getDouble("MAX_ANGLE_PID_OUTPUT"));
+
+        distance_controller.setP(Dashboard.getDouble("kDIST_P"));
+        distance_controller.setI(Dashboard.getDouble("kDIST_I"));
+        distance_controller.setD(Dashboard.getDouble("kDIST_D"));
+
+        distance_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_DISTANCE_ERROR"));
+        distance_controller.setAcceptableVelocity(Dashboard.getDouble("ACCEPTABLE_DISTANCE_VELOCITY"));
+        distance_controller.setOutputRange(-Dashboard.getDouble("MAX_DRIVE_PID_OUTPUT"), Dashboard.getDouble("MAX_DRIVE_PID_OUTPUT"));
+
+        angle_controller.setSetpoint(Dashboard.getDouble("angle_setpoint"));
+        Dashboard.setDouble("distance_setpoint", Dashboard.getDouble("distance_setpoint") + setpoint);
+        distance_controller.setSetpoint(Dashboard.getDouble("distance_setpoint"));
         enabled = true;
     }
 
@@ -48,6 +66,7 @@ public class DriveCommand extends BaseCommand {
         double angle_output = angle_controller.calculate();
         double distance_output = distance_controller.calculate();
         Subsystems.drivetrain.setDrivetrain(distance_output - angle_output, distance_output + angle_output);
+        Dashboard.setDouble("distance_error", distance_controller.getError());
     }
 
     @Override
@@ -60,8 +79,7 @@ public class DriveCommand extends BaseCommand {
 
     @Override
     public boolean isFinished() {
-        boolean finished = (super.isFinished() || (distance_controller.onTarget() && angle_controller.errorOnTarget()));
-        System.out.println(angle_controller.getError());
+        boolean finished = (super.isFinished()/* || (distance_controller.onTarget() && angle_controller.errorOnTarget())*/);
         System.out.println(distance_controller.onTarget() + ":" + angle_controller.errorOnTarget());
         if(finished) {
             System.out.println("Finished");

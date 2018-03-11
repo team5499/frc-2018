@@ -66,8 +66,10 @@ public class Dashboard {
             int index = indexOfKey(parameters, key);
             if(index > -1) {
                 packet_builder.setParameters(index, DashPacketProtos.DashPacket.param.newBuilder().setKey(key).setValue(value).build());
+                incoming_message = incoming_message.toBuilder().setParameters(index, DashPacketProtos.DashPacket.param.newBuilder().setKey(key).setValue(value).build()).build();
             } else {
                 packet_builder.addParameters(DashPacketProtos.DashPacket.param.newBuilder().setKey(key).setValue(value).build());
+                incoming_message = incoming_message.toBuilder().addParameters(DashPacketProtos.DashPacket.param.newBuilder().setKey(key).setValue(value).build()).build();
             }
         }
     }

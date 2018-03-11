@@ -32,6 +32,8 @@ public class Robot extends TimedRobot {
         operatorController = new OperatorController();
         autoController = new AutoController();
         testController = new TestController();
+
+        Dashboard.setString("automode", "left");
     }
 
     @Override
@@ -43,9 +45,6 @@ public class Robot extends TimedRobot {
         Subsystems.drivetrain.handleAngleVelocity();
         Dashboard.setDouble("battvoltage", DriverStation.getInstance().getBatteryVoltage());
         Dashboard.setDouble("current_time", Timer.getFPGATimestamp());
-
-        System.out.println(Dashboard.getString("automode"));
-
     }
 
     /**

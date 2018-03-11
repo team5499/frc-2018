@@ -37,6 +37,13 @@ public class ArmCommand extends BaseCommand {
     @Override
     public void start() {
         super.start();
+        arm_controller.setP(Dashboard.getDouble("kARM_P"));
+        arm_controller.setI(Dashboard.getDouble("kARM_I"));
+        arm_controller.setD(Dashboard.getDouble("kARM_D"));
+        arm_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_ARM_ERROR"));
+        arm_controller.setAcceptableVelocity(Dashboard.getDouble("ACCEPTABLE_ARM_VELOCITY"));
+        arm_controller.setOutputRange(Dashboard.getDouble("AUTO_ARM_DOWN_SPEED"), Dashboard.getDouble("AUTO_ARM_UP_SPEED"));
+        arm_controller.setSetpoint(setpoint);
         enabled = true;
     }
 

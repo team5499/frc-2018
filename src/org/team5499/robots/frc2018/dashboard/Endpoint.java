@@ -23,7 +23,6 @@ public class Endpoint {
     */
     @OnOpen
     public void onOpen(Session session) {
-       System.out.println(session.getId() + " has opened a connection"); 
        Dashboard._addSession(session.getId(), session);
     }
 

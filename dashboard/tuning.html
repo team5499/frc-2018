@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Tuning</title>
+    </head>
+    <body>
+        <div>
+            <canvas id="distance_error" width="1200" height="500"></canvas>
+            <button id="reset">Reset</button>
+
+
+            <div>
+                <input type="text" id="kDistP"/>
+                <label for="kDistP">Distance P Value:</label>
+                <input type="text" id="kDistI"/>
+                <label for="kDistI">Distance I Value:</label>
+                <input type="text" id="kDistD"/>
+                <label for="kDistD">Distance D Value:</label>
+                <button id="update_constants">Update</button>
+            </div>
+        </div>
+
+        <script src="scripts/tuning_bundle.js"></script>
+    </body>
+</html>

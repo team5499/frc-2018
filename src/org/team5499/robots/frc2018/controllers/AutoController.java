@@ -18,7 +18,7 @@ public class AutoController extends BaseController {
     private Routine current_routine;
 
 
-    private Routine straight, straight_score, left_straight_score, right_straight_score, left_far_score, right_far_score, center_left_score, center_right_score;
+    private Routine straight, straight_score, left_straight_score, right_straight_score, left_far_score, right_far_score, center_left_score, center_right_score, tuning;
 
     private BaseCommand current_command;
     private String game_data;
@@ -26,6 +26,8 @@ public class AutoController extends BaseController {
     public AutoController() {
         super();
         game_data = null;
+        Dashboard.setDouble("distance_setpoint", 0);
+        Dashboard.setDouble("angle_setpoint", 0);
 
         center_left_score = new Routine();
         center_right_score = new Routine();
@@ -35,6 +37,7 @@ public class AutoController extends BaseController {
         right_straight_score = new Routine();
         straight = new Routine();
         straight_score = new Routine();
+        tuning = new Routine();
 
         // drives 10 feet
         straight.addCommand(new NothingCommand(10));
@@ -77,6 +80,8 @@ public class AutoController extends BaseController {
         left_straight_score.addCommand(new TurnCommand(2, -90));
         left_straight_score.addCommand(new DriveCommand(2, -40));
         left_straight_score.addCommand(new OuttakeCommand(1, 0.5));
+
+        tuning.addCommand(new DriveCommand(10, 36)); // Drives three feet forward
         
         current_routine = straight;
     }
@@ -92,14 +97,37 @@ public class AutoController extends BaseController {
         while(DriverStation.getInstance().getGameSpecificMessage().length() < 3) {
             return;
         }
-        if(game_data == null){
-            game_data = DriverStation.getInstance().getGameSpecificMessage();
-            if(game_data.substring(0, 1).equals("L")) {
-                current_routine = left_straight_score;
-            } else {
-                current_routine = straight;
-            }
-        }        
+        game_data = DriverStation.getInstance().getGameSpecificMessage();
+        Dashboard.setString("game_data", game_data);
+        switch(Dashboard.getString("automode")) {
+            case "left":
+                if(game_data.substring(0, 1).equals("L")) {
+                    current_routine = straight_score;
+                } else {
+                    current_routine = left_far_score;
+                }
+                break;
+            case "center":
+                if(game_data.substring(0, 1).equals("L")) {
+                    current_routine = center_left_score;
+                } else {
+                    current_routine = center_right_score;
+                }
+                break;
+            case "right":
+                if(game_data.substring(0, 1).equals("L")) {
+                    current_routine = right_far_score;
+                } else {
+                    current_routine = straight_score;
+                }
+                break;
+            case "tuning":
+                current_routine = tuning;
+                break;
+            default:
+                System.out.println("Automode mot recognized");
+                break;
+        }
 
         /** Once the correct routine is choosen, handle it */
         if(current_routine.isFinished()) {
@@ -128,6 +156,9 @@ public class AutoController extends BaseController {
         Subsystems.drivetrain.setAngle(0);
         Subsystems.drivetrain.setDistance(0);
 
+        Dashboard.setDouble("distance_setpoint", 0); // Reset the global distance setpoint
+        Dashboard.setDouble("angle_setpoint", 0); // Reset the global angle setpoint
+
         center_left_score.reset();
         center_right_score.reset();
         left_far_score.reset();
@@ -136,6 +167,7 @@ public class AutoController extends BaseController {
         right_straight_score.reset();
         straight.reset();
         straight_score.reset();
+        tuning.reset();
 
         game_data = null;
     }
