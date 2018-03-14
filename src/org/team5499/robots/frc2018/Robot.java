@@ -34,7 +34,6 @@ public class Robot extends TimedRobot {
         testController = new TestController();
 
         Dashboard.setString("automode", "left_inner");
-        Dashboard.setString("dropmode", "drop");
         Dashboard.setString("cubemode", "one");
     }
 
