@@ -19808,7 +19808,6 @@ var MessageHandler = require('./MessageHandler');
 var Chart = require('chart.js');
 
 var autoselector = document.getElementById("autoselector");
-var dropselector = document.getElementById("dropselector");
 var two_cube = document.getElementById("two_cube");
 
 
@@ -19882,26 +19881,21 @@ function run(handler) {
         batteryvoltage_graph.update();
     });
 
+    autoselector.value = handler.getProperty("automode");
+    two_cube.value = handler.getProperty("cubemode");
 
 
     handler.addKeyListener("automode", function() {
         autoselector.value = handler.getProperty("automode");
     });
-    handler.addKeyListener("dropmode", function() {
-        dropselector.value = handler.getProperty("dropmode");
-    });
     handler.addKeyListener("cubemode", function() {
-        dropselector.value = handler.getProperty("cubemode");
+        two_cube.value = handler.getProperty("cubemode");
     });
 
 
     autoselector.addEventListener("change", function() {
         console.log("setting automode:" + autoselector.value);
         handler.setProperty("automode", autoselector.value);
-    }, false);
-    dropselector.addEventListener("change", function() {
-        console.log("setting dropmode:" + dropselector.value);
-        handler.setProperty("dropmode", dropselector.value);
     }, false);
     two_cube.addEventListener("change", function() {
         console.log("setting cubemode:" + two_cube.value);

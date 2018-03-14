@@ -74,5 +74,6 @@
     "ACCEPTABLE_ARM_VELOCITY": "1.5",
     "kINTAKE_P": "0.1",
     "kINTAKE_I": "0.0",
-    "kINTAKE_D": "0.0"
+    "kINTAKE_D": "0.0",
+    "kFEEDFORWARD_ARM_VOLTAGE": "0.18"
 }

@@ -15,6 +15,10 @@ public class Routine {
         commands.add(command);
     }
 
+    public void setCommand(int index, BaseCommand command) {
+        commands.set(index, command);
+    }
+
     public BaseCommand getCurrentCommand() {
         return commands.get(step_number);
     }

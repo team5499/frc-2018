@@ -4,6 +4,7 @@ import org.team5499.robots.frc2018.controllers.AutoController;
 import org.team5499.robots.frc2018.controllers.OperatorController;
 import org.team5499.robots.frc2018.controllers.TestController;
 import org.team5499.robots.frc2018.dashboard.Dashboard;
+import org.team5499.robots.frc2018.pid.Controllers;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -35,6 +36,7 @@ public class Robot extends TimedRobot {
 
         Dashboard.setString("automode", "left_inner");
         Dashboard.setString("cubemode", "one");
+        Dashboard.setDouble("timeout", 0);
     }
 
     @Override
@@ -50,6 +52,10 @@ public class Robot extends TimedRobot {
         Dashboard.setDouble("arm_angle", Subsystems.intake.getArmAngle());
         Dashboard.setInt("sonic_raw_value", Subsystems.intake.getRawSonicValue());
         Dashboard.setDouble("cube_distance", Subsystems.intake.getCubeDistance());
+
+        Controllers.arm_controller.handle();
+        Controllers.turn_controller.handle();
+        Controllers.drive_controller.handle();
     }
 
     /**
@@ -60,6 +66,12 @@ public class Robot extends TimedRobot {
         autoController.reset();
         operatorController.reset();
         testController.reset();
+
+        Controllers.arm_controller.reset();
+        Controllers.turn_controller.reset();
+        Controllers.drive_controller.reset();
+
+
     }
     
 	@Override
@@ -81,7 +93,6 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         autoController.handle();
-        Subsystems.intake.handle();
     }
 
     /**
@@ -99,7 +110,6 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         operatorController.handle();
-        Subsystems.intake.handle();
     }
 
     /**

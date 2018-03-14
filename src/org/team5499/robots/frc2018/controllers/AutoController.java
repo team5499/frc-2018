@@ -59,65 +59,125 @@ public class AutoController extends BaseController {
 
         ro_oc.addCommand(new NothingCommand(0));
         ro_oc.addCommand(new ArmCommand(1, true, 110));
-        
+        ro_oc.addCommand(new DriveCommand(3, false, -150));
+        ro_oc.addCommand(new TurnCommand(2, false, 90));
+        ro_oc.addCommand(new DriveCommand(1.5, false, -23));
+        ro_oc.addCommand(new OuttakeCommand(1, 0.6));
 
         // drives 90 inches(just enough to cross baseline)
         ro_nc.addCommand(new NothingCommand(0));
         ro_nc.addCommand(new DriveCommand(3, false, -90));
 
-        // working center right command
-        center_right_score.addCommand(new DriveCommand(5, false, -45));
-        center_right_score.addCommand(new TurnCommand(2, false, -90));
-        center_right_score.addCommand(new DriveCommand(2, false, -51));
-        center_right_score.addCommand(new TurnCommand(2, false, 90));
-        center_right_score.addCommand(new DriveCommand(3, false, -63));
-        center_right_score.addCommand(new IntakeCommand(1, 0.75, false));
-        center_right_score.addCommand(new DriveCommand(2, false, 20));
-        center_right_score.addCommand(new ArmCommand(1, false, -25));
-        center_right_score.addCommand(new TurnCommand(2, false, -110));
-        center_right_score.addCommand(new IntakeDriveCommand(3, false, 70, -1.0, true));
-        center_right_score.addCommand(new ArmCommand(2, false, 100));
-        center_right_score.addCommand(new DriveCommand(2, false, -70));
-        center_right_score.addCommand(new TurnCommand(2.5, false, 110));
-        center_right_score.addCommand(new DriveCommand(2, false, -20));
-        center_right_score.addCommand(new IntakeCommand(1, 0.75, false));
+        ri_oc.addCommand(new NothingCommand(0));
+        ri_oc.addCommand(new ArmCommand(1, true, 110));
+        ri_oc.addCommand(new DriveCommand(3, false, -104));
+        ri_oc.addCommand(new OuttakeCommand(1, 0.6));
 
-        center_left_score.addCommand(new DriveCommand(5, false, -45));
-        center_left_score.addCommand(new TurnCommand(2, false, 90));
-        center_left_score.addCommand(new DriveCommand(2, false, -51));
-        center_left_score.addCommand(new TurnCommand(2, false, -90));
-        center_left_score.addCommand(new DriveCommand(3, false, -63));
-        center_left_score.addCommand(new IntakeCommand(1, 0.75, false));
-        center_left_score.addCommand(new DriveCommand(2, false, 50));
-        center_left_score.addCommand(new ArmCommand(1, false, -25));
-        center_left_score.addCommand(new TurnCommand(2, false, 130));
-        center_left_score.addCommand(new IntakeDriveCommand(3, false, 50, -1.0, false));
-        center_left_score.addCommand(new ArmCommand(2, false, 100));
-        center_left_score.addCommand(new DriveCommand(2, false, -40));
-        center_left_score.addCommand(new TurnCommand(2.5, false, -130));
-        center_left_score.addCommand(new DriveCommand(2, false, -60));
-        center_left_score.addCommand(new IntakeCommand(1, 0.75, false));
+        ri_nc.addCommand(new NothingCommand(0));
+        ri_nc.addCommand(new DriveCommand(3, false, -104));
 
-        left_straight_score.addCommand(new DriveCommand(3, false, -160));
-        left_straight_score.addCommand(new TurnCommand(2, false, -90));
-        left_straight_score.addCommand(new DriveCommand(2, false, -40));
-        left_straight_score.addCommand(new OuttakeCommand(1, 0.5));
+        m_nc.addCommand(new NothingCommand(0));
+        m_nc.addCommand(new DriveCommand(2, false, -60));
 
-        right_straight_score.addCommand(new DriveCommand(3, false, -160));
-        right_straight_score.addCommand(new TurnCommand(2, false, 90));
-        right_straight_score.addCommand(new DriveCommand(2, false, -40));
-        right_straight_score.addCommand(new OuttakeCommand(1, 0.5));
+        m_oc_l.addCommand(new NothingCommand(0));
+        m_oc_l.addCommand(new ArmCommand(1, true, 110));
+        m_oc_l.addCommand(new DriveCommand(5, false, -45));
+        m_oc_l.addCommand(new TurnCommand(2, false, 90));
+        m_oc_l.addCommand(new DriveCommand(2, false, -59));
+        m_oc_l.addCommand(new TurnCommand(2, false, -90));
+        m_oc_l.addCommand(new DriveCommand(3, false, -63));
+        m_oc_l.addCommand(new OuttakeCommand(1, 0.6));
+
+        m_oc_r.addCommand(new NothingCommand(0));
+        m_oc_r.addCommand(new ArmCommand(1, true, 110));
+        m_oc_r.addCommand(new DriveCommand(5, false, -45));
+        m_oc_r.addCommand(new TurnCommand(2, false, -90));
+        m_oc_r.addCommand(new DriveCommand(2, false, -47));
+        m_oc_r.addCommand(new TurnCommand(2, false, 90));
+        m_oc_r.addCommand(new DriveCommand(3, false, -58.5));
+        m_oc_r.addCommand(new OuttakeCommand(1, 0.6));
+
+        m_tc_l.addCommand(new NothingCommand(0));
+        m_tc_l.addCommand(new ArmCommand(1, true, 110));
+        m_tc_l.addCommand(new DriveCommand(5, false, -45));
+        m_tc_l.addCommand(new TurnCommand(2, false, 90));
+        m_tc_l.addCommand(new DriveCommand(2, false, -59));
+        m_tc_l.addCommand(new TurnCommand(2, false, -90));
+        m_tc_l.addCommand(new DriveCommand(3, false, -63));
+        m_tc_l.addCommand(new OuttakeCommand(1, 0.6));
+        m_tc_l.addCommand(new DriveCommand(2, false, 63));
+        m_tc_l.addCommand(new ArmCommand(1, true, -25));
+        m_tc_l.addCommand(new ArmCommand(0, false, -25));
+        m_tc_l.addCommand(new TurnCommand(2, false, 120));
+        m_tc_l.addCommand(new IntakeDriveCommand(3.5, false, 65, -1.0, true)); // SET WAIT_FOR_CUBE to false, unless distance sensor works!
+        m_tc_l.addCommand(new ArmCommand(1, true, 110));
+        m_tc_l.addCommand(new DriveCommand(2, false, -65));
+        m_tc_l.addCommand(new TurnCommand(2, false, -120));
+        m_tc_l.addCommand(new DriveCommand(2, false, -63));
+        m_tc_l.addCommand(new OuttakeCommand(1, 0.6));
+
+        m_tc_r.addCommand(new NothingCommand(0));
+        m_tc_r.addCommand(new ArmCommand(1, true, 110));
+        m_tc_r.addCommand(new DriveCommand(5, false, -45));
+        m_tc_r.addCommand(new TurnCommand(2, false, -90));
+        m_tc_r.addCommand(new DriveCommand(2, false, -47));
+        m_tc_r.addCommand(new TurnCommand(2, false, 90));
+        m_tc_r.addCommand(new DriveCommand(3, false, -58.5));
+        m_tc_r.addCommand(new OuttakeCommand(1, 0.6));
+        m_tc_r.addCommand(new DriveCommand(2, false, 63));
+        m_tc_r.addCommand(new ArmCommand(1, true, -25));
+        m_tc_r.addCommand(new ArmCommand(0, false, -25));
+        m_tc_r.addCommand(new TurnCommand(2, false, -120));
+        m_tc_r.addCommand(new IntakeDriveCommand(3.5, false, 65, -1.0, true)); // SET WAIT_FOR_CUBE to false, unless distance sensor works!
+        m_tc_r.addCommand(new ArmCommand(1, true, 110));
+        m_tc_r.addCommand(new DriveCommand(2, false, -65));
+        m_tc_r.addCommand(new TurnCommand(2, false, 120));
+        m_tc_r.addCommand(new DriveCommand(2, false, -63));
+        m_tc_r.addCommand(new OuttakeCommand(1, 0.6));
+
+        lo_oc.addCommand(new NothingCommand(0));
+        lo_oc.addCommand(new ArmCommand(1, true, 110));
+        lo_oc.addCommand(new DriveCommand(3, false, -150));
+        lo_oc.addCommand(new TurnCommand(2, false, -90));
+        lo_oc.addCommand(new DriveCommand(1.5, false, -23));
+        lo_oc.addCommand(new OuttakeCommand(1, 0.6));
+
+        // drives 90 inches(just enough to cross baseline)
+        lo_nc.addCommand(new NothingCommand(0));
+        lo_nc.addCommand(new DriveCommand(3, false, -90));
+
+        li_oc.addCommand(new NothingCommand(0));
+        li_oc.addCommand(new ArmCommand(1, true, 110));
+        li_oc.addCommand(new DriveCommand(3, false, -104));
+        li_oc.addCommand(new OuttakeCommand(1, 0.6));
+
+        li_nc.addCommand(new NothingCommand(0));
+        li_nc.addCommand(new DriveCommand(3, false, -104));
+
+        nothing.addCommand(new NothingCommand(0));
 
         tuning.addCommand(new ArmCommand(10, true, 110));
         tuning.addCommand(new ArmCommand(0, false, 110));
         
-        current_routine = straight;
+        current_routine = nothing;
     }
 
     @Override
     public void start() {
         System.out.println("Auto Controller Started"); /** Eventually replace with logger */
-        Subsystems.intake.setPidEnabled(false);
+        ro_oc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
+        ro_nc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
+        ri_oc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
+        ri_nc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
+        m_nc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
+        m_oc_r.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
+        m_oc_l.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
+        m_tc_r.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
+        m_tc_l.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
+        li_oc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
+        li_nc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
+        lo_oc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
+        lo_nc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
     }
 
     @Override
@@ -132,42 +192,56 @@ public class AutoController extends BaseController {
         switch(Dashboard.getString("automode")) {
             case "left_inner":
                 if(game_data.substring(0, 1).equals("L")) {
-                    current_routine = straight_score;
+                    current_routine = li_oc;
                 } else {
-                    current_routine = straight;
+                    current_routine = li_nc;
                 }
                 break;
             case "left_outer":
                 if(game_data.substring(0, 1).equals("L")) {
-                    current_routine = straight_score;
+                    current_routine = lo_oc;
                 } else {
-                    current_routine = straight;
+                    current_routine = lo_nc;
                 }
                 break;
             case "center":
                 if(game_data.substring(0, 1).equals("L")) {
-                    current_routine = center_left_score;
+                    if(Dashboard.getString("cubemode").equals("one")) {
+                        current_routine = m_oc_l;
+                    } else if(Dashboard.getString("cubemode").equals("two")) {
+                        current_routine = m_tc_l;
+                    } else {
+                        current_routine = m_nc;
+                    }
                 } else {
-                    current_routine = center_right_score;
+                    if(Dashboard.getString("cubemode").equals("one")) {
+                        current_routine = m_oc_r;
+                    } else if(Dashboard.getString("cubemode").equals("two")) {
+                        current_routine = m_tc_r;
+                    } else {
+                        current_routine = m_nc;
+                    }
                 }
                 break;
             case "right_inner":
                 if(game_data.substring(0, 1).equals("L")) {
-                    current_routine = straight;
+                    current_routine = ri_nc;
                 } else {
-                    current_routine = straight_score;
+                    current_routine = ri_oc;
                 }
                 break;
             case "right_outer":
                 if(game_data.substring(0, 1).equals("L")) {
-                    current_routine = straight;
+                    current_routine = ro_nc;
                 } else {
-                    current_routine = straight_score;
+                    current_routine = ro_oc;
                 }
                 break;
             case "tune":
                 current_routine = tuning;
                 break;
+            case "none":
+                current_routine = nothing;
             default:
                 System.out.println("Automode mode not recognized");
                 break;
@@ -203,15 +277,21 @@ public class AutoController extends BaseController {
         Dashboard.setDouble("distance_setpoint", 0); // Reset the global distance setpoint
         Dashboard.setDouble("angle_setpoint", 0); // Reset the global angle setpoint
 
-        center_left_score.reset();
-        center_right_score.reset();
-        left_far_score.reset();
-        right_far_score.reset();
-        left_straight_score.reset();
-        right_straight_score.reset();
-        straight.reset();
-        straight_score.reset();
+        lo_nc.reset();
+        lo_oc.reset();
+        li_nc.reset();
+        li_oc.reset();
+        m_nc.reset();
+        m_oc_l.reset();
+        m_oc_r.reset();
+        m_tc_l.reset();
+        m_tc_r.reset();
+        ro_nc.reset();
+        ro_oc.reset();
+        ri_nc.reset();
+        ri_oc.reset();
         tuning.reset();
+        nothing.reset();
 
         game_data = null;
         current_command = null;

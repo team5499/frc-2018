@@ -1,4 +1,4 @@
-package org.team5499.robots.frc2018;
+package org.team5499.robots.frc2018.pid;
 
 import edu.wpi.first.wpilibj.Timer;
 
@@ -48,6 +48,10 @@ public class PID {
     public void setSetpoint(double setpoint) {
         this.setpoint = setpoint;
         this.last_error = getError();
+    }
+
+    public double getSetpoint() {
+        return this.setpoint;
     }
 
     /** Set process variable */

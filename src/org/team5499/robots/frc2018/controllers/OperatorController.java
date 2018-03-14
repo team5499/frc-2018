@@ -1,7 +1,7 @@
 package org.team5499.robots.frc2018.controllers;
 
 import org.team5499.robots.frc2018.dashboard.Dashboard;
-import org.team5499.robots.frc2018.PID;
+import org.team5499.robots.frc2018.pid.Controllers;
 import org.team5499.robots.frc2018.Hardware;
 
 import org.team5499.robots.frc2018.subsystems.Subsystems;
@@ -15,21 +15,14 @@ public class OperatorController extends BaseController {
     /**
      * THIS CLASS SHOULD CONTAIN OLY CONTROL LOGIC FOR THE TELEOPERATED PERIOD
      */
-    private PID arm_controller;
 
     public OperatorController() {
         super();
-        this.arm_controller = new PID(Dashboard.getDouble("kARM_P"), Dashboard.getDouble("kARM_I"), Dashboard.getDouble("kARM_D"));
-        this.arm_controller.setInverted(false);
-        this.arm_controller.setAcceptableError(0.0);
-        this.arm_controller.setAcceptableVelocity(0.0);
-        this.arm_controller.setOutputRange(Dashboard.getDouble("AUTO_ARM_DOWN_SPEED"), Dashboard.getDouble("AUTO_ARM_UP_SPEED"));
     }
 
     @Override
     public void start() {
         System.out.println("Teleop controller started"); // Eventually use a logger object
-        Subsystems.intake.setPidEnabled(false);
     }
 
     @Override
@@ -38,27 +31,19 @@ public class OperatorController extends BaseController {
         Subsystems.intake.setIntake(getIntake()); /** Set the intake speed */
 
         if(getPidArmForward() && getArm() == 0) { // Use PID to move the arm up
-            arm_controller.setSetpoint(Dashboard.getDouble("ARM_FORWARD_POSITION"));
-            arm_controller.setProcessVariable(Subsystems.intake.getArmAngle());
-            arm_controller.setVelocity(Subsystems.intake.getArmVelocity());
-            Subsystems.intake.setArm(arm_controller.calculate());
+            Controllers.arm_controller.setSetpoint(Dashboard.getDouble("ARM_FORWARD_POSITION"));
+            Controllers.arm_controller.setEnabled(true);
         } else if(getPidArmReverse() && getArm() == 0) { // Use PID to move arm down
-            arm_controller.setSetpoint(Dashboard.getDouble("ARM_REVERSE_POSITION"));
-            arm_controller.setProcessVariable(Subsystems.intake.getArmAngle());
-            arm_controller.setVelocity(Subsystems.intake.getArmVelocity());
-            Subsystems.intake.setArm(arm_controller.calculate());
+            Controllers.arm_controller.setSetpoint(Dashboard.getDouble("ARM_REVERSE_POSITION"));
+            Controllers.arm_controller.setEnabled(true);
         } else if(getPidArm() > 0 && getArm() == 0) {
-            arm_controller.setSetpoint(Dashboard.getDouble("ARM_REAR_POSITION"));
-            arm_controller.setProcessVariable(Subsystems.intake.getArmAngle());
-            arm_controller.setVelocity(Subsystems.intake.getArmVelocity());
-            Subsystems.intake.setArm(arm_controller.calculate());
+            Controllers.arm_controller.setSetpoint(Dashboard.getDouble("ARM_REAR_POSITION"));
+            Controllers.arm_controller.setEnabled(true);
         } else if(getPidArm() < 0 && getArm() == 0) {
-            arm_controller.setSetpoint(Dashboard.getDouble("ARM_FRONT_POSITION"));
-            arm_controller.setProcessVariable(Subsystems.intake.getArmAngle());
-            arm_controller.setVelocity(Subsystems.intake.getArmVelocity());
-            Subsystems.intake.setArm(arm_controller.calculate());
+            Controllers.arm_controller.setSetpoint(Dashboard.getDouble("ARM_FRONT_POSITION"));
+            Controllers.arm_controller.setEnabled(true);
         } else { // Manual control of the arm
-            arm_controller.reset();
+            Controllers.arm_controller.setEnabled(false);
             Subsystems.intake.setArm(getArm());
         }
         
