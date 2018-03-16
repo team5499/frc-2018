@@ -30,7 +30,7 @@ public class AutoController extends BaseController {
      * OC - One cube(default)
      * TC - Two cube
      */
-    private Routine ro_oc, ro_nc, ri_oc, ri_nc, m_nc, m_oc_r, m_oc_l, m_tc_r, m_tc_l, li_oc, li_nc, lo_oc, lo_nc, nothing, tuning;
+    private Routine ro_tc, ro_oc, ro_nc, ri_oc, ri_nc, m_nc, m_oc_r, m_oc_l, m_tc_r, m_tc_l, li_oc, li_nc, lo_tc, lo_oc, lo_nc, nothing, tuning;
 
     private BaseCommand current_command;
     private String game_data;
@@ -41,6 +41,7 @@ public class AutoController extends BaseController {
         Dashboard.setDouble("distance_setpoint", 0);
         Dashboard.setDouble("angle_setpoint", 0);
 
+        ro_tc = new Routine();
         ro_oc = new Routine();
         ro_nc = new Routine();
         ri_oc = new Routine();
@@ -52,10 +53,26 @@ public class AutoController extends BaseController {
         m_tc_l = new Routine();
         li_oc = new Routine();
         li_nc = new Routine();
+        lo_tc = new Routine();
         lo_oc = new Routine();
         lo_nc = new Routine();
         nothing = new Routine();
         tuning = new Routine();
+
+        ro_tc.addCommand(new NothingCommand(0));
+        ro_tc.addCommand(new ArmCommand(1, true, 110));
+        ro_tc.addCommand(new DriveCommand(3, false, -150));
+        ro_tc.addCommand(new TurnCommand(2, false, 90));
+        ro_tc.addCommand(new DriveCommand(1.5, false, -16));
+        ro_tc.addCommand(new OuttakeCommand(1, 0.6));
+        ro_tc.addCommand(new DriveCommand(1.5, false, 16));
+        ro_tc.addCommand(new TurnCommand(2, false, 90));
+        ro_tc.addCommand(new DriveCommand(2, false, 36));
+        ro_tc.addCommand(new TurnCommand(2, false, -90));
+        ro_tc.addCommand(new IntakeDriveCommand(2, false, 26, 0.5, true));
+        ro_tc.addCommand(new ArmCommand(2, true, 30));
+        ro_tc.addCommand(new TurnCommand(2, false, -30));
+        ro_tc.addCommand(new OuttakeCommand(0.5, 1.0));
 
         ro_oc.addCommand(new NothingCommand(0));
         ro_oc.addCommand(new ArmCommand(1, true, 110));
@@ -134,6 +151,21 @@ public class AutoController extends BaseController {
         m_tc_r.addCommand(new TurnCommand(2, false, 120));
         m_tc_r.addCommand(new DriveCommand(2, false, -63));
         m_tc_r.addCommand(new OuttakeCommand(1, 0.6));
+
+        lo_tc.addCommand(new NothingCommand(0));
+        lo_tc.addCommand(new ArmCommand(1, true, 110));
+        lo_tc.addCommand(new DriveCommand(3, false, -150));
+        lo_tc.addCommand(new TurnCommand(2, false, -90));
+        lo_tc.addCommand(new DriveCommand(1.5, false, -16));
+        lo_tc.addCommand(new OuttakeCommand(1, 0.6));
+        lo_tc.addCommand(new DriveCommand(1.5, false, 16));
+        lo_tc.addCommand(new TurnCommand(2, false, -90));
+        lo_tc.addCommand(new DriveCommand(2, false, 36));
+        lo_tc.addCommand(new TurnCommand(2, false, 90));
+        lo_tc.addCommand(new IntakeDriveCommand(2, false, 26, 0.5, true));
+        lo_tc.addCommand(new ArmCommand(2, true, 30));
+        lo_tc.addCommand(new TurnCommand(2, false, 30));
+        lo_tc.addCommand(new OuttakeCommand(0.5, 1.0));
 
         lo_oc.addCommand(new NothingCommand(0));
         lo_oc.addCommand(new ArmCommand(1, true, 110));
