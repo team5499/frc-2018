@@ -17,8 +17,6 @@ public class AutoController extends BaseController {
      */
     private Routine current_routine;
 
-
-    //private Routine straight, straight_score, left_straight_score, right_straight_score, left_far_score, right_far_score, center_left_score, center_right_score, tuning;
     /**
      * RO - Right outer
      * RI - Right inner
@@ -26,11 +24,13 @@ public class AutoController extends BaseController {
      * LI - Left inner
      * LO - Left outer
      * 
+     * C - Cross Over
+     * 
      * NC - No cubes
      * OC - One cube(default)
      * TC - Two cube
      */
-    private Routine ro_tc, ro_oc, ro_nc, ri_oc, ri_nc, m_nc, m_oc_r, m_oc_l, m_tc_r, m_tc_l, li_oc, li_nc, lo_tc, lo_oc, lo_nc, nothing, tuning;
+    private Routine ro_tc, ro_oc, ro_nc, ro_c_oc, ri_oc, ri_nc, m_nc, m_oc_r, m_oc_l, m_tc_r, m_tc_l, li_oc, li_nc, lo_tc, lo_oc, lo_nc, lo_c_oc, nothing, tuning;
 
     private BaseCommand current_command;
     private String game_data;
@@ -44,6 +44,7 @@ public class AutoController extends BaseController {
         ro_tc = new Routine();
         ro_oc = new Routine();
         ro_nc = new Routine();
+        ro_c_oc = new Routine();
         ri_oc = new Routine();
         ri_nc = new Routine();
         m_nc = new Routine(); // Just drive straight a bit
@@ -56,6 +57,7 @@ public class AutoController extends BaseController {
         lo_tc = new Routine();
         lo_oc = new Routine();
         lo_nc = new Routine();
+        lo_c_oc = new Routine();
         nothing = new Routine();
         tuning = new Routine();
 
@@ -84,6 +86,8 @@ public class AutoController extends BaseController {
         // drives 90 inches(just enough to cross baseline)
         ro_nc.addCommand(new NothingCommand(0));
         ro_nc.addCommand(new DriveCommand(3, false, -90));
+
+        ro_c_oc.addCommand(new NothingCommand(0));
 
         ri_oc.addCommand(new NothingCommand(0));
         ri_oc.addCommand(new ArmCommand(1, true, 110));
@@ -185,6 +189,8 @@ public class AutoController extends BaseController {
 
         li_nc.addCommand(new NothingCommand(0));
         li_nc.addCommand(new DriveCommand(3, false, -104));
+
+        lo_c_oc = new Routine();
 
         nothing.addCommand(new NothingCommand(0));
 
