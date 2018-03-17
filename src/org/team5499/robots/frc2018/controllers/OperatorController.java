@@ -55,9 +55,9 @@ public class OperatorController extends BaseController {
             return 0;
         }
 
-        if(Subsystems.intake.getArmAngle() < -30 && raw_speed < 0) {
+        if(Subsystems.intake.getArmAngle() < 0 && raw_speed < 0) {
             return 0;
-        } else if(Subsystems.intake.getArmAngle() > 100 && raw_speed > 0){
+        } else if(Subsystems.intake.getArmAngle() > 90 && raw_speed > 0){
             return 0;
         }
         return raw_speed * Dashboard.getDouble("ARM_SPEED_MULTIPLIER");
