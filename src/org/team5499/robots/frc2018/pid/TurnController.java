@@ -31,6 +31,7 @@ public class TurnController {
     public void setEnabled(boolean enable) {
         if(enable) {
             initial_distance = Subsystems.drivetrain.getDistance();
+            controller.setSetpoint(Dashboard.getDouble("angle_setpoint"));
         } else {
             Dashboard.setDouble("distance_setpoint", Dashboard.getDouble("distance_setpoint") + Subsystems.drivetrain.getDistance() - initial_distance);
         }
@@ -51,7 +52,7 @@ public class TurnController {
 
     public void setSetpoint(double setpoint) {
         Dashboard.setDouble("angle_setpoint", Dashboard.getDouble("angle_setpoint") + setpoint);
-        controller.setSetpoint(setpoint);
+        controller.setSetpoint(Dashboard.getDouble("angle_setpoint"));
     }
 
     public double getSetpoint() {

@@ -14,18 +14,20 @@ public class ArmCommand extends BaseCommand {
 
     private boolean enable;
     private double degrees;
+    private boolean hold;
 
-    public ArmCommand(double to, boolean enable, double degrees) {
+    public ArmCommand(double to, boolean enable, boolean hold, double degrees) {
         super(to);
         this.enable = enable;
         this.degrees = degrees;
+        this.hold = hold;
     }
 
     @Override
     public void start() {
         super.start();
         Controllers.arm_controller.setSetpoint(degrees);
-        Controllers.arm_controller.setEnabled(enable);
+        Controllers.arm_controller.setEnabled(enable, hold);
     }
 
     @Override

@@ -32,34 +32,8 @@ public class OperatorController extends BaseController {
         Subsystems.drivetrain.setDrivetrain(getLeft(), getRight()); /** Set the left and right speeds of the drivetrain */
         Subsystems.intake.setIntake(getIntake()); /** Set the intake speed */
 
-        if(getArm() != 0){ // Manual control of the arm
-            arm_mode = 0;
-        }else if(getPidArmForward() && getArm() == 0) {
-            arm_mode = 1;
-        } else if(getPidArmReverse() && getArm() == 0) { // Use PID to move arm down
-            arm_mode = 2;
-        } else if(getPidArm() > 0 && getArm() == 0) {
-            arm_mode = 3;
-        } else if(getPidArm() < 0 && getArm() == 0) {
-            arm_mode = 4;
-        }
-
-        if(arm_mode == 1) { // Use PID to move the arm up
-            Controllers.arm_controller.setSetpoint(Dashboard.getDouble("ARM_FORWARD_POSITION"));
-            Controllers.arm_controller.setEnabled(true);
-        } else if(arm_mode == 2) { // Use PID to move arm down
-            Controllers.arm_controller.setSetpoint(Dashboard.getDouble("ARM_REVERSE_POSITION"));
-            Controllers.arm_controller.setEnabled(true);
-        } else if(arm_mode == 3) {
-            Controllers.arm_controller.setSetpoint(Dashboard.getDouble("ARM_REAR_POSITION"));
-            Controllers.arm_controller.setEnabled(true);
-        } else if(arm_mode == 4) {
-            Controllers.arm_controller.setSetpoint(Dashboard.getDouble("ARM_FRONT_POSITION"));
-            Controllers.arm_controller.setEnabled(true);
-        } else if(arm_mode == 0){ // Manual control of the arm
-            Controllers.arm_controller.setEnabled(false);
-            Subsystems.intake.setArm(getArm());
-        }
+        Controllers.arm_controller.setEnabled(false, false);
+        Subsystems.intake.setArm(getArm());
         
     }
 
@@ -76,7 +50,7 @@ public class OperatorController extends BaseController {
 
     /** Get arm speed(positive is up) */
     private double getArm() {
-        double raw_speed = Hardware.codriver.getY(Hand.kRight);
+        double raw_speed = Hardware.codriver.getY(Hand.kLeft);
         if(Math.abs(raw_speed) < Dashboard.getDouble("ARM_DEADZONE")) { /** If the raw value is less than the deadzone, return 0 speed */
             return 0;
         }
