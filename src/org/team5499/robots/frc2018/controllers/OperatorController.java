@@ -16,6 +16,8 @@ public class OperatorController extends BaseController {
      * THIS CLASS SHOULD CONTAIN OLY CONTROL LOGIC FOR THE TELEOPERATED PERIOD
      */
 
+    int arm_mode = 0;
+
     public OperatorController() {
         super();
     }
@@ -30,19 +32,31 @@ public class OperatorController extends BaseController {
         Subsystems.drivetrain.setDrivetrain(getLeft(), getRight()); /** Set the left and right speeds of the drivetrain */
         Subsystems.intake.setIntake(getIntake()); /** Set the intake speed */
 
-        if(getPidArmForward() && getArm() == 0) { // Use PID to move the arm up
+        if(getArm() != 0){ // Manual control of the arm
+            arm_mode = 0;
+        }else if(getPidArmForward() && getArm() == 0) {
+            arm_mode = 1;
+        } else if(getPidArmReverse() && getArm() == 0) { // Use PID to move arm down
+            arm_mode = 2;
+        } else if(getPidArm() > 0 && getArm() == 0) {
+            arm_mode = 3;
+        } else if(getPidArm() < 0 && getArm() == 0) {
+            arm_mode = 4;
+        }
+
+        if(arm_mode == 1) { // Use PID to move the arm up
             Controllers.arm_controller.setSetpoint(Dashboard.getDouble("ARM_FORWARD_POSITION"));
             Controllers.arm_controller.setEnabled(true);
-        } else if(getPidArmReverse() && getArm() == 0) { // Use PID to move arm down
+        } else if(arm_mode == 2) { // Use PID to move arm down
             Controllers.arm_controller.setSetpoint(Dashboard.getDouble("ARM_REVERSE_POSITION"));
             Controllers.arm_controller.setEnabled(true);
-        } else if(getPidArm() > 0 && getArm() == 0) {
+        } else if(arm_mode == 3) {
             Controllers.arm_controller.setSetpoint(Dashboard.getDouble("ARM_REAR_POSITION"));
             Controllers.arm_controller.setEnabled(true);
-        } else if(getPidArm() < 0 && getArm() == 0) {
+        } else if(arm_mode == 4) {
             Controllers.arm_controller.setSetpoint(Dashboard.getDouble("ARM_FRONT_POSITION"));
             Controllers.arm_controller.setEnabled(true);
-        } else { // Manual control of the arm
+        } else if(arm_mode == 0){ // Manual control of the arm
             Controllers.arm_controller.setEnabled(false);
             Subsystems.intake.setArm(getArm());
         }

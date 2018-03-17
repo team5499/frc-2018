@@ -19809,6 +19809,8 @@ var Chart = require('chart.js');
 
 var autoselector = document.getElementById("autoselector");
 var two_cube = document.getElementById("two_cube");
+var timeout = document.getElementById("timeout");
+var set_timeout = document.getElementById("set_timeout");
 
 
 
@@ -19862,7 +19864,7 @@ var batteryvoltage_graph = new Chart(batteryvoltage_canvas_context, {
 });
 
 window.onload = function() {
-    var handler = new MessageHandler("ws://roborio-5499-frc.local:5804/dashboard/main");
+    var handler = new MessageHandler("ws://10.54.99.2:5804/dashboard/main");
     handler.connect(run);
 }
 
@@ -19891,6 +19893,9 @@ function run(handler) {
     handler.addKeyListener("cubemode", function() {
         two_cube.value = handler.getProperty("cubemode");
     });
+    handler.addKeyListener("timeout", function() {
+        timeout.value = handler.getProperty("timeout");
+    });
 
 
     autoselector.addEventListener("change", function() {
@@ -19900,6 +19905,9 @@ function run(handler) {
     two_cube.addEventListener("change", function() {
         console.log("setting cubemode:" + two_cube.value);
         handler.setProperty("cubemode", two_cube.value);
+    }, false);
+    set_timeout.addEventListener("click", function(){
+        handler.setProperty("timeout", timeout.value);
     }, false);
 }
 },{"./MessageHandler":61,"chart.js":1}]},{},[61,62]);

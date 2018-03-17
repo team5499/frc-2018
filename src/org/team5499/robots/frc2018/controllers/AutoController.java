@@ -156,8 +156,11 @@ public class AutoController extends BaseController {
 
         nothing.addCommand(new NothingCommand(0));
 
-        tuning.addCommand(new ArmCommand(10, true, 110));
-        tuning.addCommand(new ArmCommand(0, false, 110));
+        tuning.addCommand(new ArmCommand(1, true, 110));
+        tuning.addCommand(new DriveCommand(5, true, -40));
+        tuning.addCommand(new TurnCommand(5, true, 90));
+        tuning.addCommand(new DriveCommand(5, true, -40));
+
         
         current_routine = nothing;
     }
@@ -165,25 +168,12 @@ public class AutoController extends BaseController {
     @Override
     public void start() {
         System.out.println("Auto Controller Started"); /** Eventually replace with logger */
-        ro_oc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
-        ro_nc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
-        ri_oc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
-        ri_nc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
-        m_nc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
-        m_oc_r.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
-        m_oc_l.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
-        m_tc_r.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
-        m_tc_l.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
-        li_oc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
-        li_nc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
-        lo_oc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
-        lo_nc.setCommand(0, new NothingCommand(Dashboard.getDouble("timeout")));
     }
 
     @Override
     public void handle() {
         /** Make sure the game data is loaded, and set the correct routine */
-        while(DriverStation.getInstance().getGameSpecificMessage().length() < 3) {
+        while(DriverStation.getInstance().getGameSpecificMessage() == null || DriverStation.getInstance().getGameSpecificMessage().length() < 3) {
             return;
         }
         game_data = DriverStation.getInstance().getGameSpecificMessage();
@@ -242,6 +232,7 @@ public class AutoController extends BaseController {
                 break;
             case "none":
                 current_routine = nothing;
+                break;
             default:
                 System.out.println("Automode mode not recognized");
                 break;

@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
         autoController = new AutoController();
         testController = new TestController();
 
-        Dashboard.setString("automode", "left_inner");
+        Dashboard.setString("automode", "center");
         Dashboard.setString("cubemode", "one");
         Dashboard.setDouble("timeout", 0);
     }

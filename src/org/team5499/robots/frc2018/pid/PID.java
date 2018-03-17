@@ -47,6 +47,7 @@ public class PID {
     /** Set setpoint for the controller */
     public void setSetpoint(double setpoint) {
         this.setpoint = setpoint;
+        System.out.println("Set setpoint:" + setpoint);
         this.last_error = getError();
     }
 

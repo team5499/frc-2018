@@ -25,13 +25,15 @@ public class DriveController {
 
     public void handle() {
         if(enabled) {
+            System.out.println("Error:" + distance_controller.getError());
+            System.out.println("Setpoint:" + distance_controller.getSetpoint());
             angle_controller.setProcessVariable(Subsystems.drivetrain.getAngle());
             angle_controller.setVelocity(Subsystems.drivetrain.getAngleVelocity());
             distance_controller.setProcessVariable(Subsystems.drivetrain.getDistance());
             distance_controller.setVelocity(Subsystems.drivetrain.getDistanceVelocity());
             double angle_output = angle_controller.calculate();
             double distance_output = distance_controller.calculate();
-            Subsystems.drivetrain.setDrivetrain(distance_output * multiplier - angle_output, distance_output * multiplier + angle_output);
+            Subsystems.drivetrain.setDrivetrain(distance_output - angle_output, distance_output + angle_output);
             Dashboard.setDouble("distance_error", distance_controller.getError());
             Dashboard.setDouble("angle_error", angle_controller.getError());
         }
@@ -43,12 +45,14 @@ public class DriveController {
         angle_controller.setInverted(false);
         angle_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_ANGLE_ERROR"));
         angle_controller.setOutputRange(-Dashboard.getDouble("MAX_ANGLE_PID_OUTPUT"), Dashboard.getDouble("MAX_ANGLE_PID_OUTPUT"));
+        angle_controller.setSetpoint(Dashboard.getDouble("angle_setpoint"));
 
         distance_controller = new PID(Dashboard.getDouble("kDIST_P"), Dashboard.getDouble("kDIST_I"), Dashboard.getDouble("kDIST_D"));
         distance_controller.setInverted(false);
         distance_controller.setAcceptableError(Dashboard.getDouble("ACCEPTABLE_DISTANCE_ERROR"));
         distance_controller.setAcceptableVelocity(Dashboard.getDouble("ACCEPTABLE_DISTANCE_VELOCITY"));
-        distance_controller.setOutputRange(-Dashboard.getDouble("MAX_DRIVE_PID_OUTPUT"), Dashboard.getDouble("MAX_DRIVE_PID_OUTPUT"));
+        distance_controller.setOutputRange(-Dashboard.getDouble("MAX_DRIVE_PID_OUTPUT") * multiplier, Dashboard.getDouble("MAX_DRIVE_PID_OUTPUT") * multiplier);
+        distance_controller.setSetpoint(Dashboard.getDouble("distance_setpoint"));
         enabled = enable;
     }
 
@@ -58,8 +62,9 @@ public class DriveController {
 
     public void setSetpoint(double setpoint) {
         Dashboard.setDouble("distance_setpoint", Dashboard.getDouble("distance_setpoint") + setpoint);
-        distance_controller.setSetpoint(setpoint);
+        distance_controller.setSetpoint(Dashboard.getDouble("distance_setpoint"));
         angle_controller.setSetpoint(Dashboard.getDouble("angle_setpoint"));
+        System.out.println("DISTANCE_SETPOINT:" + Dashboard.getDouble("distance_setpoint"));
     }
 
     public double getSetpoint() {
