@@ -17,6 +17,8 @@ public class Robot extends TimedRobot {
     private AutoController autoController;
     private TestController testController;
 
+    private boolean nextAuto = true;
+
     /**
      * - Set the main loop update period
      * - Initialize controllers
@@ -76,6 +78,15 @@ public class Robot extends TimedRobot {
     
 	@Override
 	public void disabledPeriodic() {
+        if(Hardware.driver.getXButton()) { 
+            if(nextAuto) {
+                autoController.incrementRoutine();
+                nextAuto = false;
+            }
+        } else  {
+            nextAuto = true;
+        }
+        
     }
 
     /**

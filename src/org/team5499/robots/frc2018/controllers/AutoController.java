@@ -35,6 +35,9 @@ public class AutoController extends BaseController {
     private BaseCommand current_command;
     private String game_data;
 
+    private int routineNumber = 3; // 
+    private static final int maxRoutines = 5;
+
     public AutoController() {
         super();
         game_data = null;
@@ -200,7 +203,8 @@ public class AutoController extends BaseController {
         tuning.addCommand(new DriveCommand(5, true, -40));
 
         
-        current_routine = nothing;
+        // current_routine = nothing;
+        manualAutoSelect();
     }
 
     @Override
@@ -211,10 +215,12 @@ public class AutoController extends BaseController {
     @Override
     public void handle() {
         /** Make sure the game data is loaded, and set the correct routine */
+        
         while(DriverStation.getInstance().getGameSpecificMessage() == null || DriverStation.getInstance().getGameSpecificMessage().length() < 3) {
             return;
         }
-        game_data = DriverStation.getInstance().getGameSpecificMessage();
+        
+        /* game_data = DriverStation.getInstance().getGameSpecificMessage();
         Dashboard.setString("game_data", game_data);
         System.out.println(Dashboard.getString("automode"));
         switch(Dashboard.getString("automode")) {
@@ -275,6 +281,8 @@ public class AutoController extends BaseController {
                 System.out.println("Automode mode not recognized");
                 break;
         }
+        */
+
 
         /** Once the correct routine is choosen, handle it */
         if(current_routine.isFinished()) {
@@ -291,6 +299,51 @@ public class AutoController extends BaseController {
         } else {
             current_command.handle();
         }
+    }
+
+    private void manualAutoSelect() {
+        game_data = DriverStation.getInstance().getGameSpecificMessage();
+        String closePlate = game_data.substring(0, 1);
+        switch(routineNumber) {
+            case 0: // left
+                System.out.println("Left auto selected!");
+                if(closePlate.equals("L")) {
+                    current_routine = lo_oc;
+                } else {
+                    current_routine = lo_nc;
+                }
+                break;
+            case 1: // center
+                System.out.println("Center auto selected!");
+                if(closePlate.equals("L")) {
+                    current_routine = m_tc_l;
+                } else {
+                    current_routine = m_tc_r;
+                }
+                break;
+            case 2: // right
+                System.out.println("Right auto selected!");
+                if(closePlate.equals("R")) {
+                    current_routine = ro_oc;
+                } else {
+                    current_routine = ro_nc;
+                }
+                break;
+            case 3: // straight
+                System.out.println("Straight auto selected!");
+                current_routine = ro_oc;
+                break;
+            case 4: // nothing
+                System.out.println("No auto selected!");
+                current_routine = nothing;
+                break;
+        }
+    }
+
+    public void incrementRoutine() {
+        routineNumber++;
+        if(routineNumber == maxRoutines) routineNumber = 0;
+        manualAutoSelect();
     }
 
     @Override
