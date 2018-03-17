@@ -111,7 +111,7 @@ public class AutoController extends BaseController {
         m_oc_l.addCommand(new TurnCommand(2, false, 90));
         m_oc_l.addCommand(new DriveCommand(2, false, -59));
         m_oc_l.addCommand(new TurnCommand(2, false, -90));
-        m_oc_l.addCommand(new DriveCommand(3, false, -63));
+        m_oc_l.addCommand(new DriveCommand(3, false, -70));
         m_oc_l.addCommand(new ArmCommand(1, true, false, 110));
         m_oc_l.addCommand(new OuttakeCommand(1, 0.6));
 
@@ -121,7 +121,7 @@ public class AutoController extends BaseController {
         m_oc_r.addCommand(new TurnCommand(2, false, -90));
         m_oc_r.addCommand(new DriveCommand(2, false, -47));
         m_oc_r.addCommand(new TurnCommand(2, false, 90));
-        m_oc_r.addCommand(new DriveCommand(3, false, -58.5));
+        m_oc_r.addCommand(new DriveCommand(3, false, -70));
         m_oc_r.addCommand(new ArmCommand(1, true, false, 110));
         m_oc_r.addCommand(new OuttakeCommand(1, 0.6));
 
@@ -131,10 +131,10 @@ public class AutoController extends BaseController {
         m_tc_l.addCommand(new TurnCommand(2, false, 90));
         m_tc_l.addCommand(new DriveCommand(2, false, -59));
         m_tc_l.addCommand(new TurnCommand(2, false, -90));
-        m_tc_l.addCommand(new DriveCommand(3, false, -63));
+        m_tc_l.addCommand(new DriveCommand(3, false, -70));
         m_tc_l.addCommand(new ArmCommand(1, true, false, 110));
         m_tc_l.addCommand(new OuttakeCommand(1, 0.6));
-        m_tc_l.addCommand(new DriveCommand(2, false, 63));
+        m_tc_l.addCommand(new DriveCommand(2, false, 70));
         m_tc_l.addCommand(new ArmCommand(1, true, true, -25));
         m_tc_l.addCommand(new ArmCommand(0, false, true, -25));
         m_tc_l.addCommand(new TurnCommand(2, false, 120));
@@ -153,10 +153,10 @@ public class AutoController extends BaseController {
         m_tc_r.addCommand(new TurnCommand(2, false, -90));
         m_tc_r.addCommand(new DriveCommand(2, false, -47));
         m_tc_r.addCommand(new TurnCommand(2, false, 90));
-        m_tc_r.addCommand(new DriveCommand(3, false, -58.5));
+        m_tc_r.addCommand(new DriveCommand(3, false, -70));
         m_tc_r.addCommand(new ArmCommand(1, true, false, 110));
         m_tc_r.addCommand(new OuttakeCommand(1, 0.6));
-        m_tc_r.addCommand(new DriveCommand(2, false, 63));
+        m_tc_r.addCommand(new DriveCommand(2, false, 70));
         m_tc_r.addCommand(new ArmCommand(1, true, true, -25));
         m_tc_r.addCommand(new ArmCommand(0, false, true, -25));
         m_tc_r.addCommand(new TurnCommand(2, false, -120));
