@@ -54,6 +54,10 @@ public class OperatorController extends BaseController {
         if(Math.abs(raw_speed) < Dashboard.getDouble("ARM_DEADZONE")) { /** If the raw value is less than the deadzone, return 0 speed */
             return 0;
         }
+
+        if(Subsystems.intake.getArmAngle() < -30 && raw_speed < 0) {
+            return 0;
+        }
         return raw_speed * Dashboard.getDouble("ARM_SPEED_MULTIPLIER");
     }
 
