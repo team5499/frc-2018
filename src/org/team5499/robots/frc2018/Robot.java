@@ -56,8 +56,6 @@ public class Robot extends TimedRobot {
         Controllers.arm_controller.handle();
         Controllers.turn_controller.handle();
         Controllers.drive_controller.handle();
-
-        System.out.println(Subsystems.drivetrain.getAngleVelocity());
     }
 
     /**

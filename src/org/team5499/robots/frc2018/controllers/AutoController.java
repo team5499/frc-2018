@@ -111,7 +111,8 @@ public class AutoController extends BaseController {
         m_oc_l.addCommand(new TurnCommand(2, false, 90));
         m_oc_l.addCommand(new DriveCommand(2, false, -59));
         m_oc_l.addCommand(new TurnCommand(2, false, -90));
-        m_oc_l.addCommand(new DriveCommand(3, false, -70));
+        m_oc_l.addCommand(new DriveCommand(2, false, -60));
+        m_oc_l.addCommand(new DriveSlowCommand(2, false, -10));
         m_oc_l.addCommand(new ArmCommand(1, true, false, 110));
         m_oc_l.addCommand(new OuttakeDriveCommand(1, true, 0.6));
 
@@ -121,7 +122,7 @@ public class AutoController extends BaseController {
         m_oc_r.addCommand(new TurnCommand(2, false, -90));
         m_oc_r.addCommand(new DriveCommand(2, false, -47));
         m_oc_r.addCommand(new TurnCommand(2, false, 90));
-        m_oc_r.addCommand(new DriveCommand(3, false, -70));
+        m_oc_r.addCommand(new DriveSlowCommand(3, false, -70));
         m_oc_r.addCommand(new ArmCommand(1, true, false, 110));
         m_oc_r.addCommand(new OuttakeDriveCommand(1, true, 0.6));
 
@@ -131,7 +132,7 @@ public class AutoController extends BaseController {
         m_tc_l.addCommand(new TurnCommand(2, false, 90));
         m_tc_l.addCommand(new DriveCommand(2, false, -59));
         m_tc_l.addCommand(new TurnCommand(2, false, -90));
-        m_tc_l.addCommand(new DriveCommand(3, false, -70));
+        m_tc_l.addCommand(new DriveSlowCommand(3, false, -70));
         m_tc_l.addCommand(new ArmCommand(1, true, false, 110));
         m_tc_l.addCommand(new OuttakeDriveCommand(1, true, 0.6));
         m_tc_l.addCommand(new DriveCommand(2, false, 70));
@@ -143,17 +144,16 @@ public class AutoController extends BaseController {
         m_tc_l.addCommand(new ArmCommand(1, true, true, 110));
         m_tc_l.addCommand(new DriveCommand(2, false, -65));
         m_tc_l.addCommand(new TurnCommand(2, false, -120));
-        m_tc_l.addCommand(new DriveCommand(2, false, -63));
+        m_tc_l.addCommand(new DriveSlowCommand(2, false, -70));
         m_tc_l.addCommand(new ArmCommand(1, true, false, 110));
         m_tc_l.addCommand(new OuttakeDriveCommand(1, true, 0.6));
 
-        m_tc_r.addCommand(new NothingCommand(0));
         m_tc_r.addCommand(new ArmCommand(1, true, true, 110));
         m_tc_r.addCommand(new DriveCommand(5, false, -45));
         m_tc_r.addCommand(new TurnCommand(2, false, -90));
         m_tc_r.addCommand(new DriveCommand(2, false, -47));
         m_tc_r.addCommand(new TurnCommand(2, false, 90));
-        m_tc_r.addCommand(new DriveCommand(3, false, -70));
+        m_tc_r.addCommand(new DriveSlowCommand(3, false, -70));
         m_tc_r.addCommand(new ArmCommand(1, true, false, 110));
         m_tc_r.addCommand(new OuttakeDriveCommand(1, true, 0.6));
         m_tc_r.addCommand(new DriveCommand(2, false, 70));
@@ -165,7 +165,7 @@ public class AutoController extends BaseController {
         m_tc_r.addCommand(new ArmCommand(1, true, true, 110));
         m_tc_r.addCommand(new DriveCommand(2, false, -65));
         m_tc_r.addCommand(new TurnCommand(2, false, 120));
-        m_tc_r.addCommand(new DriveCommand(2, false, -63));
+        m_tc_r.addCommand(new DriveSlowCommand(2, false, -70));
         m_tc_r.addCommand(new ArmCommand(1, true, false, 110));
         m_tc_r.addCommand(new OuttakeDriveCommand(1, true, 0.6));
 
@@ -214,7 +214,7 @@ public class AutoController extends BaseController {
 
         tuning.addCommand(new ArmCommand(1, true, true, 110));
         tuning.addCommand(new ArmCommand(0, true, false, 110));
-        tuning.addCommand(new OuttakeDriveCommand(1, true, 0.6));
+        tuning.addCommand(new IntakeDriveCommand(10, false, 200, -1, true));
         tuning.addCommand(new NothingCommand(10));
 
 
