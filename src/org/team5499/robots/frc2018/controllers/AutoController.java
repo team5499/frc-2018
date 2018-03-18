@@ -79,13 +79,14 @@ public class AutoController extends BaseController {
         ro_tc.addCommand(new ArmCommand(2, true, false, 30));
         ro_tc.addCommand(new OuttakeCommand(0.5, 1.0));
 
-        ro_oc.addCommand(new NothingCommand(0));
-        ro_oc.addCommand(new ArmCommand(1, true, true, 110));
+
+        ro_oc.addCommand(new ArmCommand(0, true, true, 110));
         ro_oc.addCommand(new DriveCommand(3, false, -150));
         ro_oc.addCommand(new TurnCommand(2, false, 90));
-        ro_oc.addCommand(new DriveCommand(1.5, false, -23));
-        ro_oc.addCommand(new ArmCommand(1, true, false, 110));
-        ro_oc.addCommand(new OuttakeCommand(1, 0.6));
+        ro_oc.addCommand(new DriveCommand(1.5, false, -30));
+        ro_oc.addCommand(new DriveSlowCommand(1, false, -10));
+        ro_oc.addCommand(new ArmCommand(0, true, false, 110));
+        ro_oc.addCommand(new OuttakeDriveCommand(1, true, 0.6));
 
         // drives 90 inches(just enough to cross baseline)
         ro_nc.addCommand(new NothingCommand(0));
@@ -94,10 +95,10 @@ public class AutoController extends BaseController {
         ro_c_oc.addCommand(new NothingCommand(0));
 
         ri_oc.addCommand(new NothingCommand(0));
-        ri_oc.addCommand(new ArmCommand(1, true, true, 110));
+        ri_oc.addCommand(new ArmCommand(0, true, true, 110));
         ri_oc.addCommand(new DriveCommand(3, false, -104));
-        ri_oc.addCommand(new ArmCommand(1, true, false, 110));
-        ri_oc.addCommand(new OuttakeCommand(1, 0.6));
+        ri_oc.addCommand(new ArmCommand(0, true, false, 110));
+        ri_oc.addCommand(new OuttakeDriveCommand(1, true, 0.6));
 
         ri_nc.addCommand(new NothingCommand(0));
         ri_nc.addCommand(new DriveCommand(3, false, -104));
@@ -106,68 +107,79 @@ public class AutoController extends BaseController {
         m_nc.addCommand(new DriveCommand(2, false, -60));
 
         m_oc_l.addCommand(new NothingCommand(0));
-        m_oc_l.addCommand(new ArmCommand(1, true, true, 110));
+        m_oc_l.addCommand(new ArmCommand(0, true, true, 110));
         m_oc_l.addCommand(new DriveCommand(5, false, -45));
         m_oc_l.addCommand(new TurnCommand(2, false, 90));
         m_oc_l.addCommand(new DriveCommand(2, false, -59));
         m_oc_l.addCommand(new TurnCommand(2, false, -90));
-        m_oc_l.addCommand(new DriveCommand(2, false, -60));
-        m_oc_l.addCommand(new DriveSlowCommand(2, false, -10));
-        m_oc_l.addCommand(new ArmCommand(1, true, false, 110));
+        m_oc_l.addCommand(new DriveCommand(1.5, false, -60));
+        m_oc_l.addCommand(new DriveSlowCommand(1, false, -10));
+        m_oc_l.addCommand(new ArmCommand(0, true, false, 110));
         m_oc_l.addCommand(new OuttakeDriveCommand(1, true, 0.6));
 
         m_oc_r.addCommand(new NothingCommand(0));
-        m_oc_r.addCommand(new ArmCommand(1, true, true, 110));
+        m_oc_r.addCommand(new ArmCommand(0, true, true, 110));
         m_oc_r.addCommand(new DriveCommand(5, false, -45));
         m_oc_r.addCommand(new TurnCommand(2, false, -90));
         m_oc_r.addCommand(new DriveCommand(2, false, -47));
         m_oc_r.addCommand(new TurnCommand(2, false, 90));
-        m_oc_r.addCommand(new DriveSlowCommand(3, false, -70));
-        m_oc_r.addCommand(new ArmCommand(1, true, false, 110));
+        m_oc_r.addCommand(new DriveCommand(1.5, false, -60));
+        m_oc_r.addCommand(new DriveSlowCommand(1, false, -10));
+        m_oc_r.addCommand(new ArmCommand(0, true, false, 110));
         m_oc_r.addCommand(new OuttakeDriveCommand(1, true, 0.6));
 
+
+
+
         m_tc_l.addCommand(new NothingCommand(0));
-        m_tc_l.addCommand(new ArmCommand(1, true, true, 110));
-        m_tc_l.addCommand(new DriveCommand(5, false, -45));
+        m_tc_l.addCommand(new ArmCommand(0, true, true, 110));
+        m_tc_l.addCommand(new DriveCommand(2, false, -45));
         m_tc_l.addCommand(new TurnCommand(2, false, 90));
         m_tc_l.addCommand(new DriveCommand(2, false, -59));
         m_tc_l.addCommand(new TurnCommand(2, false, -90));
-        m_tc_l.addCommand(new DriveSlowCommand(3, false, -70));
-        m_tc_l.addCommand(new ArmCommand(1, true, false, 110));
+        m_tc_l.addCommand(new DriveCommand(1.5, false, -60));
+        m_tc_l.addCommand(new DriveSlowCommand(1, false, -10));
+        m_tc_l.addCommand(new ArmCommand(0, true, false, 110));
         m_tc_l.addCommand(new OuttakeDriveCommand(1, true, 0.6));
-        m_tc_l.addCommand(new DriveCommand(2, false, 70));
-        m_tc_l.addCommand(new ArmCommand(1, true, true, -25));
-        m_tc_l.addCommand(new ArmCommand(0, false, true, -25));
+        m_tc_l.addCommand(new DriveCommand(2, false, 50));
+        m_tc_l.addCommand(new ArmCommand(0.5, true, true, -50));
+        m_tc_l.addCommand(new ArmCommand(0, false, true, -50));
         m_tc_l.addCommand(new TurnCommand(2, false, 120));
         m_tc_l.addCommand(new ArmCommand(0, false, false, -25));
         m_tc_l.addCommand(new IntakeDriveCommand(3.5, false, 65, -1.0, true)); // SET WAIT_FOR_CUBE to false, unless distance sensor works!
-        m_tc_l.addCommand(new ArmCommand(1, true, true, 110));
+        m_tc_l.addCommand(new ArmCommand(0.5, true, true, 110));
         m_tc_l.addCommand(new DriveCommand(2, false, -65));
         m_tc_l.addCommand(new TurnCommand(2, false, -120));
-        m_tc_l.addCommand(new DriveSlowCommand(2, false, -70));
-        m_tc_l.addCommand(new ArmCommand(1, true, false, 110));
-        m_tc_l.addCommand(new OuttakeDriveCommand(1, true, 0.6));
+        m_tc_l.addCommand(new DriveCommand(2, false, -65));
+        m_tc_l.addCommand(new DriveSlowCommand(0.5, false, -10));
+        m_tc_l.addCommand(new ArmCommand(0, true, false, 110));
+        m_tc_l.addCommand(new OuttakeDriveCommand(1, true, 0.4));
 
-        m_tc_r.addCommand(new ArmCommand(1, true, true, 110));
-        m_tc_r.addCommand(new DriveCommand(5, false, -45));
+
+
+        m_tc_r.addCommand(new NothingCommand(0));
+        m_tc_r.addCommand(new ArmCommand(0, true, true, 110));
+        m_tc_r.addCommand(new DriveCommand(2, false, -45));
         m_tc_r.addCommand(new TurnCommand(2, false, -90));
         m_tc_r.addCommand(new DriveCommand(2, false, -47));
         m_tc_r.addCommand(new TurnCommand(2, false, 90));
-        m_tc_r.addCommand(new DriveSlowCommand(3, false, -70));
-        m_tc_r.addCommand(new ArmCommand(1, true, false, 110));
+        m_tc_r.addCommand(new DriveCommand(1.5, false, -60));
+        m_tc_r.addCommand(new DriveSlowCommand(1, false, -10));
+        m_tc_r.addCommand(new ArmCommand(0, true, false, 110));
         m_tc_r.addCommand(new OuttakeDriveCommand(1, true, 0.6));
-        m_tc_r.addCommand(new DriveCommand(2, false, 70));
-        m_tc_r.addCommand(new ArmCommand(1, true, true, -25));
-        m_tc_r.addCommand(new ArmCommand(0, false, true, -25));
+        m_tc_r.addCommand(new DriveCommand(2, false, 50));
+        m_tc_r.addCommand(new ArmCommand(0.5, true, true, -50));
+        m_tc_r.addCommand(new ArmCommand(0, false, true, -50));
         m_tc_r.addCommand(new TurnCommand(2, false, -120));
         m_tc_r.addCommand(new ArmCommand(0, false, false, -25));
         m_tc_r.addCommand(new IntakeDriveCommand(3.5, false, 65, -1.0, true)); // SET WAIT_FOR_CUBE to false, unless distance sensor works!
-        m_tc_r.addCommand(new ArmCommand(1, true, true, 110));
+        m_tc_r.addCommand(new ArmCommand(0.5, true, true, 110));
         m_tc_r.addCommand(new DriveCommand(2, false, -65));
         m_tc_r.addCommand(new TurnCommand(2, false, 120));
-        m_tc_r.addCommand(new DriveSlowCommand(2, false, -70));
-        m_tc_r.addCommand(new ArmCommand(1, true, false, 110));
-        m_tc_r.addCommand(new OuttakeDriveCommand(1, true, 0.6));
+        m_tc_r.addCommand(new DriveCommand(2, false, -65));
+        m_tc_r.addCommand(new DriveSlowCommand(0.5, false, -10));
+        m_tc_r.addCommand(new ArmCommand(0, true, false, 110));
+        m_tc_r.addCommand(new OuttakeDriveCommand(1, true, 0.4));
 
         lo_tc.addCommand(new NothingCommand(0));
         lo_tc.addCommand(new ArmCommand(1, true, true, 110));
@@ -187,11 +199,11 @@ public class AutoController extends BaseController {
         lo_tc.addCommand(new OuttakeDriveCommand(1, true, 0.6));
 
         lo_oc.addCommand(new NothingCommand(0));
-        lo_oc.addCommand(new ArmCommand(1, true, true, 110));
+        lo_oc.addCommand(new ArmCommand(0, true, true, 110));
         lo_oc.addCommand(new DriveCommand(3, false, -150));
-        lo_oc.addCommand(new TurnCommand(2, false, -90));
+        lo_oc.addCommand(new TurnCommand(1.5, false, -90));
         lo_oc.addCommand(new DriveCommand(1.5, false, -23));
-        lo_oc.addCommand(new ArmCommand(1, true, false, 110));
+        lo_oc.addCommand(new ArmCommand(0, true, false, 110));
         lo_oc.addCommand(new OuttakeDriveCommand(1, true, 0.6));
 
         // drives 90 inches(just enough to cross baseline)
@@ -199,15 +211,15 @@ public class AutoController extends BaseController {
         lo_nc.addCommand(new DriveCommand(3, false, -90));
 
         li_oc.addCommand(new NothingCommand(0));
-        li_oc.addCommand(new ArmCommand(1, true, true, 110));
+        li_oc.addCommand(new ArmCommand(0, true, true, 110));
         li_oc.addCommand(new DriveCommand(3, false, -104));
-        li_oc.addCommand(new ArmCommand(1, true, false, 110));
+        li_oc.addCommand(new ArmCommand(0, true, false, 110));
         li_oc.addCommand(new OuttakeDriveCommand(1, true, 0.6));
 
         li_nc.addCommand(new NothingCommand(0));
         li_nc.addCommand(new DriveCommand(3, false, -104));
 
-        baseline.addCommand(new ArmCommand(1, true, false, 110));
+        baseline.addCommand(new ArmCommand(0, true, false, 110));
         baseline.addCommand(new DriveCommand(3, false, 106));
 
         nothing.addCommand(new NothingCommand(0));

@@ -24,7 +24,7 @@ public class DriveSlowCommand extends BaseCommand {
 
         Dashboard.setDouble("distance_setpoint_relative", setpoint);
         Controllers.drive_controller.setSetpoint(setpoint);
-        Controllers.drive_controller.setEnabled(true, 0.2);
+        Controllers.drive_controller.setEnabled(true, 0.5);
         
         enabled = true;
     }
