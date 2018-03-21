@@ -141,12 +141,13 @@ public class AutoController extends BaseController {
         m_tc_l.addCommand(new DriveSlowCommand(1, false, -10));
         m_tc_l.addCommand(new ArmCommand(0, true, false, 110));
         m_tc_l.addCommand(new OuttakeDriveCommand(1, true, 0.6));
-        m_tc_l.addCommand(new DriveCommand(2, false, 50));
+        m_tc_l.addCommand(new DriveCommand(2, false, 35));
         m_tc_l.addCommand(new ArmCommand(0.5, true, true, -50));
         m_tc_l.addCommand(new ArmCommand(0, false, true, -50));
         m_tc_l.addCommand(new TurnCommand(2, false, 120));
         m_tc_l.addCommand(new ArmCommand(0, false, false, -25));
-        m_tc_l.addCommand(new IntakeDriveCommand(3.5, false, 65, -1.0, true)); // SET WAIT_FOR_CUBE to false, unless distance sensor works!
+        m_tc_l.addCommand(new DriveCommand(1.5, false, 40));
+        m_tc_l.addCommand(new IntakeDriveCommand(2, false, 25, -1.0, true)); // SET WAIT_FOR_CUBE to false, unless distance sensor works!
         m_tc_l.addCommand(new ArmCommand(0.5, true, true, 110));
         m_tc_l.addCommand(new DriveCommand(2, false, -65));
         m_tc_l.addCommand(new TurnCommand(2, false, -120));
@@ -167,14 +168,15 @@ public class AutoController extends BaseController {
         m_tc_r.addCommand(new DriveSlowCommand(1, false, -10));
         m_tc_r.addCommand(new ArmCommand(0, true, false, 110));
         m_tc_r.addCommand(new OuttakeDriveCommand(1, true, 0.6));
-        m_tc_r.addCommand(new DriveCommand(2, false, 50));
+        m_tc_r.addCommand(new DriveCommand(2, false, 35));
         m_tc_r.addCommand(new ArmCommand(0.5, true, true, -50));
         m_tc_r.addCommand(new ArmCommand(0, false, true, -50));
         m_tc_r.addCommand(new TurnCommand(2, false, -120));
         m_tc_r.addCommand(new ArmCommand(0, false, false, -25));
-        m_tc_r.addCommand(new IntakeDriveCommand(3.5, false, 65, -1.0, true)); // SET WAIT_FOR_CUBE to false, unless distance sensor works!
+        m_tc_r.addCommand(new DriveCommand(1.5, false, 40));
+        m_tc_r.addCommand(new IntakeDriveCommand(2, false, 25, -1.0, true)); // SET WAIT_FOR_CUBE to false, unless distance sensor works!
         m_tc_r.addCommand(new ArmCommand(0.5, true, true, 110));
-        m_tc_r.addCommand(new DriveCommand(2, false, -65));
+        m_tc_r.addCommand(new DriveCommand(2, false, -55));
         m_tc_r.addCommand(new TurnCommand(2, false, 120));
         m_tc_r.addCommand(new DriveCommand(2, false, -65));
         m_tc_r.addCommand(new DriveSlowCommand(0.5, false, -10));
