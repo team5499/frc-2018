@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Websocket Test</title>
+    </head>
+    <body>
+        <canvas id="batteryvoltage" width="250" height="250"></canvas>
+        <select id="autoselector">
+            <option value="left_inner">Left Inner</option>
+            <option value="left_outer">Left Outer</option>
+            <option value="center">Center</option>
+            <option value="right_inner">Right Inner</option>
+            <option value="right_outer">Right Outer</option>
+            <option value="baseline">Baseline</option>
+            <option value="tune">Tuning</option>
+            <option value="none">None</option>
+        </select>
+        <select id="two_cube">
+            <option value="two">Two cubes</option>
+            <option value="one">One cube</option>
+            <option value="zero">Zero cubes</option>
+        </select>
+        <label for="timeout">Timeout before auto:</label>
+        <input type="text" id="timeout" value="0"/>
+        <button id="set_timeout">Set timeout</button>
+
+
+        <script src="scripts/main_bundle.js"></script>
+    </body>
+</html>

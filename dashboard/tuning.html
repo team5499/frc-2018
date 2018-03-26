@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Tuning</title>
+    </head>
+    <body>
+        <div>
+            <canvas id="error" width="1280" height="500"></canvas>
+            <button id="reset">Reset</button>
+
+            <div>
+                <label for="kDistP">Distance P Value:</label>
+                <input type="text" id="kDistP"/>
+                <label for="kDistI">Distance I Value:</label>
+                <input type="text" id="kDistI"/>
+                <label for="kDistD">Distance D Value:</label>
+                <input type="text" id="kDistD"/>
+                <button id="update_distance_constants">Update</button>
+            </div>
+            <div>
+                <label for="kAngleP">Angle P Value:</label>
+                <input type="text" id="kAngleP"/>
+                <label for="kAngleI">Angle I Value:</label>
+                <input type="text" id="kAngleI"/>
+                <label for="kAngleD">Angle D Value:</label>
+                <input type="text" id="kAngleD"/>
+                <button id="update_angle_constants">Update</button>
+            </div>
+            <div>
+                <label for="kTurnP">Turn P Value:</label>
+                <input type="text" id="kTurnP"/>
+                <label for="kTurnI">Turn I Value:</label>
+                <input type="text" id="kTurnI"/>
+                <label for="kTurnD">Turn D Value:</label>
+                <input type="text" id="kTurnD"/>
+                <button id="update_turn_constants">Update</button>
+            </div>
+            <div>
+                <label for="kArmP">Arm P Value:</label>
+                <input type="text" id="kArmP"/>
+                <label for="kArmI">Arm I Value:</label>
+                <input type="text" id="kArmI"/>
+                <label for="kArmD">Arm D Value:</label>
+                <input type="text" id="kArmD"/>
+                <button id="update_arm_constants">Update</button>
+            </div>
+        </div>
+        <div>
+            <div id="pot_value">Pot Value:--</div>
+            <div id="arm_angle">Arm Angle:--</div>
+            <button id="set_vertical">Set Vertical</button>
+            <button id="set_horizontal">Set Horizontal</button>
+        </div>
+
+        <div>
+            <div id="sonic_value">Sonic Value:--</div>
+            <div id="cube_distance">Cube Distance:--</div>
+            <button id="set_zero">Set Zero</button>
+            <button id="set_one_foot">Set One Foot</button>
+        </div>
+
+        <script src="scripts/tuning_bundle.js"></script>
+    </body>
+</html>

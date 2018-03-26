@@ -1,0 +1,15 @@
+{
+  "name": "dashboard",
+  "version": "1.0.0",
+  "description": "Websockets based smart dashboard",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andy Cate",
+  "license": "ISC",
+  "dependencies": {
+    "chart.js": "^2.7.2",
+    "google-protobuf": "^3.5.0"
+  }
+}
