@@ -8,6 +8,7 @@ import org.team5499.robots.frc2018.pid.Controllers;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -46,7 +47,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         Subsystems.drivetrain.handleAngleVelocity();
-        Dashboard.setDouble("battvoltage", DriverStation.getInstance().getBatteryVoltage());
+        Dashboard.setDouble("battvoltage", RobotController.getBatteryVoltage());
         Dashboard.setDouble("current_time", Timer.getFPGATimestamp());
         Dashboard.setInt("pot_raw_value", Subsystems.intake.getRawPotValue());
         Dashboard.setDouble("arm_angle", Subsystems.intake.getArmAngle());
