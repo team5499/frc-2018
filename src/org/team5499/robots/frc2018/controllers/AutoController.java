@@ -142,7 +142,7 @@ public class AutoController extends BaseController {
         m_tc_l.addCommand(new ArmCommand(0, true, false, 110));
         m_tc_l.addCommand(new OuttakeDriveCommand(0.25, true, 0.6));
         // Two cube section
-        m_tc_l.addCommand(new DriveCommand(2, false, 45));
+        m_tc_l.addCommand(new DriveCommand(2, false, 40));
         m_tc_l.addCommand(new ArmCommand(0.5, true, true, -50));
         m_tc_l.addCommand(new ArmCommand(0, false, true, -50));
         m_tc_l.addCommand(new TurnCommand(2, false, 120));
@@ -170,7 +170,7 @@ public class AutoController extends BaseController {
         m_tc_r.addCommand(new ArmCommand(0, true, false, 110));
         m_tc_r.addCommand(new OuttakeDriveCommand(0.25, true, 0.6));
         // Two cube section
-        m_tc_r.addCommand(new DriveCommand(2, false, 45));
+        m_tc_r.addCommand(new DriveCommand(2, false, 40));
         m_tc_r.addCommand(new ArmCommand(0.5, true, true, -50));
         m_tc_r.addCommand(new ArmCommand(0, false, true, -50));
         m_tc_r.addCommand(new TurnCommand(2, false, -120));
