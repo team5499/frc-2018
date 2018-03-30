@@ -19,7 +19,7 @@ public class Hardware {
      */
 
     /** PDP */
-    public static PowerDistributionPanel pdp = new PowerDistributionPanel();
+    //public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 
     /** Drivetrain */
     public static TalonSRX left_master_talon = new TalonSRX(Dashboard.getInt("LEFT_MASTER_PORT"));
