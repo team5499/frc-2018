@@ -163,7 +163,7 @@ public class AutoController extends BaseController {
         m_tc_r.addCommand(new ArmCommand(0, true, true, 110));
         m_tc_r.addCommand(new DriveCommand(2, false, -45));
         m_tc_r.addCommand(new TurnCommand(2, false, -90));
-        m_tc_r.addCommand(new DriveCommand(2, false, -37));
+        m_tc_r.addCommand(new DriveCommand(2, false, -47));
         m_tc_r.addCommand(new TurnCommand(2, false, 90));
         m_tc_r.addCommand(new DriveCommand(1.5, false, -60));
         m_tc_r.addCommand(new DriveSlowCommand(1, false, -10));
