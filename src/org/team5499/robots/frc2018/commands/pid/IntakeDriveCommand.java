@@ -35,6 +35,7 @@ public class IntakeDriveCommand extends DriveSlowCommand {
     @Override
     public boolean isFinished() {
         boolean finished = (super.isFinished() || (Subsystems.intake.getCubeDetected() && wait_for_cube && !wait_for_timeout));
+        System.out.println("Cube detected: " + Subsystems.intake.getCubeDetected());
         if(finished) {
             Controllers.drive_controller.setEnabled(false, 0);
             Subsystems.intake.stopIntake();
