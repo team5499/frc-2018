@@ -66,7 +66,7 @@ public class Position {
     }
     
     /**
-     * @return x and z coords of the robot in the form: [x,y]
+     * @return x and y coords of the robot in the form: [x,y]
     */
     public double[] getRobotCoordinates() {
         return new double[] {this.xPosition, this.yPosition};
