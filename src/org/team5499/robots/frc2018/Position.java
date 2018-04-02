@@ -1,12 +1,78 @@
 package org.team5499.robots.frc2018;
 
+import org.team5499.robots.frc2018.subsystems.Subsystems;
+
 public class Position {
+
     private double width;
-    public Position(double w_to_w_distance) {
-        width = w_to_w_distance;
+    
+    private double xPosition;
+    private double zPosition;
+
+    private double angle;
+    private double lastAngle;
+
+    private double distance;
+    private double lastDistance;
+
+    public Position(double wheelToWheelDistance) {
+        this.width = wheelToWheelDistance;
+        this.xPosition = 0;
+        this.zPosition = 0;
+        this.angle = 0;
+        this.lastAngle = 0;
+        this.distance = 0;
+        this.lastDistance = 0;
     }
 
-    public void handle(double d_angle, double d_distance) {
+    public void handle() {
+        // angle calcs
+        lastAngle = angle;
+        angle = Math.toRadians(Subsystems.drivetrain.getAngle());
+        double dAngle = angle - lastAngle;
+
+        // distance calcs
+        lastDistance = distance;
+        distance = Subsystems.drivetrain.getDistance();
+        double dDistance = distance - lastDistance;
+
+        // untracked wheel estimate
+        double deltaB = dAngle * width - dDistance;
         
+
+
     }
+
+    public void setWidth(double wheelToWheelDistance) {
+        this.width = wheelToWheelDistance;
+    }
+
+    public double getWidth() {
+        return this.width;
+    }
+    
+    /**
+     * @return x and z coords of the robot in the form: [x,z]
+    */
+    public double[] getRobotCoordinates() {
+        return new double[] {this.xPosition, this.zPosition};
+    }
+
+    public double getRobotX() {
+        return this.xPosition;
+    }
+
+    public double getRobotZ() {
+        return this.zPosition;
+    }
+
+    public void reset() {
+        xPosition = 0;
+        zPosition = 0;
+        angle = 0;
+        lastAngle = 0;
+        distance = 0;
+        lastDistance = 0;
+    }
+
 }
