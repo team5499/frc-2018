@@ -7,7 +7,7 @@ public class Position {
     private double width;
     
     private double xPosition;
-    private double zPosition;
+    private double yPosition;
     private double angle;
     private double lastAngle;
     private double distance;
@@ -16,7 +16,7 @@ public class Position {
     public Position(double wheelToWheelDistance) {
         this.width = wheelToWheelDistance;
         this.xPosition = 0;
-        this.zPosition = 0;
+        this.yPosition = 0;
         this.angle = 0;
         this.lastAngle = 0;
         this.distance = 0;
@@ -42,19 +42,19 @@ public class Position {
 
         double radius;
         double deltaXRotated;
-        double deltaZRotated;
+        double deltaYRotated;
 
         if(dAngle == 0) {
-            deltaZRotated = averageArcLength;
+            deltaYRotated = averageArcLength;
             deltaXRotated = 0;
         } else {
             radius = averageArcLength / dAngle;
             deltaXRotated = radius * Math.cos(dAngle) - radius;
-            deltaZRotated = radius * Math.sin(dAngle);
+            deltaYRotated = radius * Math.sin(dAngle);
         }     
 
-        xPosition += deltaXRotated * Math.cos(angle) + deltaZRotated * Math.cos(angle);
-        zPosition += -deltaXRotated * Math.sin(angle) + deltaZRotated * Math.cos(angle);
+        xPosition += deltaXRotated * Math.cos(angle) + deltaYRotated * Math.cos(angle);
+        yPosition += -deltaXRotated * Math.sin(angle) + deltaYRotated * Math.cos(angle);
     }
 
     public void setWidth(double wheelToWheelDistance) {
@@ -66,36 +66,36 @@ public class Position {
     }
     
     /**
-     * @return x and z coords of the robot in the form: [x,z]
+     * @return x and z coords of the robot in the form: [x,y]
     */
     public double[] getRobotCoordinates() {
-        return new double[] {this.xPosition, this.zPosition};
+        return new double[] {this.xPosition, this.yPosition};
     }
 
     public double getRobotX() {
         return this.xPosition;
     }
 
-    public double getRobotZ() {
-        return this.zPosition;
+    public double getRobotY() {
+        return this.yPosition;
     }
 
-    public void setRobotCoordinates(double xPosition, double zPosition) {
+    public void setRobotCoordinates(double xPosition, double yPosition) {
         this.xPosition = xPosition;
-        this.zPosition = zPosition;
+        this.yPosition = yPosition;
     }
 
     public void setRobotX(double xPosition) {
         this.xPosition = xPosition;
     }
 
-    public void setRobotZ(double zPosition) {
-        this.zPosition = zPosition;
+    public void setRobotY(double yPosition) {
+        this.yPosition = yPosition;
     }
 
     public void reset() {
         this.xPosition = 0;
-        this.zPosition = 0;
+        this.yPosition = 0;
         this.angle = 0;
         this.lastAngle = 0;
         this.distance = 0;
