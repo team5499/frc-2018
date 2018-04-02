@@ -38,17 +38,17 @@ public class Position {
         double dUntrackedDistance = dAngle * width - dTrackedDistance;
 
         // calculate arc length
-        double averageLengthOfArc = (dTrackedDistance + dUntrackedDistance) / 2.0;
+        double averageArcLength = (dTrackedDistance + dUntrackedDistance) / 2.0;
 
         double radius;
         double deltaXRotated;
         double deltaZRotated;
 
         if(dAngle == 0) {
-            deltaZRotated = averageLengthOfArc;
+            deltaZRotated = averageArcLength;
             deltaXRotated = 0;
         } else {
-            radius = averageLengthOfArc / dAngle;
+            radius = averageArcLength / dAngle;
             deltaXRotated = radius * Math.cos(dAngle) - radius;
             deltaZRotated = radius * Math.sin(dAngle);
         }     
