@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
         autoController = new AutoController();
         testController = new TestController();
 
-        position = new Position(24);
+        position = new Position(Dashboard.getDouble("ROBOT_WIDTH"));
 
         Dashboard.setString("automode", "baseline");
         Dashboard.setString("cubemode", "one");
