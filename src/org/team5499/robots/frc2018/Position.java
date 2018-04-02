@@ -80,13 +80,26 @@ public class Position {
         return this.zPosition;
     }
 
+    public void setRobotCoordinates(double xPosition, double zPosition) {
+        this.xPosition = xPosition;
+        this.zPosition = zPosition;
+    }
+
+    public void setRobotX(double xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    public void setRobotZ(double zPosition) {
+        this.zPosition = zPosition;
+    }
+
     public void reset() {
-        xPosition = 0;
-        zPosition = 0;
-        angle = 0;
-        lastAngle = 0;
-        distance = 0;
-        lastDistance = 0;
+        this.xPosition = 0;
+        this.zPosition = 0;
+        this.angle = 0;
+        this.lastAngle = 0;
+        this.distance = 0;
+        this.lastDistance = 0;
     }
 
 }
