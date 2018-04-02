@@ -1,5 +1,6 @@
 package org.team5499.robots.frc2018;
 
+import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 public class Position {
@@ -23,15 +24,15 @@ public class Position {
         this.lastDistance = 0;
     }
 
-    public void handle() {
+    public void handle(double currentAngle, double currentDistance) {
         // angle calcs
         lastAngle = angle;
-        angle = Math.toRadians(Subsystems.drivetrain.getAngle());
+        angle = Math.toRadians(currentAngle);
         double dAngle = angle - lastAngle;
 
         // distance calcs
         lastDistance = distance;
-        distance = Subsystems.drivetrain.getDistance();
+        distance = currentDistance;
         double dTrackedDistance = distance - lastDistance;
 
         // untracked wheel estimate
@@ -55,6 +56,9 @@ public class Position {
 
         xPosition += deltaXRotated * Math.cos(angle) + deltaYRotated * Math.sin(angle);
         yPosition += -deltaXRotated * Math.sin(angle) + deltaYRotated * Math.cos(angle);
+        
+        Dashboard.setDouble("X_POSITION", xPosition);
+        Dashboard.setDouble("Y_POSITION", yPosition);
     }
 
     public void setWidth(double wheelToWheelDistance) {

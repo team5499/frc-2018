@@ -99,7 +99,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         autoController.handle();
-        position.handle();
+        position.handle(Subsystems.drivetrain.getAngle(), Subsystems.drivetrain.getDistance());
     }
 
     /**
@@ -117,7 +117,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         operatorController.handle();
-        position.handle();
+        position.handle(Subsystems.drivetrain.getAngle(), Subsystems.drivetrain.getDistance());
     }
 
     /**
@@ -135,7 +135,7 @@ public class Robot extends TimedRobot {
     @Override
     public void testPeriodic() {
         testController.handle();
-        position.handle();
+        position.handle(Subsystems.drivetrain.getAngle(), Subsystems.drivetrain.getDistance());
     }
 
 }
