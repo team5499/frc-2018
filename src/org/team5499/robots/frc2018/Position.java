@@ -53,7 +53,7 @@ public class Position {
             deltaYRotated = radius * Math.sin(dAngle);
         }     
 
-        xPosition += deltaXRotated * Math.cos(angle) + deltaYRotated * Math.cos(angle);
+        xPosition += deltaXRotated * Math.cos(angle) + deltaYRotated * Math.sin(angle);
         yPosition += -deltaXRotated * Math.sin(angle) + deltaYRotated * Math.cos(angle);
     }
 
