@@ -8,10 +8,8 @@ public class Position {
     
     private double xPosition;
     private double zPosition;
-
     private double angle;
     private double lastAngle;
-
     private double distance;
     private double lastDistance;
 
@@ -40,17 +38,17 @@ public class Position {
         double dUntrackedDistance = dAngle * width - dTrackedDistance;
 
         // calculate arc length
-        double lengthOfArc = (dTrackedDistance + dUntrackedDistance) / 2.0;
+        double averageLengthOfArc = (dTrackedDistance + dUntrackedDistance) / 2.0;
 
         double radius;
         double deltaXRotated;
         double deltaZRotated;
 
         if(dAngle == 0) {
-            deltaZRotated = lengthOfArc;
+            deltaZRotated = averageLengthOfArc;
             deltaXRotated = 0;
         } else {
-            radius = lengthOfArc / dAngle;
+            radius = averageLengthOfArc / dAngle;
             deltaXRotated = radius * Math.cos(dAngle) - radius;
             deltaZRotated = radius * Math.sin(dAngle);
         }     
