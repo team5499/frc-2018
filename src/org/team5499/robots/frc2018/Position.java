@@ -1,5 +1,6 @@
 package org.team5499.robots.frc2018;
 
+import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 public class Position {
@@ -55,6 +56,9 @@ public class Position {
 
         xPosition += deltaXRotated * Math.cos(angle) + deltaYRotated * Math.sin(angle);
         yPosition += -deltaXRotated * Math.sin(angle) + deltaYRotated * Math.cos(angle);
+        
+        Dashboard.setDouble("X_POSITION", xPosition);
+        Dashboard.setDouble("Y_POSITION", yPosition);
     }
 
     public void setWidth(double wheelToWheelDistance) {
