@@ -83,7 +83,7 @@ public class Intake {
 
     /** Get raw current output from PDP to the arm talon */
     public double getArmPDPCurrent() {
-        return Hardware.pdp.getCurrent(Dashboard.getInt("ARM_TALON_PDP_PORT"));
+        return 0; // Hardware.pdp.getCurrent(Dashboard.getInt("ARM_TALON_PDP_PORT"));
     }
 
     /** Get raw voltage output from the arm talon */
@@ -103,7 +103,7 @@ public class Intake {
 
     /** Get raw current output from PDP to the left intake talon */
     public double getLeftIntakePDPCurrent() {
-        return Hardware.pdp.getCurrent(Dashboard.getInt("INTAKE_LEFT_TALON_PDP_PORT"));
+        return 0; // Hardware.pdp.getCurrent(Dashboard.getInt("INTAKE_LEFT_TALON_PDP_PORT"));
     }
 
     /** Get raw voltage output from the left intake talon */
@@ -123,7 +123,7 @@ public class Intake {
 
     /** Get raw current output from PDP to the right intake talon */
     public double getRightIntakePDPCurrent() {
-        return Hardware.pdp.getCurrent(Dashboard.getInt("INTAKE_RIGHT_TALON_PDP_PORT"));
+        return 0; // Hardware.pdp.getCurrent(Dashboard.getInt("INTAKE_RIGHT_TALON_PDP_PORT"));
     }
 
     /** Get raw voltage output from the right intake talon */

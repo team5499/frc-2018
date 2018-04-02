@@ -135,7 +135,7 @@ public class Drivetrain {
 
     /** Get raw current output from PDP to the left master talon */
     public double getLeftMasterPDPCurrent() {
-        return Hardware.pdp.getCurrent(Dashboard.getInt("LEFT_MASTER_TALON_PDP_PORT"));
+        return 0; // Hardware.pdp.getCurrent(Dashboard.getInt("LEFT_MASTER_TALON_PDP_PORT"));
     }
 
     /** Get raw voltage output from the left master talon */
@@ -155,7 +155,7 @@ public class Drivetrain {
 
     /** Get raw current output from PDP to the right master talon */
     public double getRightMasterPDPCurrent() {
-        return Hardware.pdp.getCurrent(Dashboard.getInt("RIGHT_MASTER_TALON_PDP_PORT"));
+        return 0; // Hardware.pdp.getCurrent(Dashboard.getInt("RIGHT_MASTER_TALON_PDP_PORT"));
     }
 
     /** Get raw voltage output from the right master talon */
@@ -175,7 +175,7 @@ public class Drivetrain {
 
     /** Get raw current output from PDP to the left slave talon */
     public double getLeftSlavePDPCurrent() {
-        return Hardware.pdp.getCurrent(Dashboard.getInt("LEFT_SLAVE_TALON_PDP_PORT"));
+        return 0; // Hardware.pdp.getCurrent(Dashboard.getInt("LEFT_SLAVE_TALON_PDP_PORT"));
     }
 
     /** Get raw voltage output from the left slave talon */
@@ -195,7 +195,7 @@ public class Drivetrain {
 
     /** Get raw current output from PDP to the right slave talon */
     public double getRightSlavePDPCurrent() {
-        return Hardware.pdp.getCurrent(Dashboard.getInt("RIGHT_SLAVE_TALON_PDP_PORT"));
+        return 0; // Hardware.pdp.getCurrent(Dashboard.getInt("RIGHT_SLAVE_TALON_PDP_PORT"));
     }
 
     /** Get raw voltage output from the right slave talon */

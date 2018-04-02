@@ -19915,7 +19915,7 @@ var graph = new Chart(canvas, {
 });
 
 window.onload = function() {
-    var handler = new MessageHandler("ws://roborio-5499-frc.local:5804/dashboard/main");
+    var handler = new MessageHandler("ws://10.54.99.2:5804/dashboard/main");
     handler.connect(run);
 }
 
