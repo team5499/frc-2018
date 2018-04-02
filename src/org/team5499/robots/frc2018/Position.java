@@ -34,13 +34,13 @@ public class Position {
         // distance calcs
         lastDistance = distance;
         distance = Subsystems.drivetrain.getDistance();
-        double dDistance = distance - lastDistance;
+        double dTrackedDistance = distance - lastDistance;
 
         // untracked wheel estimate
-        double deltaUntrackedDistance = dAngle * width - dDistance;
+        double dUntrackedDistance = dAngle * width - dTrackedDistance;
 
         // calculate arc length
-        double lengthOfArc = 0;
+        double lengthOfArc = (dTrackedDistance + dUntrackedDistance) / 2.0;
 
         double radius;
         double deltaXRotated;
