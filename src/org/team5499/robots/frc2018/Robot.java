@@ -57,9 +57,9 @@ public class Robot extends TimedRobot {
         Dashboard.setDouble("arm_angle", Subsystems.intake.getArmAngle());
         Dashboard.setInt("sonic_raw_value", Subsystems.intake.getRawSonicValue());
         Dashboard.setDouble("cube_distance", Subsystems.intake.getCubeDistance());
-        Dashboard.setDouble("X_POSITION", position.getRobotX());
-        Dashboard.setDouble("Y_POSITION", position.getRobotY());
-        Dashboard.setDouble("ROBOT_ANGLE", Subsystems.drivetrain.getAngle());
+        Dashboard.setDouble("x_position", position.getRobotX());
+        Dashboard.setDouble("y_position", position.getRobotY());
+        Dashboard.setDouble("robot_angle", Subsystems.drivetrain.getAngle());
 
         Controllers.arm_controller.handle();
         Controllers.turn_controller.handle();
