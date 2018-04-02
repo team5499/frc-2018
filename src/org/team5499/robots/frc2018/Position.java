@@ -37,10 +37,26 @@ public class Position {
         double dDistance = distance - lastDistance;
 
         // untracked wheel estimate
-        double deltaB = dAngle * width - dDistance;
-        
+        double deltaUntrackedDistance = dAngle * width - dDistance;
 
+        // calculate arc length
+        double lengthOfArc = 0;
 
+        double radius;
+        double deltaXRotated;
+        double deltaZRotated;
+
+        if(dAngle == 0) {
+            deltaZRotated = lengthOfArc;
+            deltaXRotated = 0;
+        } else {
+            radius = lengthOfArc / dAngle;
+            deltaXRotated = radius * Math.cos(dAngle) - radius;
+            deltaZRotated = radius * Math.sin(dAngle);
+        }     
+
+        xPosition += deltaXRotated * Math.cos(angle) + deltaZRotated * Math.cos(angle);
+        zPosition += -deltaXRotated * Math.sin(angle) + deltaZRotated * Math.cos(angle);
     }
 
     public void setWidth(double wheelToWheelDistance) {

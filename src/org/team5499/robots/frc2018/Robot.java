@@ -18,6 +18,8 @@ public class Robot extends TimedRobot {
     private AutoController autoController;
     private TestController testController;
 
+    private Position position;
+
     /**
      * - Set the main loop update period
      * - Initialize controllers
@@ -34,6 +36,8 @@ public class Robot extends TimedRobot {
         operatorController = new OperatorController();
         autoController = new AutoController();
         testController = new TestController();
+
+        position = new Position(24);
 
         Dashboard.setString("automode", "baseline");
         Dashboard.setString("cubemode", "one");
@@ -72,11 +76,12 @@ public class Robot extends TimedRobot {
         Controllers.turn_controller.reset();
         Controllers.drive_controller.reset();
 
-
+        position.reset();
     }
     
 	@Override
 	public void disabledPeriodic() {
+        position.reset();
     }
 
     /**
@@ -94,6 +99,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         autoController.handle();
+        position.handle();
     }
 
     /**
@@ -111,6 +117,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         operatorController.handle();
+        position.handle();
     }
 
     /**
@@ -128,6 +135,7 @@ public class Robot extends TimedRobot {
     @Override
     public void testPeriodic() {
         testController.handle();
+        position.handle();
     }
 
 }
