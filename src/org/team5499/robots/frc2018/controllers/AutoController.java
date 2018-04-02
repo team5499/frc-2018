@@ -136,20 +136,20 @@ public class AutoController extends BaseController {
         m_tc_l.addCommand(new ArmCommand(0, true, true, 110));
         m_tc_l.addCommand(new DriveCommand(2, false, -45));
         m_tc_l.addCommand(new TurnCommand(2, false, 90));
-        m_tc_l.addCommand(new DriveCommand(2, false, -59));
+        m_tc_l.addCommand(new DriveCommand(2, false, -55));
         m_tc_l.addCommand(new TurnCommand(2, false, -90));
         m_tc_l.addCommand(new DriveCommand(1.5, false, -60));
         m_tc_l.addCommand(new DriveSlowCommand(1, false, -10));
         m_tc_l.addCommand(new ArmCommand(0, true, false, 110));
         m_tc_l.addCommand(new OuttakeDriveCommand(0.25, true, 0.6));
         // Two cube section
-        m_tc_l.addCommand(new DriveCommand(2, false, 75));
+        m_tc_l.addCommand(new DriveCommand(2, false, 65));
         m_tc_l.addCommand(new ArmCommand(0.5, true, true, -50));
         m_tc_l.addCommand(new ArmCommand(0, false, true, -50));
         m_tc_l.addCommand(new TurnCommand(2, false, 135));
         m_tc_l.addCommand(new ArmCommand(0, false, false, -25));
         m_tc_l.addCommand(new DriveCommand(1.25, false, 48));
-        m_tc_l.addCommand(new IntakeDriveCommand(2.0, false, 27, -1.0, false));
+        m_tc_l.addCommand(new IntakeDriveCommand(2.0, false, 29, -1.0, false));
         m_tc_l.addCommand(new ArmCommand(0.5, true, true, 110));
         m_tc_l.addCommand(new DriveCommand(2, false, -50));
         m_tc_l.addCommand(new TurnCommand(2, false, -135));
