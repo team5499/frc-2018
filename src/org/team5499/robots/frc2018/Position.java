@@ -56,9 +56,6 @@ public class Position {
 
         xPosition += deltaXRotated * Math.cos(angle) + deltaYRotated * Math.sin(angle);
         yPosition += -deltaXRotated * Math.sin(angle) + deltaYRotated * Math.cos(angle);
-        
-        Dashboard.setDouble("X_POSITION", xPosition);
-        Dashboard.setDouble("Y_POSITION", yPosition);
     }
 
     public void setWidth(double wheelToWheelDistance) {

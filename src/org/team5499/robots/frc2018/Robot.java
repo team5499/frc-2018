@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
         autoController = new AutoController();
         testController = new TestController();
 
-        position = new Position(24);
+        position = new Position(Dashboard.getDouble("ROBOT_WIDTH"));
 
         Dashboard.setString("automode", "baseline");
         Dashboard.setString("cubemode", "one");
@@ -57,6 +57,9 @@ public class Robot extends TimedRobot {
         Dashboard.setDouble("arm_angle", Subsystems.intake.getArmAngle());
         Dashboard.setInt("sonic_raw_value", Subsystems.intake.getRawSonicValue());
         Dashboard.setDouble("cube_distance", Subsystems.intake.getCubeDistance());
+        Dashboard.setDouble("x_position", position.getRobotX());
+        Dashboard.setDouble("y_position", position.getRobotY());
+        Dashboard.setDouble("robot_angle", Subsystems.drivetrain.getAngle());
 
         Controllers.arm_controller.handle();
         Controllers.turn_controller.handle();
