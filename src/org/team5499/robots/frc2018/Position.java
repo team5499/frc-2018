@@ -23,15 +23,15 @@ public class Position {
         this.lastDistance = 0;
     }
 
-    public void handle() {
+    public void handle(double currentAngle, double currentDistance) {
         // angle calcs
         lastAngle = angle;
-        angle = Math.toRadians(Subsystems.drivetrain.getAngle());
+        angle = Math.toRadians(currentAngle);
         double dAngle = angle - lastAngle;
 
         // distance calcs
         lastDistance = distance;
-        distance = Subsystems.drivetrain.getDistance();
+        distance = currentDistance;
         double dTrackedDistance = distance - lastDistance;
 
         // untracked wheel estimate

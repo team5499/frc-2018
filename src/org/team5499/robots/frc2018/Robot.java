@@ -117,7 +117,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         operatorController.handle();
-        position.handle();
+        position.handle(Subsystems.drivetrain.getAngle(), Subsystems.drivetrain.getDistance());
     }
 
     /**
