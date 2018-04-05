@@ -160,6 +160,10 @@ task bundle_dashboard {
       commandLine 'browserify'
       args 'dashboard/scripts/MessageHandler.js', 'dashboard/scripts/tuning.js', '-o', 'dashboard/scripts/tuning_bundle.js'
     }
+    exec {
+      commandLine 'browserify'
+      args 'dashboard/scripts/MessageHandler.js', 'dashboard/scripts/field.js', '-o', 'dashboard/scripts/field_bundle.js'
+    }
   }
 }
 
