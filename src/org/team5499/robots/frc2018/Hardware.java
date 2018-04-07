@@ -74,7 +74,7 @@ public class Hardware {
 
         /** Set follower modes */
         Hardware.climber_slave_talon.follow(Hardware.climber_master_talon); 
-        Hardware.intake_right_talon.follow(Hardware.intake_left_talon);
+        // Hardware.intake_right_talon.follow(Hardware.intake_left_talon);
         Hardware.left_slave_talon.follow(Hardware.left_master_talon);
         Hardware.right_slave_talon.follow(Hardware.right_master_talon);
     }

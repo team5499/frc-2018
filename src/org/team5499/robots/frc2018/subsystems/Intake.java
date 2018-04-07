@@ -28,6 +28,29 @@ public class Intake {
     public void setIntake(double speed) {
         /** right talon follows left talon */
         Hardware.intake_left_talon.set(ControlMode.PercentOutput, speed);
+        Hardware.intake_right_talon.set(ControlMode.PercentOutput, -speed);
+
+    }
+
+    public void magicIntake() {
+
+        // get intake motor amps
+        double leftAmps = Hardware.intake_left_talon.getOutputCurrent();
+        double rightAmps = Hardware.intake_right_talon.getOutputCurrent();
+
+        // set left
+        if(leftAmps > Dashboard.getDouble("intake_threshold1")) {
+            Hardware.intake_left_talon.set(ControlMode.PercentOutput, 0.6);
+        } else {
+            Hardware.intake_left_talon.set(ControlMode.PercentOutput, 0.4);
+        }
+
+        // set right
+        if(rightAmps > Dashboard.getDouble("intake_threshold1")) {
+            Hardware.intake_right_talon.set(ControlMode.PercentOutput, 0.6);
+        } else {
+            Hardware.intake_right_talon.set(ControlMode.PercentOutput, 0.4);
+        }
     }
 
     /** Returns the angle of the arm in degrees */
