@@ -1,8 +1,5 @@
 package org.team5499.robots.frc2018;
 
-import org.team5499.robots.frc2018.dashboard.Dashboard;
-import org.team5499.robots.frc2018.subsystems.Subsystems;
-
 public class Position {
 
     private double width;
