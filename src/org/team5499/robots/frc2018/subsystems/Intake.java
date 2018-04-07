@@ -28,7 +28,7 @@ public class Intake {
     public void setIntake(double speed) {
         /** right talon follows left talon */
         Hardware.intake_left_talon.set(ControlMode.PercentOutput, speed);
-        Hardware.intake_right_talon.set(ControlMode.PercentOutput, -speed);
+        Hardware.intake_right_talon.set(ControlMode.PercentOutput, speed);
 
     }
 
@@ -39,18 +39,23 @@ public class Intake {
         double rightAmps = Hardware.intake_right_talon.getOutputCurrent();
 
         // set left
-        if(leftAmps > Dashboard.getDouble("intake_threshold1")) {
-            Hardware.intake_left_talon.set(ControlMode.PercentOutput, 0.6);
+        if(leftAmps > Dashboard.getDouble("intake_threshold")) {
+            Hardware.intake_left_talon.set(ControlMode.PercentOutput, -0.4);
         } else {
-            Hardware.intake_left_talon.set(ControlMode.PercentOutput, 0.4);
+            Hardware.intake_left_talon.set(ControlMode.PercentOutput, mapIntakePower(leftAmps));
         }
 
         // set right
-        if(rightAmps > Dashboard.getDouble("intake_threshold1")) {
-            Hardware.intake_right_talon.set(ControlMode.PercentOutput, 0.6);
+        if(rightAmps > Dashboard.getDouble("intake_threshold")) {
+            Hardware.intake_right_talon.set(ControlMode.PercentOutput, -0.4);
         } else {
-            Hardware.intake_right_talon.set(ControlMode.PercentOutput, 0.4);
+            Hardware.intake_right_talon.set(ControlMode.PercentOutput, mapIntakePower(rightAmps));
         }
+
+    }
+
+    private double mapIntakePower(double amps) {
+        return 0;
     }
 
     /** Returns the angle of the arm in degrees */
