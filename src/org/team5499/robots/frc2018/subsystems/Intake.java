@@ -46,14 +46,14 @@ public class Intake {
         if(leftAmps > Dashboard.getDouble("INTAKE_THRESHOLD")) {
             Hardware.intake_left_talon.set(ControlMode.PercentOutput, -0.2);
         } else {
-            Hardware.intake_left_talon.set(ControlMode.PercentOutput, mapIntakePower(0, Dashboard.getDouble("INTAKE_THRESHOLD"), 0.1, 1, leftAmps));
+            Hardware.intake_left_talon.set(ControlMode.PercentOutput, mapIntakePower(0, Dashboard.getDouble("INTAKE_THRESHOLD"), 0.2, 0.9, leftAmps));
         }
 
         // set right
         if(rightAmps > Dashboard.getDouble("INTAKE_THRESHOLD")) {
             Hardware.intake_right_talon.set(ControlMode.PercentOutput, -0.2);
         } else {
-            Hardware.intake_right_talon.set(ControlMode.PercentOutput, mapIntakePower(0, Dashboard.getDouble("INTAKE_THRESHOLD"), 0.1, 1, rightAmps));
+            Hardware.intake_right_talon.set(ControlMode.PercentOutput, mapIntakePower(0, Dashboard.getDouble("INTAKE_THRESHOLD"), 0.2, 0.9, rightAmps));
         }
 
     }
