@@ -58,6 +58,7 @@ public class Robot extends TimedRobot {
         Controllers.turn_controller.handle();
         Controllers.drive_controller.handle();
 
+        System.out.println("Ampage: " + Hardware.intake_left_talon.getOutputCurrent() + " " + Hardware.intake_right_talon.getOutputCurrent());
         //System.out.println(Subsystems.drivetrain.getDistance());
     }
 

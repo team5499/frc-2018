@@ -30,8 +30,9 @@ public class OperatorController extends BaseController {
     @Override
     public void handle() {
         Subsystems.drivetrain.setDrivetrain(getLeft(), getRight()); /** Set the left and right speeds of the drivetrain */
-        Subsystems.intake.setIntake(getIntake()); /** Set the intake speed */
-
+        // Subsystems.intake.setIntake(getIntake()); /** Set the intake speed */
+        if(getMagicIntake()) Subsystems.intake.magicIntake();
+        // else Subsystems.intake.setIntake(getIntake());
         Controllers.arm_controller.setEnabled(false, false);
         Subsystems.intake.setArm(getArm());
         
@@ -123,13 +124,17 @@ public class OperatorController extends BaseController {
 
     /** Get intake speed(positive is outtake) */
     private double getIntake() {
-        if(Hardware.codriver.getBumper(Hand.kRight)) {
+        /* if(Hardware.codriver.getBumper(Hand.kRight)) {
             return Dashboard.getDouble("INTAKE_SPEED");
-        } else if(Hardware.codriver.getTriggerAxis(Hand.kRight) > 0.1) {
+        } else*/ if(Hardware.codriver.getTriggerAxis(Hand.kRight) > 0.1) {
             return Dashboard.getDouble("SLOW_INTAKE");
         } else if(Hardware.codriver.getBumper(Hand.kLeft)) {
             return Dashboard.getDouble("OUTTAKE_SPEED");
         } else return 0;
+    }
+
+    private boolean getMagicIntake() {
+        return Hardware.codriver.getBumper(Hand.kRight);
     }
 
 }

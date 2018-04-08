@@ -53,6 +53,7 @@ public class Intake {
         if(rightAmps > Dashboard.getDouble("INTAKE_THRESHOLD")) {
             Hardware.intake_right_talon.set(ControlMode.PercentOutput, -0.2);
         } else {
+            System.out.println("Right side output");
             Hardware.intake_right_talon.set(ControlMode.PercentOutput, mapIntakePower(0, Dashboard.getDouble("INTAKE_THRESHOLD"), 0.2, 0.9, rightAmps));
         }
 
