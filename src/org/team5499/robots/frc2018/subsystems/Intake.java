@@ -3,6 +3,9 @@ package org.team5499.robots.frc2018.subsystems;
 import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.Hardware;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class Intake {
@@ -17,6 +20,7 @@ public class Intake {
      */
 
     public Intake() {
+        
     }
 
     /** -1 - 1 raw arm speed(positive is up) */
@@ -39,23 +43,24 @@ public class Intake {
         double rightAmps = Hardware.intake_right_talon.getOutputCurrent();
 
         // set left
-        if(leftAmps > Dashboard.getDouble("intake_threshold")) {
-            Hardware.intake_left_talon.set(ControlMode.PercentOutput, -0.4);
+        if(leftAmps > Dashboard.getDouble("INTAKE_THRESHOLD")) {
+            Hardware.intake_left_talon.set(ControlMode.PercentOutput, -0.2);
         } else {
-            Hardware.intake_left_talon.set(ControlMode.PercentOutput, mapIntakePower(leftAmps));
+            Hardware.intake_left_talon.set(ControlMode.PercentOutput, mapIntakePower(0, Dashboard.getDouble("INTAKE_THRESHOLD"), 0.1, 1, leftAmps));
         }
 
         // set right
-        if(rightAmps > Dashboard.getDouble("intake_threshold")) {
-            Hardware.intake_right_talon.set(ControlMode.PercentOutput, -0.4);
+        if(rightAmps > Dashboard.getDouble("INTAKE_THRESHOLD")) {
+            Hardware.intake_right_talon.set(ControlMode.PercentOutput, -0.2);
         } else {
-            Hardware.intake_right_talon.set(ControlMode.PercentOutput, mapIntakePower(rightAmps));
+            Hardware.intake_right_talon.set(ControlMode.PercentOutput, mapIntakePower(0, Dashboard.getDouble("INTAKE_THRESHOLD"), 0.1, 1, rightAmps));
         }
 
     }
 
-    private double mapIntakePower(double amps) {
-        return 0;
+    private double mapIntakePower(double ampsMin, double ampsMax, double intakeMin, double intakeMax, double value) {
+        double temp = (ampsMax - ampsMin) / (intakeMax - intakeMin);
+        return ((value - ampsMin) * temp) + ampsMin;
     }
 
     /** Returns the angle of the arm in degrees */
