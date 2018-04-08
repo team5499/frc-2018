@@ -263,7 +263,13 @@ public class AutoController extends BaseController {
                 break;
             case "left_outer":
                 if(game_data.substring(0, 1).equals("L")) {
-                    current_routine = lo_oc;
+                    if(Dashboard.getString("cubemode").equals("one")) {
+                        current_routine = lo_oc;
+                    } else if(Dashboard.getString("cubemode").equals("two")) {
+                        current_routine = lo_tc;
+                    } else {
+                        current_routine = lo_nc;
+                    }
                 } else {
                     current_routine = lo_nc;
                 }
@@ -298,7 +304,13 @@ public class AutoController extends BaseController {
                 if(game_data.substring(0, 1).equals("L")) {
                     current_routine = ro_nc;
                 } else {
-                    current_routine = ro_oc;
+                    if(Dashboard.getString("cubemode").equals("one")) {
+                        current_routine = ro_oc;
+                    } else if(Dashboard.getString("cubemode").equals("two")) {
+                        current_routine = ro_tc;
+                    } else {
+                        current_routine = ro_nc;
+                    }
                 }
                 break;
             case "baseline":
