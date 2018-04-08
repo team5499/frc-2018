@@ -225,7 +225,7 @@ public class AutoController extends BaseController {
         li_nc.addCommand(new DriveCommand(3, false, -104));
 
         baseline.addCommand(new ArmCommand(0, true, false, 110));
-        baseline.addCommand(new DriveCommand(3, false, 106));
+        baseline.addCommand(new DriveCommand(3, false, 12));
 
         nothing.addCommand(new NothingCommand(0));
 
