@@ -69,7 +69,7 @@
     "ACCEPTABLE_TURN_VELOCITY": "12.0",
     "kARM_P": "0.0075",
     "kARM_I": "0.0",
-    "kARM_D": "0.002",
+    "kARM_D": "0.00",
     "ACCEPTABLE_ARM_ERROR": "1.0",
     "ACCEPTABLE_ARM_VELOCITY": "1.5",
     "kINTAKE_P": "0.1",
