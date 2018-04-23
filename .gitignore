@@ -1,6 +1,13 @@
 .gradle
 /bin/
 /build/
+.settings 
+.vscode
+bin
+.classpath
+.project
+.DS_Store
+
 
 # Ignore Gradle GUI config
 gradle-app.setting

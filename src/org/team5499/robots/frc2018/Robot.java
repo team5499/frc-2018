@@ -1,26 +1,18 @@
 package org.team5499.robots.frc2018;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 
-public class Robot extends IterativeRobot {
-
-    private TalonSRX talon;
-
+public class Robot extends TimedRobot {
     public Robot() {
-        talon = new TalonSRX(1);
     }
-
 
     @Override
     public void robotInit() {
-        talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 5, 0);
     }
 
     @Override
     public void robotPeriodic() {
-        System.out.println(talon.getSensorCollection().getQuadraturePosition());
     }
 
     @Override
@@ -32,7 +24,7 @@ public class Robot extends IterativeRobot {
     }
 
     @Override
-    public void autonomousInit() {
+    public void autonomousInit(){
     }
 
     @Override
@@ -41,11 +33,14 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void teleopInit() {
-        
     }
 
     @Override
     public void teleopPeriodic() {
-        ;
     }
+
+    @Override
+    public void testPeriodic() {
+    }
+
 }
