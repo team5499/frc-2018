@@ -18,6 +18,8 @@ public class OperatorController extends BaseController {
 
     int arm_mode = 0;
 
+    private double DEMONSTRATION_SLOW_MULTIPLIER = 0.20;
+
     public OperatorController() {
         super();
     }
@@ -105,7 +107,7 @@ public class OperatorController extends BaseController {
         if(!Hardware.driver.getBumper(Hand.kRight)) {
             turn = turn * Dashboard.getDouble("SLOW_MULTIPLIER");
         }
-        return raw + turn;
+        return DEMONSTRATION_SLOW_MULTIPLIER * (raw + turn);
     }
 
     /** Get right drive speed */
@@ -118,7 +120,7 @@ public class OperatorController extends BaseController {
         if(!Hardware.driver.getBumper(Hand.kRight)) {
             turn = turn * Dashboard.getDouble("SLOW_MULTIPLIER");
         }
-        return raw - turn;
+        return DEMONSTRATION_SLOW_MULTIPLIER * (raw - turn);
     }
 
     /** Get intake speed(positive is outtake) */
