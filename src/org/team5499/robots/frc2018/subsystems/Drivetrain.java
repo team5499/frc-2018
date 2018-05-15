@@ -28,6 +28,8 @@ public class Drivetrain {
     private double last_angle;
     private Timer timer;
     private double angle_velocity;
+
+    private double DEMONSTRATION_SLOW_MULTIPLIER = 0.3;
     
     public Drivetrain() {
         last_encoder_value = 0;
@@ -38,8 +40,8 @@ public class Drivetrain {
 
     /** -1 - 1 set left and right output for the drivetrain(positive is forward) */
     public void setDrivetrain(double left, double right) {
-        Hardware.left_master_talon.set(ControlMode.PercentOutput, left);
-        Hardware.right_master_talon.set(ControlMode.PercentOutput, right);
+        Hardware.left_master_talon.set(ControlMode.PercentOutput, left * DEMONSTRATION_SLOW_MULTIPLIER);
+        Hardware.right_master_talon.set(ControlMode.PercentOutput, right * DEMONSTRATION_SLOW_MULTIPLIER);
     }
 
     /** Get distance in inches that the encoder has moved */
