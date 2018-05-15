@@ -29,7 +29,7 @@ public class Drivetrain {
     private Timer timer;
     private double angle_velocity;
 
-    private double DEMONSTRATION_SLOW_MULTIPLIER = 0.3;
+    private double DEMONSTRATION_SLOW_MULTIPLIER = 0.20;
     
     public Drivetrain() {
         last_encoder_value = 0;
