@@ -99,7 +99,7 @@ var graph = new Chart(canvas, {
                     display: false
                 },
                 ticks: {
-                    display: false
+                    display: false, 
                 }
             }],
             yAxes: [{
