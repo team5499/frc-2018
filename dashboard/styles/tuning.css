@@ -1,8 +1,13 @@
-html {
+/*html {
     background-color: black;
     color: white;
 }
 
 #error {
     color: black;
+}
+*/
+
+div {
+    padding-bottom: 10px;
 }
