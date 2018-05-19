@@ -105,9 +105,13 @@ public class OperatorController extends BaseController {
             raw = 0;
         }
         if(!Hardware.driver.getBumper(Hand.kRight)) {
-            turn = turn * Dashboard.getDouble("SLOW_MULTIPLIER");
+            turn *= Dashboard.getDouble("DEMO_TURN_MULTIPLIER");
+        } else {
+            turn *= Dashboard.getDouble("DEMO_NOT_AS_SLOW_TURN_MULTIPLIER");
         }
-        return DEMONSTRATION_SLOW_MULTIPLIER * (raw + turn);
+
+        raw *= Dashboard.getDouble("DEMO_SPEED_MULTIPLIER");
+        return (raw + turn);
     }
 
     /** Get right drive speed */
@@ -118,9 +122,12 @@ public class OperatorController extends BaseController {
             raw = 0;
         }
         if(!Hardware.driver.getBumper(Hand.kRight)) {
-            turn = turn * Dashboard.getDouble("SLOW_MULTIPLIER");
+            turn *= Dashboard.getDouble("DEMO_TURN_MULTIPLIER");
+        } else {
+            turn *= Dashboard.getDouble("DEMONOT_AS_SLOW_TURN_MULTIPLIER");
         }
-        return DEMONSTRATION_SLOW_MULTIPLIER * (raw - turn);
+        raw *= Dashboard.getDouble("DEMO_SPEED_MULTIPLIER");
+        return (raw - turn);
     }
 
     /** Get intake speed(positive is outtake) */

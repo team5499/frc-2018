@@ -19828,6 +19828,11 @@ var kArmP = document.getElementById("kArmP");
 var kArmI = document.getElementById("kArmI");
 var kArmD = document.getElementById("kArmD");
 
+var update_demo_constants = document.getElementById("update_demo_constants");
+var demoDriveSpeedMultiplier = document.getElementById("demoDriveSpeedMultiplier");
+var demoTurnSpeedMultiplier = document.getElementById("demoTurnSpeedMultiplier");
+var demoFastTurnMultiplier = document.getElementById("demoFastTurnMultiplier");
+
 var pot_value = document.getElementById("pot_value");
 var arm_angle = document.getElementById("arm_angle");
 var set_vertical = document.getElementById("set_vertical");
@@ -19938,6 +19943,10 @@ function run(handler) {
     kArmI.value = handler.getProperty("kARM_I");
     kArmD.value = handler.getProperty("kARM_D");
 
+    demoDriveSpeedMultiplier = handler.getProperty("DEMO_SPEED_MULTIPLIER");
+    demoFastTurnMultiplier = handler.getProperty("DEMO_NOT_AS_SLOW_TURN_MULTIPLIER");
+    demoTurnSpeedMultiplier = handler.getProperty("DEMO_TURN_MULTIPLIER");
+
     handler.addKeyListener("kDIST_P", function() {
         kDistP.value = handler.getProperty("kDIST_P");
     });
@@ -19977,6 +19986,16 @@ function run(handler) {
     handler.addKeyListener("kARM_D", function() {
         kArmD.value = handler.getProperty("kARM_D");
     });
+
+    handler.addKeyListener("DEMO_TURN_MULTIPLIER", function() {
+        demoTurnSpeedMultiplier.value = handler.getProperty("DEMO_TURN_MULTIPLIER");
+    });
+    handler.addKeyListener("DEMO_SPEED_MULTIPLIER", function() {
+        demoDriveSpeedMultiplier.value = handler.getProperty("DEMO_SPEED_MULTIPLIER");
+    });
+    handler.addKeyListener("DEMO_NOT_AS_SLOW_TURN_MULTIPLIER", function() {
+        demoFastTurnMultiplier.value = handler.getProperty("DEMO_NOT_AS_SLOW_TURN_MULTIPLIER");
+    })
 
     handler.addKeyListener("distance_error", function() {
         graph.data.datasets[0].data.push(parseFloat(handler.getProperty("distance_error")));
@@ -20053,6 +20072,12 @@ function run(handler) {
         handler.setProperty("kARM_P", kArmP.value);
         handler.setProperty("kARM_I", kArmI.value);
         handler.setProperty("kARM_D", kArmD.value);
+    }, false);
+
+    update_demo_constants.addEventListener("click", function() {
+        handler.setProperty("DEMO_TURN_MULTIPLIER", demoTurnSpeedMultiplier.value);
+        handler.setProperty("DEMO_NOT_AS_SLOW_MULTIPLIER", demoFastTurnMultiplier.value);
+        handler.setProperty("DEMO_SPEED_MULTIPLIER", demoDriveSpeedMultiplier.value);
     }, false);
 
     set_horizontal.addEventListener("click", function() {
