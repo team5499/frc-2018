@@ -18,8 +18,6 @@ public class OperatorController extends BaseController {
 
     int arm_mode = 0;
 
-    private double DEMONSTRATION_SLOW_MULTIPLIER = 0.40;
-
     public OperatorController() {
         super();
     }
