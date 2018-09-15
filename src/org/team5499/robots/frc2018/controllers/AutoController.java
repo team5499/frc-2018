@@ -349,7 +349,6 @@ public class AutoController extends BaseController {
         Subsystems.drivetrain.stop();
         Subsystems.intake.stopArm();
         Subsystems.intake.stopIntake();
-        Subsystems.climber.stop();
 
         Subsystems.drivetrain.setAngle(0); // Does this work?
         Subsystems.drivetrain.setDistance(0);

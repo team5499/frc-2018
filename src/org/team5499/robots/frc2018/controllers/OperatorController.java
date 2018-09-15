@@ -43,7 +43,6 @@ public class OperatorController extends BaseController {
         Subsystems.drivetrain.stop();
         Subsystems.intake.stopArm();
         Subsystems.intake.stopIntake();
-        Subsystems.climber.stop();
 
         Subsystems.drivetrain.setAngle(0);
         Subsystems.drivetrain.setDistance(0);
@@ -79,11 +78,6 @@ public class OperatorController extends BaseController {
 
     public boolean getPidArmReverse() {
         return Hardware.codriver.getBButton();
-    }
-
-    /** Get climber raw speed(positive contracts) */
-    private double getClimber() {
-        return 0;
     }
 
     /** Get climber contract */
