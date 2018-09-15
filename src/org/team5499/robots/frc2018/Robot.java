@@ -6,11 +6,14 @@ import org.team5499.robots.frc2018.controllers.TestController;
 import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.pid.Controllers;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
+import org.team5499.robots.frc2018.Position;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+
+
 
 public class Robot extends TimedRobot {
 
@@ -57,8 +60,10 @@ public class Robot extends TimedRobot {
         Controllers.arm_controller.handle();
         Controllers.turn_controller.handle();
         Controllers.drive_controller.handle();
-
+        
         //System.out.println(Subsystems.drivetrain.getDistance());
+        Position.getInstance().handle(Subsystems.drivetrain.getAngle(), Subsystems.drivetrain.getDistance());
+        System.out.println(Position.getInstance().toString());
     }
 
     /**
@@ -79,6 +84,7 @@ public class Robot extends TimedRobot {
     
 	@Override
 	public void disabledPeriodic() {
+        Position.getInstance().reset();
     }
 
     /**
@@ -88,6 +94,7 @@ public class Robot extends TimedRobot {
     public void autonomousInit(){
         autoController.reset();
         autoController.start();
+        Position.getInstance().reset();
     }
 
     /**
@@ -95,8 +102,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        autoController.handle();
-    }
+        autoController.handle();    }
 
     /**
      * - Start operator controller
@@ -112,8 +118,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-        operatorController.handle();
-    }
+        operatorController.handle();    }
 
     /**
      * - Start test controller
@@ -130,6 +135,6 @@ public class Robot extends TimedRobot {
     @Override
     public void testPeriodic() {
         testController.handle();
-    }
+        }
 
 }

@@ -32,7 +32,8 @@ public class OperatorController extends BaseController {
         Subsystems.drivetrain.setDrivetrain(getLeft(), getRight()); /** Set the left and right speeds of the drivetrain */
         Subsystems.intake.setIntake(getIntake()); /** Set the intake speed */
 
-        Controllers.arm_controller.setEnabled(false, false);
+        //Controllers.arm_controller.setEnabled(false, false);
+        //Subsystems.intake.setArm(getArm());
         Subsystems.intake.setArm(getArm());
         
     }
