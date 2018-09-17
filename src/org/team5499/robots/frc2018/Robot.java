@@ -6,7 +6,7 @@ import org.team5499.robots.frc2018.controllers.TestController;
 import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.pid.Controllers;
 import org.team5499.robots.frc2018.subsystems.Subsystems;
-import org.team5499.robots.frc2018.Position;
+import org.team5499.robots.frc2018.path_pursuit.Position;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;

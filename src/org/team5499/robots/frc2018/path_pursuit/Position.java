@@ -1,12 +1,17 @@
-package org.team5499.robots.frc2018;
+package org.team5499.robots.frc2018.path_pursuit;
 
 import org.team5499.robots.frc2018.dashboard.Dashboard;
+import org.team5499.robots.frc2018.math.Transform2d;
+import org.team5499.robots.frc2018.math.Vector2d;
 
 public class Position {
 
-    private static Position m_instance = new Position(Dashboard.getDouble("ROBOT_WIDTH"));
+    private static Position m_instance = null;
 
     public static Position getInstance() {
+        if(m_instance == null) {
+            m_instance = new Position(Dashboard.getDouble("ROBOT_WIDTH"));
+        }
         return m_instance;
     }
 
@@ -97,6 +102,10 @@ public class Position {
 
     public void setRobotY(double yPosition) {
         this.yPosition = yPosition;
+    }
+
+    public Transform2d getTransform() {
+        return new Transform2d(new Vector2d(getRobotX(), getRobotY()), Math.toDegrees(lastAngle));
     }
 
     public void reset() {
