@@ -1,5 +1,12 @@
 package org.team5499.robots.frc2018.path_pursuit;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.team5499.robots.frc2018.commands.exceptions.IncompletePathException;
 import org.team5499.robots.frc2018.math.Vector2d;
 
@@ -92,5 +99,41 @@ public class Path {
     public BoundLine[] getBoundLines() {
         return this.lines;
     }
+
+    public Vector2d[] getWayPoints() {
+        return this.waypoints;
+    }
     
+    public static Path readPathFromFile(String path) {
+        List<Vector2d> waypoints = new ArrayList<>(5);
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            String line = br.readLine();
+            while(line != null) {
+                String[] s = line.split(",");
+                if(s.length > 2) {
+                    throw new Exception("To many arguments in path");
+                }
+                double x = Double.parseDouble(s[0].trim());
+                double y = Double.parseDouble(s[1].trim());
+                waypoints.add(new Vector2d(x, y));
+                line = br.readLine();
+            }
+
+        } catch(Exception e) {
+            return default_path;
+        }
+        
+        Vector2d[] res = new Vector2d[waypoints.size()];
+        res = waypoints.toArray(res);
+        return new Path(res);
+    }
+
+    private static Path createDefaultPath() {
+        Vector2d[] waypoints = {new Vector2d(0,0), new Vector2d(1, 1)};
+        return new Path(waypoints);
+    }
+
+    private static Path default_path = createDefaultPath();
+
 }
