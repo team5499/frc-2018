@@ -5,7 +5,7 @@ import org.team5499.robots.frc2018.controllers.OperatorController;
 import org.team5499.robots.frc2018.controllers.TestController;
 import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.pid.Controllers;
-import org.team5499.robots.frc2018.path_pursuit.Position;
+import org.team5499.robots.frc2018.path_pursuit.RLS;
 import org.team5499.robots.frc2018.subsystems.Intake;
 import org.team5499.robots.frc2018.subsystems.Drivetrain;
 
@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
         Controllers.turn_controller.handle();
         Controllers.drive_controller.handle();
         
-        System.out.println(Position.getInstance().toString());
+        System.out.println(RLS.getInstance().toString());
     }
 
     /**
@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
         Controllers.arm_controller.reset();
         Controllers.turn_controller.reset();
         Controllers.drive_controller.reset();
-        Position.getInstance().zero();
+        RLS.getInstance().zero();
     }
     
 	@Override
@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
     public void autonomousInit(){
         autoController.reset();
         autoController.start();
-        Position.getInstance().configure(Dashboard.getDouble("ROBOT_WIDTH"), 0, 0, 0);
+        RLS.getInstance().configure(Dashboard.getDouble("ROBOT_WIDTH"), 0, 0, 0);
     }
 
     /**
@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         autoController.handle();
-        Position.getInstance().updateWithOneEncoder(Drivetrain.getInstance().getDistance(), Math.toRadians(Drivetrain.getInstance().getAngle()));
+        RLS.getInstance().updateWithOneEncoder(Drivetrain.getInstance().getDistance(), Math.toRadians(Drivetrain.getInstance().getAngle()));
     }
 
     /**
@@ -119,7 +119,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         operatorController.handle();
-        Position.getInstance().updateWithOneEncoder(Drivetrain.getInstance().getDistance(), Math.toRadians(Drivetrain.getInstance().getAngle()));
+        RLS.getInstance().updateWithOneEncoder(Drivetrain.getInstance().getDistance(), Math.toRadians(Drivetrain.getInstance().getAngle()));
     }
 
     /**

@@ -5,7 +5,7 @@ import org.team5499.robots.frc2018.exceptions.VerticalPathException;
 import org.team5499.robots.frc2018.math.Vector2d;
 
 public class BoundLine {
-
+    
     private double m = 0.0, b = 0.0;
     private double lowerXBound = 0.0, upperXBound = 0.0;
 

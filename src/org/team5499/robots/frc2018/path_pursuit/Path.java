@@ -121,6 +121,7 @@ public class Path {
             }
 
         } catch(Exception e) {
+            e.printStackTrace();
             return default_path;
         }
         

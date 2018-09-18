@@ -4,13 +4,13 @@ import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.math.Transform2d;
 import org.team5499.robots.frc2018.math.Vector2d;
 
-public class Position {
+public class RLS {
 
-    private static Position m_instance = null;
+    private static RLS m_instance = null;
 
-    public static Position getInstance() {
+    public static RLS getInstance() {
         if(m_instance == null) {
-            m_instance = new Position();
+            m_instance = new RLS();
         }
         return m_instance;
     }
@@ -26,7 +26,7 @@ public class Position {
 
     private boolean is_configured = false;
 
-    private Position() {}
+    private RLS() {}
 
     public void configure(double width, double x0, double y0, double theta0) {
         this.width = width;
