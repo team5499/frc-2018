@@ -5,10 +5,8 @@ import org.team5499.robots.frc2018.Hardware;
 
 import edu.wpi.first.wpilibj.Timer;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.PigeonIMU;
-import com.ctre.phoenix.sensors.PigeonIMU.PigeonState;
 
 public class Drivetrain {
     /**

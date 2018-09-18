@@ -1,7 +1,7 @@
 package org.team5499.robots.frc2018.commands.pid;
 
 import org.team5499.robots.frc2018.dashboard.Dashboard;
-import org.team5499.robots.frc2018.pid.Controllers;
+import org.team5499.robots.frc2018.pid.DriveController;
 import org.team5499.robots.frc2018.commands.BaseCommand;
 import org.team5499.robots.frc2018.subsystems.Drivetrain;
 
@@ -23,8 +23,8 @@ public class DriveSlowCommand extends BaseCommand {
         super.start();
 
         Dashboard.setDouble("distance_setpoint_relative", setpoint);
-        Controllers.drive_controller.setSetpoint(setpoint);
-        Controllers.drive_controller.setEnabled(true, 0.3);
+        DriveController.getInstance().setSetpoint(setpoint);
+        DriveController.getInstance().setEnabled(true, 0.3);
         
         enabled = true;
     }
@@ -41,10 +41,10 @@ public class DriveSlowCommand extends BaseCommand {
 
     @Override
     public boolean isFinished() {
-        boolean finished = (super.isFinished() || (Controllers.drive_controller.distanceOnTarget() && Controllers.drive_controller.angleErrorOnTarget() && !wait_for_timeout));
+        boolean finished = (super.isFinished() || (DriveController.getInstance().distanceOnTarget() && DriveController.getInstance().angleErrorOnTarget() && !wait_for_timeout));
         if(finished) {
             System.out.println("Finished");
-            Controllers.drive_controller.setEnabled(false, 0);
+            DriveController.getInstance().setEnabled(false, 0);
             Drivetrain.getInstance().stop();
             reset();
         }

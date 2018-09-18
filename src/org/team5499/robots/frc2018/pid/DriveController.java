@@ -5,6 +5,13 @@ import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.subsystems.Drivetrain;
 
 public class DriveController {
+
+    private static DriveController instance = new DriveController();
+
+    public static DriveController getInstance() {
+        return instance;
+    }
+
     private boolean enabled;
     private double multiplier;
     private PID angle_controller;

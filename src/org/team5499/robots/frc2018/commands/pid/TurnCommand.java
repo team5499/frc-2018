@@ -1,6 +1,6 @@
 package org.team5499.robots.frc2018.commands.pid;
 
-import org.team5499.robots.frc2018.pid.Controllers;
+import org.team5499.robots.frc2018.pid.TurnController;
 import org.team5499.robots.frc2018.subsystems.Drivetrain;
 import org.team5499.robots.frc2018.commands.BaseCommand;
 
@@ -20,8 +20,8 @@ public class TurnCommand extends BaseCommand {
     public void start() {
         super.start();
 
-        Controllers.turn_controller.setSetpoint(setpoint);
-        Controllers.turn_controller.setEnabled(true);
+        TurnController.getInstance().setSetpoint(setpoint);
+        TurnController.getInstance().setEnabled(true);
         enabled = true;
     }
 
@@ -37,9 +37,9 @@ public class TurnCommand extends BaseCommand {
 
     @Override
     public boolean isFinished() {
-        boolean finished = (super.isFinished() || (Controllers.turn_controller.onTarget() && !wait_for_timeout));
+        boolean finished = (super.isFinished() || (TurnController.getInstance().onTarget() && !wait_for_timeout));
         if(finished) {
-            Controllers.turn_controller.setEnabled(false);
+            TurnController.getInstance().setEnabled(false);
             Drivetrain.getInstance().stop();
             reset();
         }

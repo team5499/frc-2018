@@ -4,7 +4,9 @@ import org.team5499.robots.frc2018.controllers.AutoController;
 import org.team5499.robots.frc2018.controllers.OperatorController;
 import org.team5499.robots.frc2018.controllers.TestController;
 import org.team5499.robots.frc2018.dashboard.Dashboard;
-import org.team5499.robots.frc2018.pid.Controllers;
+import org.team5499.robots.frc2018.pid.ArmController;
+import org.team5499.robots.frc2018.pid.DriveController;
+import org.team5499.robots.frc2018.pid.TurnController;
 import org.team5499.robots.frc2018.path_pursuit.RLS;
 import org.team5499.robots.frc2018.subsystems.Intake;
 import org.team5499.robots.frc2018.subsystems.Drivetrain;
@@ -58,9 +60,9 @@ public class Robot extends TimedRobot {
         Dashboard.setInt("sonic_raw_value", Intake.getInstance().getRawSonicValue());
         Dashboard.setDouble("cube_distance", Intake.getInstance().getCubeDistance());
 
-        Controllers.arm_controller.handle();
-        Controllers.turn_controller.handle();
-        Controllers.drive_controller.handle();
+        ArmController.getInstance().handle();
+        TurnController.getInstance().handle();
+        DriveController.getInstance().handle();
         
         System.out.println(RLS.getInstance().toString());
     }
@@ -74,9 +76,9 @@ public class Robot extends TimedRobot {
         operatorController.reset();
         testController.reset();
 
-        Controllers.arm_controller.reset();
-        Controllers.turn_controller.reset();
-        Controllers.drive_controller.reset();
+        ArmController.getInstance().reset();
+        TurnController.getInstance().reset();
+        DriveController.getInstance().reset();
         RLS.getInstance().zero();
     }
     

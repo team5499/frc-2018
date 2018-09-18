@@ -64,27 +64,31 @@ public class RLS {
     }
 
     private void update(double left_delta, double right_delta){
-        double theta_delta = (left_delta - right_delta) / width;
-        double R = 0.0;
-        if(left_delta > right_delta) {
-            R = ((right_delta * width) / (left_delta - right_delta)) + (width / 2);
-        } else if(left_delta < right_delta) {
-            R = ((left_delta * width) / (right_delta - left_delta)) + (width / 2);
+        if(is_configured) {
+            double theta_delta = (left_delta - right_delta) / width;
+            double R = 0.0;
+            if(left_delta > right_delta) {
+                R = ((right_delta * width) / (left_delta - right_delta)) + (width / 2);
+            } else if(left_delta < right_delta) {
+                R = ((left_delta * width) / (right_delta - left_delta)) + (width / 2);
+            } else {
+                R = Double.MAX_VALUE;
+            }
+
+            double forward_delta_magnitude = R * Math.sin(Math.abs(theta_delta));
+            double right_delta_magnitude = R - (R * Math.cos(theta_delta));
+            
+            double x_delta = (forward_delta_magnitude * Math.cos(Math.toRadians(450 - theta_last))) 
+                    + (right_delta_magnitude * Math.cos(Math.toRadians(450 - (theta_last + 90))));
+            double y_delta = (forward_delta_magnitude * Math.sin(Math.toRadians(450 - theta_last))) 
+                    + (right_delta_magnitude * Math.sin(Math.toRadians(450 - (theta_last + 90))));
+
+            theta_last += Math.toDegrees(theta_delta);
+            x_last += x_delta;
+            y_last += y_delta;
         } else {
-            R = Double.MAX_VALUE;
+            System.out.println("Error: RLS not configured!");
         }
-
-        double forward_delta_magnitude = R * Math.sin(Math.abs(theta_delta));
-        double right_delta_magnitude = R - (R * Math.cos(theta_delta));
-        
-        double x_delta = (forward_delta_magnitude * Math.cos(Math.toRadians(450 - theta_last))) 
-                + (right_delta_magnitude * Math.cos(Math.toRadians(450 - (theta_last + 90))));
-        double y_delta = (forward_delta_magnitude * Math.sin(Math.toRadians(450 - theta_last))) 
-                + (right_delta_magnitude * Math.sin(Math.toRadians(450 - (theta_last + 90))));
-
-        theta_last += Math.toDegrees(theta_delta);
-        x_last += x_delta;
-        y_last += y_delta;
     }
 
     public Transform2d getTransform() {

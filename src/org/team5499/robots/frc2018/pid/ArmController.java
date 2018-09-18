@@ -4,6 +4,14 @@ import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.subsystems.Intake;
 
 public class ArmController {
+
+    private static ArmController instance = new ArmController();
+
+    public static ArmController getInstance() {
+        return instance;
+    }
+
+
     private boolean enabled;
     private boolean intake_hold;
     private PID controller;

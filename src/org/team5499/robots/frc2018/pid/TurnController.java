@@ -4,6 +4,13 @@ import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.subsystems.Drivetrain;
 
 public class TurnController {
+
+    private static TurnController instance = new TurnController();
+
+    public static TurnController getInstance() {
+        return instance;
+    }
+
     private boolean enabled;
     private PID controller;
     private double initial_distance;
