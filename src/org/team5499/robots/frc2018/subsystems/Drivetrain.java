@@ -23,6 +23,12 @@ public class Drivetrain {
      * - Gyro
      */
 
+    private static Drivetrain instance = new Drivetrain();
+    
+    public static Drivetrain getInstance() {
+        return instance;
+    }
+
     private int last_encoder_value;
     private boolean encoder_enabled;
     private double last_angle;

@@ -3,7 +3,7 @@ package org.team5499.robots.frc2018.commands.pid;
 import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.pid.Controllers;
 import org.team5499.robots.frc2018.commands.BaseCommand;
-import org.team5499.robots.frc2018.subsystems.Subsystems;
+import org.team5499.robots.frc2018.subsystems.Drivetrain;
 
 public class DriveCommand extends BaseCommand {
 
@@ -43,12 +43,12 @@ public class DriveCommand extends BaseCommand {
     public boolean isFinished() {
         System.out.println(Controllers.drive_controller.distanceOnTarget() + ":" + Controllers.drive_controller.angleErrorOnTarget());
         System.out.println(Dashboard.getDouble("distance_setpoint"));
-        System.out.println("Distance" + Subsystems.drivetrain.getDistance());
+        System.out.println("Distance" + Drivetrain.getInstance().getDistance());
         boolean finished = (super.isFinished() || (Controllers.drive_controller.distanceOnTarget() && Controllers.drive_controller.angleErrorOnTarget() && !wait_for_timeout));
         if(finished) {
             System.out.println("Finished");
             Controllers.drive_controller.setEnabled(false, 0);
-            Subsystems.drivetrain.stop();
+            Drivetrain.getInstance().stop();
             reset();
         }
         return finished;

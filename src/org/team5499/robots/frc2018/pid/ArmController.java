@@ -1,7 +1,7 @@
 package org.team5499.robots.frc2018.pid;
 
 import org.team5499.robots.frc2018.dashboard.Dashboard;
-import org.team5499.robots.frc2018.subsystems.Subsystems;
+import org.team5499.robots.frc2018.subsystems.Intake;
 
 public class ArmController {
     private boolean enabled;
@@ -21,15 +21,15 @@ public class ArmController {
 
     public void handle() {
         if(enabled) {
-            double feedforward = Math.cos(Math.toRadians(Subsystems.intake.getArmAngle())) * Dashboard.getDouble("kFEEDFORWARD_ARM_VOLTAGE");
-            controller.setProcessVariable(Subsystems.intake.getArmAngle());
-            controller.setVelocity(Subsystems.intake.getArmVelocity());
+            double feedforward = Math.cos(Math.toRadians(Intake.getInstance().getArmAngle())) * Dashboard.getDouble("kFEEDFORWARD_ARM_VOLTAGE");
+            controller.setProcessVariable(Intake.getInstance().getArmAngle());
+            controller.setVelocity(Intake.getInstance().getArmVelocity());
             double output = controller.calculate() + feedforward;
-            Subsystems.intake.setArm(output);
+            Intake.getInstance().setArm(output);
             Dashboard.setDouble("arm_error", controller.getError());
         }
         if(intake_hold) {
-            Subsystems.intake.setIntake(-0.2);
+            Intake.getInstance().setIntake(-0.2);
         }
     }
 

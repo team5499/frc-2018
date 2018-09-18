@@ -1,7 +1,8 @@
 package org.team5499.robots.frc2018.pid;
 
 import org.team5499.robots.frc2018.dashboard.Dashboard;
-import org.team5499.robots.frc2018.subsystems.Subsystems;
+
+import org.team5499.robots.frc2018.subsystems.Drivetrain;
 
 public class DriveController {
     private boolean enabled;
@@ -27,13 +28,13 @@ public class DriveController {
         if(enabled) {
             System.out.println("Error:" + distance_controller.getError());
             System.out.println("Setpoint:" + distance_controller.getSetpoint());
-            angle_controller.setProcessVariable(Subsystems.drivetrain.getAngle());
-            angle_controller.setVelocity(Subsystems.drivetrain.getAngleVelocity());
-            distance_controller.setProcessVariable(Subsystems.drivetrain.getDistance());
-            distance_controller.setVelocity(Subsystems.drivetrain.getDistanceVelocity());
+            angle_controller.setProcessVariable(Drivetrain.getInstance().getAngle());
+            angle_controller.setVelocity(Drivetrain.getInstance().getAngleVelocity());
+            distance_controller.setProcessVariable(Drivetrain.getInstance().getDistance());
+            distance_controller.setVelocity(Drivetrain.getInstance().getDistanceVelocity());
             double angle_output = angle_controller.calculate();
             double distance_output = distance_controller.calculate();
-            Subsystems.drivetrain.setDrivetrain(distance_output - angle_output, distance_output + angle_output);
+            Drivetrain.getInstance().setDrivetrain(distance_output - angle_output, distance_output + angle_output);
             Dashboard.setDouble("distance_error", distance_controller.getError());
             Dashboard.setDouble("angle_error", angle_controller.getError());
         }

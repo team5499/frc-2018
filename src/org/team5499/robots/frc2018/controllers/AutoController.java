@@ -1,7 +1,8 @@
 package org.team5499.robots.frc2018.controllers;
 
 import org.team5499.robots.frc2018.dashboard.Dashboard;
-import org.team5499.robots.frc2018.subsystems.Subsystems;
+import org.team5499.robots.frc2018.subsystems.Drivetrain;
+import org.team5499.robots.frc2018.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.DriverStation;
 
@@ -346,12 +347,12 @@ public class AutoController extends BaseController {
 
     @Override
     public void reset() {
-        Subsystems.drivetrain.stop();
-        Subsystems.intake.stopArm();
-        Subsystems.intake.stopIntake();
+        Drivetrain.getInstance().stop();
+        Intake.getInstance().stopArm();
+        Intake.getInstance().stopIntake();
 
-        Subsystems.drivetrain.setAngle(0); // Does this work?
-        Subsystems.drivetrain.setDistance(0);
+        Drivetrain.getInstance().setAngle(0); // Does this work?
+        Drivetrain.getInstance().setDistance(0);
 
         Dashboard.setDouble("distance_setpoint", 0); // Reset the global distance setpoint
         Dashboard.setDouble("angle_setpoint", 0); // Reset the global angle setpoint

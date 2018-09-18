@@ -5,8 +5,9 @@ import org.team5499.robots.frc2018.controllers.OperatorController;
 import org.team5499.robots.frc2018.controllers.TestController;
 import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.pid.Controllers;
-import org.team5499.robots.frc2018.subsystems.Subsystems;
 import org.team5499.robots.frc2018.path_pursuit.Position;
+import org.team5499.robots.frc2018.subsystems.Intake;
+import org.team5499.robots.frc2018.subsystems.Drivetrain;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
@@ -49,13 +50,13 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
-        Subsystems.drivetrain.handleAngleVelocity();
+        Drivetrain.getInstance().handleAngleVelocity();
         Dashboard.setDouble("battvoltage", RobotController.getBatteryVoltage());
         Dashboard.setDouble("current_time", Timer.getFPGATimestamp());
-        Dashboard.setInt("pot_raw_value", Subsystems.intake.getRawPotValue());
-        Dashboard.setDouble("arm_angle", Subsystems.intake.getArmAngle());
-        Dashboard.setInt("sonic_raw_value", Subsystems.intake.getRawSonicValue());
-        Dashboard.setDouble("cube_distance", Subsystems.intake.getCubeDistance());
+        Dashboard.setInt("pot_raw_value", Intake.getInstance().getRawPotValue());
+        Dashboard.setDouble("arm_angle", Intake.getInstance().getArmAngle());
+        Dashboard.setInt("sonic_raw_value", Intake.getInstance().getRawSonicValue());
+        Dashboard.setDouble("cube_distance", Intake.getInstance().getCubeDistance());
 
         Controllers.arm_controller.handle();
         Controllers.turn_controller.handle();
@@ -100,7 +101,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         autoController.handle();
-        Position.getInstance().updateWithOneEncoder(Subsystems.drivetrain.getDistance(), Math.toRadians(Subsystems.drivetrain.getAngle()));
+        Position.getInstance().updateWithOneEncoder(Drivetrain.getInstance().getDistance(), Math.toRadians(Drivetrain.getInstance().getAngle()));
     }
 
     /**
@@ -118,7 +119,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         operatorController.handle();
-        Position.getInstance().updateWithOneEncoder(Subsystems.drivetrain.getDistance(), Math.toRadians(Subsystems.drivetrain.getAngle()));
+        Position.getInstance().updateWithOneEncoder(Drivetrain.getInstance().getDistance(), Math.toRadians(Drivetrain.getInstance().getAngle()));
     }
 
     /**

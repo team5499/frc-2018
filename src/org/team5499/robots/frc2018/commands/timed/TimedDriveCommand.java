@@ -1,7 +1,8 @@
 package org.team5499.robots.frc2018.commands.timed;
 
 import org.team5499.robots.frc2018.commands.BaseCommand;
-import org.team5499.robots.frc2018.subsystems.Subsystems;
+import org.team5499.robots.frc2018.commands.pid.DriveCommand;
+import org.team5499.robots.frc2018.subsystems.Drivetrain;
 
 public class TimedDriveCommand extends BaseCommand {
 
@@ -14,14 +15,14 @@ public class TimedDriveCommand extends BaseCommand {
 
     @Override
     public void handle() {
-        Subsystems.drivetrain.setDrivetrain(speed, speed);
+        Drivetrain.getInstance().setDrivetrain(speed, speed);
     }
 
     @Override
     public boolean isFinished() {
         boolean finished = super.isFinished();
         if(finished) {
-            Subsystems.drivetrain.stop();
+            Drivetrain.getInstance().stop();
         }
         return finished;
     }

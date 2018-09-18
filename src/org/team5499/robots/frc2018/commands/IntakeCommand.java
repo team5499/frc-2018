@@ -1,6 +1,6 @@
 package org.team5499.robots.frc2018.commands;
 
-import org.team5499.robots.frc2018.subsystems.Subsystems;
+import org.team5499.robots.frc2018.subsystems.Intake;
 
 public class IntakeCommand extends BaseCommand {
 
@@ -17,14 +17,14 @@ public class IntakeCommand extends BaseCommand {
 
     @Override
     public void handle() {
-        Subsystems.intake.setIntake(speed);
+        Intake.getInstance().setIntake(speed);
     }
 
     @Override
     public boolean isFinished() {
-        boolean finished = super.isFinished() || (Subsystems.intake.getCubeDetected() && wait_for_cube);
+        boolean finished = super.isFinished() || (Intake.getInstance().getCubeDetected() && wait_for_cube);
         if(finished) {
-            Subsystems.intake.stopIntake();
+            Intake.getInstance().stopIntake();
         }
         return finished;
     }

@@ -3,7 +3,7 @@ package org.team5499.robots.frc2018.commands.pid;
 import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.pid.Controllers;
 import org.team5499.robots.frc2018.commands.BaseCommand;
-import org.team5499.robots.frc2018.subsystems.Subsystems;
+import org.team5499.robots.frc2018.subsystems.Drivetrain;
 
 public class DriveSlowCommand extends BaseCommand {
 
@@ -45,7 +45,7 @@ public class DriveSlowCommand extends BaseCommand {
         if(finished) {
             System.out.println("Finished");
             Controllers.drive_controller.setEnabled(false, 0);
-            Subsystems.drivetrain.stop();
+            Drivetrain.getInstance().stop();
             reset();
         }
         return finished;

@@ -3,8 +3,9 @@ package org.team5499.robots.frc2018.controllers;
 import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.pid.Controllers;
 import org.team5499.robots.frc2018.Hardware;
+import org.team5499.robots.frc2018.subsystems.Intake;
+import org.team5499.robots.frc2018.subsystems.Drivetrain;
 
-import org.team5499.robots.frc2018.subsystems.Subsystems;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -29,23 +30,23 @@ public class OperatorController extends BaseController {
 
     @Override
     public void handle() {
-        Subsystems.drivetrain.setDrivetrain(getLeft(), getRight()); /** Set the left and right speeds of the drivetrain */
-        Subsystems.intake.setIntake(getIntake()); /** Set the intake speed */
+        Drivetrain.getInstance().setDrivetrain(getLeft(), getRight()); /** Set the left and right speeds of the drivetrain */
+        Intake.getInstance().setIntake(getIntake()); /** Set the intake speed */
 
         //Controllers.arm_controller.setEnabled(false, false);
-        //Subsystems.intake.setArm(getArm());
-        Subsystems.intake.setArm(getArm());
+        //Intake.getInstance().setArm(getArm());
+        Intake.getInstance().setArm(getArm());
         
     }
 
     @Override
     public void reset() {
-        Subsystems.drivetrain.stop();
-        Subsystems.intake.stopArm();
-        Subsystems.intake.stopIntake();
+        Drivetrain.getInstance().stop();
+        Intake.getInstance().stopArm();
+        Intake.getInstance().stopIntake();
 
-        Subsystems.drivetrain.setAngle(0);
-        Subsystems.drivetrain.setDistance(0);
+        Drivetrain.getInstance().setAngle(0);
+        Drivetrain.getInstance().setDistance(0);
     }
 
     /** Get arm speed(positive is up) */
@@ -55,9 +56,9 @@ public class OperatorController extends BaseController {
             return 0;
         }
 
-        if(Subsystems.intake.getArmAngle() < -25 && raw_speed < 0) {
+        if(Intake.getInstance().getArmAngle() < -25 && raw_speed < 0) {
             return 0;
-        } else if(Subsystems.intake.getArmAngle() > 90 && raw_speed > 0){
+        } else if(Intake.getInstance().getArmAngle() > 90 && raw_speed > 0){
             return 0;
         }
         return raw_speed * Dashboard.getDouble("ARM_SPEED_MULTIPLIER");
