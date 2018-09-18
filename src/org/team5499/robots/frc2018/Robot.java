@@ -61,8 +61,6 @@ public class Robot extends TimedRobot {
         Controllers.turn_controller.handle();
         Controllers.drive_controller.handle();
         
-        //System.out.println(Subsystems.drivetrain.getDistance());
-        Position.getInstance().handle(Subsystems.drivetrain.getAngle(), Subsystems.drivetrain.getDistance());
         System.out.println(Position.getInstance().toString());
     }
 
@@ -78,13 +76,12 @@ public class Robot extends TimedRobot {
         Controllers.arm_controller.reset();
         Controllers.turn_controller.reset();
         Controllers.drive_controller.reset();
-
-
+        Position.getInstance().zero();
     }
     
 	@Override
 	public void disabledPeriodic() {
-        Position.getInstance().reset();
+        
     }
 
     /**
@@ -94,7 +91,7 @@ public class Robot extends TimedRobot {
     public void autonomousInit(){
         autoController.reset();
         autoController.start();
-        Position.getInstance().reset();
+        Position.getInstance().configure(Dashboard.getDouble("ROBOT_WIDTH"), 0, 0, 0);
     }
 
     /**
@@ -102,7 +99,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        autoController.handle();    }
+        autoController.handle();
+        Position.getInstance().updateWithOneEncoder(Subsystems.drivetrain.getDistance(), Math.toRadians(Subsystems.drivetrain.getAngle()));
+    }
 
     /**
      * - Start operator controller
@@ -118,7 +117,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-        operatorController.handle();    }
+        operatorController.handle();
+        Position.getInstance().updateWithOneEncoder(Subsystems.drivetrain.getDistance(), Math.toRadians(Subsystems.drivetrain.getAngle()));
+    }
 
     /**
      * - Start test controller

@@ -10,116 +10,125 @@ public class Position {
 
     public static Position getInstance() {
         if(m_instance == null) {
-            m_instance = new Position(Dashboard.getDouble("ROBOT_WIDTH"));
+            m_instance = new Position();
         }
         return m_instance;
     }
 
-    private double width;
-    
-    private double xPosition;
-    private double yPosition;
-    private double angle;
-    private double lastAngle;
-    private double distance;
-    private double lastDistance;
+    private double theta_last = 0.0;
+    private double x_last = 0.0;
+    private double y_last = 0.0;
+    private double width = 0.0;
 
-    private Position(double wheelToWheelDistance) {
-        this.width = wheelToWheelDistance;
-        this.xPosition = 0;
-        this.yPosition = 0;
-        this.angle = 0;
-        this.lastAngle = 0;
-        this.distance = 0;
-        this.lastDistance = 0;
+    private double last_left_distance = 0.0;
+    private double last_right_distance = 0.0;
+    private double last_angle = 0.0;
+
+    private boolean is_configured = false;
+
+    private Position() {}
+
+    public void configure(double width, double x0, double y0, double theta0) {
+        this.width = width;
+        this.x_last = x0;
+        this.y_last = y0;
+        this.theta_last = theta0;
+        this.is_configured = true;
+        System.out.println("Position system configured!");
     }
 
-    public void handle(double currentAngle, double currentDistance) {
-        // angle calcs
-        lastAngle = angle;
-        angle = Math.toRadians(currentAngle);
-        double dAngle = angle - lastAngle;
+    /**
+     * 
+     * @param left_distance distance in inches from left encoder
+     * @param angle angle in radians of the drivetrain
+     */
+    public void updateWithOneEncoder(double left_distance, double angle) {
+        double angle_delta = angle - last_angle;
 
-        // distance calcs
-        lastDistance = distance;
-        distance = currentDistance;
-        double dTrackedDistance = distance - lastDistance;
+        double left_delta = left_distance - last_left_distance;
+        double right_delta = angle_delta * width - left_delta;
 
-        // untracked wheel estimate
-        double dUntrackedDistance = dAngle * width - dTrackedDistance;
-
-        // calculate arc length
-        double averageArcLength = (dTrackedDistance + dUntrackedDistance) / 2.0;
-
-        double radius;
-        double deltaXRotated;
-        double deltaYRotated;
-
-        if(dAngle == 0) {
-            deltaYRotated = averageArcLength;
-            deltaXRotated = 0;
-        } else {
-            radius = averageArcLength / dAngle;
-            deltaXRotated = radius * Math.cos(dAngle) - radius;
-            deltaYRotated = radius * Math.sin(dAngle);
-        }     
-
-        xPosition += deltaXRotated * Math.cos(angle) + deltaYRotated * Math.sin(angle);
-        yPosition += -deltaXRotated * Math.sin(angle) + deltaYRotated * Math.cos(angle);
-    }
-
-    public void setWidth(double wheelToWheelDistance) {
-        this.width = wheelToWheelDistance;
-    }
-
-    public double getWidth() {
-        return this.width;
+        update(left_delta,right_delta);
     }
     
     /**
-     * @return x and y coords of the robot in the form: [x,y]
-    */
-    public double[] getRobotCoordinates() {
-        return new double[] {this.xPosition, this.yPosition};
+     * 
+     * @param left_distance distance in inches from left encoder
+     * @param right_distance distance in inches from the right encoder
+     */
+    public void updateWithTwoEncoders(double left_distance, double right_distance) {
+        double left_delta = left_distance - last_left_distance;
+        double right_delta = right_distance - last_right_distance;
+
+        update(left_delta, right_delta);
     }
 
-    public double getRobotX() {
-        return this.xPosition;
-    }
+    private void update(double left_delta, double right_delta){
+        double theta_delta = (left_delta - right_delta) / width;
+        double R = 0.0;
+        if(left_delta > right_delta) {
+            R = ((right_delta * width) / (left_delta - right_delta)) + (width / 2);
+        } else if(left_delta < right_delta) {
+            R = ((left_delta * width) / (right_delta - left_delta)) + (width / 2);
+        } else {
+            R = Double.MAX_VALUE;
+        }
 
-    public double getRobotY() {
-        return this.yPosition;
-    }
+        double forward_delta_magnitude = R * Math.sin(Math.abs(theta_delta));
+        double right_delta_magnitude = R - (R * Math.cos(theta_delta));
+        
+        double x_delta = (forward_delta_magnitude * Math.cos(Math.toRadians(450 - theta_last))) 
+                + (right_delta_magnitude * Math.cos(Math.toRadians(450 - (theta_last + 90))));
+        double y_delta = (forward_delta_magnitude * Math.sin(Math.toRadians(450 - theta_last))) 
+                + (right_delta_magnitude * Math.sin(Math.toRadians(450 - (theta_last + 90))));
 
-    public void setRobotCoordinates(double xPosition, double yPosition) {
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
-    }
-
-    public void setRobotX(double xPosition) {
-        this.xPosition = xPosition;
-    }
-
-    public void setRobotY(double yPosition) {
-        this.yPosition = yPosition;
+        theta_last += Math.toDegrees(theta_delta);
+        x_last += x_delta;
+        y_last += y_delta;
     }
 
     public Transform2d getTransform() {
-        return new Transform2d(new Vector2d(getRobotX(), getRobotY()), Math.toDegrees(lastAngle));
+        return new Transform2d(new Vector2d(getX(), getY()), getHeading());
     }
 
-    public void reset() {
-        this.xPosition = 0;
-        this.yPosition = 0;
-        this.angle = 0;
-        this.lastAngle = 0;
-        this.distance = 0;
-        this.lastDistance = 0;
+    public double getX() {
+        return this.x_last;
+    }
+
+    public void setX(double x) {
+        this.x_last = x;
+    }
+
+    public double getY() {
+        return this.y_last;
+    }
+
+    public void setY(double y) {
+        this.y_last = y;
+    }
+
+    public double getHeading() {
+        double adjAngle = theta_last;
+        while(adjAngle < 0.0)
+            adjAngle += 360.0;
+        while(adjAngle >= 360.0)
+            adjAngle -= 360.0;
+
+        return adjAngle;
+    }
+
+    public void setHeading(double theta) {
+        this.theta_last = theta;
+    }
+
+    public void zero() {
+        setX(0);
+        setY(0);
     }
 
     @Override
     public String toString() {
-        return "Robot Position -- x: " + getRobotX() + ", y: " + getRobotY();
+        return "Robot Position -- x: " + getX() + ", y: " + getY();
     }
 
 }
