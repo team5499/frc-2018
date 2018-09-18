@@ -1,7 +1,7 @@
 package org.team5499.robots.frc2018.path_pursuit;
 
-import org.team5499.robots.frc2018.commands.exceptions.OutsideBoundException;
-import org.team5499.robots.frc2018.commands.exceptions.VerticalPathException;
+import org.team5499.robots.frc2018.exceptions.OutsideBoundException;
+import org.team5499.robots.frc2018.exceptions.VerticalPathException;
 import org.team5499.robots.frc2018.math.Vector2d;
 
 public class BoundLine {

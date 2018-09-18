@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.team5499.robots.frc2018.commands.exceptions.IncompletePathException;
+import org.team5499.robots.frc2018.exceptions.IncompletePathException;
 import org.team5499.robots.frc2018.math.Vector2d;
 
 public class Path {
