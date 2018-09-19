@@ -37,8 +37,8 @@ public class DriveController {
             System.out.println("Setpoint:" + distance_controller.getSetpoint());
             angle_controller.setProcessVariable(Drivetrain.getInstance().getAngle());
             angle_controller.setVelocity(Drivetrain.getInstance().getAngleVelocity());
-            distance_controller.setProcessVariable(Drivetrain.getInstance().getDistance());
-            distance_controller.setVelocity(Drivetrain.getInstance().getDistanceVelocity());
+            distance_controller.setProcessVariable(Drivetrain.getInstance().getLeftDistance());
+            distance_controller.setVelocity(Drivetrain.getInstance().getLeftDistanceVelocity());
             double angle_output = angle_controller.calculate();
             double distance_output = distance_controller.calculate();
             Drivetrain.getInstance().setDrivetrain(distance_output - angle_output, distance_output + angle_output);

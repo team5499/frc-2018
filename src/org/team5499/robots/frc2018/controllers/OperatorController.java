@@ -45,7 +45,7 @@ public class OperatorController extends BaseController {
         Intake.getInstance().stopIntake();
 
         Drivetrain.getInstance().setAngle(0);
-        Drivetrain.getInstance().setDistance(0);
+        Drivetrain.getInstance().setLeftDistance(0);
     }
 
     /** Get arm speed(positive is up) */

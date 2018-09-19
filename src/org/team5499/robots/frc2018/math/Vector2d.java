@@ -60,6 +60,10 @@ public class Vector2d {
         return adjustedAngleDelta;
     }
 
+    public static double angleBetweenRadians(Vector2d from, Vector2d to) {
+        return Math.toRadians(angleBetween(from, to));
+    }
+
     public static Vector2d representHeadingWithUnitVector(double heading) {
         double v0 = Math.cos(Math.toRadians(450 - heading));
         double v1 = Math.sin(Math.toRadians(450 - heading));

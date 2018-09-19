@@ -96,6 +96,10 @@ public class Path {
 		}
     }
 
+    public double getDistanceToEndpoint(Vector2d position) {
+        return Vector2d.distanceBetween(position, waypoints[waypoints.length - 1]);
+    }
+
     public BoundLine[] getBoundLines() {
         return this.lines;
     }

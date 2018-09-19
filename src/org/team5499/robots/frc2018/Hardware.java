@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.ParamEnum;
 
@@ -52,6 +53,11 @@ public class Hardware {
             Dashboard.getInt("TALON_QUADRATURE_UPDATE_INTERVAL"), 0);
         Hardware.right_master_talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature,
             Dashboard.getInt("TALON_QUADRATURE_UPDATE_INTERVAL"), 0);
+
+        Hardware.left_master_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+        Hardware.right_master_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+        
+
 
         /** Set inversions for talons */
         Hardware.right_master_talon.setInverted(true);

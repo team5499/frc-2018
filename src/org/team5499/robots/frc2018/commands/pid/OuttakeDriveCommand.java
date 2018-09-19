@@ -22,7 +22,7 @@ public class OuttakeDriveCommand extends BaseCommand {
     @Override
     public void start() {
         super.start();
-        initial_distance = Drivetrain.getInstance().getDistance();
+        initial_distance = Drivetrain.getInstance().getLeftDistance();
         Drivetrain.getInstance().setDrivetrain(-0.25, -0.25);
         
         enabled = true;
@@ -45,7 +45,7 @@ public class OuttakeDriveCommand extends BaseCommand {
         if(finished) {
             Intake.getInstance().stopIntake();
             Drivetrain.getInstance().stop();
-            Dashboard.setDouble("distance_setpoint", Dashboard.getDouble("distance_setpoint") + Drivetrain.getInstance().getDistance() - initial_distance);
+            Dashboard.setDouble("distance_setpoint", Dashboard.getDouble("distance_setpoint") + Drivetrain.getInstance().getLeftDistance() - initial_distance);
         }
         return finished;
     }

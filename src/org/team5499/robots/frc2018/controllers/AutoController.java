@@ -352,7 +352,7 @@ public class AutoController extends BaseController {
         Intake.getInstance().stopIntake();
 
         Drivetrain.getInstance().setAngle(0); // Does this work?
-        Drivetrain.getInstance().setDistance(0);
+        Drivetrain.getInstance().setLeftDistance(0);
 
         Dashboard.setDouble("distance_setpoint", 0); // Reset the global distance setpoint
         Dashboard.setDouble("angle_setpoint", 0); // Reset the global angle setpoint

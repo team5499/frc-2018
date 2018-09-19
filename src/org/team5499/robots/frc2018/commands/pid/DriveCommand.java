@@ -43,7 +43,7 @@ public class DriveCommand extends BaseCommand {
     public boolean isFinished() {
         System.out.println(DriveController.getInstance().distanceOnTarget() + ":" + DriveController.getInstance().angleErrorOnTarget());
         System.out.println(Dashboard.getDouble("distance_setpoint"));
-        System.out.println("Distance" + Drivetrain.getInstance().getDistance());
+        System.out.println("Distance" + Drivetrain.getInstance().getLeftDistance());
         boolean finished = (super.isFinished() || (DriveController.getInstance().distanceOnTarget() && DriveController.getInstance().angleErrorOnTarget() && !wait_for_timeout));
         if(finished) {
             System.out.println("Finished");

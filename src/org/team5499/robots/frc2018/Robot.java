@@ -11,7 +11,6 @@ import org.team5499.robots.frc2018.path_pursuit.RLS;
 import org.team5499.robots.frc2018.subsystems.Intake;
 import org.team5499.robots.frc2018.subsystems.Drivetrain;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -103,7 +102,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         autoController.handle();
-        RLS.getInstance().updateWithOneEncoder(Drivetrain.getInstance().getDistance(), Math.toRadians(Drivetrain.getInstance().getAngle()));
+        RLS.getInstance().updateWithOneEncoder(Drivetrain.getInstance().getLeftDistance(), Math.toRadians(Drivetrain.getInstance().getAngle()));
     }
 
     /**
@@ -121,7 +120,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         operatorController.handle();
-        RLS.getInstance().updateWithOneEncoder(Drivetrain.getInstance().getDistance(), Math.toRadians(Drivetrain.getInstance().getAngle()));
+        RLS.getInstance().updateWithTwoEncoders(Drivetrain.getInstance().getLeftDistance(), Drivetrain.getInstance().getRightDistance());
     }
 
     /**

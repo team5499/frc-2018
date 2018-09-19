@@ -37,10 +37,10 @@ public class TurnController {
 
     public void setEnabled(boolean enable) {
         if(enable) {
-            initial_distance = Drivetrain.getInstance().getDistance();
+            initial_distance = Drivetrain.getInstance().getLeftDistance();
             controller.setSetpoint(Dashboard.getDouble("angle_setpoint"));
         } else {
-            Dashboard.setDouble("distance_setpoint", Dashboard.getDouble("distance_setpoint") + Drivetrain.getInstance().getDistance() - initial_distance);
+            Dashboard.setDouble("distance_setpoint", Dashboard.getDouble("distance_setpoint") + Drivetrain.getInstance().getLeftDistance() - initial_distance);
         }
         controller.setP(Dashboard.getDouble("kTURN_P"));
         controller.setI(Dashboard.getDouble("kTURN_I"));
