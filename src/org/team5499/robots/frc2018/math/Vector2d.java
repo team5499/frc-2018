@@ -27,6 +27,13 @@ public class Vector2d {
             y += v.y;
         }
     }
+
+    public void subtract(Vector2d... vectors) {
+        for(Vector2d v : vectors) {
+            x -= v.x;
+            y -= v.y;
+        }
+    }
     
     public void multiply(double c) {
         x *= c;

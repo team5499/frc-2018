@@ -57,8 +57,9 @@ public class Hardware {
         Hardware.left_master_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
         Hardware.right_master_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
         
-
-
+        Hardware.left_master_talon.configClosedLoopPeriod(0, 1, 0);
+        Hardware.right_master_talon.configClosedLoopPeriod(0, 1, 0);
+        
         /** Set inversions for talons */
         Hardware.right_master_talon.setInverted(true);
         Hardware.right_slave_talon.setInverted(true);

@@ -28,7 +28,7 @@ public class DrivePath extends BaseCommand {
 
     @Override
     public void handle() {
-        double[] velo = PathFollower.getInstance().update();
+        double[] velo = PathFollower.getInstance().update(Math.toRadians(Drivetrain.getInstance().getAngle()));
         Drivetrain.getInstance().setDrivetrainVelocitySetpoints(velo[0], velo[1]);
     }
 

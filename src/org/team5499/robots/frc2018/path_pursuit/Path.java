@@ -123,7 +123,7 @@ public class Path {
                 waypoints.add(new Vector2d(x, y));
                 line = br.readLine();
             }
-
+            br.close();
         } catch(Exception e) {
             e.printStackTrace();
             return default_path;
