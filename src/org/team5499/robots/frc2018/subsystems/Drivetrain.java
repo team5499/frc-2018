@@ -51,7 +51,29 @@ public class Drivetrain {
         Hardware.right_master_talon.set(ControlMode.Velocity, right);
     }
 
-    
+    public void setVelocityRampRate(double ramp_rate) {
+        Hardware.left_master_talon.configClosedloopRamp(ramp_rate, 0);
+        Hardware.right_master_talon.configClosedloopRamp(ramp_rate, 0);
+    }
+
+    public void setAcceptableVelocityError(int allowableCloseLoopError) {
+        Hardware.left_master_talon.configAllowableClosedloopError(0, allowableCloseLoopError, 0);
+        Hardware.right_master_talon.configAllowableClosedloopError(0, allowableCloseLoopError, 0);
+    }
+
+    public void setLeftvelocityPIDF(double kP, double kI, double kD, double kF) {
+        Hardware.left_master_talon.config_kD(0, kP, 0);
+        Hardware.left_master_talon.config_kI(0, kI, 0);
+        Hardware.left_master_talon.config_kD(0, kD, 0);
+        Hardware.left_master_talon.config_kF(0, kF, 0);
+    }
+
+    public void setRightvelocityPIDF(double kP, double kI, double kD, double kF) {
+        Hardware.right_master_talon.config_kD(0, kP, 0);
+        Hardware.right_master_talon.config_kI(0, kI, 0);
+        Hardware.right_master_talon.config_kD(0, kD, 0);
+        Hardware.right_master_talon.config_kF(0, kF, 0);
+    }
 
     /** Get distance in inches that the encoder has moved */
     public double getLeftDistance() {

@@ -27,18 +27,10 @@ public class PathFollower {
     private boolean is_configured = false;
 
     private PathFollower() {
-        setLeftPIDF(0, 0, 0, 0);
-        setRightPIDF(0, 0, 0, 0);
-        setAcceptableVelocityError(0);
-        setRampRate(0);
     }
 
     public void configure(Path path, PFConfig config) {
         this.m_path = path;
-        setLeftPIDF(config.LkP, config.LkI, config.LkD, config.LkF);
-        setRightPIDF(config.RkP, config.RkI, config.RkD, config.RkF);
-        setAcceptableVelocityErrorInches(config.acceptable_error_inches);
-        setRampRate(config.ramp_rate);
         this.max_average_velocity = config.max_average_velocity;
         this.turn_acceleration_coefficient = config.turn_acceleration_coefficient;
         this.is_configured = true;
@@ -102,55 +94,15 @@ public class PathFollower {
         return BminA.getMagnitude();
     }
 
-    public void setRampRate(double ramp_rate) {
-        Hardware.left_master_talon.configClosedloopRamp(ramp_rate, 0);
-        Hardware.right_master_talon.configClosedloopRamp(ramp_rate, 0);
-    }
 
-    public void setAcceptableVelocityErrorInches(double inches) {
-        int value = (int) (inches * (double) Dashboard.getInt("TICKS_PER_ROTATION") / (Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI));
-        setAcceptableVelocityError(value);
-    }
-
-    public void setAcceptableVelocityError(int allowableCloseLoopError) {
-        Hardware.left_master_talon.configAllowableClosedloopError(0, allowableCloseLoopError, 0);
-        Hardware.right_master_talon.configAllowableClosedloopError(0, allowableCloseLoopError, 0);
-    }
-
-    public void setLeftPIDF(double kP, double kI, double kD, double kF) {
-        Hardware.left_master_talon.config_kD(0, kP, 0);
-        Hardware.left_master_talon.config_kI(0, kI, 0);
-        Hardware.left_master_talon.config_kD(0, kD, 0);
-        Hardware.left_master_talon.config_kF(0, kF, 0);
-    }
-
-    public void setRightPIDF(double kP, double kI, double kD, double kF) {
-        Hardware.right_master_talon.config_kD(0, kP, 0);
-        Hardware.right_master_talon.config_kI(0, kI, 0);
-        Hardware.right_master_talon.config_kD(0, kD, 0);
-        Hardware.right_master_talon.config_kF(0, kF, 0);
-    }
 
     public void setPath(Path path) {
         this.m_path = path;
     }
 
     public static class PFConfig {
-        public double LkP = 0.0;
-        public double LkI = 0.0;
-        public double LkD = 0.0;
-        public double LkF = 0.0;
-
-        public double RkP = 0.0;
-        public double RkI = 0.0;
-        public double RkD = 0.0;
-        public double RkF = 0.0;
-         
-        public double acceptable_error_inches = 0.0;
-        public double ramp_rate = 0.0;
         public double max_average_velocity = 0.0;
         public double turn_acceleration_coefficient = 0.0;
-
         public double look_ahead_distance = 0.0;
     }
 

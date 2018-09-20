@@ -71,11 +71,8 @@ public class AutoController extends BaseController {
 
         Path path = new Path(new Vector2d[] {new Vector2d(0, 0), new Vector2d(10, 1), new Vector2d(15, 10)});
         PFConfig path_follower_config = new PFConfig();
-        path_follower_config.LkP = 0.25;
-        path_follower_config.RkP = 0.25;
         path_follower_config.max_average_velocity = 0.5;
         path_follower_config.turn_acceleration_coefficient = 0.1;
-        path_follower_config.ramp_rate = 10;
         path_follower_config.look_ahead_distance = 12;
 
         path_test.addCommand(new DrivePathCommand(10, path, path_follower_config));
@@ -341,7 +338,7 @@ public class AutoController extends BaseController {
             }
 
 
-        current_routine = path_test;
+        current_routine = baseline;
 
         /** Once the correct routine is choosen, handle it */
         if(current_routine.isFinished()) {

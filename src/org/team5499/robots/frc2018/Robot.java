@@ -52,6 +52,11 @@ public class Robot extends TimedRobot {
 
         Drivetrain.getInstance().setLeftDistance(0);
         Drivetrain.getInstance().setRightDistance(0);
+
+        Drivetrain.getInstance().setLeftvelocityPIDF(0.25, 0, 0 , 0);
+        Drivetrain.getInstance().setLeftvelocityPIDF(0.25, 0, 0, 0);
+        Drivetrain.getInstance().setAcceptableVelocityError(100);
+        Drivetrain.getInstance().setVelocityRampRate(2);
     }
 
     @Override
