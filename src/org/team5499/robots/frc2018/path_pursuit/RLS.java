@@ -15,6 +15,8 @@ public class RLS {
         return m_instance;
     }
 
+    // width used to be 22.0 cm in json
+
     private double theta_last = 0.0;
     private double x_last = 0.0;
     private double y_last = 0.0;
@@ -59,36 +61,37 @@ public class RLS {
     public void updateWithTwoEncoders(double left_distance, double right_distance) {
         double left_delta = left_distance - last_left_distance;
         double right_delta = right_distance - last_right_distance;
-
+        last_left_distance = left_distance;
+        last_right_distance = right_distance;
         update(left_delta, right_delta);
     }
 
-    private void update(double left_delta, double right_delta){
+    public void update(double left_delta, double right_delta){
         if(is_configured) {
-            double theta_delta = (left_delta - right_delta) / width;
-            double R = 0.0;
-            if(left_delta > right_delta) {
-                R = ((right_delta * width) / (left_delta - right_delta)) + (width / 2);
-            } else if(left_delta < right_delta) {
-                R = ((left_delta * width) / (right_delta - left_delta)) + (width / 2);
-            } else {
-                R = Double.MAX_VALUE;
-            }
-
-            double forward_delta_magnitude = R * Math.sin(Math.abs(theta_delta));
-            double right_delta_magnitude = R - (R * Math.cos(theta_delta));
-            
-            double x_delta = (forward_delta_magnitude * Math.cos(Math.toRadians(450 - theta_last))) 
-                    + (right_delta_magnitude * Math.cos(Math.toRadians(450 - (theta_last + 90))));
-            double y_delta = (forward_delta_magnitude * Math.sin(Math.toRadians(450 - theta_last))) 
-                    + (right_delta_magnitude * Math.sin(Math.toRadians(450 - (theta_last + 90))));
-
-            theta_last += Math.toDegrees(theta_delta);
-            x_last += x_delta;
-            y_last += y_delta;
-        } else {
-            System.out.println("Error: RLS not configured!");
-        }
+			double theta_delta = (left_delta - right_delta) / width;
+			double R = 0.0;
+			if(left_delta > right_delta) {
+				R = ((right_delta * width) / (left_delta - right_delta)) + (width / 2);
+			} else if(left_delta < right_delta) {
+				R = ((left_delta * width) / (right_delta - left_delta)) + (width / 2);
+			} else {
+				R = Double.MAX_VALUE;
+			}
+			
+			double forward_delta_magnitude = R * Math.sin(Math.abs(theta_delta));
+			double right_delta_magnitude = R - (R * Math.cos(theta_delta));
+			
+			double x_delta = (forward_delta_magnitude * Math.cos(Math.toRadians(450 - theta_last))) 
+					+ (right_delta_magnitude * Math.cos(Math.toRadians(450 - (theta_last + 90))));
+			double y_delta = (forward_delta_magnitude * Math.sin(Math.toRadians(450 - theta_last))) 
+					+ (right_delta_magnitude * Math.sin(Math.toRadians(450 - (theta_last + 90))));
+			
+			theta_last += Math.toDegrees(theta_delta);
+			x_last += x_delta;
+			y_last += y_delta;
+		} else {
+			System.out.println("Update failed: RSL not configured");
+		}
     }
 
     public Transform2d getTransform() {
@@ -128,11 +131,14 @@ public class RLS {
     public void zero() {
         setX(0);
         setY(0);
+        setHeading(0);
+        last_left_distance = 0.0;
+        last_right_distance = 0.0;
     }
 
     @Override
     public String toString() {
-        return "Robot Position -- x: " + getX() + ", y: " + getY();
+        return "Robot Position -- x: " + getX() + ", y: " + getY() + ", Heading: " + getHeading();
     }
 
 }

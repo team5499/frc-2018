@@ -47,6 +47,11 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
+        RLS.getInstance().zero();
+        RLS.getInstance().configure(Dashboard.getDouble("ROBOT_WIDTH"), 0, 0, 0);
+
+        Drivetrain.getInstance().setLeftDistance(0);
+        Drivetrain.getInstance().setRightDistance(0);
     }
 
     @Override
@@ -63,6 +68,7 @@ public class Robot extends TimedRobot {
         TurnController.getInstance().handle();
         DriveController.getInstance().handle();
         
+        RLS.getInstance().updateWithTwoEncoders(Drivetrain.getInstance().getLeftDistance(), Drivetrain.getInstance().getRightDistance());
         System.out.println(RLS.getInstance().toString());
     }
 
@@ -78,13 +84,22 @@ public class Robot extends TimedRobot {
         ArmController.getInstance().reset();
         TurnController.getInstance().reset();
         DriveController.getInstance().reset();
+
+        Drivetrain.getInstance().setLeftDistance(0);
+        Drivetrain.getInstance().setRightDistance(0);
+
         RLS.getInstance().zero();
     }
     
 	@Override
 	public void disabledPeriodic() {
-        
+        RLS.getInstance().updateWithTwoEncoders(Drivetrain.getInstance().getLeftDistance(), Drivetrain.getInstance().getRightDistance());
+        System.out.println(RLS.getInstance().toString());
+
     }
+
+    private double last_left_value = 0;
+    private double last_right_value = 0;
 
     /**
      * - Start auto controller
@@ -93,7 +108,12 @@ public class Robot extends TimedRobot {
     public void autonomousInit(){
         autoController.reset();
         autoController.start();
+        Drivetrain.getInstance().setLeftDistance(0);
+        Drivetrain.getInstance().setRightDistance(0);
         RLS.getInstance().configure(Dashboard.getDouble("ROBOT_WIDTH"), 0, 0, 0);
+
+
+
     }
 
     /**
@@ -102,7 +122,11 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         autoController.handle();
-        RLS.getInstance().updateWithOneEncoder(Drivetrain.getInstance().getLeftDistance(), Math.toRadians(Drivetrain.getInstance().getAngle()));
+        //RLS.getInstance().updateWithTwoEncoders(Drivetrain.getInstance().getLeftDistance(), Drivetrain.getInstance().getRightDistance());
+        //RLS.getInstance().updateWithOneEncoder(Drivetrain.getInstance().getLeftDistance(), Math.toRadians(Drivetrain.getInstance().getAngle()));
+        
+
+        // System.out.println(Drivetrain.getInstance().getLeftDistance() + " - " + Drivetrain.getInstance().getRightDistance());
     }
 
     /**

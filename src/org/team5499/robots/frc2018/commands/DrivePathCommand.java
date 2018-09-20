@@ -5,16 +5,16 @@ import org.team5499.robots.frc2018.path_pursuit.PathFollower;
 import org.team5499.robots.frc2018.path_pursuit.PathFollower.PFConfig;
 import org.team5499.robots.frc2018.subsystems.Drivetrain;
 
-public class DrivePath extends BaseCommand {
+public class DrivePathCommand extends BaseCommand {
 
     private Path path;
     private PFConfig config;
 
-    public DrivePath(double to, Path path) {
+    public DrivePathCommand(double to, Path path) {
         this(to, path, new PFConfig());
     }
 
-    public DrivePath(double to, Path path, PFConfig config) {
+    public DrivePathCommand(double to, Path path, PFConfig config) {
         super(to);
         this.path = path;
         this.config = config;
@@ -29,7 +29,7 @@ public class DrivePath extends BaseCommand {
     @Override
     public void handle() {
         double[] velo = PathFollower.getInstance().update(Math.toRadians(Drivetrain.getInstance().getAngle()));
-        Drivetrain.getInstance().setDrivetrainVelocitySetpoints(velo[0], velo[1]);
+        Drivetrain.getInstance().setDrivetrainVelocitySetpoints(velo[0] , velo[1]);
     }
 
     @Override

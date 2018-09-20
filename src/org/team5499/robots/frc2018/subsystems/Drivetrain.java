@@ -84,7 +84,7 @@ public class Drivetrain {
     }
 
     public double getRightDistance() {
-        return (double) getRightRawDistance() * Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI / (double) Dashboard.getInt("TICKS_PER_ROTATION");
+        return -(double) getRightRawDistance() * Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI / (double) Dashboard.getInt("TICKS_PER_ROTATION");
     }
 
 

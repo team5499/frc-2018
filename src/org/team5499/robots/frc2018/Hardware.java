@@ -56,7 +56,8 @@ public class Hardware {
 
         Hardware.left_master_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
         Hardware.right_master_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-        
+        Hardware.left_master_talon.setSensorPhase(true);
+
         Hardware.left_master_talon.configClosedLoopPeriod(0, 1, 0);
         Hardware.right_master_talon.configClosedLoopPeriod(0, 1, 0);
         

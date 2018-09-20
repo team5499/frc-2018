@@ -1,6 +1,9 @@
 package org.team5499.robots.frc2018.controllers;
 
 import org.team5499.robots.frc2018.dashboard.Dashboard;
+import org.team5499.robots.frc2018.math.Vector2d;
+import org.team5499.robots.frc2018.path_pursuit.Path;
+import org.team5499.robots.frc2018.path_pursuit.PathFollower.PFConfig;
 import org.team5499.robots.frc2018.subsystems.Drivetrain;
 import org.team5499.robots.frc2018.subsystems.Intake;
 
@@ -32,6 +35,7 @@ public class AutoController extends BaseController {
      * TC - Two cube
      */
     private Routine ro_tc, ro_oc, ro_nc, ro_c_oc, ri_oc, ri_nc, m_nc, m_oc_r, m_oc_l, m_tc_r, m_tc_l, li_oc, li_nc, lo_tc, lo_oc, lo_nc, lo_c_oc, baseline, nothing, tuning;
+    private Routine path_test;
 
     private BaseCommand current_command;
     private String game_data;
@@ -41,6 +45,8 @@ public class AutoController extends BaseController {
         game_data = null;
         Dashboard.setDouble("distance_setpoint", 0);
         Dashboard.setDouble("angle_setpoint", 0);
+
+        path_test = new Routine();
 
         ro_tc = new Routine();
         ro_oc = new Routine();
@@ -62,6 +68,17 @@ public class AutoController extends BaseController {
         baseline = new Routine();
         nothing = new Routine();
         tuning = new Routine();
+
+        Path path = new Path(new Vector2d[] {new Vector2d(0, 0), new Vector2d(10, 1), new Vector2d(15, 10)});
+        PFConfig path_follower_config = new PFConfig();
+        path_follower_config.LkP = 0.25;
+        path_follower_config.RkP = 0.25;
+        path_follower_config.max_average_velocity = 0.5;
+        path_follower_config.turn_acceleration_coefficient = 0.1;
+        path_follower_config.ramp_rate = 10;
+        path_follower_config.look_ahead_distance = 12;
+
+        path_test.addCommand(new DrivePathCommand(10, path, path_follower_config));
 
         ro_tc.addCommand(new NothingCommand(0));
         ro_tc.addCommand(new ArmCommand(1, true, true, 110));
@@ -129,9 +146,6 @@ public class AutoController extends BaseController {
         m_oc_r.addCommand(new DriveSlowCommand(1, false, -10));
         m_oc_r.addCommand(new ArmCommand(0, true, false, 110));
         m_oc_r.addCommand(new OuttakeDriveCommand(1, true, 0.6));
-
-
-
 
         m_tc_l.addCommand(new NothingCommand(0));
         m_tc_l.addCommand(new ArmCommand(0, true, true, 110));
@@ -235,9 +249,7 @@ public class AutoController extends BaseController {
         tuning.addCommand(new IntakeDriveCommand(10, false, 200, -1, true));
         tuning.addCommand(new NothingCommand(10));
 
-
-        
-        current_routine = nothing;
+        current_routine = path_test;
     }
 
     @Override
@@ -253,7 +265,7 @@ public class AutoController extends BaseController {
         }
         game_data = DriverStation.getInstance().getGameSpecificMessage();
         Dashboard.setString("game_data", game_data);
-        System.out.println(Dashboard.getString("automode"));
+        // System.out.println(Dashboard.getString("automode"));
         switch(Dashboard.getString("automode")) {
             case "left_inner":
                 if(game_data.substring(0, 1).equals("L")) {
@@ -326,7 +338,10 @@ public class AutoController extends BaseController {
             default:
                 System.out.println("Automode mode not recognized");
                 break;
-        }
+            }
+
+
+        current_routine = path_test;
 
         /** Once the correct routine is choosen, handle it */
         if(current_routine.isFinished()) {

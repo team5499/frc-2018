@@ -20,10 +20,10 @@ public class BoundLine {
     }
 
     public double get(double x) throws OutsideBoundException {
-        if(x >= lowerXBound && x <= upperXBound) {
+        //if(x >= lowerXBound && x <= upperXBound) {
             return m * x + b;
-        }
-        throw new OutsideBoundException("Tried to get value outside bounds of line function!");
+        //}
+        //throw new OutsideBoundException("Tried to get value outside bounds of line function!");
     }
 
     public double getSlope() {
