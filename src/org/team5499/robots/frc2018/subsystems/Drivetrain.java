@@ -62,14 +62,14 @@ public class Drivetrain {
     }
 
     public void setLeftvelocityPIDF(double kP, double kI, double kD, double kF) {
-        Hardware.left_master_talon.config_kD(0, kP, 0);
+        Hardware.left_master_talon.config_kP(0, kP, 0);
         Hardware.left_master_talon.config_kI(0, kI, 0);
         Hardware.left_master_talon.config_kD(0, kD, 0);
         Hardware.left_master_talon.config_kF(0, kF, 0);
     }
 
     public void setRightvelocityPIDF(double kP, double kI, double kD, double kF) {
-        Hardware.right_master_talon.config_kD(0, kP, 0);
+        Hardware.right_master_talon.config_kP(0, kP, 0);
         Hardware.right_master_talon.config_kI(0, kI, 0);
         Hardware.right_master_talon.config_kD(0, kD, 0);
         Hardware.right_master_talon.config_kF(0, kF, 0);

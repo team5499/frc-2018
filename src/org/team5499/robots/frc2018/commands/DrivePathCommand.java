@@ -34,12 +34,13 @@ public class DrivePathCommand extends BaseCommand {
 
     @Override
     public void reset() {
+        PathFollower.getInstance().configure(path, config);    
         super.reset();
     }
 
     @Override
     public boolean isFinished() {
-        return super.isFinished();
+        return PathFollower.getInstance().getDoneWithPath() || super.isFinished();
     }
 
 }

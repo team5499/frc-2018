@@ -30,8 +30,11 @@ public class OperatorController extends BaseController {
     @Override
     public void handle() {
         Drivetrain.getInstance().setDrivetrain(getLeft(), getRight()); /** Set the left and right speeds of the drivetrain */
+        //double lv = -Hardware.driver.getY(Hand.kLeft) * 500.0 * 1024.0 / 600.0;
+        //double lr = -Hardware.driver.getY(Hand.kRight) * 500.0 * 1024.0 / 600.0;
+        //Drivetrain.getInstance().setDrivetrainVelocitySetpoints(lv, lr);
         Intake.getInstance().setIntake(getIntake()); /** Set the intake speed */
-
+        
         //Controllers.arm_controller.setEnabled(false, false);
         //Intake.getInstance().setArm(getArm());
         Intake.getInstance().setArm(getArm());

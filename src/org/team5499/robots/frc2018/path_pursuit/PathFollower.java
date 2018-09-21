@@ -25,6 +25,7 @@ public class PathFollower {
     private double angle_last = 0.0;
 
     private boolean is_configured = false;
+    private boolean done_with_path = false;
 
     private PathFollower() {
     }
@@ -35,11 +36,16 @@ public class PathFollower {
         this.turn_acceleration_coefficient = config.turn_acceleration_coefficient;
         this.is_configured = true;
         this.look_ahead_distance = config.look_ahead_distance;
+        this.done_with_path = false;
     }
 
     public double[] update(double angle) {
         if(is_configured){
             double average_velocity = calculateAverageVelocity(angle - angle_last); // average velocity of both sides of drivetrain
+            
+            if (average_velocity == 0)
+                return new double[] {0, 0};
+            
             angle_last = angle;
             Vector2d position = RLS.getInstance().getTransform().position;
             Vector2d lookahead_vector = m_path.getLookaheadPointFromPoint(position, look_ahead_distance, 100);
@@ -59,6 +65,9 @@ public class PathFollower {
             double vl = arc_length_left / ta;
             double vr = arc_length_right / ta;
 
+            vl *= 500.0 * 1024.0 / 600.0;
+            vr *= 500.0 * 1024.0 / 600.0;
+
             return new double[] { vl, vr };
         } else {
             System.out.println("Error: Path Follower not configured");
@@ -68,6 +77,11 @@ public class PathFollower {
 
     private double calculateAverageVelocity(double angle_delta) {
         double av;
+
+        if(m_path.getDistanceToEndpoint(RLS.getInstance().getTransform().position) < 2.0 /*inches*/) {
+            done_with_path = true;
+            max_average_velocity = 0;
+        }
 
         if(m_path.getDistanceToEndpoint(RLS.getInstance().getTransform().position) < 6.0 /*inches*/) {
             return max_average_velocity / 4;
@@ -94,7 +108,9 @@ public class PathFollower {
         return BminA.getMagnitude();
     }
 
-
+    public boolean getDoneWithPath() {
+        return done_with_path;
+    }
 
     public void setPath(Path path) {
         this.m_path = path;

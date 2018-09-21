@@ -69,12 +69,11 @@ public class AutoController extends BaseController {
         nothing = new Routine();
         tuning = new Routine();
 
-        Path path = new Path(new Vector2d[] {new Vector2d(0, 0), new Vector2d(10, 1), new Vector2d(15, 10)});
+        Path path = new Path(new Vector2d[] {new Vector2d(10, 40), new Vector2d(1, -40), new Vector2d(-10, -80)});
         PFConfig path_follower_config = new PFConfig();
-        path_follower_config.max_average_velocity = 0.5;
-        path_follower_config.turn_acceleration_coefficient = 0.1;
+        path_follower_config.max_average_velocity = 0.2;
+        path_follower_config.turn_acceleration_coefficient = 0.2;
         path_follower_config.look_ahead_distance = 12;
-
         path_test.addCommand(new DrivePathCommand(10, path, path_follower_config));
 
         ro_tc.addCommand(new NothingCommand(0));
@@ -246,7 +245,7 @@ public class AutoController extends BaseController {
         tuning.addCommand(new IntakeDriveCommand(10, false, 200, -1, true));
         tuning.addCommand(new NothingCommand(10));
 
-        current_routine = path_test;
+        current_routine = nothing;
     }
 
     @Override
@@ -338,7 +337,7 @@ public class AutoController extends BaseController {
             }
 
 
-        current_routine = baseline;
+        current_routine = path_test;
 
         /** Once the correct routine is choosen, handle it */
         if(current_routine.isFinished()) {
@@ -384,6 +383,8 @@ public class AutoController extends BaseController {
         ri_oc.reset();
         tuning.reset();
         nothing.reset();
+
+        path_test.reset();
 
         game_data = null;
         current_command = null;

@@ -3,6 +3,7 @@ package org.team5499.robots.frc2018.path_pursuit;
 import org.team5499.robots.frc2018.dashboard.Dashboard;
 import org.team5499.robots.frc2018.math.Transform2d;
 import org.team5499.robots.frc2018.math.Vector2d;
+import org.team5499.robots.frc2018.subsystems.Drivetrain;
 
 public class RLS {
 
@@ -115,13 +116,16 @@ public class RLS {
     }
 
     public double getHeading() {
-        double adjAngle = theta_last;
+        
+        //double adjAngle = theta_last;
+        double adjAngle = Drivetrain.getInstance().getAngle();
         while(adjAngle < 0.0)
             adjAngle += 360.0;
         while(adjAngle >= 360.0)
             adjAngle -= 360.0;
 
         return adjAngle;
+
     }
 
     public void setHeading(double theta) {

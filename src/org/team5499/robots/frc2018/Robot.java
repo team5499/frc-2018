@@ -53,10 +53,10 @@ public class Robot extends TimedRobot {
         Drivetrain.getInstance().setLeftDistance(0);
         Drivetrain.getInstance().setRightDistance(0);
 
-        Drivetrain.getInstance().setLeftvelocityPIDF(0.25, 0, 0 , 0);
-        Drivetrain.getInstance().setLeftvelocityPIDF(0.25, 0, 0, 0);
-        Drivetrain.getInstance().setAcceptableVelocityError(100);
-        Drivetrain.getInstance().setVelocityRampRate(2);
+        Drivetrain.getInstance().setLeftvelocityPIDF(0.5, 0.001, 0, 0);
+        Drivetrain.getInstance().setRightvelocityPIDF(0.5, 0.001, 0, 0);
+        //Drivetrain.getInstance().setAcceptableVelocityError(0);
+        //Drivetrain.getInstance().setVelocityRampRate(1);
     }
 
     @Override
@@ -75,6 +75,8 @@ public class Robot extends TimedRobot {
         
         RLS.getInstance().updateWithTwoEncoders(Drivetrain.getInstance().getLeftDistance(), Drivetrain.getInstance().getRightDistance());
         System.out.println(RLS.getInstance().toString());
+        //System.out.println("Left target: " + Hardware.left_master_talon.getClosedLoopTarget(0) + ", Right target: " + Hardware.right_master_talon.getClosedLoopTarget(0));
+        //System.out.println("Left error: " + Hardware.left_master_talon.getClosedLoopError(0) + ", Right error: " + Hardware.right_master_talon.getClosedLoopError(0));
     }
 
     /**
@@ -98,13 +100,10 @@ public class Robot extends TimedRobot {
     
 	@Override
 	public void disabledPeriodic() {
-        RLS.getInstance().updateWithTwoEncoders(Drivetrain.getInstance().getLeftDistance(), Drivetrain.getInstance().getRightDistance());
-        System.out.println(RLS.getInstance().toString());
-
+        //RLS.getInstance().updateWithTwoEncoders(Drivetrain.getInstance().getLeftDistance(), Drivetrain.getInstance().getRightDistance());
+        //System.out.println(RLS.getInstance().toString());
+        RLS.getInstance().zero();
     }
-
-    private double last_left_value = 0;
-    private double last_right_value = 0;
 
     /**
      * - Start auto controller
@@ -115,6 +114,7 @@ public class Robot extends TimedRobot {
         autoController.start();
         Drivetrain.getInstance().setLeftDistance(0);
         Drivetrain.getInstance().setRightDistance(0);
+        RLS.getInstance().zero();
         RLS.getInstance().configure(Dashboard.getDouble("ROBOT_WIDTH"), 0, 0, 0);
 
 
