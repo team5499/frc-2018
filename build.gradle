@@ -1,0 +1,90 @@
+plugins {
+  id "jaci.gradle.EmbeddedTools" version "2018.09.16"
+  id "java"
+}
+
+ext {
+  WPILib_version = '2018.4.1'
+  WPIUtil_version = '3.2.0'
+  OpenCV_version = '3.1.0'
+  NetworkTables_version = '3.1.7'
+  Ntcore_version = '4.1.0'
+  CameraServer_version = '1.3.0'
+  CTREToolsuite_version = '5.3.1.0'
+
+  MainClass = 'org.team5499.robots.frc2018.Robot'
+}
+
+repositories {
+  mavenCentral()
+  maven {
+    url 'http://first.wpi.edu/FRC/roborio/maven/release'
+  }
+  maven {
+    url 'https://maven.team5499.org/'
+  }
+}
+
+dependencies {
+  compile "edu.wpi.first.wpilibj:wpilibj-java:$WPILib_version"
+  compile "edu.wpi.first.wpiutil:wpiutil-java:$WPIUtil_version"
+  compile "org.opencv:opencv-java:$OpenCV_version"
+  compile "edu.wpi.first.ntcore:ntcore-java:$Ntcore_version"
+  compile "edu.wpi.first.cscore:cscore-java:$CameraServer_version"
+  compile "openrio.mirror.third.ctre:CTRE-phoenix-java:$CTREToolsuite_version"
+
+  runtime "edu.wpi.first.wpilibj:wpilibj-jni:$WPILib_version:linuxathena"
+  runtime "org.opencv:opencv-natives:$OpenCV_version:linux-arm"
+  runtime "org.opencv:opencv-jni:$OpenCV_version:linux-arm"
+  runtime "edu.wpi.first.cscore:cscore-jni:$CameraServer_version:linuxathena"
+  runtime "edu.wpi.first.wpiutil:wpiutil-java:$WPIUtil_version"
+  runtime "edu.wpi.first.ntcore:ntcore-jni:$Ntcore_version:linuxathena"
+  runtime "openrio.mirror.third.ctre:CTRE-phoenix-java:$CTREToolsuite_version:native@zip"
+}
+
+jar {
+  from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+  manifest {
+    attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
+    attributes 'Robot-Class': "$MainClass"
+  }
+}
+
+deploy {
+    targets {
+        target("robot") {
+            directory = "/home/lvuser"
+            maxChannels = 1
+            timeout = 3
+            failOnMissing = true
+
+            locations {
+                ssh {
+                    address = "roborio-5499-frc.local"
+                    user = "lvuser"
+                    password = ""
+                    ipv6 = false
+                }
+            }
+        }
+    }
+    artifacts {
+        // COMMON PROPERTIES FOR ALL ARTIFACTS //
+        all {
+            directory = 'mydir'
+            targets << 'myTarget'
+
+            onlyIf = { execute('echo Hi').result == 'Hi' }
+
+            predeploy << { execute 'echo Pre' }      // After onlyIf, but before deploy logic
+            postdeploy << { execute 'echo Post' }    // After this artifact's deploy logic
+
+            disabled = true
+
+            // dependsOn('_______')
+        }
+        // END COMMON //
+
+
+    }
+}
