@@ -57,7 +57,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
-        
     }
 
     @Override
@@ -104,8 +103,8 @@ public class Robot extends TimedRobot {
 			/* append more signals to print when in speed mode. */
 		} else {
 			/* Percent voltage mode */
-         _talon_left.set(ControlMode.PercentOutput, leftYstick);
-         _talon_right.set(ControlMode.PercentOutput, rightYstick);
+            _talon_left.set(ControlMode.PercentOutput, leftYstick);
+            _talon_right.set(ControlMode.PercentOutput, rightYstick);
 		}
         System.out.println(_talon_left.getClosedLoopError(0) * 600.0 / 1024.0);
 		if (++_loops >= 10) {
