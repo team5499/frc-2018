@@ -337,7 +337,7 @@ public class AutoController extends BaseController {
             }
 
 
-        current_routine = path_test;
+        // current_routine = path_test;
 
         /** Once the correct routine is choosen, handle it */
         if(current_routine.isFinished()) {

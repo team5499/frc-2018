@@ -55,8 +55,6 @@ public class Robot extends TimedRobot {
 
         Drivetrain.getInstance().setLeftvelocityPIDF(0.5, 0.001, 0, 0);
         Drivetrain.getInstance().setRightvelocityPIDF(0.5, 0.001, 0, 0);
-        //Drivetrain.getInstance().setAcceptableVelocityError(0);
-        //Drivetrain.getInstance().setVelocityRampRate(1);
     }
 
     @Override
@@ -74,7 +72,7 @@ public class Robot extends TimedRobot {
         DriveController.getInstance().handle();
         
         RLS.getInstance().updateWithTwoEncoders(Drivetrain.getInstance().getLeftDistance(), Drivetrain.getInstance().getRightDistance());
-        System.out.println(RLS.getInstance().toString());
+        //System.out.println(RLS.getInstance().toString());
         //System.out.println("Left target: " + Hardware.left_master_talon.getClosedLoopTarget(0) + ", Right target: " + Hardware.right_master_talon.getClosedLoopTarget(0));
         //System.out.println("Left error: " + Hardware.left_master_talon.getClosedLoopError(0) + ", Right error: " + Hardware.right_master_talon.getClosedLoopError(0));
     }
@@ -100,8 +98,6 @@ public class Robot extends TimedRobot {
     
 	@Override
 	public void disabledPeriodic() {
-        //RLS.getInstance().updateWithTwoEncoders(Drivetrain.getInstance().getLeftDistance(), Drivetrain.getInstance().getRightDistance());
-        //System.out.println(RLS.getInstance().toString());
         RLS.getInstance().zero();
     }
 
@@ -116,9 +112,6 @@ public class Robot extends TimedRobot {
         Drivetrain.getInstance().setRightDistance(0);
         RLS.getInstance().zero();
         RLS.getInstance().configure(Dashboard.getDouble("ROBOT_WIDTH"), 0, 0, 0);
-
-
-
     }
 
     /**
@@ -127,11 +120,6 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         autoController.handle();
-        //RLS.getInstance().updateWithTwoEncoders(Drivetrain.getInstance().getLeftDistance(), Drivetrain.getInstance().getRightDistance());
-        //RLS.getInstance().updateWithOneEncoder(Drivetrain.getInstance().getLeftDistance(), Math.toRadians(Drivetrain.getInstance().getAngle()));
-        
-
-        // System.out.println(Drivetrain.getInstance().getLeftDistance() + " - " + Drivetrain.getInstance().getRightDistance());
     }
 
     /**
@@ -149,7 +137,6 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         operatorController.handle();
-        RLS.getInstance().updateWithTwoEncoders(Drivetrain.getInstance().getLeftDistance(), Drivetrain.getInstance().getRightDistance());
     }
 
     /**
