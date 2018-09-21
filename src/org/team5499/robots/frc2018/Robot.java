@@ -1,7 +1,6 @@
 package org.team5499.robots.frc2018;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 
 public class Robot extends TimedRobot {
     public Robot() {
