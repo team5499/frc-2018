@@ -35,7 +35,7 @@ public class AutoController extends BaseController {
      * TC - Two cube
      */
     private Routine ro_tc, ro_oc, ro_nc, ro_c_oc, ri_oc, ri_nc, m_nc, m_oc_r, m_oc_l, m_tc_r, m_tc_l, li_oc, li_nc, lo_tc, lo_oc, lo_nc, lo_c_oc, baseline, nothing, tuning;
-    private Routine path_test;
+    private Routine path_test, test;
 
     private BaseCommand current_command;
     private String game_data;
@@ -47,6 +47,7 @@ public class AutoController extends BaseController {
         Dashboard.setDouble("angle_setpoint", 0);
 
         path_test = new Routine();
+        test = Routine.readRoutineFromFile("routines/baseline.routine");
 
         ro_tc = new Routine();
         ro_oc = new Routine();
