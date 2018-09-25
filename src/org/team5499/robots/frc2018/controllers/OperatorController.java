@@ -1,6 +1,7 @@
 package org.team5499.robots.frc2018.controllers;
 
 import org.team5499.robots.frc2018.dashboard.Dashboard;
+import org.team5499.robots.frc2018.pid.ArmController;
 import org.team5499.robots.frc2018.Hardware;
 import org.team5499.robots.frc2018.subsystems.Intake;
 import org.team5499.robots.frc2018.subsystems.Drivetrain;
@@ -30,12 +31,14 @@ public class OperatorController extends BaseController {
     @Override
     public void handle() {
         Drivetrain.getInstance().setDrivetrain(getLeft(), getRight()); /** Set the left and right speeds of the drivetrain */
+        //Drivetrain.getInstance().setDrivetrain(0, 0); /** Set the left and right speeds of the drivetrain */
+
         //double lv = -Hardware.driver.getY(Hand.kLeft) * 500.0 * 1024.0 / 600.0;
         //double lr = -Hardware.driver.getY(Hand.kRight) * 500.0 * 1024.0 / 600.0;
         //Drivetrain.getInstance().setDrivetrainVelocitySetpoints(lv, lr);
         Intake.getInstance().setIntake(getIntake()); /** Set the intake speed */
         
-        //Controllers.arm_controller.setEnabled(false, false);
+        ArmController.getInstance().setEnabled(false, false);
         //Intake.getInstance().setArm(getArm());
         Intake.getInstance().setArm(getArm());
         
@@ -57,12 +60,13 @@ public class OperatorController extends BaseController {
         if(Math.abs(raw_speed) < Dashboard.getDouble("ARM_DEADZONE")) { /** If the raw value is less than the deadzone, return 0 speed */
             return 0;
         }
-
+        /*
         if(Intake.getInstance().getArmAngle() < -25 && raw_speed < 0) {
             return 0;
         } else if(Intake.getInstance().getArmAngle() > 90 && raw_speed > 0){
             return 0;
         }
+        */
         return raw_speed * Dashboard.getDouble("ARM_SPEED_MULTIPLIER");
     }
 
