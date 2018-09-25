@@ -1,9 +1,7 @@
 package org.team5499.robots.frc2018.commands.pid;
 
-import org.team5499.robots.frc2018.dashboard.Dashboard;
-import org.team5499.robots.frc2018.pid.Controllers;
+import org.team5499.robots.frc2018.pid.ArmController;
 import org.team5499.robots.frc2018.commands.BaseCommand;
-import org.team5499.robots.frc2018.subsystems.Subsystems;
 
 public class ArmCommand extends BaseCommand {
 
@@ -26,8 +24,8 @@ public class ArmCommand extends BaseCommand {
     @Override
     public void start() {
         super.start();
-        Controllers.arm_controller.setSetpoint(degrees);
-        Controllers.arm_controller.setEnabled(enable, hold);
+        ArmController.getInstance().setSetpoint(degrees);
+        ArmController.getInstance().setEnabled(enable, hold);
     }
 
     @Override
@@ -41,7 +39,7 @@ public class ArmCommand extends BaseCommand {
 
     @Override
     public boolean isFinished() {
-        return (super.isFinished() || Controllers.arm_controller.onTarget());
+        return (super.isFinished() || ArmController.getInstance().onTarget());
     }
 
 }

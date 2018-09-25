@@ -16,6 +16,12 @@ public class Intake {
      * - Intake sonic sensor
      */
 
+    private static Intake instance = new Intake();
+    
+    public static Intake getInstance() {
+        return instance;
+    }
+
     public Intake() {
     }
 

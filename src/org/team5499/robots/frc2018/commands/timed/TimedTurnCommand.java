@@ -1,6 +1,6 @@
 package org.team5499.robots.frc2018.commands.timed;
 
-import org.team5499.robots.frc2018.subsystems.Subsystems;
+import org.team5499.robots.frc2018.subsystems.Drivetrain;
 import org.team5499.robots.frc2018.commands.BaseCommand;
 
 public class TimedTurnCommand extends BaseCommand {
@@ -28,7 +28,7 @@ public class TimedTurnCommand extends BaseCommand {
     public boolean isFinished() {
         boolean finished = super.isFinished();
         if(finished) {
-            Subsystems.drivetrain.stop();
+            Drivetrain.getInstance().stop();
         }
         return finished;
     }

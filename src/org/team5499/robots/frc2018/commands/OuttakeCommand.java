@@ -1,6 +1,6 @@
 package org.team5499.robots.frc2018.commands;
 
-import org.team5499.robots.frc2018.subsystems.Subsystems;
+import org.team5499.robots.frc2018.subsystems.Intake;
 
 public class OuttakeCommand extends BaseCommand {
 
@@ -14,14 +14,14 @@ public class OuttakeCommand extends BaseCommand {
 
     @Override
     public void handle() {
-        Subsystems.intake.setIntake(speed);
+        Intake.getInstance().setIntake(speed);
     }
 
     @Override
     public boolean isFinished() {
         boolean finished = super.isFinished();
         if(finished) {
-            Subsystems.intake.stopIntake();
+            Intake.getInstance().stopIntake();
         }
         return finished;
     }
