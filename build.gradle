@@ -1,5 +1,5 @@
 plugins {
-  id "jaci.gradle.EmbeddedTools" version "2018.09.16"
+  id "jaci.gradle.EmbeddedTools" version "2018.09.21"
   id "java"
 }
 
@@ -46,7 +46,7 @@ jar {
   from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
   manifest {
     attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
-    attributes 'Robot-Class': "$MainClass"
+    attributes 'Robot-Class': MainClass
   }
 }
 
@@ -61,7 +61,13 @@ deploy {
             locations {
                 ssh {
                     address = "roborio-5499-frc.local"
-                    user = "lvuser"
+                    user = "admin"
+                    password = ""
+                    ipv6 = false
+                }
+                ssh {
+                    address = "10.54.99.2"
+                    user = "admin"
                     password = ""
                     ipv6 = false
                 }
@@ -71,20 +77,27 @@ deploy {
     artifacts {
         // COMMON PROPERTIES FOR ALL ARTIFACTS //
         all {
-            directory = 'mydir'
-            targets << 'myTarget'
+            directory = ''
+            targets << 'robot'
 
-            onlyIf = { execute('echo Hi').result == 'Hi' }
+            onlyIf = { execute('echo hi').result == 'hi\n' }
 
             predeploy << { execute 'echo Pre' }      // After onlyIf, but before deploy logic
             postdeploy << { execute 'echo Post' }    // After this artifact's deploy logic
 
-            disabled = true
+            disabled = false
 
             // dependsOn('_______')
         }
         // END COMMON //
 
+        javaArtifact('robotProgram') {
+            jar = 'jar'
+            filename = 'FRCUserProgram.jar'
+        }
 
+        commandArtifact('restartRobotProgram') {
+            command = ''
+        }
     }
 }
