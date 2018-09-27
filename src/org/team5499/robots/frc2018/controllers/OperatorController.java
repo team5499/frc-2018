@@ -55,12 +55,15 @@ public class OperatorController extends BaseController {
             return 0;
         }
 
+        /*
         if(Subsystems.intake.getArmAngle() < -25 && raw_speed < 0) {
             return 0;
         } else if(Subsystems.intake.getArmAngle() > 90 && raw_speed > 0){
             return 0;
         }
+        */
         return raw_speed * Dashboard.getDouble("ARM_SPEED_MULTIPLIER");
+        
     }
 
     /** Get whether PID should be used to move the arm(negative is down, positive is up) */
@@ -129,6 +132,8 @@ public class OperatorController extends BaseController {
             return Dashboard.getDouble("SLOW_INTAKE");
         } else if(Hardware.codriver.getBumper(Hand.kLeft)) {
             return Dashboard.getDouble("OUTTAKE_SPEED");
+        } else if(Hardware.codriver.getTriggerAxis(Hand.kLeft) > 0.1) {
+            return 1.0;
         } else return 0;
     }
 

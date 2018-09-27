@@ -59,7 +59,7 @@ public class Hardware {
         Hardware.left_slave_talon.setInverted(false);
         Hardware.right_slave_talon.setInverted(true);
         Hardware.arm_talon.setInverted(false);
-        Hardware.intake_right_talon.setInverted(true);
+        Hardware.intake_right_talon.setInverted(false);
 
         /** Enable voltage compensation */
         Hardware.left_master_talon.enableVoltageCompensation(true);
