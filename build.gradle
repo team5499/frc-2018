@@ -97,7 +97,7 @@ deploy {
         }
 
         commandArtifact('restartRobotProgram') {
-            command = ''
+            command = 'killall -q netconsole-host ||:; sh /etc/profile.d/natinst-path.sh; sh /usr/local/frc/bin/frcKillRobot.sh -t -r; sync'
         }
     }
 }
