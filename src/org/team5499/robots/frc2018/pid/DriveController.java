@@ -33,7 +33,7 @@ public class DriveController {
             distance_controller.setVelocity(Subsystems.drivetrain.getDistanceVelocity());
             double angle_output = angle_controller.calculate();
             double distance_output = distance_controller.calculate();
-            Subsystems.drivetrain.setDrivetrain(distance_output - angle_output, distance_output + angle_output);
+            Subsystems.drivetrain.setDrivetrain((-distance_output - angle_output), (-distance_output + angle_output));
             Dashboard.setDouble("distance_error", distance_controller.getError());
             Dashboard.setDouble("angle_error", angle_controller.getError());
         }

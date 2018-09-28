@@ -225,15 +225,17 @@ public class AutoController extends BaseController {
         li_nc.addCommand(new DriveCommand(3, false, -104));
 
         baseline.addCommand(new ArmCommand(0, true, false, 110));
-        baseline.addCommand(new DriveCommand(3, false, 106));
+        baseline.addCommand(new DriveCommand(3, false, -106));
+        //baseline.addCommand(new TurnCommand(10, false, 90));
 
         nothing.addCommand(new NothingCommand(0));
 
-        tuning.addCommand(new ArmCommand(1, true, true, 110));
-        tuning.addCommand(new ArmCommand(0, true, false, 110));
-        tuning.addCommand(new IntakeDriveCommand(10, false, 200, -1, true));
-        tuning.addCommand(new NothingCommand(10));
-
+        tuning.addCommand(new ArmCommand(1, true, true, 30));
+        tuning.addCommand(new DriveCommand(3, false, 20));
+        tuning.addCommand(new TurnCommand(2, false, 90));
+        //tuning.addCommand(new ArmCommand(0, true, false, 110));
+        //tuning.addCommand(new IntakeDriveCommand(10, false, 200, -1, true));
+        //tuning.addCommand(new NothingCommand(10));
 
         
         current_routine = nothing;
@@ -372,6 +374,7 @@ public class AutoController extends BaseController {
         ri_oc.reset();
         tuning.reset();
         nothing.reset();
+        baseline.reset();
 
         game_data = null;
         current_command = null;
