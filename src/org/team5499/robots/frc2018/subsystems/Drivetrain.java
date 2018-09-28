@@ -54,22 +54,22 @@ public class Drivetrain {
 
     /** Get raw distance value */
     public int getRawDistance() {
-        return Hardware.left_master_talon.getSensorCollection().getQuadraturePosition();
+        return -Hardware.left_master_talon.getSensorCollection().getQuadraturePosition();
     }
 
     /** Get raw distance velocity value */
     public int getRawDistanceVelocity() {
-        return Hardware.left_master_talon.getSensorCollection().getQuadratureVelocity();
+        return -Hardware.left_master_talon.getSensorCollection().getQuadratureVelocity();
     }
 
     /** Sets the distance */
     public void setDistance(double distance) {
-        Hardware.left_master_talon.getSensorCollection().setQuadraturePosition((int) (distance * (double) Dashboard.getInt("TICKS_PER_ROTATION") / (Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI)), 0);
+        Hardware.left_master_talon.getSensorCollection().setQuadraturePosition(-(int) (distance * (double) Dashboard.getInt("TICKS_PER_ROTATION") / (Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI)), 0);
     }
 
     /** Set raw distance */
     public void setRawDistance(int distance) {
-        Hardware.left_master_talon.getSensorCollection().setQuadraturePosition(distance, 0);
+        Hardware.left_master_talon.getSensorCollection().setQuadraturePosition(-distance, 0);
     }
 
     /** Set encoder enabled */
