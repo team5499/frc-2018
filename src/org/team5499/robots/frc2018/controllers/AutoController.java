@@ -230,9 +230,10 @@ public class AutoController extends BaseController {
 
         nothing.addCommand(new NothingCommand(0));
 
-        tuning.addCommand(new ArmCommand(1, true, true, 30));
-        tuning.addCommand(new DriveCommand(3, false, 20));
-        tuning.addCommand(new TurnCommand(2, false, 90));
+        tuning.addCommand(new ArmCommand(1, true, true, 50));
+        //tuning.addCommand(new ArmCommand(1, true, true, 80));
+        //tuning.addCommand(new DriveCommand(3, false, -20));
+        //tuning.addCommand(new TurnCommand(2, false, 90));
         //tuning.addCommand(new ArmCommand(0, true, false, 110));
         //tuning.addCommand(new IntakeDriveCommand(10, false, 200, -1, true));
         //tuning.addCommand(new NothingCommand(10));

@@ -55,12 +55,12 @@ public class Drivetrain {
 
     /** Get raw distance value */
     public int getRawDistance() {
-        return -Hardware.left_master_talon.getSensorCollection().getQuadraturePosition();
+        return Hardware.left_master_talon.getSensorCollection().getQuadraturePosition();
     }
 
     /** Get raw distance velocity value */
     public int getRawDistanceVelocity() {
-        return -Hardware.left_master_talon.getSensorCollection().getQuadratureVelocity();
+        return Hardware.left_master_talon.getSensorCollection().getQuadratureVelocity();
     }
 
     /** Sets the distance */
