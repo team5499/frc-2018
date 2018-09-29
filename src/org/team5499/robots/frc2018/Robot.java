@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
      */
     @Override
 	public void disabledInit() {
-        Subsystems.drivetrain.setBrakeMode(true);
+        Subsystems.drivetrain.setBrakeMode(false);
         autoController.reset();
         operatorController.reset();
         testController.reset();
@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit(){
-        Subsystems.drivetrain.setBrakeMode(true);
+        Subsystems.drivetrain.setBrakeMode(false);
         autoController.reset();
         autoController.start();
     }
