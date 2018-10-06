@@ -1,7 +1,11 @@
 package org.team5499.robots.frc2018.controllers;
 
 import org.team5499.robots.frc2018.dashboard.Dashboard;
-import org.team5499.robots.frc2018.subsystems.Subsystems;
+import org.team5499.robots.frc2018.math.Vector2d;
+import org.team5499.robots.frc2018.path_pursuit.Path;
+import org.team5499.robots.frc2018.path_pursuit.PathFollower.PFConfig;
+import org.team5499.robots.frc2018.subsystems.Drivetrain;
+import org.team5499.robots.frc2018.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.DriverStation;
 
@@ -31,6 +35,7 @@ public class AutoController extends BaseController {
      * TC - Two cube
      */
     private Routine ro_tc, ro_oc, ro_nc, ro_c_oc, ri_oc, ri_nc, m_nc, m_oc_r, m_oc_l, m_tc_r, m_tc_l, li_oc, li_nc, lo_tc, lo_oc, lo_nc, lo_c_oc, baseline, nothing, tuning;
+    private Routine path_test;
 
     private BaseCommand current_command;
     private String game_data;
@@ -40,6 +45,8 @@ public class AutoController extends BaseController {
         game_data = null;
         Dashboard.setDouble("distance_setpoint", 0);
         Dashboard.setDouble("angle_setpoint", 0);
+
+        path_test = new Routine();
 
         ro_tc = new Routine();
         ro_oc = new Routine();
@@ -61,6 +68,13 @@ public class AutoController extends BaseController {
         baseline = new Routine();
         nothing = new Routine();
         tuning = new Routine();
+
+        Path path = new Path(new Vector2d[] {new Vector2d(10, 40), new Vector2d(1, -40), new Vector2d(-10, -80)});
+        PFConfig path_follower_config = new PFConfig();
+        path_follower_config.max_average_velocity = 0.2;
+        path_follower_config.turn_acceleration_coefficient = 0.2;
+        path_follower_config.look_ahead_distance = 12;
+        path_test.addCommand(new DrivePathCommand(10, path, path_follower_config));
 
         ro_tc.addCommand(new NothingCommand(0));
         ro_tc.addCommand(new ArmCommand(1, true, true, 110));
@@ -128,9 +142,6 @@ public class AutoController extends BaseController {
         m_oc_r.addCommand(new DriveSlowCommand(1, false, -10));
         m_oc_r.addCommand(new ArmCommand(0, true, false, 110));
         m_oc_r.addCommand(new OuttakeDriveCommand(1, true, 0.6));
-
-
-
 
         m_tc_l.addCommand(new NothingCommand(0));
         m_tc_l.addCommand(new ArmCommand(0, true, true, 110));
@@ -234,8 +245,6 @@ public class AutoController extends BaseController {
         tuning.addCommand(new IntakeDriveCommand(10, false, 200, -1, true));
         tuning.addCommand(new NothingCommand(10));
 
-
-        
         current_routine = nothing;
     }
 
@@ -252,7 +261,7 @@ public class AutoController extends BaseController {
         }
         game_data = DriverStation.getInstance().getGameSpecificMessage();
         Dashboard.setString("game_data", game_data);
-        System.out.println(Dashboard.getString("automode"));
+        // System.out.println(Dashboard.getString("automode"));
         switch(Dashboard.getString("automode")) {
             case "left_inner":
                 if(game_data.substring(0, 1).equals("L")) {
@@ -263,7 +272,13 @@ public class AutoController extends BaseController {
                 break;
             case "left_outer":
                 if(game_data.substring(0, 1).equals("L")) {
-                    current_routine = lo_oc;
+                    if(Dashboard.getString("cubemode").equals("one")) {
+                        current_routine = lo_oc;
+                    } else if(Dashboard.getString("cubemode").equals("two")) {
+                        current_routine = lo_tc;
+                    } else {
+                        current_routine = lo_nc;
+                    }
                 } else {
                     current_routine = lo_nc;
                 }
@@ -298,7 +313,13 @@ public class AutoController extends BaseController {
                 if(game_data.substring(0, 1).equals("L")) {
                     current_routine = ro_nc;
                 } else {
-                    current_routine = ro_oc;
+                    if(Dashboard.getString("cubemode").equals("one")) {
+                        current_routine = ro_oc;
+                    } else if(Dashboard.getString("cubemode").equals("two")) {
+                        current_routine = ro_tc;
+                    } else {
+                        current_routine = ro_nc;
+                    }
                 }
                 break;
             case "baseline":
@@ -313,7 +334,10 @@ public class AutoController extends BaseController {
             default:
                 System.out.println("Automode mode not recognized");
                 break;
-        }
+            }
+
+
+        // current_routine = path_test;
 
         /** Once the correct routine is choosen, handle it */
         if(current_routine.isFinished()) {
@@ -334,13 +358,12 @@ public class AutoController extends BaseController {
 
     @Override
     public void reset() {
-        Subsystems.drivetrain.stop();
-        Subsystems.intake.stopArm();
-        Subsystems.intake.stopIntake();
-        Subsystems.climber.stop();
+        Drivetrain.getInstance().stop();
+        Intake.getInstance().stopArm();
+        Intake.getInstance().stopIntake();
 
-        Subsystems.drivetrain.setAngle(0); // Does this work?
-        Subsystems.drivetrain.setDistance(0);
+        Drivetrain.getInstance().setAngle(0); // Does this work?
+        Drivetrain.getInstance().setLeftDistance(0);
 
         Dashboard.setDouble("distance_setpoint", 0); // Reset the global distance setpoint
         Dashboard.setDouble("angle_setpoint", 0); // Reset the global angle setpoint
@@ -360,6 +383,8 @@ public class AutoController extends BaseController {
         ri_oc.reset();
         tuning.reset();
         nothing.reset();
+
+        path_test.reset();
 
         game_data = null;
         current_command = null;

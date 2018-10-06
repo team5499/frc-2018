@@ -1,7 +1,8 @@
 package org.team5499.robots.frc2018.commands.pid;
 
-import org.team5499.robots.frc2018.pid.Controllers;
-import org.team5499.robots.frc2018.subsystems.Subsystems;
+import org.team5499.robots.frc2018.pid.DriveController;
+import org.team5499.robots.frc2018.subsystems.Intake;
+import org.team5499.robots.frc2018.subsystems.Drivetrain;
 
 public class IntakeDriveCommand extends DriveSlowCommand {
 
@@ -24,7 +25,7 @@ public class IntakeDriveCommand extends DriveSlowCommand {
     @Override
     public void handle() {
         super.handle();
-        Subsystems.intake.setIntake(intake_speed);
+        Intake.getInstance().setIntake(intake_speed);
     }
 
     @Override
@@ -34,12 +35,12 @@ public class IntakeDriveCommand extends DriveSlowCommand {
 
     @Override
     public boolean isFinished() {
-        boolean finished = (super.isFinished() || (Subsystems.intake.getCubeDetected() && wait_for_cube && !wait_for_timeout));
-        System.out.println("Cube detected: " + Subsystems.intake.getCubeDetected());
+        boolean finished = (super.isFinished() || (Intake.getInstance().getCubeDetected() && wait_for_cube && !wait_for_timeout));
+        System.out.println("Cube detected: " + Intake.getInstance().getCubeDetected());
         if(finished) {
-            Controllers.drive_controller.setEnabled(false, 0);
-            Subsystems.intake.stopIntake();
-            Subsystems.drivetrain.stop();
+            DriveController.getInstance().setEnabled(false, 0);
+            Intake.getInstance().stopIntake();
+            Drivetrain.getInstance().stop();
         }
         return finished;
     }

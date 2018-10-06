@@ -2,8 +2,8 @@ package org.team5499.robots.frc2018.commands.pid;
 
 import org.team5499.robots.frc2018.commands.BaseCommand;
 import org.team5499.robots.frc2018.dashboard.Dashboard;
-import org.team5499.robots.frc2018.pid.Controllers;
-import org.team5499.robots.frc2018.subsystems.Subsystems;
+import org.team5499.robots.frc2018.subsystems.Drivetrain;
+import org.team5499.robots.frc2018.subsystems.Intake;
 
 public class OuttakeDriveCommand extends BaseCommand {
 
@@ -22,15 +22,15 @@ public class OuttakeDriveCommand extends BaseCommand {
     @Override
     public void start() {
         super.start();
-        initial_distance = Subsystems.drivetrain.getDistance();
-        Subsystems.drivetrain.setDrivetrain(-0.25, -0.25);
+        initial_distance = Drivetrain.getInstance().getLeftDistance();
+        Drivetrain.getInstance().setDrivetrain(-0.25, -0.25);
         
         enabled = true;
     }
 
     @Override
     public void handle() {
-        Subsystems.intake.setIntake(outtake_speed);
+        Intake.getInstance().setIntake(outtake_speed);
     }
 
     @Override
@@ -41,11 +41,11 @@ public class OuttakeDriveCommand extends BaseCommand {
 
     @Override
     public boolean isFinished() {
-        boolean finished = (super.isFinished() || (Subsystems.intake.getCubeDetected() && !wait_for_timeout));
+        boolean finished = (super.isFinished() || (Intake.getInstance().getCubeDetected() && !wait_for_timeout));
         if(finished) {
-            Subsystems.intake.stopIntake();
-            Subsystems.drivetrain.stop();
-            Dashboard.setDouble("distance_setpoint", Dashboard.getDouble("distance_setpoint") + Subsystems.drivetrain.getDistance() - initial_distance);
+            Intake.getInstance().stopIntake();
+            Drivetrain.getInstance().stop();
+            Dashboard.setDouble("distance_setpoint", Dashboard.getDouble("distance_setpoint") + Drivetrain.getInstance().getLeftDistance() - initial_distance);
         }
         return finished;
     }

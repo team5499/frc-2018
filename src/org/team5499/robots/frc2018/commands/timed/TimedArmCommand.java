@@ -1,6 +1,6 @@
 package org.team5499.robots.frc2018.commands.timed;
 
-import org.team5499.robots.frc2018.subsystems.Subsystems;
+import org.team5499.robots.frc2018.subsystems.Intake;
 import org.team5499.robots.frc2018.commands.BaseCommand;
 
 public class TimedArmCommand extends BaseCommand {
@@ -15,14 +15,14 @@ public class TimedArmCommand extends BaseCommand {
 
     @Override
     public void handle() {
-        Subsystems.intake.setArm(speed);
+        Intake.getInstance().setArm(speed);
     }
 
     @Override
     public boolean isFinished() {
         boolean finished = super.isFinished();
         if(finished) {
-            Subsystems.intake.stopArm();
+            Intake.getInstance().stopArm();
         }
         return finished;
     }

@@ -5,10 +5,8 @@ import org.team5499.robots.frc2018.Hardware;
 
 import edu.wpi.first.wpilibj.Timer;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.PigeonIMU;
-import com.ctre.phoenix.sensors.PigeonIMU.PigeonState;
 
 public class Drivetrain {
     /**
@@ -22,6 +20,12 @@ public class Drivetrain {
      * - Encoder(s)
      * - Gyro
      */
+
+    private static Drivetrain instance = new Drivetrain();
+    
+    public static Drivetrain getInstance() {
+        return instance;
+    }
 
     private int last_encoder_value;
     private boolean encoder_enabled;
@@ -42,43 +46,97 @@ public class Drivetrain {
         Hardware.right_master_talon.set(ControlMode.PercentOutput, right);
     }
 
+    public void setDrivetrainVelocitySetpoints(double left, double right) {
+        Hardware.left_master_talon.set(ControlMode.Velocity, left);
+        Hardware.right_master_talon.set(ControlMode.Velocity, right);
+    }
+
+    public void setVelocityRampRate(double ramp_rate) {
+        Hardware.left_master_talon.configClosedloopRamp(ramp_rate, 0);
+        Hardware.right_master_talon.configClosedloopRamp(ramp_rate, 0);
+    }
+
+    public void setAcceptableVelocityError(int allowableCloseLoopError) {
+        Hardware.left_master_talon.configAllowableClosedloopError(0, allowableCloseLoopError, 0);
+        Hardware.right_master_talon.configAllowableClosedloopError(0, allowableCloseLoopError, 0);
+    }
+
+    public void setLeftvelocityPIDF(double kP, double kI, double kD, double kF) {
+        Hardware.left_master_talon.config_kP(0, kP, 0);
+        Hardware.left_master_talon.config_kI(0, kI, 0);
+        Hardware.left_master_talon.config_kD(0, kD, 0);
+        Hardware.left_master_talon.config_kF(0, kF, 0);
+    }
+
+    public void setRightvelocityPIDF(double kP, double kI, double kD, double kF) {
+        Hardware.right_master_talon.config_kP(0, kP, 0);
+        Hardware.right_master_talon.config_kI(0, kI, 0);
+        Hardware.right_master_talon.config_kD(0, kD, 0);
+        Hardware.right_master_talon.config_kF(0, kF, 0);
+    }
+
     /** Get distance in inches that the encoder has moved */
-    public double getDistance() {
-        return (double) getRawDistance() * Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI / (double) Dashboard.getInt("TICKS_PER_ROTATION");
+    public double getLeftDistance() {
+        return (double) getLeftRawDistance() * Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI / (double) Dashboard.getInt("TICKS_PER_ROTATION");
     }
 
     /** Get distance velocity(inches per second) */
-    public double getDistanceVelocity() {
-        return ((double) getRawDistanceVelocity() * Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI / (double) Dashboard.getInt("TICKS_PER_ROTATION"));
+    public double getLeftDistanceVelocity() {
+        return ((double) getLeftRawDistanceVelocity() * Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI / (double) Dashboard.getInt("TICKS_PER_ROTATION"));
     }
 
     /** Get raw distance value */
-    public int getRawDistance() {
+    public int getLeftRawDistance() {
         return Hardware.left_master_talon.getSensorCollection().getQuadraturePosition();
     }
 
     /** Get raw distance velocity value */
-    public int getRawDistanceVelocity() {
+    public int getLeftRawDistanceVelocity() {
         return Hardware.left_master_talon.getSensorCollection().getQuadratureVelocity();
     }
 
     /** Sets the distance */
-    public void setDistance(double distance) {
+    public void setLeftDistance(double distance) {
         Hardware.left_master_talon.getSensorCollection().setQuadraturePosition((int) (distance * (double) Dashboard.getInt("TICKS_PER_ROTATION") / (Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI)), 0);
     }
 
     /** Set raw distance */
-    public void setRawDistance(int distance) {
+    public void setLeftRawDistance(int distance) {
         Hardware.left_master_talon.getSensorCollection().setQuadraturePosition(distance, 0);
+    }
+
+    public double getRightDistance() {
+        return -(double) getRightRawDistance() * Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI / (double) Dashboard.getInt("TICKS_PER_ROTATION");
+    }
+
+
+    public double getRightDistanceVelocity() {
+        return ((double) getRightRawDistanceVelocity() * Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI / (double) Dashboard.getInt("TICKS_PER_ROTATION"));
+    }
+
+    public int getRightRawDistance() {
+        return Hardware.right_master_talon.getSensorCollection().getQuadraturePosition();
+    }
+
+    public int getRightRawDistanceVelocity(){
+        return Hardware.right_master_talon.getSensorCollection().getQuadratureVelocity();
+    }
+
+    public void setRightDistance(double distance) {
+        Hardware.right_master_talon.getSensorCollection().setQuadraturePosition((int) (distance * (double) Dashboard.getInt("TICKS_PER_ROTATION") / (Dashboard.getDouble("WHEEL_DIAMETER") * Math.PI)), 0);
+    }
+
+    public void setRightRawDistance(int distance) {
+        Hardware.right_master_talon.getSensorCollection().setQuadraturePosition(distance, 0);
     }
 
     /** Set encoder enabled */
     public void enableEncoder(boolean enable) {
         if(enable && !encoder_enabled) {
-            setRawDistance(last_encoder_value);
+            setLeftRawDistance(last_encoder_value);
             encoder_enabled = true;
         } else if(!enable && encoder_enabled) {
-            last_encoder_value = getRawDistance();
+            last_encoder_value = getLeftRawDistance();
             encoder_enabled = false;
         }
     }

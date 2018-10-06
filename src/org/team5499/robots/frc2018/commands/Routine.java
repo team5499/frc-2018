@@ -41,4 +41,10 @@ public class Routine {
         commands.forEach((command) -> {command.reset();});
     }
 
+    public static Routine readRoutineFromFile(String path){
+        Routine r = new Routine();
+
+        return r;
+    }
+
 }

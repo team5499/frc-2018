@@ -4,13 +4,18 @@ import org.team5499.robots.frc2018.controllers.AutoController;
 import org.team5499.robots.frc2018.controllers.OperatorController;
 import org.team5499.robots.frc2018.controllers.TestController;
 import org.team5499.robots.frc2018.dashboard.Dashboard;
-import org.team5499.robots.frc2018.pid.Controllers;
-import org.team5499.robots.frc2018.subsystems.Subsystems;
+import org.team5499.robots.frc2018.pid.ArmController;
+import org.team5499.robots.frc2018.pid.DriveController;
+import org.team5499.robots.frc2018.pid.TurnController;
+import org.team5499.robots.frc2018.path_pursuit.RLS;
+import org.team5499.robots.frc2018.subsystems.Intake;
+import org.team5499.robots.frc2018.subsystems.Drivetrain;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+
+
 
 public class Robot extends TimedRobot {
 
@@ -42,23 +47,34 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
+        RLS.getInstance().zero();
+        RLS.getInstance().configure(Dashboard.getDouble("ROBOT_WIDTH"), 0, 0, 0);
+
+        Drivetrain.getInstance().setLeftDistance(0);
+        Drivetrain.getInstance().setRightDistance(0);
+
+        Drivetrain.getInstance().setLeftvelocityPIDF(0.5, 0.001, 0, 0);
+        Drivetrain.getInstance().setRightvelocityPIDF(0.5, 0.001, 0, 0);
     }
 
     @Override
     public void robotPeriodic() {
-        Subsystems.drivetrain.handleAngleVelocity();
+        Drivetrain.getInstance().handleAngleVelocity();
         Dashboard.setDouble("battvoltage", RobotController.getBatteryVoltage());
         Dashboard.setDouble("current_time", Timer.getFPGATimestamp());
-        Dashboard.setInt("pot_raw_value", Subsystems.intake.getRawPotValue());
-        Dashboard.setDouble("arm_angle", Subsystems.intake.getArmAngle());
-        Dashboard.setInt("sonic_raw_value", Subsystems.intake.getRawSonicValue());
-        Dashboard.setDouble("cube_distance", Subsystems.intake.getCubeDistance());
+        Dashboard.setInt("pot_raw_value", Intake.getInstance().getRawPotValue());
+        Dashboard.setDouble("arm_angle", Intake.getInstance().getArmAngle());
+        Dashboard.setInt("sonic_raw_value", Intake.getInstance().getRawSonicValue());
+        Dashboard.setDouble("cube_distance", Intake.getInstance().getCubeDistance());
 
-        Controllers.arm_controller.handle();
-        Controllers.turn_controller.handle();
-        Controllers.drive_controller.handle();
-
-        //System.out.println(Subsystems.drivetrain.getDistance());
+        ArmController.getInstance().handle();
+        TurnController.getInstance().handle();
+        DriveController.getInstance().handle();
+        
+        RLS.getInstance().updateWithTwoEncoders(Drivetrain.getInstance().getLeftDistance(), Drivetrain.getInstance().getRightDistance());
+        //System.out.println(RLS.getInstance().toString());
+        //System.out.println("Left target: " + Hardware.left_master_talon.getClosedLoopTarget(0) + ", Right target: " + Hardware.right_master_talon.getClosedLoopTarget(0));
+        //System.out.println("Left error: " + Hardware.left_master_talon.getClosedLoopError(0) + ", Right error: " + Hardware.right_master_talon.getClosedLoopError(0));
     }
 
     /**
@@ -70,15 +86,19 @@ public class Robot extends TimedRobot {
         operatorController.reset();
         testController.reset();
 
-        Controllers.arm_controller.reset();
-        Controllers.turn_controller.reset();
-        Controllers.drive_controller.reset();
+        ArmController.getInstance().reset();
+        TurnController.getInstance().reset();
+        DriveController.getInstance().reset();
 
+        Drivetrain.getInstance().setLeftDistance(0);
+        Drivetrain.getInstance().setRightDistance(0);
 
+        RLS.getInstance().zero();
     }
     
 	@Override
 	public void disabledPeriodic() {
+        RLS.getInstance().zero();
     }
 
     /**
@@ -88,6 +108,10 @@ public class Robot extends TimedRobot {
     public void autonomousInit(){
         autoController.reset();
         autoController.start();
+        Drivetrain.getInstance().setLeftDistance(0);
+        Drivetrain.getInstance().setRightDistance(0);
+        RLS.getInstance().zero();
+        RLS.getInstance().configure(Dashboard.getDouble("ROBOT_WIDTH"), 0, 0, 0);
     }
 
     /**
@@ -130,6 +154,6 @@ public class Robot extends TimedRobot {
     @Override
     public void testPeriodic() {
         testController.handle();
-    }
+        }
 
 }
