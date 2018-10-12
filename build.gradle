@@ -1,103 +1,57 @@
 plugins {
-  id "jaci.gradle.EmbeddedTools" version "2018.09.21"
-  id "java"
-}
-
-ext {
-  WPILib_version = '2018.4.1'
-  WPIUtil_version = '3.2.0'
-  OpenCV_version = '3.1.0'
-  NetworkTables_version = '3.1.7'
-  Ntcore_version = '4.1.0'
-  CameraServer_version = '1.3.0'
-  CTREToolsuite_version = '5.3.1.0'
-
-  MainClass = 'org.team5499.robots.frc2018.Robot'
+    id 'java'
+    id 'jaci.openrio.gradle.GradleRIO' version '2018.03.06'
 }
 
 repositories {
-  mavenCentral()
-  maven {
-    url 'http://first.wpi.edu/FRC/roborio/maven/release'
-  }
-  maven {
-    url 'https://maven.team5499.org/'
-  }
+    mavenLocal()
+    mavenCentral()
 }
 
-dependencies {
-  compile "edu.wpi.first.wpilibj:wpilibj-java:$WPILib_version"
-  compile "edu.wpi.first.wpiutil:wpiutil-java:$WPIUtil_version"
-  compile "org.opencv:opencv-java:$OpenCV_version"
-  compile "edu.wpi.first.ntcore:ntcore-java:$Ntcore_version"
-  compile "edu.wpi.first.cscore:cscore-java:$CameraServer_version"
-  compile "openrio.mirror.third.ctre:CTRE-phoenix-java:$CTREToolsuite_version"
+def TEAM = 5499
+def ROBOT_CLASS = "org.team5499.robots.frc2018.Robot"
 
-  runtime "edu.wpi.first.wpilibj:wpilibj-jni:$WPILib_version:linuxathena"
-  runtime "org.opencv:opencv-natives:$OpenCV_version:linux-arm"
-  runtime "org.opencv:opencv-jni:$OpenCV_version:linux-arm"
-  runtime "edu.wpi.first.cscore:cscore-jni:$CameraServer_version:linuxathena"
-  runtime "edu.wpi.first.wpiutil:wpiutil-java:$WPIUtil_version"
-  runtime "edu.wpi.first.ntcore:ntcore-jni:$Ntcore_version:linuxathena"
-  runtime "openrio.mirror.third.ctre:CTRE-phoenix-java:$CTREToolsuite_version:native@zip"
-}
-
-jar {
-  from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-  manifest {
-    attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
-    attributes 'Robot-Class': MainClass
-  }
-}
-
+// Define my targets (RoboRIO) and artifacts (deployable files)
+// This is added by GradleRIO's backing project EmbeddedTools.
 deploy {
     targets {
-        target("robot") {
-            directory = "/home/lvuser"
-            maxChannels = 1
-            timeout = 3
-            failOnMissing = true
-
-            locations {
-                ssh {
-                    address = "roborio-5499-frc.local"
-                    user = "admin"
-                    password = ""
-                    ipv6 = false
-                }
-                ssh {
-                    address = "10.54.99.2"
-                    user = "admin"
-                    password = ""
-                    ipv6 = false
-                }
-            }
+        target("roborio", jaci.openrio.gradle.frc.RoboRIO) {
+            team = TEAM
         }
     }
     artifacts {
-        // COMMON PROPERTIES FOR ALL ARTIFACTS //
-        all {
-            directory = ''
-            targets << 'robot'
-
-            onlyIf = { execute('echo hi').result == 'hi\n' }
-
-            predeploy << { execute 'echo Pre' }      // After onlyIf, but before deploy logic
-            postdeploy << { execute 'echo Post' }    // After this artifact's deploy logic
-
-            disabled = false
-
-            // dependsOn('_______')
-        }
-        // END COMMON //
-
-        javaArtifact('robotProgram') {
-            jar = 'jar'
-            filename = 'FRCUserProgram.jar'
-        }
-
-        commandArtifact('restartRobotProgram') {
-            command = 'killall -q netconsole-host ||:; sh /etc/profile.d/natinst-path.sh; sh /usr/local/frc/bin/frcKillRobot.sh -t -r; sync'
+        artifact('frcJava', jaci.openrio.gradle.frc.FRCJavaArtifact) {
+            targets << "roborio"
         }
     }
+}
+
+wpi {
+    wpilibVersion = '2018.4.1'
+    ctreVersion = '5.3.1.0'
+}
+
+// Defining my dependencies. In this case, WPILib (+ friends), CTRE Toolsuite (Talon SRX)
+// and NavX.
+dependencies {
+    compile wpilib()
+    compile ctre()
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.2'
+    compile group: 'org.apache.tomcat', name: 'tomcat-websocket', version: '9.0.4'
+    compile group: 'org.glassfish.tyrus', name: 'tyrus-server', version: '1.13.1'
+    compile group: 'org.glassfish.tyrus', name: 'tyrus-container-grizzly-server', version: '1.13.1'
+}
+
+// Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
+// in order to make them all available at runtime. Also adding the manifest so WPILib
+// knows where to look for our Robot Class.
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    manifest jaci.openrio.gradle.GradleRIOPlugin.javaManifest(ROBOT_CLASS)
+}
+
+compileTestJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    options.compilerArgs += '-parameters'
 }
