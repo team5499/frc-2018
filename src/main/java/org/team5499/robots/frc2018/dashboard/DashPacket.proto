@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package dashboard;
+
+option java_package = "org.team5499.robots.frc2018.dashboard";
+option java_outer_classname = "DashPacketProtos";
+
+message DashPacket {
+    message param {
+        optional string key = 1;
+        optional string value = 2;
+        optional bool store = 3 [default = false];
+    }
+    repeated param parameters = 1;
+}
