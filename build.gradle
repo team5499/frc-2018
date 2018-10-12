@@ -40,7 +40,7 @@ dependencies {
     compile group: 'org.apache.tomcat', name: 'tomcat-websocket', version: '9.0.4'
     compile group: 'org.glassfish.tyrus', name: 'tyrus-server', version: '1.13.1'
     compile group: 'org.glassfish.tyrus', name: 'tyrus-container-grizzly-server', version: '1.13.1'
-    
+    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.5.1'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
