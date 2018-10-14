@@ -23,3 +23,5 @@ gradle-app.setting
 .settings
 .project
 .classpath
+
+node_modules/
