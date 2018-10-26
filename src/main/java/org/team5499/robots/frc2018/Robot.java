@@ -57,8 +57,6 @@ public class Robot extends TimedRobot {
         Controllers.arm_controller.handle();
         Controllers.turn_controller.handle();
         Controllers.drive_controller.handle();
-
-        //System.out.println(Subsystems.drivetrain.getDistance());
     }
 
     /**
@@ -66,6 +64,7 @@ public class Robot extends TimedRobot {
      */
     @Override
 	public void disabledInit() {
+        Subsystems.drivetrain.setBrakeMode(false);
         autoController.reset();
         operatorController.reset();
         testController.reset();
@@ -86,6 +85,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit(){
+        Subsystems.drivetrain.setBrakeMode(true);
         autoController.reset();
         autoController.start();
     }
@@ -96,6 +96,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         autoController.handle();
+        System.out.println(Subsystems.drivetrain.getRawDistance());
     }
 
     /**
@@ -103,6 +104,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopInit() {
+        Subsystems.drivetrain.setBrakeMode(false);
         operatorController.reset();
         operatorController.start();
     }

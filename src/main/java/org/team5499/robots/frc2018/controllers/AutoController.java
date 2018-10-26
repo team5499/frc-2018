@@ -80,7 +80,8 @@ public class AutoController extends BaseController {
         ro_tc.addCommand(new OuttakeCommand(0.5, 1.0));
 
 
-        ro_oc.addCommand(new NothingCommand(7.0));
+        // ro_oc.addCommand(new NothingCommand(7.0));
+        ro_oc.addCommand(new NothingCommand(0.0));
         ro_oc.addCommand(new ArmCommand(0, true, true, 110));
         ro_oc.addCommand(new DriveCommand(3, false, -150));
         ro_oc.addCommand(new TurnCommand(2, false, 90));
@@ -90,8 +91,9 @@ public class AutoController extends BaseController {
         ro_oc.addCommand(new OuttakeDriveCommand(1, true, 0.6));
 
         // drives 90 inches(just enough to cross baseline)
-        ro_nc.addCommand(new NothingCommand(7.0));
-        ro_nc.addCommand(new DriveCommand(3, false, -90));
+        // ro_nc.addCommand(new NothingCommand(7.0));
+        ro_nc.addCommand(new NothingCommand(0.0));
+        ro_nc.addCommand(new DriveCommand(3, false, -95));
 
         ro_c_oc.addCommand(new NothingCommand(0));
 
@@ -136,9 +138,9 @@ public class AutoController extends BaseController {
         m_tc_l.addCommand(new ArmCommand(0, true, true, 110));
         m_tc_l.addCommand(new DriveCommand(2, false, -45));
         m_tc_l.addCommand(new TurnCommand(2, false, 90));
-        m_tc_l.addCommand(new DriveCommand(2, false, -55));
+        m_tc_l.addCommand(new DriveCommand(2, false, -42));
         m_tc_l.addCommand(new TurnCommand(2, false, -90));
-        m_tc_l.addCommand(new DriveCommand(1.5, false, -60));
+        m_tc_l.addCommand(new DriveCommand(1.5, false, -48));
         m_tc_l.addCommand(new DriveSlowCommand(1, false, -10));
         m_tc_l.addCommand(new ArmCommand(0, true, false, 110));
         m_tc_l.addCommand(new OuttakeDriveCommand(0.25, true, 0.6));
@@ -149,16 +151,15 @@ public class AutoController extends BaseController {
         m_tc_l.addCommand(new TurnCommand(2, false, 135));
         m_tc_l.addCommand(new ArmCommand(0, false, false, -25));
         m_tc_l.addCommand(new DriveCommand(1.25, false, 48));
-        m_tc_l.addCommand(new IntakeDriveCommand(2.0, false, 29, -1.0, false));
+        m_tc_l.addCommand(new IntakeDriveCommand(1.5, false, 32, -1.0, false));
+        m_tc_l.addCommand(new IntakeCommand(0.4, -0.6, false));
         m_tc_l.addCommand(new ArmCommand(0.5, true, true, 110));
         m_tc_l.addCommand(new DriveCommand(2, false, -50));
         m_tc_l.addCommand(new TurnCommand(2, false, -135));
-        m_tc_l.addCommand(new DriveCommand(2, false, -65));
+        m_tc_l.addCommand(new DriveCommand(1.8, false, -52));
         m_tc_l.addCommand(new DriveSlowCommand(0.5, false, -10));
         m_tc_l.addCommand(new ArmCommand(0, true, false, 110));
         m_tc_l.addCommand(new OuttakeDriveCommand(1, true, 0.4));
-
-
 
         m_tc_r.addCommand(new NothingCommand(0));
         m_tc_r.addCommand(new ArmCommand(0, true, true, 110));
@@ -166,8 +167,8 @@ public class AutoController extends BaseController {
         m_tc_r.addCommand(new TurnCommand(2, false, -90));
         m_tc_r.addCommand(new DriveCommand(2, false, -47));
         m_tc_r.addCommand(new TurnCommand(2, false, 90));
-        m_tc_r.addCommand(new DriveCommand(1.5, false, -60));
-        m_tc_r.addCommand(new DriveSlowCommand(0.5, false, -5));
+        m_tc_r.addCommand(new DriveCommand(1.5, false, -48));
+        m_tc_r.addCommand(new DriveSlowCommand(0.5, false, -10));
         m_tc_r.addCommand(new ArmCommand(0, true, false, 110));
         m_tc_r.addCommand(new OuttakeDriveCommand(0.25, true, 0.6));
         // Two cube section
@@ -177,33 +178,35 @@ public class AutoController extends BaseController {
         m_tc_r.addCommand(new TurnCommand(2, false, -135));
         m_tc_r.addCommand(new ArmCommand(0, false, false, -25));
         m_tc_r.addCommand(new DriveCommand(1, false, 35));
-        m_tc_r.addCommand(new IntakeDriveCommand(2.0, false, 22, -1.0, false));
+        m_tc_r.addCommand(new IntakeDriveCommand(1.5, false, 32, -1.0, false));
+        m_tc_r.addCommand(new IntakeCommand(0.4, -0.6, false));
         m_tc_r.addCommand(new ArmCommand(0.5, true, true, 110));
-        m_tc_r.addCommand(new DriveCommand(2, false, -65));
+        m_tc_r.addCommand(new DriveCommand(1.8, false, -50));
         m_tc_r.addCommand(new TurnCommand(2, false, 135));
-        m_tc_r.addCommand(new DriveCommand(2, false, -72));
-        m_tc_r.addCommand(new DriveSlowCommand(0.5, false, -5));
+        m_tc_r.addCommand(new DriveCommand(1.8, false, -52));
+        m_tc_r.addCommand(new DriveSlowCommand(0.5, false, -10));
         m_tc_r.addCommand(new ArmCommand(0, true, false, 110));
         m_tc_r.addCommand(new OuttakeDriveCommand(1, true, 0.4));
 
         lo_tc.addCommand(new NothingCommand(0));
         lo_tc.addCommand(new ArmCommand(1, true, true, 110));
-        lo_tc.addCommand(new DriveCommand(3, false, -150));
-        lo_tc.addCommand(new TurnCommand(2, false, -90));
+        lo_tc.addCommand(new DriveCommand(3, false, -162));
+        lo_tc.addCommand(new TurnCommand(2, false, -135));
         lo_tc.addCommand(new DriveCommand(1.5, false, -16));
         lo_tc.addCommand(new ArmCommand(1, true, false, 110));
-        lo_tc.addCommand(new OuttakeDriveCommand(1, true, 0.6));
+        //lo_tc.addCommand(new OuttakeDriveCommand(1, true, 0.6));
+        lo_tc.addCommand(new OuttakeCommand(0.3, 0.2));
+        // two cube section
         lo_tc.addCommand(new DriveCommand(1.5, false, 16));
-        lo_tc.addCommand(new TurnCommand(2, false, -90));
-        lo_tc.addCommand(new DriveCommand(2, false, 36));
-        lo_tc.addCommand(new TurnCommand(2, false, 90));
-        lo_tc.addCommand(new IntakeDriveCommand(2, false, 26, 0.5, true));
+        lo_tc.addCommand(new TurnCommand(2, false, 45));
+        lo_tc.addCommand(new IntakeDriveCommand(2, false, 32, 0.70, true));
         lo_tc.addCommand(new ArmCommand(2, true, true, 30));
-        lo_tc.addCommand(new TurnCommand(2, false, 30));
+        lo_tc.addCommand(new TurnCommand(2, false, -90));
         lo_tc.addCommand(new ArmCommand(2, true, false, 30));
         lo_tc.addCommand(new OuttakeDriveCommand(1, true, 0.6));
 
-        lo_oc.addCommand(new NothingCommand(7.0));
+        // lo_oc.addCommand(new NothingCommand(7.0));
+        lo_oc.addCommand(new NothingCommand(0.0));
         lo_oc.addCommand(new ArmCommand(0, true, true, 110));
         lo_oc.addCommand(new DriveCommand(3, false, -150));
         lo_oc.addCommand(new TurnCommand(1.5, false, -90));
@@ -212,8 +215,9 @@ public class AutoController extends BaseController {
         lo_oc.addCommand(new OuttakeDriveCommand(1, true, 0.6));
 
         // drives 90 inches(just enough to cross baseline)
-        lo_nc.addCommand(new NothingCommand(7.0));
-        lo_nc.addCommand(new DriveCommand(3, false, -90));
+        // lo_nc.addCommand(new NothingCommand(7.0));
+        lo_nc.addCommand(new NothingCommand(0.0));
+        lo_nc.addCommand(new DriveCommand(3, false, -95));
 
         li_oc.addCommand(new NothingCommand(0));
         li_oc.addCommand(new ArmCommand(0, true, true, 110));
@@ -225,15 +229,18 @@ public class AutoController extends BaseController {
         li_nc.addCommand(new DriveCommand(3, false, -104));
 
         baseline.addCommand(new ArmCommand(0, true, false, 110));
-        baseline.addCommand(new DriveCommand(3, false, 106));
+        baseline.addCommand(new DriveCommand(3, false, -106));
+        //baseline.addCommand(new TurnCommand(10, false, 90));
 
         nothing.addCommand(new NothingCommand(0));
 
-        tuning.addCommand(new ArmCommand(1, true, true, 110));
+       // tuning.addCommand(new ArmCommand(1, true, true, 50));
+        //tuning.addCommand(new ArmCommand(1, true, true, 80));
+        tuning.addCommand(new DriveCommand(3, false, -20));
+        tuning.addCommand(new TurnCommand(2, false, 90));
         tuning.addCommand(new ArmCommand(0, true, false, 110));
         tuning.addCommand(new IntakeDriveCommand(10, false, 200, -1, true));
         tuning.addCommand(new NothingCommand(10));
-
 
         
         current_routine = nothing;
@@ -372,6 +379,7 @@ public class AutoController extends BaseController {
         ri_oc.reset();
         tuning.reset();
         nothing.reset();
+        baseline.reset();
 
         game_data = null;
         current_command = null;

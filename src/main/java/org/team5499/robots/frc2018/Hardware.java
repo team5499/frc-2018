@@ -53,6 +53,8 @@ public class Hardware {
         Hardware.right_master_talon.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature,
             Dashboard.getInt("TALON_QUADRATURE_UPDATE_INTERVAL"), 0);
 
+
+
         /** Set inversions for talons */
         Hardware.right_master_talon.setInverted(true);
         Hardware.right_slave_talon.setInverted(true);
@@ -60,6 +62,8 @@ public class Hardware {
         Hardware.right_slave_talon.setInverted(true);
         Hardware.arm_talon.setInverted(false);
         Hardware.intake_right_talon.setInverted(false);
+
+        Hardware.left_master_talon.setSensorPhase(false);
 
         /** Enable voltage compensation */
         Hardware.left_master_talon.enableVoltageCompensation(true);

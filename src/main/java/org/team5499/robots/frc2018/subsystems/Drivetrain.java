@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.PigeonIMU.PigeonState;
 
@@ -54,12 +55,12 @@ public class Drivetrain {
 
     /** Get raw distance value */
     public int getRawDistance() {
-        return -Hardware.left_master_talon.getSensorCollection().getQuadraturePosition();
+        return Hardware.left_master_talon.getSensorCollection().getQuadraturePosition();
     }
 
     /** Get raw distance velocity value */
     public int getRawDistanceVelocity() {
-        return -Hardware.left_master_talon.getSensorCollection().getQuadratureVelocity();
+        return Hardware.left_master_talon.getSensorCollection().getQuadratureVelocity();
     }
 
     /** Sets the distance */
@@ -70,6 +71,20 @@ public class Drivetrain {
     /** Set raw distance */
     public void setRawDistance(int distance) {
         Hardware.left_master_talon.getSensorCollection().setQuadraturePosition(-distance, 0);
+    }
+
+    public void setBrakeMode(boolean isBrakeMode) {
+        if(isBrakeMode) {
+            Hardware.left_master_talon.setNeutralMode(NeutralMode.Brake);
+            Hardware.left_slave_talon.setNeutralMode(NeutralMode.Brake);
+            Hardware.right_master_talon.setNeutralMode(NeutralMode.Brake);
+            Hardware.right_slave_talon.setNeutralMode(NeutralMode.Brake);
+        } else {
+            Hardware.left_master_talon.setNeutralMode(NeutralMode.Coast);
+            Hardware.left_slave_talon.setNeutralMode(NeutralMode.Coast);
+            Hardware.right_master_talon.setNeutralMode(NeutralMode.Coast);
+            Hardware.right_slave_talon.setNeutralMode(NeutralMode.Coast);
+        }
     }
 
     /** Set encoder enabled */
