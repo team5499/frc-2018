@@ -19864,7 +19864,7 @@ var batteryvoltage_graph = new Chart(batteryvoltage_canvas_context, {
 });
 
 window.onload = function() {
-    var handler = new MessageHandler("ws://10.54.99.2:5804/dashboard/main");
+    var handler = new MessageHandler("ws://" + window.location.hostname + ":5804/dashboard/main");
     handler.connect(run);
 }
 
