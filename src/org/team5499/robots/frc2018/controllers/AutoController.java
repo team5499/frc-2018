@@ -40,6 +40,8 @@ public class AutoController extends BaseController {
     private BaseCommand current_command;
     private String game_data;
 
+    public Timer timer;
+
     public AutoController() {
         super();
         game_data = null;
@@ -252,6 +254,7 @@ public class AutoController extends BaseController {
     @Override
     public void start() {
         System.out.println("Auto Controller Started"); /** Eventually replace with logger */
+        timer.start();
     }
 
     @Override
@@ -341,20 +344,13 @@ public class AutoController extends BaseController {
         // current_routine = path_test;
 
         /** Once the correct routine is choosen, handle it */
-        if(current_routine.isFinished()) {
-            return;
-        }
-
-        if(current_command == null) {
-            current_command = current_routine.getCurrentCommand();
-            current_command.start();
-        } else if(current_command.isFinished()) {
-            current_routine.advanceRoutine();
-            current_command = current_routine.getCurrentCommand();
-            current_command.start();
-        } else {
-            current_command.handle();
-        }
+        current_routine.getCommands().forEach((command) -> {
+            if(command.getStartTime() == timer.FPGATimestamp()){
+                command.start();
+            };
+        });
+        
+        //current_command.handle(); qwat?
     }
 
     @Override

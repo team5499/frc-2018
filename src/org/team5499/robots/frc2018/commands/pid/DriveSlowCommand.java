@@ -11,7 +11,7 @@ public class DriveSlowCommand extends BaseCommand {
     private boolean enabled;
     private boolean wait_for_timeout;
 
-    public DriveSlowCommand(double to, boolean wait_for_timeout, double setpoint) {
+    public DriveSlowCommand(double to, double st, boolean wait_for_timeout, double setpoint) {
         super(to);
         this.setpoint = setpoint;
         this.enabled = false;

@@ -9,7 +9,7 @@ public class IntakeCommand extends BaseCommand {
     private boolean wait_for_cube;
 
 
-    public IntakeCommand(double to, double speed, boolean wait_for_cube) {
+    public IntakeCommand(double to, double st, double speed, boolean wait_for_cube) {
         super(to);
         this.speed = speed;
         this.wait_for_cube = wait_for_cube;

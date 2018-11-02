@@ -7,7 +7,7 @@ public class OuttakeCommand extends BaseCommand {
     /** zero to one */
     private double speed;
 
-    public OuttakeCommand(double to, double speed) {
+    public OuttakeCommand(double to, double st, double speed) {
         super(to);
         this.speed = speed;
     }

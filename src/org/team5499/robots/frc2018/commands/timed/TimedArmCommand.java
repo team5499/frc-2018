@@ -7,7 +7,7 @@ public class TimedArmCommand extends BaseCommand {
 
     private double speed; /** Positive is up */
 
-    public TimedArmCommand(double to, double speed) {
+    public TimedArmCommand(double to, double st, double speed) {
         super(to);
         this.speed = speed;
 

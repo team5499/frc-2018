@@ -8,7 +8,7 @@ public class TimedTurnCommand extends BaseCommand {
     private double startAngle;
     private double dAngle;
 
-    public TimedTurnCommand(double to, double dAngle) {
+    public TimedTurnCommand(double to, double st, double dAngle) {
         super(to);
         this.dAngle = dAngle;
     }

@@ -14,7 +14,7 @@ public class ArmCommand extends BaseCommand {
     private double degrees;
     private boolean hold;
 
-    public ArmCommand(double to, boolean enable, boolean hold, double degrees) {
+    public ArmCommand(double to, double st, boolean enable, boolean hold, double degrees) {
         super(to);
         this.enable = enable;
         this.degrees = degrees;

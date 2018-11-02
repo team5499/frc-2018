@@ -2,7 +2,7 @@ package org.team5499.robots.frc2018.commands;
 
 public class NothingCommand extends BaseCommand {
 
-    public NothingCommand(double to) {
+    public NothingCommand(double to, double st) {
         super(to);
     }
 

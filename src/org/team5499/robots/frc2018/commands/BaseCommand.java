@@ -9,10 +9,13 @@ public abstract class BaseCommand {
      * It implements the timeout feature for each autonomous command
      */
 
+    private double start_time;
     private double timeout;
+
     private Timer timer;
 
-    public BaseCommand(double to) {
+    public BaseCommand(double to, double st) {
+        start_time = st;
         timeout = to;
         timer = new Timer();
     }
@@ -24,15 +27,16 @@ public abstract class BaseCommand {
 
     public abstract void handle();
 
-    public double getTimeout() {
+    public double getCurrentTime() {
+        return timer.get();
+    }
+
+    public double timeout(){
         return timeout;
     }
 
-    public void setTimeout() {
-    }
-
-    public double getCurrentTime() {
-        return timer.get();
+    public double getStartTime(){
+        return start_time;
     }
 
     public boolean isFinished() {

@@ -14,7 +14,7 @@ public class DrivePathCommand extends BaseCommand {
         this(to, path, new PFConfig());
     }
 
-    public DrivePathCommand(double to, Path path, PFConfig config) {
+    public DrivePathCommand(double to, double st, Path path, PFConfig config) {
         super(to);
         this.path = path;
         this.config = config;

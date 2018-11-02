@@ -7,7 +7,7 @@ public class MultiCommand extends BaseCommand {
 
     private List<BaseCommand> commands = new ArrayList<>();
 
-    public MultiCommand(double to, List<BaseCommand> commands) {
+    public MultiCommand(double to, double st, List<BaseCommand> commands) {
         super(to);
         this.commands = commands;
     }

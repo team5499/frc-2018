@@ -8,7 +8,7 @@ public class TimedDriveCommand extends BaseCommand {
 
     private double speed;
 
-    public TimedDriveCommand(double to, double speed) {
+    public TimedDriveCommand(double to, double st, double speed) {
         super(to);
         this.speed = speed;
     }
